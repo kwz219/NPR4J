@@ -1,0 +1,5 @@
+MONGO_URL="mongodb://localhost:27017/"
+DATABASE="BF_Methods"
+COMMIT_COL="commit"
+METHOD_COL="Minfo"
+BUG_COL="Buginfo"
