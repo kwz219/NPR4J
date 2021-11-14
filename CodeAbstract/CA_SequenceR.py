@@ -7,34 +7,57 @@ code abstract at 3 levels:
     buggy method: keep all code of the buggy method
     buggy class: keep init statement and description of other methods
 """
-def run_SequenceR_abs(code_path,buggyline,output_file):
-    args=["../lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",code_path,buggyline,output_file]
-    result=jarWrapper(args)
-    code = filter_code("D:\DD_PR\Example\\abstract\EventEmitter_SRabs.java")
-    return code
+def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo):
+    #args=["../lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
+    #out,err=jarWrapper(args)
+    #err=str(err)
+    try:
+        class_content=open(outputcode_f,'r',encoding='unicode_escape').read()
+        code,hitflag = add_buggy_method(class_content,buginfo)
+    except:
+        code=''
+        hitflag=0
+    return code,hitflag
 
 """
 add <START_BUG> before buggyline and <END_BUG> after buggyline
 remove comments of code 
 """
-def filter_code(filepath):
-    lines=open(filepath,'r',encoding='utf8').readlines()
-    filtered_lines=[]
-    for i in range(len(lines)):
-        line=lines[i].strip()
-        if r"// BUGGY LINE BELOW" in line:
-            filtered_lines.append(line.replace(r"// BUGGY LINE BELOW","<START_BUG>"))
-            lines[i+1]=lines[i+1]+" <END_BUG>"
-        elif line.startswith("/") or line.startswith("*"):
+def add_buggy_method(cont,res):
+    buggycode=res["buggy_code"].split("\n")
+    err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
+    if str(buggycode[0].strip()).startswith("@"):
+        m_start=buggycode[1].strip().split("(")[0].strip()
+        buggycode[err_pos] = "<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
+        buggy_m=buggycode[1:-2]
+    else:
+        m_start=buggycode[0].strip().split("(")[0].strip()
+        buggycode[err_pos] = "<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
+        buggy_m = buggycode[:-2]
+    buggy_m_body=[]
+    for line in buggy_m:
+        if line.strip().startswith("/") or line.strip().startswith("*"):
             continue
         else:
-            filtered_lines.append(line)
-    return ' '.join(filtered_lines)
-
+            buggy_m_body.append(line.strip())
+    cont_lines=cont.split("\n")
+    new_lines=[]
+    hitflag=0
+    for line in cont_lines:
+        if line.strip().startswith("/") or line.strip().startswith("*"):
+            continue
+        else:
+            if m_start in line:
+                new_lines+=buggy_m_body
+                hitflag=1
+            else:
+                new_lines.append(line.strip())
+    return ' '.join(new_lines),hitflag
 def test_run_SeqeunceR_abs():
     cp="../Example/origin/EventEmitter.java"
-    buggline='40'
+
     outputfile="../Example/abstract/EventEmitter_SRabs.java"
-    code=run_SequenceR_abs(cp,buggline,outputfile)
-    print(code)
+    run_SequenceR_abs(cp,outputfile)
+    #print(code)
+
 

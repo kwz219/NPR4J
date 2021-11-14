@@ -1,6 +1,7 @@
 from MongoHelper import MongoHelper
-from DataConstants import BUG_COL,METHOD_COL,COMMIT_COL
-from Utils.IOHelper import writeD2J
+from DataConstants import BUG_COL,METHOD_COL,COMMIT_COL,Defects4j_repos,Bugs_dot_jar_repos,Bears_repos,SEP
+from Utils.IOHelper import writeD2J,writeL2F
+import re
 """
 get all information of a buggy-fix method
 """
@@ -75,9 +76,52 @@ def refactor_buginfo(minfo:dict,buginfo:dict,commitinfo:dict):
 
     }
     return allinfo
-
+"""
+find commits that from repos in [Defects4j,bugs.jar,bears]
+exclude these bug-fix data from training data set 
+"""
+def get_commits_byrepo():
+    repos=set(Defects4j_repos+Bears_repos+Bugs_dot_jar_repos)
+    all_commits=[]
+    mongoClient=MongoHelper()
+    commit_col=mongoClient.get_col(COMMIT_COL)
+    for repo in repos:
+        print(repo)
+        for commit in commit_col.find({"repo":{"$regex":repo}}):
+            print(commit['repo'])
+            all_commits.append(commit["_id"])
+    writeL2F(all_commits,"commits_inrepo.txt")
+"""
+find commits whose message contains explicit bug or issue ID
+"""
+def get_commits_special():
+    mongoClient=MongoHelper()
+    commit_col=mongoClient.get_col(COMMIT_COL)
+    pattern=r".*#\d*.*"
+    special_repos=set()
+    for commit in commit_col.find():
+        repo=commit['repo']
+        message=commit['message']
+        if re.match(pattern,message) :
+            special_repos.add(repo)
+    repo_commits_special=[]
+    print("special_repos",len(special_repos))
+    repo_count=1
+    for repo in set(special_repos):
+        repo_commit=[repo]
+        count=0
+        for com in commit_col.find({"repo":repo}):
+            repo_commit.append(com['_id'])
+            count+=1
+        repo_commit.append(str(count))
+        repo_commits_special.append(SEP.join(repo_commit))
+        print(repo_count)
+        repo_count+=1
+    writeL2F(repo_commits_special,"commits_special.txt")
 def test_get_Minfo_all():
     sigs=[r"0000a9af91676cde100cdff6ca8de9bda8cb272d\P_dir\src\moe\xing\databindingformatter\WriterUtil.java@private void addMethod(PsiField field)"]
     final_dict=get_Minfo_all(sigs)
     writeD2J(final_dict,"test.json")
+
+get_commits_special()
 

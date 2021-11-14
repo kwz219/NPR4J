@@ -15,3 +15,5 @@ def test_src2abs():
     output_abstract_path="../Example/abstract/EventEmitter_src2abs.java"
     idioms_path="D:\DD_PR\CodeAbstract\CA_Resource\idioms_eg.txt"
     run_src2abs(cg,input_code_path,output_abstract_path,idioms_path)
+
+test_src2abs()

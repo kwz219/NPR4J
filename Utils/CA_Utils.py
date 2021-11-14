@@ -31,7 +31,6 @@ execute jar file, thanks to https://stackoverflow.com/questions/7372592/python-h
 """
 def jarWrapper(args:list):
     process = Popen(['java', '-jar']+args, stdout=PIPE, stderr=PIPE)
-    ret = []
     stdout, stderr = process.communicate()
     return stdout,stderr
 
