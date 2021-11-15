@@ -1,7 +1,7 @@
 ## Where the vocab(s) will be written
-save_data: ../Example/
+save_data: E:\APR_data\data\SequenceR\
 # Prevent overwriting existing files in the folder
-overwrite: False
+overwrite: True
 
 # filter long examples
 src_seq_length: 1010
@@ -14,23 +14,25 @@ share_vocab: True
 dynamic_dict: True
 # Corpus opts:
 data:
-    cnndm:
-        path_src: cnndm/train.txt.src
-        path_tgt: cnndm/train.txt.tgt.tagged
+    train:
+        path_src: E:\APR_data\data\SequenceR\buggy.trn.txt
+        path_tgt: E:\APR_data\data\SequenceR\fix.trn.txt
         transforms: []
         weight: 1
     valid:
-        path_src: cnndm/val.txt.src
-        path_tgt: cnndm/val.txt.tgt.tagged
+        path_src: E:\APR_data\data\SequenceR\buggy.val.txt
+        path_tgt: E:\APR_data\data\SequenceR\fix.val.txt
         transforms: []
 
-src_vocab_size: 1000 #SequenceR original vocab size
-tgt_vocab_size: 1000
+src_vocab_size: 100000 #SequenceR original vocab size
+tgt_vocab_size: 100000
 
-src_vocab: ../Example/SequenceR.src.vocab
-tgt_vocab: ../Example/SequenceR.tgt.vocab
+src_vocab: E:\APR_data\data\SequenceR\SequenceR.src.vocab
+tgt_vocab: E:\APR_data\data\SequenceR\SequenceR.src.vocab
 
-save_model: ../Example/SequenceR_model
+#log_file
+log_file: E:\APR_data\log\SequenceR\SR_T.log
+save_model: E:\APR_data\model\SequenceR\SequenceR_model
 copy_attn: true
 copy_loss_by_seqlength: true
 reuse_copy_attn: true
@@ -53,3 +55,4 @@ adagrad_accumulator_init: 0.1
 
 seed: 912
 world_size: 1
+

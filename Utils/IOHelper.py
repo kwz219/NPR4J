@@ -4,7 +4,7 @@ import json
 
 "write list to file"
 def writeL2F(contents:list,filepath):
-    with open(filepath,'w',encoding='utf8')as f:
+    with open(filepath,'w',encoding='utf8',errors='surrogatepass')as f:
         for line in contents:
             f.write(str(line)+'\n')
         f.close()

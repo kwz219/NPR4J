@@ -1,0 +1,14 @@
+Map.Entry,EventType,HashMap,ArrayList,Event.EventType,Method,InvocationTargetException,IllegalAccessException,Event,List,Object,EventListener,Map,IllegalArgumentException,
+TYPE_10,TYPE_4,TYPE_5,TYPE_7,TYPE_6,TYPE_11,TYPE_14,TYPE_12,TYPE_8,TYPE_3,TYPE_9,TYPE_2,TYPE_1,TYPE_13,
+getClass,emitEvent,handleEvent,isAnnotationPresent,values,emitReflectionEvent,invoke,error,put,remove,get,value,add,getKey,entrySet,containsKey,unregister,getMessage,getValue,contains,size,getType,getAnnotation,isRegistered,getSimpleName,getMethods,register,
+METHOD_19,METHOD_12,METHOD_18,METHOD_21,METHOD_5,METHOD_17,METHOD_24,METHOD_25,METHOD_6,METHOD_9,METHOD_3,METHOD_23,METHOD_4,METHOD_14,METHOD_13,METHOD_2,METHOD_7,METHOD_27,METHOD_15,METHOD_11,METHOD_8,METHOD_16,METHOD_22,METHOD_10,METHOD_26,METHOD_20,METHOD_1,
+attachedObjects,java.util.HashMap,com.badlogic.gdx.Gdx,type,EventRoute.,java.util.ArrayList,EventEmitter,java.util.Map,eventListener,sendEvent,de.verygame.square.core.event.Event.EventType,event,java.lang.reflect.Method,method,e,length,eventType,list,java.lang.reflect.InvocationTargetException,target,entry,java.util.List,de.verygame.square.core.event,attached,eventHandler,Gdx.app,
+VAR_18,VAR_6,VAR_2,VAR_13,VAR_24,VAR_5,VAR_10,VAR_8,VAR_12,VAR_20,VAR_9,VAR_17,VAR_4,VAR_23,VAR_25,VAR_15,VAR_16,VAR_14,VAR_3,VAR_21,VAR_19,VAR_7,VAR_1,VAR_22,VAR_11,VAR_26,
+
+
+
+
+1,
+INT_1,
+" has occurred. Reason: ","An ",
+STRING_2,STRING_1,

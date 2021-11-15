@@ -1,0 +1,40 @@
+{
+    "id": "0000a9af91676cde100cdff6ca8de9bda8cb272d\\P_dir\\src\\moe\\xing\\databindingformatter\\WriterUtil.java@private void addMethod(PsiField field)",
+    "commit_info": {
+        "repo": "https://api.github.com/repos/njleonzhang/DataBindingGetterSetter",
+        "commit_url:": "https://github.com/njleonzhang/DataBindingGetterSetter/commit/0000a9af91676cde100cdff6ca8de9bda8cb272d",
+        "commit_message": "bug fix"
+    },
+    "method_info": {
+        "name": "addMethod",
+        "buggy": {
+            "parent_file": "0000a9af91676cde100cdff6ca8de9bda8cb272d\\P_dir\\src\\moe\\xing\\databindingformatter\\WriterUtil.java",
+            "start_line": 44,
+            "end_line": 62,
+            "code": "    private void addMethod(PsiField field) {\n\n        String getter =\n                \"public \" + field.getType().getPresentableText() + \" get\" + getFirstUpCaseName(field.getName()) +\n                        \"(){ \\n\" +\n                        \"return \" + field.getName() + \"; \\n\" +\n                        \"}\";\n        PsiMethod getMethod = mFactory.createMethodFromText(getter, mClass);\n        getMethod.getModifierList().addAnnotation(\"android.databinding.Bindable\");\n        mClass.add(getMethod);\n\n        String setter = \"public void set\" + getFirstUpCaseName(field.getName()) +\n                \"(\" + field.getType().getPresentableText() + \" \" +\n                field.getName() + \"){\\n \" +\n                \"        this.\" + field.getName() + \" = \" + field.getName() + \";\\n\" +\n                \"        notifyChange( BR.\" + field.getName() + \");\\n\" +\n                \"    }\";\n        mClass.add(mFactory.createMethodFromText(setter, mClass));\n    }\n"
+        },
+        "fix": {
+            "parent_file": "0000a9af91676cde100cdff6ca8de9bda8cb272d\\F_dir\\src\\moe\\xing\\databindingformatter\\WriterUtil.java",
+            "start_line": 44,
+            "end_line": 62,
+            "code": "    private void addMethod(PsiField field) {\n\n        String getter =\n                \"public \" + field.getType().getPresentableText() + \" get\" + getFirstUpCaseName(field.getName()) +\n                        \"(){ \\n\" +\n                        \"return \" + field.getName() + \"; \\n\" +\n                        \"}\";\n        PsiMethod getMethod = mFactory.createMethodFromText(getter, mClass);\n        getMethod.getModifierList().addAnnotation(\"android.databinding.Bindable\");\n        mClass.add(getMethod);\n\n        String setter = \"public void set\" + getFirstUpCaseName(field.getName()) +\n                \"(\" + field.getType().getPresentableText() + \" \" +\n                field.getName() + \"){\\n \" +\n                \"        this.\" + field.getName() + \" = \" + field.getName() + \";\\n\" +\n                \"        notifyPropertyChanged( BR.\" + field.getName() + \");\\n\" +\n                \"    }\";\n        mClass.add(mFactory.createMethodFromText(setter, mClass));\n    }\n"
+        }
+    },
+    "bugfix_info": {
+        "bug_nums": 1,
+        "edit_types": "replace",
+        "bugfix_contents": [
+            {
+                "type": "replace",
+                "src_pos": "[15:16]",
+                "tgt_pos": "[15:16]",
+                "src_content": [
+                    "                \"        notifyChange( BR.\" + field.getName() + \");\\n\" +\n"
+                ],
+                "tgt_content": [
+                    "                \"        notifyPropertyChanged( BR.\" + field.getName() + \");\\n\" +\n"
+                ]
+            }
+        ]
+    }
+}
