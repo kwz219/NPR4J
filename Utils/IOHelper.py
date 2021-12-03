@@ -1,7 +1,7 @@
 #-*- coding : utf-8-*-
 import javalang
 import json
-
+import codecs
 "write list to file"
 def writeL2F(contents:list,filepath):
     with open(filepath,'w',encoding='utf8',errors='surrogatepass')as f:
@@ -27,4 +27,10 @@ def readF2L(filepath):
             lines.append(line.strip())
         f.close()
     return lines
+
+"directly write"
+def write2F(content:str,filepath):
+    f=codecs.open(filepath,'w',encoding='utf8')
+    f.write(content)
+    f.close()
 

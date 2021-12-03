@@ -8,9 +8,9 @@ code abstract at 3 levels:
     buggy class: keep init statement and description of other methods
 """
 def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo):
-    #args=["../lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
-    #out,err=jarWrapper(args)
-    #err=str(err)
+    args=["../lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
+    out,err=jarWrapper(args)
+    err=str(err)
     try:
         class_content=open(outputcode_f,'r',encoding='unicode_escape').read()
         code,hitflag = add_buggy_method(class_content,buginfo)

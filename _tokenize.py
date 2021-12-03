@@ -1,4 +1,3 @@
-from Tokenize import *
 from Utils.IOHelper import readF2L,writeL2F
 def retokenize(src_f,tgt_f,tokenizetype):
     if tokenizetype=="javalang":

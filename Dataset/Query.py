@@ -1,6 +1,8 @@
+from bson import ObjectId
+
 from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL,COMMIT_COL,Defects4j_repos,Bugs_dot_jar_repos,Bears_repos,SEP
-from Utils.IOHelper import writeD2J,writeL2F
+from Utils.IOHelper import writeD2J, writeL2F, write2F,readF2L
 import re
 """
 get all information of a buggy-fix method
@@ -122,6 +124,40 @@ def test_get_Minfo_all():
     sigs=[r"0000a9af91676cde100cdff6ca8de9bda8cb272d\P_dir\src\moe\xing\databindingformatter\WriterUtil.java@private void addMethod(PsiField field)"]
     final_dict=get_Minfo_all(sigs)
     writeD2J(final_dict,"test.json")
+def get_buginfos(idlist:list):
+    mongoClient=MongoHelper()
+    bugcol=mongoClient.get_col(BUG_COL)
+    bugs=[]
+    for id in idlist:
+        bug=bugcol.find_one({'_id':ObjectId(id)})
+        bugs.append(bug)
+    return bugs
 
-get_commits_special()
+
+
+
+def test_get_buginfos():
+    idlist=readF2L("D:\DDPR\Dataset\\trn_ids.txt")
+    bugs=get_buginfos(idlist)
+    target_dir="E:\APR_data\data\\raw\\trn\\"
+    correct_ids=[]
+    error_ids=[]
+    ind=1
+    for bug in bugs:
+        buggy_code=bug['buggy_code']
+        fix_code=bug['fix_code']
+        try:
+            write2F(buggy_code,target_dir+str(bug['_id'])+"_buggy.txt")
+            write2F(fix_code, target_dir+str(bug['_id']) + "_fix.txt")
+            correct_ids.append(str(bug['_id']))
+        except:
+            error_ids.append(str(bug['_id']))
+        print(ind)
+        ind+=1
+    writeL2F(correct_ids,target_dir+"write_correct.txt")
+    writeL2F(error_ids, target_dir + "write_error.txt")
+
+
+
+#test_get_buginfos()
 

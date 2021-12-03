@@ -1,3 +1,4 @@
+import codecs
 import os
 from collections import Counter
 from subprocess import Popen, PIPE
@@ -15,14 +16,21 @@ def genIdioms(corpus_dir,top_n,targerfile,tokenize="javalang",byFrequency=True):
     idioms_counter=Counter()
     if byFrequency:
         if tokenize=="javalang":
+            ind=1
             for file in files:
-                codelines=''.join(open(corpus_dir+"\\"+file,'r',encoding='utf8').readlines())
-                def isIdentifier(tok):
-                    return isinstance(tok,javalang.tokenizer.Identifier)
-                #using javalang to tokenize java code, and only keep token with Identifier type
-                toked_code=filter(isIdentifier,list(javalang.tokenizer.tokenize(codelines)))
-                tmp=Counter([tok.value for tok in toked_code])
-                idioms_counter+=tmp
+                try:
+                    def isIdentifier(tok):
+                        return isinstance(tok, javalang.tokenizer.Identifier)
+                    codelines=''.join(codecs.open(corpus_dir+"\\"+file,'r',encoding='utf8').readlines())
+                    # using javalang to tokenize java code, and only keep token with Identifier type
+                    toked_code = filter(isIdentifier, list(javalang.tokenizer.tokenize(codelines)))
+                    tmp = Counter([tok.value for tok in toked_code])
+                    idioms_counter += tmp
+                    ind+=1
+                except:
+                    ind+=1
+                    continue
+                print(ind)
     idioms=[idiom[0] for idiom in idioms_counter.most_common(top_n)]
     writeL2F(idioms,targerfile)
 
@@ -50,8 +58,8 @@ def remove_comments(code:str):
 
 
 def test_genIdiom():
-    corpus_dir="../Example/origin"
-    top_n=10
-    targetfile="../CodeAbstract/CA_Resource/idioms_eg.txt"
+    corpus_dir="E:\APR_data\data\\raw\\trn"
+    top_n=20000
+    targetfile="E:\APR_data\data\Tufano\Idioms_10w.txt"
     print(genIdioms(corpus_dir,top_n,targetfile))
 
