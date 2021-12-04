@@ -103,8 +103,9 @@ def train(opt):
 
     if opt.clearML==True:
         from clearml import Task
-        taskname=str(opt.config).split('/')[-1]
+        taskname=str(opt.config).split('/')[-1].replace(".yaml","")
         task=Task.init(project_name="train",task_name=taskname)
+        task.connect_configuration(name="train parameters",configuration=opt.config)
 
     set_random_seed(opt.seed, False)
 

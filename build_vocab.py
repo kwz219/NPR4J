@@ -1,7 +1,7 @@
 import os
 import argparse
 def build_vocab_ONMT(config_file,clearML):
-    cmd="python "+"D:\DDPR\OpenNMT-py-master\\build_vocab.py "+"-config "+config_file+" -n_sample -1" +" -clearML "+str(clearML)
+    cmd="python OpenNMT-py-master/build_vocab.py"+" -config "+config_file+" -n_sample -1" +" -clearML "+str(clearML)
     os.system(cmd)
 
 def main():
@@ -9,7 +9,7 @@ def main():
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearML",help="record experiment by clearML",default=False)
-    parser.add_argument("-framework", help="", required=True,choices=["onmt","fairseq","None"])
+    parser.add_argument("-framework", help="", required=True,choices=["onmt","fairseq","None"],default="onmt")
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()

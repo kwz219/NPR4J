@@ -155,7 +155,7 @@ def write_FilteredDataset(inputdir,outputdir,trn_metas_f,val_metas_f,test_metas_
                     fix_toked=javalang.tokenizer.tokenize(fix_content)
                     bug_toked = [tok.value for tok in bug_toked]
                     fix_toked = [tok.value for tok in fix_toked]
-                    if len(bug_toked)<=max_length and len(fix_toked)<=max_length:
+                    if len(bug_toked)<=max_length and len(fix_toked)<=max_length and bug_toked!=fix_toked:
                         buggy_codes.append(' '.join(bug_toked))
                         fix_codes.append(' '.join(fix_toked))
                         success_ids.append(bugid)
@@ -184,10 +184,10 @@ def write_FilteredDataset(inputdir,outputdir,trn_metas_f,val_metas_f,test_metas_
     writeL2F(trn_sids, outputdir + "/trn.sids")
     writeL2F(trn_fids, outputdir + "/trn.fids")
 
-write_FilteredDatasetOther("test_d4j","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j\meta_info.txt",1000)
-write_FilteredDatasetOther("test_bears","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears\meta_info.txt",1000)
-write_FilteredDatasetOther("test_bdjar","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar\meta_info.txt",1000)
+#write_FilteredDatasetOther("test_d4j","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j\meta_info.txt",1000)
+#write_FilteredDatasetOther("test_bears","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears\meta_info.txt",1000)
+#write_FilteredDatasetOther("test_bdjar","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar\meta_info.txt",1000)
 
 #write_Rawdatasets("./freq50_611/trn_ids.txt","./freq50_611/val_ids.txt","./freq50_611/test_ids.txt")
 #write_RawdatasetsOther("D:\DDPR\Dataset\OR\OR_d4j.txt","D:\DDPR\Dataset\OR\OR_bears.txt","D:\DDPR\Dataset\OR\OR_bdjar.txt")
-#write_FilteredDataset("D:\DDPR_DATA\OneLine_Replacement\Raw","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test\\meta_info.txt")
+write_FilteredDataset("D:\DDPR_DATA\OneLine_Replacement\Raw","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test\\meta_info.txt")

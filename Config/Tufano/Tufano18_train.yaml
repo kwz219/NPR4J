@@ -24,7 +24,7 @@ data:
         path_tgt: cnndm/val.txt.tgt.tagged
         transforms: []
 
-src_vocab_size: 1000 #SequenceR original vocab size
+src_vocab_size: 1000
 tgt_vocab_size: 1000
 
 src_vocab: ../Example/SequenceR.src.vocab

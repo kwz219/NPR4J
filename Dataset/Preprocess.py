@@ -43,7 +43,7 @@ def preprocess(ids:list,method,input_dir,output_dir):
         build(output_dir+"val.buggy",output_dir+"val.fix",output_dir+"val.fids",output_dir+"val.sids",ids)
         #build(output_dir+"buggy.val.txt",output_dir+"fix.val.txt",output_dir+"error_ids.val.txt",output_dir+"correct_ids.val.txt",val_ids)
 
-def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name):
+def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_length=1000):
     ids=readF2L(ids_f)
     buggy_codes = []
     fix_codes = []
@@ -59,17 +59,23 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name):
         if os.path.exists(out_a) and os.path.exists(out_b):
             print("already exists")
             try:
-                buggy_codes.append(codecs.open(out_a,'r',encoding='utf8').read())
-                fix_codes.append(codecs.open(out_b,'r',encoding='utf8').read())
-                success_ids.append(id)
+                buggy_code=codecs.open(out_a,'r',encoding='utf8').read()
+                fix_code=codecs.open(out_b,'r',encoding='utf8').read()
+                if buggy_code!=fix_code and 1<=len(buggy_code.split())<=max_length :
+                    buggy_codes.append(buggy_code)
+                    fix_codes.append(fix_code)
+                    success_ids.append(id)
             except:
                 fail_ids.append(id)
         elif os.path.exists(out_a2) and os.path.exists(out_b2):
             print("already exists")
             try:
-                buggy_codes.append(codecs.open(out_a,'r',encoding='utf8').read())
-                fix_codes.append(codecs.open(out_b,'r',encoding='utf8').read())
-                success_ids.append(id)
+                buggy_code=codecs.open(out_a,'r',encoding='utf8').read()
+                fix_code=codecs.open(out_b,'r',encoding='utf8').read()
+                if buggy_code!=fix_code and 1<=len(buggy_code.split())<=max_length:
+                    buggy_codes.append(buggy_code)
+                    fix_codes.append(fix_code)
+                    success_ids.append(id)
             except:
                 fail_ids.append(id)
         else:
@@ -97,9 +103,12 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name):
             run_src2abs("method",buggy_f,fix_f,out_a,out_b,idom_path)
             if os.path.exists(out_a) and os.path.exists(out_b):
                 try:
-                    buggy_codes.append(codecs.open(out_a, 'r', encoding='utf8').read())
-                    fix_codes.append(codecs.open(out_b, 'r', encoding='utf8').read())
-                    success_ids.append(id)
+                    buggy_code = codecs.open(out_a, 'r', encoding='utf8').read()
+                    fix_code = codecs.open(out_b, 'r', encoding='utf8').read()
+                    if buggy_code != fix_code and 1<=len(buggy_code.split()) <= max_length:
+                        buggy_codes.append(buggy_code)
+                        fix_codes.append(fix_code)
+                        success_ids.append(id)
                 except:
                     fail_ids.append(id)
         print(ind)

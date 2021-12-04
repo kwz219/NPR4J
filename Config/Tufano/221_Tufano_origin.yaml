@@ -1,0 +1,59 @@
+## Where the vocab(s) will be written
+
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 1010
+tgt_seq_length: 110
+src_seq_length_trunc: 1010
+tgt_seq_length_trunc: 110
+
+# common vocabulary for source and target
+share_vocab: True
+dynamic_dict: True
+# Corpus opts:
+data:
+    trn:
+        path_src: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/trn.buggy
+        path_tgt: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/trn.fix
+        transforms: []
+        weight: 1
+    valid:
+        path_src: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/val.buggy
+        path_tgt: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/val.fix
+        transforms: []
+
+src_vocab_size: 40000 #SequenceR original vocab size
+tgt_vocab_size: 40000
+src_vocab: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
+tgt_vocab: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
+
+
+#model params
+global_attention: general
+word_vec_size: 256
+rnn_size: 256
+bridge: true
+layers: 2
+encoder_type: brnn
+
+#training params
+train_steps: 20000
+save_checkpoint_steps: 1000
+max_grad_norm: 2
+gpu_ranks: 0
+world_size: 1
+early_stopping: 5
+early_stopping_criteria: accuracy
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 32
+optim: adagrad
+learning_rate: 0.1
+adagrad_accumulator_init: 0.1
+seed: 912
+
+#model save and log
+log_file: /home/zhongwenkang/DDPR_DATA/log/M1000_Tufano/221_to.log
+save_model: /home/zhongwenkang/DDPR_DATA/model/M1000_Tufano/221_to
