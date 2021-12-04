@@ -124,9 +124,12 @@ def test_get_Minfo_all():
     sigs=[r"0000a9af91676cde100cdff6ca8de9bda8cb272d\P_dir\src\moe\xing\databindingformatter\WriterUtil.java@private void addMethod(PsiField field)"]
     final_dict=get_Minfo_all(sigs)
     writeD2J(final_dict,"test.json")
-def get_buginfos(idlist:list):
+def get_buginfos(idlist:list,bugcolname="default"):
     mongoClient=MongoHelper()
-    bugcol=mongoClient.get_col(BUG_COL)
+    if bugcolname=="default":
+        bugcol=mongoClient.get_col(BUG_COL)
+    else:
+        bugcol=mongoClient.get_col(bugcolname)
     bugs=[]
     for id in idlist:
         bug=bugcol.find_one({'_id':ObjectId(id)})

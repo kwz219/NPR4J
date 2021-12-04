@@ -101,6 +101,11 @@ def train(opt):
     ArgumentParser.update_model_opts(opt)
     ArgumentParser.validate_model_opts(opt)
 
+    if opt.clearML==True:
+        from clearml import Task
+        taskname=str(opt.config).split('/')[-1]
+        task=Task.init(project_name="train",task_name=taskname)
+
     set_random_seed(opt.seed, False)
 
     checkpoint, fields, transforms_cls = _init_train(opt)

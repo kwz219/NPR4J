@@ -1,3 +1,6 @@
+import codecs
+import os.path
+
 from Utils.CA_Utils import jarWrapper
 
 """
@@ -9,16 +12,37 @@ code abstract at 3 levels:
 """
 def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo):
     args=["../lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
-    out,err=jarWrapper(args)
-    err=str(err)
+    if not os.path.exists(outputcode_f):
+        out,err=jarWrapper(args)
     try:
-        class_content=open(outputcode_f,'r',encoding='unicode_escape').read()
+        class_content=codecs.open(outputcode_f,'r',encoding='unicode_escape').read()
         code,hitflag = add_buggy_method(class_content,buginfo)
     except:
         code=''
         hitflag=0
     return code,hitflag
-
+def run_SequenceR_abs_p2(inputcode_f,outputcode_f,buginfo):
+    args=["../lib-jar/abstraction-p2.jar",inputcode_f,outputcode_f]
+    out,err=jarWrapper(args)
+    err=str(err)
+    try:
+        class_content=codecs.open(outputcode_f,'r',encoding='unicode_escape').read()
+        code,hitflag = add_buggy_method(class_content,buginfo)
+    except:
+        code=''
+        hitflag=0
+    return code,hitflag
+def run_SequenceR_abs_p3(inputcode_f,outputcode_f,buginfo):
+    args=["../lib-jar/abstraction-p3.jar",inputcode_f,outputcode_f]
+    if not os.path.exists(outputcode_f):
+        out,err=jarWrapper(args)
+    try:
+        class_content=codecs.open(outputcode_f,'r',encoding='unicode_escape').read()
+        code,hitflag = add_buggy_method(class_content,buginfo)
+    except:
+        code=''
+        hitflag=0
+    return code,hitflag
 """
 add <START_BUG> before buggyline and <END_BUG> after buggyline
 remove comments of code 

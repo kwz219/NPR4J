@@ -39,4 +39,4 @@ def run_src2abs_all(id_file,src_dir,tgt_dir,idiom_path):
     writeL2F(correct_ids,tgt_dir+"\\abs_correct.txt")
     writeL2F(error_ids, tgt_dir + "\\abs_error.txt")
 
-run_src2abs_all(id_file="D:\DDPR\Dataset\\val_ids.txt",src_dir=r"E:\APR_data\data\raw\val",tgt_dir=r"E:\APR_data\data\Tufano\val",idiom_path=r"E:\APR_data\data\Tufano\Idioms_2w.txt")
+#run_src2abs_all(id_file="D:\DDPR\Dataset\\val_ids.txt",src_dir=r"E:\APR_data\data\raw\val",tgt_dir=r"E:\APR_data\data\Tufano\val",idiom_path=r"E:\APR_data\data\Tufano\Idioms_2w.txt")

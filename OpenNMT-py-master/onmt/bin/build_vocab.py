@@ -6,7 +6,7 @@ from onmt.utils.parse import ArgumentParser
 from onmt.opts import dynamic_prepare_opts
 from onmt.inputters.corpus import build_vocab
 from onmt.transforms import make_transforms, get_transforms_cls
-
+from clearml import Task
 
 def build_vocab_main(opts):
     """Apply transforms to samples of specified data and build vocab from it.
@@ -20,10 +20,15 @@ def build_vocab_main(opts):
     ```
     """
 
+
     ArgumentParser.validate_prepare_opts(opts, build_vocab_only=True)
     assert opts.n_sample == -1 or opts.n_sample > 1, \
         f"Illegal argument n_sample={opts.n_sample}."
-
+    if opts.clearML==True:
+        print("report to clearML")
+        task = Task.init(project_name='great project', task_name=opts.config)
+    else:
+        print("use clearML ",opts.clearML)
     logger = init_logger()
     set_random_seed(opts.seed, False)
     transforms_cls = get_transforms_cls(opts._all_transform)
@@ -62,6 +67,7 @@ def build_vocab_main(opts):
 def _get_parser():
     parser = ArgumentParser(description='build_vocab.py')
     dynamic_prepare_opts(parser, build_vocab_only=True)
+
     return parser
 
 

@@ -65,6 +65,12 @@ def _add_reproducibility_opts(parser):
               help="Set random seed used for better "
                    "reproducibility between experiments.")
 
+#added
+def _add_clearML_opts(parser):
+    group=parser.add_argument_group("ClearML")
+    group.add('--clearML',default=True,help="report to clearML")
+
+
 
 def _add_dynamic_corpus_opts(parser, build_vocab_only=False):
     """Options related to training corpus, type: a list of dictionary."""
@@ -200,7 +206,7 @@ def dynamic_prepare_opts(parser, build_vocab_only=False):
     _add_dynamic_corpus_opts(parser, build_vocab_only=build_vocab_only)
     _add_dynamic_fields_opts(parser, build_vocab_only=build_vocab_only)
     _add_dynamic_transform_opts(parser)
-
+    _add_clearML_opts(parser)
     if build_vocab_only:
         _add_reproducibility_opts(parser)
         # as for False, this will be added in _add_train_general_opts
@@ -644,6 +650,7 @@ def train_opts(parser):
     model_opts(parser)
     _add_train_general_opts(parser)
     _add_train_dynamic_data(parser)
+    #_add_clearML_opts(parser)
 
 
 def _add_decoding_opts(parser):
