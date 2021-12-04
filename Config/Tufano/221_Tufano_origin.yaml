@@ -39,8 +39,8 @@ layers: 2
 encoder_type: brnn
 
 #training params
-train_steps: 20000
-save_checkpoint_steps: 1000
+train_steps: 100000
+save_checkpoint_steps: 5000
 max_grad_norm: 2
 gpu_ranks: 0
 world_size: 1

@@ -1,7 +1,7 @@
 import os
 import argparse
 def train_ONMT(config_file,clearML):
-    cmd="python "+"D:\DDPR\OpenNMT-py-master\\train.py "+"-config "+config_file +" -clearML "+str(clearML)
+    cmd="python DDPR\OpenNMT-py-master\\train.py "+"-config "+config_file +" -clearML "+str(clearML)
     os.system(cmd)
 
 def main():
