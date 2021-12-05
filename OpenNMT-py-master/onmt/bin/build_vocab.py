@@ -26,7 +26,8 @@ def build_vocab_main(opts):
         f"Illegal argument n_sample={opts.n_sample}."
     if opts.clearML==True:
         print("report to clearML")
-        task = Task.init(project_name='great project', task_name=opts.config)
+        task_name=opts.config.split(".")[-1].replace(".yaml","")
+        task = Task.init(project_name='build_vocab', task_name=task_name)
     else:
         print("use clearML ",opts.clearML)
     logger = init_logger()

@@ -1,5 +1,5 @@
 ## Where the vocab(s) will be written
-save_data: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano
+save_data: /root/zwk/DDPR_DATA/data/M1000_Tufano
 # Prevent overwriting existing files in the folder
 overwrite: True
 
@@ -15,33 +15,32 @@ dynamic_dict: True
 # Corpus opts:
 data:
     trn:
-        path_src: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/trn.buggy
-        path_tgt: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/trn.fix
+        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano/trn.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano/trn.fix
         transforms: []
         weight: 1
     valid:
-        path_src: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/val.buggy
-        path_tgt: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/val.fix
+        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano/val.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano/val.fix
         transforms: []
 
 src_vocab_size: 40000 #SequenceR original vocab size
 tgt_vocab_size: 40000
-src_vocab: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
-tgt_vocab: /home/zhongwenkang/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
+src_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
+tgt_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
 
 
 #model params
 global_attention: general
-word_vec_size: 256
-rnn_size: 256
+word_vec_size: 512
+rnn_size: 512
 bridge: true
 layers: 2
 encoder_type: brnn
 
 #training params
-train_steps: 500000
+train_steps: 100000
 save_checkpoint_steps: 5000
-valid_steps: 5000
 max_grad_norm: 2
 gpu_ranks: 0
 world_size: 1
@@ -56,7 +55,5 @@ adagrad_accumulator_init: 0.1
 seed: 912
 
 #model save and log
-log_file: /home/zhongwenkang/DDPR_DATA/log/M1000_Tufano/221_to.log
-save_model: /home/zhongwenkang/DDPR_DATA/model/M1000_Tufano/221_to
-tensorboard: True
-tensorboard_log_dir: /home/zhongwenkang/DDPR_DATA/log/M1000_Tufano/221_to.tensorlog
+log_file: /root/zwk/DDPR_DATA/data/M1000_Tufano/221_to.log
+save_model: /root/zwk/DDPR_DATA/data/M1000_Tufano/221_to

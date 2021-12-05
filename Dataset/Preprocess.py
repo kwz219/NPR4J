@@ -53,26 +53,27 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
     for id in ids:
         out_a = input_dir + "\\" + id + "_buggy.txt.abs"
         out_b = input_dir + "\\" + id + "_fix.txt.abs"
-        out_a2 = input_dir.replace('trn','val') + "\\" + id + "_buggy.txt.abs"
-        out_b2 = input_dir.replace('trn','val') + "\\" + id + "_fix.txt.abs"
+        out_a2 = input_dir.replace('trn','test') + "\\" + id + "_buggy.txt.abs"
+        out_b2 = input_dir.replace('trn','test') + "\\" + id + "_fix.txt.abs"
         #print(out_a)
         if os.path.exists(out_a) and os.path.exists(out_b):
-            print("already exists")
+            print("already exists 1")
             try:
                 buggy_code=codecs.open(out_a,'r',encoding='utf8').read()
                 fix_code=codecs.open(out_b,'r',encoding='utf8').read()
                 if buggy_code!=fix_code and 1<=len(buggy_code.split())<=max_length :
+                    print('added')
                     buggy_codes.append(buggy_code)
                     fix_codes.append(fix_code)
                     success_ids.append(id)
             except:
                 fail_ids.append(id)
         elif os.path.exists(out_a2) and os.path.exists(out_b2):
-            print("already exists")
+            print("already exists 2")
             try:
-                buggy_code=codecs.open(out_a,'r',encoding='utf8').read()
-                fix_code=codecs.open(out_b,'r',encoding='utf8').read()
-                if buggy_code!=fix_code and 1<=len(buggy_code.split())<=max_length:
+                buggy_code=codecs.open(out_a2,'r',encoding='utf8').read()
+                fix_code=codecs.open(out_b2,'r',encoding='utf8').read()
+                if buggy_code!=fix_code and len(buggy_code.split())<=max_length:
                     buggy_codes.append(buggy_code)
                     fix_codes.append(fix_code)
                     success_ids.append(id)
@@ -100,7 +101,9 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
                buggy_f.close()
                fix_f.close()
             """
-            run_src2abs("method",buggy_f,fix_f,out_a,out_b,idom_path)
+            tmp_a=out_a.replace("trn","tmp")
+            tmp_b=out_b.replace("trn","tmp")
+            run_src2abs("method",buggy_f,fix_f,tmp_a,tmp_b,idom_path)
             if os.path.exists(out_a) and os.path.exists(out_b):
                 try:
                     buggy_code = codecs.open(out_a, 'r', encoding='utf8').read()
@@ -113,6 +116,25 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
                     fail_ids.append(id)
         print(ind)
         ind+=1
+
+    def shuffle(list1,list2,list3):
+        assert  len(list1)==len(list2) and len(list2)==len(list3)
+        all=[]
+        for line1,line2,line3 in zip(list1,list2,list3):
+            if len(line1.strip())>1 and len(line2.strip())>1:
+                all.append(line1+"<SEP>"+line2+"<SEP>"+line3)
+        import random
+        random.shuffle(all)
+        new_l1=[]
+        new_l2=[]
+        new_l3=[]
+        for line in all:
+            line1,line2,line3=line.split('<SEP>')
+            new_l1.append(line1)
+            new_l2.append(line2)
+            new_l3.append(line3)
+        return new_l1,new_l2,new_l3
+    buggy_codes,fix_codes,success_ids=shuffle(buggy_codes,fix_codes,success_ids)
     writeL2F(buggy_codes,output_dir+"/"+name+".buggy")
     writeL2F(fix_codes, output_dir + "/" + name + ".fix")
     writeL2F(success_ids, output_dir + "/" + name + ".sids")
@@ -127,4 +149,4 @@ def test_preprocess():
     val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\val_ids.txt")
     preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
-preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","test")
+preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
