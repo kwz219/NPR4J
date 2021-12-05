@@ -39,7 +39,8 @@ layers: 2
 encoder_type: brnn
 
 #training params
-train_steps: 100000
+train_steps: 500000
+valid_steps: 5000
 save_checkpoint_steps: 5000
 max_grad_norm: 2
 gpu_ranks: 0
@@ -57,3 +58,5 @@ seed: 912
 #model save and log
 log_file: /root/zwk/DDPR_DATA/data/M1000_Tufano/221_to.log
 save_model: /root/zwk/DDPR_DATA/data/M1000_Tufano/221_to
+tensorboard: True
+tensorboard_log_dir: /root/zwk/DDPR_DATA/data/M1000_Tufano/221_to.tensorlog

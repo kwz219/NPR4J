@@ -128,10 +128,11 @@ class Statistics(object):
     def log_tensorboard(self, prefix, writer, learning_rate, patience, step):
         """ display statistics to tensorboard """
         t = self.elapsed_time()
-        writer.add_scalar(prefix + "/xent", self.xent(), step)
+        #writer.add_scalar(prefix + "/xent", self.xent(), step)
         writer.add_scalar(prefix + "/ppl", self.ppl(), step)
         writer.add_scalar(prefix + "/accuracy", self.accuracy(), step)
-        writer.add_scalar(prefix + "/tgtper", self.n_words / t, step)
-        writer.add_scalar(prefix + "/lr", learning_rate, step)
+        writer.add_scalar(prefix + "/loss", (self.loss / self.n_words), step)
+        #writer.add_scalar(prefix + "/tgtper", self.n_words / t, step)
+        #writer.add_scalar(prefix + "/lr", learning_rate, step)
         if patience is not None:
             writer.add_scalar(prefix + "/patience", patience, step)
