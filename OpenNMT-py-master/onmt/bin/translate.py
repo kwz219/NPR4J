@@ -7,7 +7,7 @@ from onmt.translate.translator import build_translator
 import onmt.opts as opts
 from onmt.utils.parse import ArgumentParser
 from collections import defaultdict
-
+from clearml import Task
 
 def translate(opt):
     ArgumentParser.validate_translate_opts(opt)
@@ -49,8 +49,9 @@ def _get_parser():
 
 def main():
     parser = _get_parser()
-
     opt = parser.parse_args()
+    model_nbest=str(opt.model).split("/")[-1]+"_nbest "+opt.n_best
+    translation_task = Task.init(project_name="translate", task_name=model_nbest)
     translate(opt)
 
 

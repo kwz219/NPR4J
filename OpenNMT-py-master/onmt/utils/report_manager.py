@@ -16,6 +16,7 @@ def build_report_manager(opt, gpu_rank):
                 datetime.now().strftime("/%b-%d_%H-%M-%S")
             )
         writer = SummaryWriter(opt.tensorboard_log_dir_dated, comment="Unmt")
+
     else:
         writer = None
 
@@ -102,7 +103,7 @@ class ReportMgrBase(object):
 
 
 class ReportMgr(ReportMgrBase):
-    def __init__(self, report_every, start_time=-1., tensorboard_writer=None):
+    def __init__(self, report_every, start_time=-1.,tensorboard_writer=None):
         """
         A report manager that writes statistics on standard output as well as
         (optionally) TensorBoard
@@ -115,9 +116,12 @@ class ReportMgr(ReportMgrBase):
         super(ReportMgr, self).__init__(report_every, start_time)
         self.tensorboard_writer = tensorboard_writer
 
+
+
     def maybe_log_tensorboard(self, stats, prefix, learning_rate,
                               patience, step):
         if self.tensorboard_writer is not None:
+
             stats.log_tensorboard(
                 prefix, self.tensorboard_writer, learning_rate, patience, step)
 
