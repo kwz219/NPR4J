@@ -1,0 +1,1226 @@
+JvmtiExport can_access_local_variables 0
+JvmtiExport can_hotswap_or_post_breakpoint 0
+JvmtiExport can_post_on_exceptions 0
+# 143 ciObject found
+instanceKlass java/util/Collections$UnmodifiableMap
+instanceKlass org/antlr/v4/runtime/misc/Interval
+instanceKlass org/antlr/v4/runtime/misc/IntervalSet
+instanceKlass org/antlr/v4/runtime/misc/Pair
+instanceKlass org/antlr/v4/runtime/misc/IntSet
+instanceKlass org/antlr/v4/runtime/atn/ATN
+instanceKlass org/antlr/v4/runtime/atn/ATNDeserializationOptions
+instanceKlass java/util/UUID
+instanceKlass org/antlr/v4/runtime/atn/LexerAction
+instanceKlass org/antlr/v4/runtime/atn/ATNState
+instanceKlass org/antlr/v4/runtime/atn/Transition
+instanceKlass org/antlr/v4/runtime/atn/ATNDeserializer
+instanceKlass org/antlr/v4/runtime/VocabularyImpl
+instanceKlass org/antlr/v4/runtime/atn/PredictionContext
+instanceKlass org/antlr/v4/runtime/atn/PredictionContextCache
+instanceKlass org/antlr/v4/runtime/RuntimeMetaData
+instanceKlass org/antlr/v4/runtime/Vocabulary
+instanceKlass org/antlr/v4/runtime/atn/ATNSimulator
+instanceKlass org/antlr/v4/runtime/ANTLRErrorListener
+instanceKlass org/antlr/v4/runtime/Recognizer
+instanceKlass org/antlr/v4/runtime/TokenSource
+instanceKlass org/antlr/v4/runtime/CharStream
+instanceKlass org/antlr/v4/runtime/IntStream
+instanceKlass edu/wm/cs/src2abs/lexer/JLexerTokenizer
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$143
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/utils/PositionUtils$$Lambda$142
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/utils/PositionUtils
+instanceKlass sun/text/normalizer/NormalizerBase$1
+instanceKlass sun/text/normalizer/NormalizerBase$QuickCheckResult
+instanceKlass sun/text/normalizer/NormalizerBase$Mode
+instanceKlass sun/text/normalizer/NormalizerBase
+instanceKlass java/text/Normalizer
+instanceKlass com/github/javaparser/printer/PrettyPrintVisitor$$Lambda$141
+instanceKlass com/github/javaparser/printer/SourcePrinter
+instanceKlass java/util/ArrayList$SubList$1
+instanceKlass java/util/stream/Sink$ChainedReference
+instanceKlass java/util/stream/Collectors$$Lambda$140
+instanceKlass java/util/stream/Collectors$$Lambda$139
+instanceKlass java/util/stream/Collectors$$Lambda$138
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/util/stream/Collectors$$Lambda$137
+instanceKlass java/util/StringJoiner
+instanceKlass com/github/javaparser/ast/type/ClassOrInterfaceType$$Lambda$136
+instanceKlass com/github/javaparser/ast/type/ClassOrInterfaceType$$Lambda$135
+instanceKlass com/github/javaparser/ast/type/ClassOrInterfaceType$$Lambda$134
+instanceKlass java/util/stream/Collectors$$Lambda$133
+instanceKlass java/util/stream/Collectors$$Lambda$132
+instanceKlass java/util/stream/Collectors$$Lambda$131
+instanceKlass java/util/ArrayList$ArrayListSpliterator
+instanceKlass com/github/javaparser/ParseResult
+instanceKlass java/util/TimSort
+instanceKlass java/util/Arrays$LegacyMergeSort
+instanceKlass com/github/javaparser/Problem$$Lambda$130
+instanceKlass com/github/javaparser/Problem
+instanceKlass com/github/javaparser/ast/validator/chunks/ModifierValidator$$Lambda$129
+instanceKlass java/util/RegularEnumSet$EnumSetIterator
+instanceKlass com/github/javaparser/ast/body/TypeDeclaration$$Lambda$128
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass com/github/javaparser/ast/validator/Java5Validator$$Lambda$127
+instanceKlass com/github/javaparser/ast/validator/Java5Validator$$Lambda$126
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$125
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$124
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$123
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$122
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$121
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$120
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$119
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$118
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$117
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$116
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$115
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$114
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$113
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$112
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$111
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$110
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$109
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$108
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$107
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$106
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$105
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$104
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$103
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$102
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$101
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$100
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$99
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$98
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$97
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$96
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$95
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$94
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$93
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$92
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$91
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$90
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$89
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$88
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$87
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$86
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$85
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$84
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$83
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$82
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$81
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$80
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$79
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$78
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$77
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$76
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$75
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$74
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter$$Lambda$73
+instanceKlass com/github/javaparser/ast/validator/Java1_1Validator$$Lambda$72
+instanceKlass java/util/LinkedList$ListItr
+instanceKlass com/github/javaparser/printer/Printable
+instanceKlass com/github/javaparser/metamodel/PropertyMetaModel
+instanceKlass com/github/javaparser/metamodel/JavaParserMetaModel
+instanceKlass com/github/javaparser/ast/validator/SingleNodeTypeValidator$$Lambda$71
+instanceKlass com/github/javaparser/ast/Node$PreOrderIterator
+instanceKlass com/github/javaparser/ast/Node$2
+instanceKlass com/github/javaparser/ast/Node$$Lambda$70
+instanceKlass com/github/javaparser/ast/Node$$Lambda$69
+instanceKlass com/github/javaparser/ast/Node$$Lambda$68
+instanceKlass com/github/javaparser/ast/validator/Validators$$Lambda$67
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/util/TreeMap$PrivateEntryIterator
+instanceKlass com/github/javaparser/ast/observer/AstObserverAdapter
+instanceKlass com/github/javaparser/ast/visitor/CloneVisitor
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/ast/NodeList$$Lambda$66
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/ast/Node$$Lambda$65
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/resolution/types/ResolvedType
+instanceKlass com/github/javaparser/utils/Pair
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass com/github/javaparser/ast/Node$$Lambda$64
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/util/Optional
+instanceKlass com/github/javaparser/TokenRange
+instanceKlass com/github/javaparser/RangedList
+instanceKlass com/github/javaparser/ModifierHolder
+instanceKlass com/github/javaparser/TokenTypes
+instanceKlass com/github/javaparser/Position
+instanceKlass com/github/javaparser/Range
+instanceKlass com/github/javaparser/JavaToken
+instanceKlass com/github/javaparser/ast/NodeList
+instanceKlass com/github/javaparser/TokenBase
+instanceKlass com/github/javaparser/printer/PrettyPrinterConfiguration$$Lambda$63
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/printer/PrettyPrintVisitor
+instanceKlass com/github/javaparser/printer/PrettyPrinterConfiguration
+instanceKlass com/github/javaparser/printer/PrettyPrinter
+instanceKlass com/github/javaparser/ast/Node$$Lambda$62
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/util/NavigableSet
+instanceKlass java/util/SortedSet
+instanceKlass com/github/javaparser/ast/comments/CommentsCollection
+instanceKlass com/github/javaparser/GeneratedJavaParserTokenManager
+instanceKlass com/github/javaparser/SimpleCharStream
+instanceKlass com/github/javaparser/GeneratedJavaParser$JJCalls
+instanceKlass com/github/javaparser/CommentsInserter
+instanceKlass com/github/javaparser/utils/Utils$$Lambda$61
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/utils/Utils
+instanceKlass com/github/javaparser/StringProvider
+instanceKlass com/github/javaparser/Providers
+instanceKlass com/github/javaparser/ParseStart$$Lambda$60
+instanceKlass com/github/javaparser/ParseStart$$Lambda$59
+instanceKlass com/github/javaparser/ParseStart$$Lambda$58
+instanceKlass com/github/javaparser/ParseStart$$Lambda$57
+instanceKlass com/github/javaparser/ParseStart$$Lambda$56
+instanceKlass com/github/javaparser/ParseStart$$Lambda$55
+instanceKlass com/github/javaparser/ParseStart$$Lambda$54
+instanceKlass com/github/javaparser/ParseStart$$Lambda$53
+instanceKlass com/github/javaparser/ParseStart$$Lambda$52
+instanceKlass com/github/javaparser/ParseStart$$Lambda$51
+instanceKlass com/github/javaparser/ParseStart$$Lambda$50
+instanceKlass com/github/javaparser/ParseStart$$Lambda$49
+instanceKlass com/github/javaparser/ParseStart$$Lambda$48
+instanceKlass com/github/javaparser/ParseStart$$Lambda$47
+instanceKlass com/github/javaparser/ParseStart$$Lambda$46
+instanceKlass com/github/javaparser/ParseStart$$Lambda$45
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithOptionalLabel
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithCondition
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithScope
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithOptionalScope
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithTraversableScope
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithArguments
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithExpression
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithOptionalBlockStmt
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithVariables
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithThrownExceptions
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithDeclaration
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithBlockStmt
+instanceKlass com/github/javaparser/Provider
+instanceKlass com/github/javaparser/GeneratedJavaParserBase
+instanceKlass com/github/javaparser/GeneratedJavaParserConstants
+instanceKlass com/github/javaparser/ParseStart
+instanceKlass com/github/javaparser/ast/validator/Java8Validator$$Lambda$44
+instanceKlass com/github/javaparser/ast/validator/Java7Validator$$Lambda$43
+instanceKlass com/github/javaparser/ast/validator/Java7Validator$$Lambda$42
+instanceKlass com/github/javaparser/ast/validator/Java5Validator$$Lambda$41
+instanceKlass com/github/javaparser/ast/validator/Java5Validator$$Lambda$40
+instanceKlass java/util/Formattable
+instanceKlass java/util/Formatter$Conversion
+instanceKlass java/util/Formatter$Flags
+instanceKlass java/util/Formatter$FormatSpecifier
+instanceKlass java/util/Formatter$FixedString
+instanceKlass java/util/Formatter$FormatString
+instanceKlass java/util/regex/ASCII
+instanceKlass java/util/Currency$CurrencyNameGetter
+instanceKlass sun/util/locale/provider/LocaleServiceProviderPool$LocalizedObjectGetter
+instanceKlass sun/util/locale/provider/SPILocaleProviderAdapter$1
+instanceKlass sun/util/locale/provider/LocaleServiceProviderPool
+instanceKlass java/io/DataInput
+instanceKlass java/util/Currency$1
+instanceKlass java/util/Currency
+instanceKlass java/util/concurrent/atomic/AtomicMarkableReference$Pair
+instanceKlass java/util/concurrent/atomic/AtomicMarkableReference
+instanceKlass java/util/ResourceBundle$CacheKeyReference
+instanceKlass java/util/ResourceBundle$CacheKey
+instanceKlass java/util/ResourceBundle$RBClassLoader$1
+instanceKlass java/net/URLClassLoader$3$1
+instanceKlass sun/misc/CompoundEnumeration
+instanceKlass java/net/URLClassLoader$3
+instanceKlass sun/misc/URLClassPath$1
+instanceKlass java/lang/ClassLoader$2
+instanceKlass sun/misc/URLClassPath$2
+instanceKlass sun/misc/Launcher$BootClassPathHolder$1
+instanceKlass sun/misc/Launcher$BootClassPathHolder
+instanceKlass java/util/LinkedHashMap$LinkedHashIterator
+instanceKlass java/util/ServiceLoader$1
+instanceKlass java/util/ServiceLoader$LazyIterator
+instanceKlass java/util/ServiceLoader
+instanceKlass java/util/spi/ResourceBundleControlProvider
+instanceKlass java/util/ResourceBundle
+instanceKlass java/util/ResourceBundle$Control
+instanceKlass sun/util/resources/LocaleData$1
+instanceKlass sun/util/resources/LocaleData
+instanceKlass sun/util/locale/provider/LocaleResources
+instanceKlass java/util/Collections$EmptyIterator
+instanceKlass sun/util/locale/LanguageTag
+instanceKlass sun/util/locale/provider/JRELocaleProviderAdapter$1
+instanceKlass sun/util/locale/provider/LocaleDataMetaInfo
+instanceKlass sun/util/locale/provider/AvailableLanguageTags
+instanceKlass sun/util/locale/provider/LocaleProviderAdapter$1
+instanceKlass sun/util/locale/provider/ResourceBundleBasedAdapter
+instanceKlass sun/util/locale/provider/LocaleProviderAdapter
+instanceKlass java/util/spi/LocaleServiceProvider
+instanceKlass java/text/DecimalFormatSymbols
+instanceKlass java/util/Locale$1
+instanceKlass java/util/Formatter
+instanceKlass com/github/javaparser/utils/CodeGenerationUtils
+instanceKlass com/github/javaparser/ast/validator/Java1_1Validator$$Lambda$39
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$38
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$37
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$36
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$35
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithParameters
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$34
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$33
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$32
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$31
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithStatements
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$30
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$29
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$28
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$27
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithBody
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$26
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$25
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/metamodel/BaseNodeMetaModel
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithIdentifier
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithTypeArguments
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithName
+instanceKlass com/github/javaparser/ast/visitor/GenericVisitor
+instanceKlass com/github/javaparser/ast/observer/AstObserver
+instanceKlass com/github/javaparser/ast/DataKey
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$24
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$23
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$22
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$21
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$20
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$19
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$18
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithType
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$17
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$16
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$15
+instanceKlass com/github/javaparser/ast/validator/Java1_0Validator$$Lambda$14
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitorAdapter
+instanceKlass com/github/javaparser/ast/visitor/VoidVisitor
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$13
+instanceKlass com/github/javaparser/ast/validator/TreeVisitorValidator
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$12
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$11
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$10
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$9
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass com/github/javaparser/ast/validator/SimpleValidator$$Lambda$8
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$7
+instanceKlass com/github/javaparser/ast/validator/ProblemReporter
+instanceKlass com/github/javaparser/ast/validator/chunks/CommonValidators$$Lambda$6
+instanceKlass java/util/function/Predicate
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass com/github/javaparser/ast/Node
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithRange
+instanceKlass com/github/javaparser/ast/visitor/Visitable
+instanceKlass com/github/javaparser/HasParentNode
+instanceKlass com/github/javaparser/ast/observer/Observable
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithAnnotations
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithStrictfpModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithStaticModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithAccessModifiers
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithProtectedModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithPrivateModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithPublicModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithJavadoc
+instanceKlass com/github/javaparser/resolution/Resolvable
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithConstructors
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithMembers
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithSimpleName
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithFinalModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/modifiers/NodeWithAbstractModifier
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithModifiers
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithTypeParameters
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithExtends
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithImplements
+instanceKlass com/github/javaparser/ast/validator/SingleNodeTypeValidator
+instanceKlass com/github/javaparser/ast/nodeTypes/NodeWithTokenRange
+instanceKlass com/github/javaparser/ast/validator/Validators
+instanceKlass com/github/javaparser/ast/validator/Validator
+instanceKlass com/github/javaparser/ast/validator/TypedValidator
+instanceKlass com/github/javaparser/ParserConfiguration
+instanceKlass com/github/javaparser/JavaParser
+instanceKlass java/util/regex/Matcher
+instanceKlass java/util/regex/MatchResult
+instanceKlass java/util/regex/Pattern$TreeInfo
+instanceKlass java/util/regex/Pattern$Node
+instanceKlass java/util/regex/Pattern
+instanceKlass edu/wm/cs/src2abs/code/SourceCodeAnalyzer
+instanceKlass edu/wm/cs/src2abs/parser/Parser
+instanceKlass sun/nio/ch/IOStatus
+instanceKlass java/nio/DirectByteBuffer$Deallocator
+instanceKlass sun/nio/ch/Util$BufferCache
+instanceKlass sun/nio/ch/Util$2
+instanceKlass sun/nio/ch/Util
+instanceKlass sun/nio/ch/NativeThread
+instanceKlass java/nio/channels/spi/AbstractInterruptibleChannel$1
+instanceKlass sun/nio/ch/Interruptible
+instanceKlass java/util/stream/ReduceOps$Box
+instanceKlass java/util/stream/ReduceOps$AccumulatingSink
+instanceKlass java/util/stream/TerminalSink
+instanceKlass java/util/stream/Sink
+instanceKlass java/util/function/Consumer
+instanceKlass java/util/stream/ReduceOps$ReduceOp
+instanceKlass java/util/stream/TerminalOp
+instanceKlass java/util/stream/ReduceOps
+instanceKlass java/util/stream/Collectors$$Lambda$5
+instanceKlass java/util/stream/Collectors$$Lambda$4
+instanceKlass java/util/function/BinaryOperator
+instanceKlass java/util/function/BiFunction
+instanceKlass java/util/stream/Collectors$$Lambda$3
+instanceKlass java/util/function/BiConsumer
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/InnerClassLambdaMetafactory$1
+instanceKlass java/util/stream/Collectors$$Lambda$2
+instanceKlass java/util/function/Supplier
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/util/stream/Collectors$CollectorImpl
+instanceKlass java/util/stream/Collector
+instanceKlass java/util/stream/Collectors
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/nio/file/Files$$Lambda$1
+instanceKlass java/lang/invoke/InfoFromMemberName
+instanceKlass java/lang/invoke/MethodHandleInfo
+instanceKlass sun/security/util/SecurityConstants
+instanceKlass java/security/AccessController$1
+instanceKlass java/lang/invoke/AbstractValidatingLambdaMetafactory
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass sun/reflect/UnsafeFieldAccessorFactory
+instanceKlass jdk/internal/org/objectweb/asm/FieldVisitor
+instanceKlass java/lang/invoke/BoundMethodHandle$Factory$1
+instanceKlass java/lang/invoke/BoundMethodHandle$SpeciesData$1
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaFormBuffer
+instanceKlass java/lang/invoke/LambdaFormEditor
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/MethodHandleImpl$Lazy
+instanceKlass java/lang/invoke/LambdaForm$BMH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/util/SubList$1
+instanceKlass java/util/ListIterator
+instanceKlass java/util/ArrayList$Itr
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/LambdaForm$MH
+instanceKlass java/lang/invoke/InvokerBytecodeGenerator$CpPatch
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass java/lang/invoke/LambdaForm$DMH
+instanceKlass sun/invoke/empty/Empty
+instanceKlass sun/invoke/util/VerifyType
+instanceKlass java/lang/invoke/InvokerBytecodeGenerator$2
+instanceKlass jdk/internal/org/objectweb/asm/AnnotationVisitor
+instanceKlass jdk/internal/org/objectweb/asm/Frame
+instanceKlass jdk/internal/org/objectweb/asm/Label
+instanceKlass jdk/internal/org/objectweb/asm/Type
+instanceKlass jdk/internal/org/objectweb/asm/MethodVisitor
+instanceKlass jdk/internal/org/objectweb/asm/Item
+instanceKlass jdk/internal/org/objectweb/asm/ByteVector
+instanceKlass jdk/internal/org/objectweb/asm/ClassVisitor
+instanceKlass java/lang/invoke/InvokerBytecodeGenerator
+instanceKlass java/util/Collections$UnmodifiableCollection$1
+instanceKlass java/lang/invoke/DirectMethodHandle$Lazy
+instanceKlass sun/invoke/util/BytecodeDescriptor
+instanceKlass java/lang/invoke/BoundMethodHandle$Factory
+instanceKlass java/lang/invoke/BoundMethodHandle$SpeciesData
+instanceKlass java/lang/invoke/LambdaForm$NamedFunction
+instanceKlass java/lang/invoke/LambdaForm$Name
+instanceKlass sun/invoke/util/ValueConversions
+instanceKlass sun/invoke/util/VerifyAccess
+instanceKlass java/lang/Long$LongCache
+instanceKlass java/lang/Character$CharacterCache
+instanceKlass java/lang/Short$ShortCache
+instanceKlass java/lang/Byte$ByteCache
+instanceKlass sun/invoke/util/Wrapper$Format
+instanceKlass java/lang/invoke/MethodHandles
+instanceKlass java/lang/invoke/Invokers
+instanceKlass java/lang/invoke/MethodTypeForm
+instanceKlass java/lang/invoke/MethodType$ConcurrentWeakInternSet
+instanceKlass java/lang/invoke/MethodHandles$Lookup
+instanceKlass java/lang/invoke/LambdaMetafactory
+instanceKlass java/lang/Class$4
+instanceKlass java/util/EnumMap$1
+instanceKlass java/util/stream/StreamOpFlag$MaskBuilder
+instanceKlass java/util/stream/PipelineHelper
+instanceKlass java/util/stream/Stream
+instanceKlass java/util/stream/BaseStream
+instanceKlass java/util/stream/StreamSupport
+instanceKlass java/util/Spliterators$IteratorSpliterator
+instanceKlass java/util/Spliterator$OfDouble
+instanceKlass java/util/Spliterator$OfLong
+instanceKlass java/util/Spliterator$OfInt
+instanceKlass java/util/Spliterator$OfPrimitive
+instanceKlass java/util/Spliterators$EmptySpliterator
+instanceKlass java/util/Spliterator
+instanceKlass java/util/Spliterators
+instanceKlass java/io/BufferedReader$1
+instanceKlass java/nio/channels/Channels
+instanceKlass sun/nio/ch/FileDispatcherImpl$1
+instanceKlass sun/nio/ch/NativeDispatcher
+instanceKlass sun/nio/ch/NativeThreadSet
+instanceKlass java/net/Inet6Address$Inet6AddressHolder
+instanceKlass java/net/InetAddress$2
+instanceKlass sun/net/spi/nameservice/NameService
+instanceKlass java/net/Inet6AddressImpl
+instanceKlass java/net/InetAddressImpl
+instanceKlass java/net/InetAddressImplFactory
+instanceKlass java/net/InetAddress$Cache
+instanceKlass java/net/InetAddress$InetAddressHolder
+instanceKlass java/net/InetAddress$1
+instanceKlass sun/security/action/GetBooleanAction
+instanceKlass java/net/InetAddress
+instanceKlass sun/nio/ch/IOUtil$1
+instanceKlass sun/nio/ch/IOUtil
+instanceKlass java/nio/channels/spi/AbstractInterruptibleChannel
+instanceKlass java/nio/channels/InterruptibleChannel
+instanceKlass java/nio/channels/ScatteringByteChannel
+instanceKlass java/nio/channels/GatheringByteChannel
+instanceKlass java/nio/channels/SeekableByteChannel
+instanceKlass java/nio/channels/ByteChannel
+instanceKlass java/nio/channels/WritableByteChannel
+instanceKlass java/nio/channels/ReadableByteChannel
+instanceKlass java/nio/channels/Channel
+instanceKlass java/util/HashMap$HashIterator
+instanceKlass sun/nio/fs/WindowsChannelFactory$Flags
+instanceKlass sun/nio/fs/WindowsChannelFactory$1
+instanceKlass sun/nio/fs/WindowsChannelFactory
+instanceKlass sun/nio/fs/WindowsSecurityDescriptor
+instanceKlass java/nio/file/attribute/FileAttribute
+instanceKlass edu/wm/cs/src2abs/vocabulary/IdiomManager
+instanceKlass java/lang/Throwable$PrintStreamOrWriter
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$BackupResult
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$CompletionStatus
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$AclInformation
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$Account
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$DiskFreeSpace
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$VolumeInformation
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$FirstStream
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$FirstFile
+instanceKlass sun/nio/fs/WindowsNativeDispatcher$1
+instanceKlass sun/nio/fs/WindowsNativeDispatcher
+instanceKlass sun/nio/fs/NativeBuffer$Deallocator
+instanceKlass sun/nio/fs/NativeBuffer
+instanceKlass sun/nio/fs/NativeBuffers
+instanceKlass sun/nio/fs/WindowsFileAttributes
+instanceKlass java/nio/file/attribute/DosFileAttributes
+instanceKlass sun/nio/fs/AbstractBasicFileAttributeView
+instanceKlass sun/nio/fs/DynamicFileAttributeView
+instanceKlass sun/nio/fs/WindowsFileAttributeViews
+instanceKlass java/nio/file/attribute/BasicFileAttributeView
+instanceKlass java/nio/file/attribute/FileAttributeView
+instanceKlass java/nio/file/attribute/AttributeView
+instanceKlass java/nio/file/attribute/BasicFileAttributes
+instanceKlass java/nio/file/Files
+instanceKlass java/nio/file/CopyOption
+instanceKlass java/nio/file/OpenOption
+instanceKlass java/nio/file/FileSystems$DefaultFileSystemHolder$1
+instanceKlass java/nio/file/FileSystems$DefaultFileSystemHolder
+instanceKlass java/nio/file/FileSystems
+instanceKlass java/nio/file/Paths
+instanceKlass edu/wm/cs/src2abs/AbstractorManager
+instanceKlass java/lang/Void
+instanceKlass java/lang/Class$MethodArray
+instanceKlass sun/launcher/LauncherHelper$FXHelper
+instanceKlass edu/wm/cs/src2abs/main/AbstractorMain
+instanceKlass java/io/FilePermission$1
+instanceKlass sun/nio/fs/AbstractPath
+instanceKlass java/net/URI$Parser
+instanceKlass java/net/URI
+instanceKlass sun/nio/fs/Util
+instanceKlass sun/nio/fs/WindowsPathParser$Result
+instanceKlass sun/nio/fs/WindowsPathParser
+instanceKlass java/util/AbstractList$Itr
+instanceKlass java/nio/file/FileSystem
+instanceKlass java/nio/file/spi/FileSystemProvider
+instanceKlass sun/nio/fs/DefaultFileSystemProvider
+instanceKlass sun/net/www/MessageHeader
+instanceKlass java/net/URLConnection
+instanceKlass java/security/PermissionCollection
+instanceKlass sun/nio/ByteBuffered
+instanceKlass java/lang/Package
+instanceKlass sun/misc/Resource
+instanceKlass sun/misc/ExtensionDependency
+instanceKlass java/util/LinkedList$Node
+instanceKlass sun/misc/JarIndex
+instanceKlass sun/misc/FileURLMapper
+instanceKlass sun/misc/URLClassPath$JarLoader$1
+instanceKlass sun/misc/URLClassPath$Loader
+instanceKlass sun/misc/URLClassPath$3
+instanceKlass sun/net/util/URLUtil
+instanceKlass java/net/URLClassLoader$1
+instanceKlass java/util/jar/Attributes$Name
+instanceKlass java/util/jar/Attributes
+instanceKlass java/util/jar/JarVerifier$3
+instanceKlass java/security/CodeSigner
+instanceKlass java/util/jar/JarVerifier
+instanceKlass sun/misc/IOUtils
+instanceKlass java/util/zip/ZStreamRef
+instanceKlass java/util/zip/Inflater
+instanceKlass java/util/zip/ZipEntry
+instanceKlass sun/nio/ch/DirectBuffer
+instanceKlass sun/misc/PerfCounter$CoreCounters
+instanceKlass sun/misc/Perf
+instanceKlass sun/misc/Perf$GetPerfAction
+instanceKlass sun/misc/PerfCounter
+instanceKlass java/util/zip/ZipCoder
+instanceKlass java/util/Deque
+instanceKlass java/util/Queue
+instanceKlass java/nio/charset/StandardCharsets
+instanceKlass java/util/jar/JavaUtilJarAccessImpl
+instanceKlass sun/misc/JavaUtilJarAccess
+instanceKlass java/util/zip/ZipFile$1
+instanceKlass sun/misc/JavaUtilZipFileAccess
+instanceKlass java/util/zip/ZipFile
+instanceKlass java/util/zip/ZipConstants
+instanceKlass java/lang/invoke/MethodHandleStatics$1
+instanceKlass java/lang/invoke/MethodHandleStatics
+instanceKlass java/lang/invoke/MemberName$Factory
+instanceKlass java/lang/ClassValue$Version
+instanceKlass java/lang/ClassValue$Identity
+instanceKlass java/lang/ClassValue
+instanceKlass java/lang/invoke/MethodHandleImpl$3
+instanceKlass java/lang/invoke/MethodHandleImpl$2
+instanceKlass java/util/function/Function
+instanceKlass java/lang/invoke/MethodHandleImpl$1
+instanceKlass java/lang/invoke/MethodHandleImpl
+instanceKlass jdk/jfr/internal/EventWriter
+instanceKlass java/lang/SystemClassLoaderAction
+instanceKlass sun/misc/Launcher$AppClassLoader$1
+instanceKlass sun/misc/URLClassPath
+instanceKlass java/security/Principal
+instanceKlass java/security/ProtectionDomain$Key
+instanceKlass java/security/ProtectionDomain$2
+instanceKlass sun/misc/JavaSecurityProtectionDomainAccess
+instanceKlass java/security/ProtectionDomain$JavaSecurityAccessImpl
+instanceKlass sun/misc/JavaSecurityAccess
+instanceKlass sun/net/util/IPAddressUtil
+instanceKlass java/net/URLStreamHandler
+instanceKlass java/net/Parts
+instanceKlass java/util/BitSet
+instanceKlass sun/net/www/ParseUtil
+instanceKlass java/io/FileInputStream$1
+instanceKlass java/lang/CharacterData
+instanceKlass sun/util/locale/LocaleUtils
+instanceKlass java/util/Locale$LocaleKey
+instanceKlass sun/util/locale/BaseLocale$Key
+instanceKlass sun/util/locale/BaseLocale
+instanceKlass java/util/concurrent/ConcurrentHashMap$CollectionView
+instanceKlass java/util/concurrent/ConcurrentHashMap$CounterCell
+instanceKlass java/util/concurrent/ConcurrentHashMap$Node
+instanceKlass java/util/concurrent/locks/ReentrantLock
+instanceKlass java/util/concurrent/locks/Lock
+instanceKlass java/util/concurrent/ConcurrentMap
+instanceKlass sun/util/locale/LocaleObjectCache
+instanceKlass java/util/Locale
+instanceKlass java/lang/reflect/Array
+instanceKlass java/io/Reader
+instanceKlass sun/misc/MetaIndex
+instanceKlass java/util/StringTokenizer
+instanceKlass sun/misc/Launcher$ExtClassLoader$1
+instanceKlass java/net/URLClassLoader$7
+instanceKlass sun/misc/JavaNetAccess
+instanceKlass java/lang/ClassLoader$ParallelLoaders
+instanceKlass sun/security/util/Debug
+instanceKlass sun/misc/Launcher$Factory
+instanceKlass java/net/URLStreamHandlerFactory
+instanceKlass java/lang/Compiler$1
+instanceKlass java/lang/Compiler
+instanceKlass java/lang/System$2
+instanceKlass sun/misc/JavaLangAccess
+instanceKlass sun/io/Win32ErrorMode
+instanceKlass sun/misc/OSEnvironment
+instanceKlass java/lang/Integer$IntegerCache
+instanceKlass sun/misc/NativeSignalHandler
+instanceKlass sun/misc/Signal
+instanceKlass java/lang/Terminator$1
+instanceKlass sun/misc/SignalHandler
+instanceKlass java/lang/Terminator
+instanceKlass java/lang/ClassLoader$NativeLibrary
+instanceKlass java/io/ExpiringCache$Entry
+instanceKlass java/lang/ClassLoader$3
+instanceKlass java/lang/StringCoding$StringEncoder
+instanceKlass java/nio/file/Path
+instanceKlass java/nio/file/Watchable
+instanceKlass java/lang/Enum
+instanceKlass java/io/ExpiringCache
+instanceKlass java/io/FileSystem
+instanceKlass java/io/DefaultFileSystem
+instanceKlass java/nio/charset/CoderResult$Cache
+instanceKlass java/nio/charset/CoderResult
+instanceKlass java/lang/Readable
+instanceKlass java/nio/Bits$1
+instanceKlass sun/misc/JavaNioAccess
+instanceKlass java/nio/ByteOrder
+instanceKlass java/nio/Bits
+instanceKlass java/nio/charset/CharsetEncoder
+instanceKlass sun/nio/cs/ArrayEncoder
+instanceKlass sun/security/action/GetPropertyAction
+instanceKlass java/io/Writer
+instanceKlass sun/reflect/misc/ReflectUtil
+instanceKlass java/util/concurrent/atomic/AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl$1
+instanceKlass java/security/PrivilegedExceptionAction
+instanceKlass java/util/concurrent/atomic/AtomicReferenceFieldUpdater
+instanceKlass java/io/OutputStream
+instanceKlass java/io/Flushable
+instanceKlass java/io/FileDescriptor$1
+instanceKlass sun/misc/JavaIOFileDescriptorAccess
+instanceKlass java/io/FileDescriptor
+instanceKlass sun/misc/Version
+instanceKlass jdk/internal/util/StaticProperty
+instanceKlass java/lang/Runtime
+instanceKlass java/util/Hashtable$Enumerator
+instanceKlass java/util/Iterator
+instanceKlass java/util/Enumeration
+instanceKlass java/util/Objects
+instanceKlass java/util/Collections$SynchronizedCollection
+instanceKlass java/nio/charset/CodingErrorAction
+instanceKlass java/nio/charset/CharsetDecoder
+instanceKlass sun/nio/cs/ArrayDecoder
+instanceKlass sun/nio/cs/ext/DelegatableDecoder
+instanceKlass sun/nio/cs/ext/DoubleByte
+instanceKlass java/lang/StringCoding$StringDecoder
+instanceKlass java/lang/ThreadLocal$ThreadLocalMap
+instanceKlass java/lang/StringCoding
+instanceKlass sun/nio/cs/HistoricallyNamedCharset
+instanceKlass java/util/TreeMap$Entry
+instanceKlass sun/misc/ASCIICaseInsensitiveComparator
+instanceKlass java/util/NavigableMap
+instanceKlass java/util/SortedMap
+instanceKlass sun/reflect/ReflectionFactory$1
+instanceKlass java/lang/Class$1
+instanceKlass java/nio/charset/Charset$ExtendedProviderHolder$1
+instanceKlass java/nio/charset/Charset$ExtendedProviderHolder
+instanceKlass java/util/Arrays
+instanceKlass java/lang/reflect/ReflectAccess
+instanceKlass sun/reflect/LangReflectAccess
+instanceKlass java/lang/reflect/Modifier
+instanceKlass sun/reflect/annotation/AnnotationType
+instanceKlass java/lang/Class$AnnotationData
+instanceKlass sun/reflect/generics/repository/AbstractRepository
+instanceKlass java/lang/Class$Atomic
+instanceKlass java/lang/Class$ReflectionData
+instanceKlass java/lang/Class$3
+instanceKlass java/lang/ThreadLocal
+instanceKlass java/nio/charset/spi/CharsetProvider
+instanceKlass java/nio/charset/Charset
+instanceKlass java/lang/Math
+instanceKlass java/util/Hashtable$Entry
+instanceKlass sun/misc/VM
+instanceKlass java/util/HashMap$Node
+instanceKlass java/util/Map$Entry
+instanceKlass sun/reflect/Reflection
+instanceKlass sun/misc/SharedSecrets
+instanceKlass java/lang/ref/Reference$1
+instanceKlass sun/misc/JavaLangRefAccess
+instanceKlass java/lang/ref/ReferenceQueue$Lock
+instanceKlass java/util/Collections$UnmodifiableCollection
+instanceKlass java/util/AbstractMap
+instanceKlass java/util/Set
+instanceKlass java/util/Collections
+instanceKlass java/lang/ref/Reference$Lock
+instanceKlass sun/reflect/ReflectionFactory
+instanceKlass java/util/AbstractCollection
+instanceKlass java/util/RandomAccess
+instanceKlass java/util/List
+instanceKlass java/util/Collection
+instanceKlass java/lang/Iterable
+instanceKlass java/security/cert/Certificate
+instanceKlass sun/reflect/ReflectionFactory$GetReflectionFactoryAction
+instanceKlass java/security/PrivilegedAction
+instanceKlass java/security/AccessController
+instanceKlass java/security/Permission
+instanceKlass java/security/Guard
+instanceKlass java/lang/String$CaseInsensitiveComparator
+instanceKlass java/util/Comparator
+instanceKlass java/io/ObjectStreamField
+instanceKlass java/lang/Number
+instanceKlass java/lang/Character
+instanceKlass java/lang/Boolean
+instanceKlass java/nio/Buffer
+instanceKlass java/lang/StackTraceElement
+instanceKlass java/security/CodeSource
+instanceKlass sun/misc/Launcher
+instanceKlass java/util/jar/Manifest
+instanceKlass java/net/URL
+instanceKlass java/io/File
+instanceKlass java/io/InputStream
+instanceKlass java/io/Closeable
+instanceKlass java/lang/AutoCloseable
+instanceKlass sun/misc/Unsafe
+instanceKlass java/lang/AbstractStringBuilder
+instanceKlass java/lang/Appendable
+instanceKlass java/lang/invoke/CallSite
+instanceKlass java/lang/invoke/MethodType
+instanceKlass java/lang/invoke/LambdaForm
+instanceKlass java/lang/invoke/MethodHandleNatives
+instanceKlass java/lang/invoke/MemberName
+instanceKlass java/lang/invoke/MethodHandle
+instanceKlass sun/reflect/CallerSensitive
+instanceKlass java/lang/annotation/Annotation
+instanceKlass sun/reflect/FieldAccessor
+instanceKlass sun/reflect/ConstantPool
+instanceKlass sun/reflect/ConstructorAccessor
+instanceKlass sun/reflect/MethodAccessor
+instanceKlass sun/reflect/MagicAccessorImpl
+instanceKlass java/lang/reflect/Parameter
+instanceKlass java/lang/reflect/Member
+instanceKlass java/lang/reflect/AccessibleObject
+instanceKlass java/util/Dictionary
+instanceKlass java/util/Map
+instanceKlass java/lang/ThreadGroup
+instanceKlass java/lang/Thread$UncaughtExceptionHandler
+instanceKlass java/lang/Thread
+instanceKlass java/lang/Runnable
+instanceKlass java/lang/ref/ReferenceQueue
+instanceKlass java/lang/ref/Reference
+instanceKlass java/security/AccessControlContext
+instanceKlass java/security/ProtectionDomain
+instanceKlass java/lang/SecurityManager
+instanceKlass java/lang/Throwable
+instanceKlass java/lang/System
+instanceKlass java/lang/ClassLoader
+instanceKlass java/lang/Cloneable
+instanceKlass java/lang/Class
+instanceKlass java/lang/reflect/Type
+instanceKlass java/lang/reflect/GenericDeclaration
+instanceKlass java/lang/reflect/AnnotatedElement
+instanceKlass java/lang/String
+instanceKlass java/lang/CharSequence
+instanceKlass java/lang/Comparable
+instanceKlass java/io/Serializable
+ciInstanceKlass java/lang/Object 1 1 78 100 10 10 10 10 8 10 10 10 100 8 10 3 8 10 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 1 1 100 1 1 1 1 12 12 100 12 12 1 12 100 12 12 1 1 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/io/Serializable 1 0 7 100 100 1 1 1 1
+ciInstanceKlass java/lang/String 1 1 548 10 8 9 9 10 100 10 10 10 10 100 10 10 10 10 10 100 8 10 10 8 10 10 10 10 10 10 10 10 10 10 10 100 10 10 10 10 10 10 10 10 10 7 10 10 10 100 100 10 10 11 11 10 10 9 11 10 10 10 10 7 3 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 11 10 10 10 10 10 7 10 10 8 10 10 3 3 7 10 10 10 10 10 11 7 10 10 100 10 10 10 11 11 11 7 3 10 10 10 10 8 8 8 10 10 10 10 10 10 10 10 10 10 10 7 10 10 10 10 8 10 10 8 8 10 10 10 10 7 9 7 10 7 100 100 100 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 100 1 100 1 1 1 1 1 1 1 1 100 1 100 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 100 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 1 12 12 7 12 1 12 12 12 12 1 100 12 12 12 12 12 1 1 7 12 1 12 12 12 12 12 12 12 100 12 12 1 12 12 7 12 100 12 12 12 12 1 12 1 1 12 12 12 12 7 12 12 7 12 12 12 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 7 12 12 1 12 12 1 12 1 12 12 12 12 7 12 1 12 12 1 12 12 100 12 100 12 12 1 12 12 12 7 12 1 1 1 100 12 12 12 12 12 12 12 12 12 12 12 1 12 12 1 12 1 1 100 12 100 12 100 12 12 1 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/String serialPersistentFields [Ljava/io/ObjectStreamField; 0 [Ljava/io/ObjectStreamField;
+staticfield java/lang/String CASE_INSENSITIVE_ORDER Ljava/util/Comparator; java/lang/String$CaseInsensitiveComparator
+ciInstanceKlass java/lang/Class 1 1 1236 9 9 10 10 10 10 9 9 9 9 7 10 10 8 10 8 8 10 10 10 10 10 10 10 10 10 8 10 8 8 10 11 10 10 10 10 10 9 10 100 10 9 7 100 8 10 10 7 10 10 100 100 10 10 10 10 9 10 7 10 100 10 10 10 9 10 10 10 10 10 100 100 10 10 10 10 10 9 10 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 100 8 10 10 100 10 100 11 10 10 10 10 10 10 10 8 10 10 10 8 9 10 10 10 10 8 10 8 10 10 10 10 8 10 100 9 10 10 10 10 10 100 10 100 10 10 10 10 10 10 10 10 100 10 10 10 10 10 10 10 10 10 10 10 10 10 9 10 9 7 10 9 10 7 10 9 10 10 10 10 10 10 10 8 10 10 9 10 7 9 10 10 7 10 10 10 10 9 10 9 10 10 10 10 9 9 10 9 100 10 100 10 10 11 11 11 7 11 11 9 9 7 7 10 9 9 10 10 9 7 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 8 7 10 8 8 8 8 10 10 9 9 10 7 9 7 10 7 7 10 10 10 8 10 7 10 7 10 100 8 10 100 10 10 11 10 100 10 10 8 8 10 10 9 11 100 11 9 10 10 10 9 9 10 10 10 10 10 11 11 11 11 100 11 10 10 100 11 10 10 10 11 11 100 10 10 9 9 10 10 10 10 7 9 100 100 100 100 1 1 1 1 7 1 1 1 1 1 3 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 100 1 1 1 100 1 1 1 1 100 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 100 100 100 100 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 12 1 12 1 12 1 1 12 12 12 12 100 12 12 12 12 1 12 1 1 12 12 7 12 7 12 12 7 12 100 12 7 12 100 12 1 12 12 1 1 1 12 12 1 12 7 12 1 1 12 12 12 12 12 1 100 12 12 12 12 12 12 12 12 100 1 1 12 12 100 12 12 12 12 100 12 1 12 12 12 12 12 12 100 12 12 12 12 12 12 7 12 12 12 1 1 12 1 12 1 12 100 12 12 12 100 12 12 1 12 12 12 1 12 12 12 12 12 1 12 1 12 12 12 12 1 12 1 12 12 12 12 12 1 12 1 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 12 1 12 12 100 12 12 12 100 12 12 12 12 1 12 12 12 12 1 12 12 12 1 12 12 100 12 100 12 12 12 12 12 12 12 12 12 12 12 12 1 1 12 100 12 12 100 12 1 12 100 12 12 1 1 12 12 12 12 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 7 1 1 1 1 12 12 12 12 12 1 12 1 1 1 1 12 100 1 12 1 12 1 12 1 1 1 12 100 12 12 1 12 1 1 100 12 12 12 12 1 12 12 100 12 100 12 12 12 12 12 12 12 12 12 12 100 12 12 1 1 12 100 12 12 1 100 12 12 12 12 1 12 12 12 100 12 12 100 12 12 12 1 12 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Class serialPersistentFields [Ljava/io/ObjectStreamField; 0 [Ljava/io/ObjectStreamField;
+ciInstanceKlass java/lang/Cloneable 1 0 7 100 100 1 1 1 1
+instanceKlass java/util/ResourceBundle$RBClassLoader
+instanceKlass sun/reflect/DelegatingClassLoader
+instanceKlass java/security/SecureClassLoader
+ciInstanceKlass java/lang/ClassLoader 1 1 848 9 9 9 10 10 10 10 7 10 7 7 7 10 10 9 7 10 9 9 9 9 9 9 10 10 7 10 9 9 7 9 7 10 10 10 10 10 10 10 10 10 7 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 100 10 100 10 10 10 10 10 100 100 10 8 10 10 10 8 10 100 8 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 8 11 9 11 10 8 8 10 10 10 10 10 10 10 10 7 7 10 10 10 7 10 10 10 7 10 10 10 10 10 10 7 10 10 10 100 10 10 10 9 9 100 8 10 10 10 7 10 10 100 10 100 10 100 10 10 10 10 10 9 10 10 100 10 7 10 10 10 10 10 10 10 10 11 11 11 100 10 9 10 10 7 8 10 9 8 10 9 8 7 10 10 100 8 10 10 10 8 8 10 10 10 8 8 10 10 7 10 10 10 9 10 10 7 9 10 10 8 8 10 10 10 8 10 10 10 10 9 10 10 10 100 10 10 10 10 9 9 9 9 9 10 7 7 10 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 100 1 1 1 1 1 1 100 100 100 100 100 1 1 1 1 1 1 100 100 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 100 100 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 100 1 100 1 1 1 1 1 1 1 1 1 12 12 12 12 7 12 100 12 12 1 1 1 12 12 12 1 12 12 12 12 12 12 12 12 1 12 12 1 12 1 12 12 12 12 12 12 12 12 1 12 7 12 12 12 12 12 12 12 12 12 100 12 7 12 12 12 12 1 12 1 12 7 12 12 12 12 1 1 1 12 12 1 12 1 1 12 12 12 12 7 12 12 12 12 12 12 100 12 12 12 12 12 12 12 12 12 12 7 12 12 1 100 12 12 12 12 1 1 12 12 12 12 12 12 12 12 1 1 12 12 12 1 12 100 12 7 12 1 12 12 12 7 12 100 12 1 12 7 12 1 12 12 12 12 12 1 1 12 12 1 12 12 1 12 1 100 1 12 12 12 12 12 100 12 12 12 1 1 12 12 12 12 12 12 12 100 12 1 12 12 12 12 1 1 12 1 12 12 1 1 12 1 1 12 12 1 1 12 12 100 12 1 1 12 1 12 12 12 12 12 1 12 12 1 1 12 1 12 12 12 12 12 12 12 12 1 12 12 12 12 100 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/ClassLoader nocerts [Ljava/security/cert/Certificate; 0 [Ljava/security/cert/Certificate;
+ciInstanceKlass java/lang/System 1 1 380 10 10 10 10 10 9 7 10 11 10 10 10 100 8 10 10 8 10 100 10 8 10 10 100 10 10 9 10 9 9 7 10 10 10 10 10 10 100 100 8 10 10 7 10 100 8 10 8 10 100 8 10 100 10 8 10 10 10 8 10 10 10 10 10 10 10 10 10 7 7 10 10 100 10 10 8 10 10 7 9 10 7 9 10 9 7 10 8 10 8 8 10 10 10 10 10 10 10 10 7 10 10 10 9 9 9 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 100 1 100 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 12 12 12 12 12 12 1 7 12 100 12 100 12 12 12 1 1 12 100 12 1 12 1 12 12 100 12 1 12 100 12 12 12 12 12 1 12 12 12 12 12 1 1 1 12 12 1 12 1 1 1 12 1 1 1 1 12 12 100 12 1 12 7 12 12 12 12 12 7 12 12 12 1 1 12 12 1 12 7 12 1 7 12 7 12 1 7 12 12 1 12 12 1 12 1 12 1 1 12 7 12 12 7 12 12 7 12 12 12 1 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/System in Ljava/io/InputStream; java/io/BufferedInputStream
+staticfield java/lang/System out Ljava/io/PrintStream; java/io/PrintStream
+staticfield java/lang/System err Ljava/io/PrintStream; java/io/PrintStream
+instanceKlass java/lang/Exception
+instanceKlass java/lang/Error
+ciInstanceKlass java/lang/Throwable 1 1 363 10 9 9 9 9 9 10 9 10 10 100 7 10 8 10 8 10 10 10 100 8 10 10 10 10 8 9 10 7 10 10 7 10 10 11 10 10 10 8 10 10 7 8 8 10 10 8 8 9 10 100 10 11 8 8 10 8 10 8 100 10 9 10 10 100 10 7 10 10 100 8 10 10 10 10 7 10 10 11 11 11 8 8 10 11 10 9 8 7 10 100 8 10 11 8 9 10 9 11 100 10 10 100 100 1 1 1 7 1 100 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 100 100 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 12 1 1 1 12 1 100 12 12 1 1 12 7 12 12 1 7 12 12 1 12 12 1 7 12 7 12 12 12 12 1 12 12 1 1 1 12 12 1 1 12 100 12 1 12 1 1 12 1 12 1 1 12 12 12 100 12 12 1 12 100 1 1 12 100 12 100 12 1 100 12 12 100 12 100 12 12 1 1 100 12 1 1 12 1 1 12 1 12 100 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Throwable UNASSIGNED_STACK [Ljava/lang/StackTraceElement; 0 [Ljava/lang/StackTraceElement;
+staticfield java/lang/Throwable SUPPRESSED_SENTINEL Ljava/util/List; java/util/Collections$UnmodifiableRandomAccessList
+staticfield java/lang/Throwable EMPTY_THROWABLE_ARRAY [Ljava/lang/Throwable; 0 [Ljava/lang/Throwable;
+staticfield java/lang/Throwable $assertionsDisabled Z 1
+instanceKlass java/lang/AssertionError
+instanceKlass java/lang/VirtualMachineError
+instanceKlass java/lang/LinkageError
+instanceKlass java/lang/ThreadDeath
+ciInstanceKlass java/lang/Error 1 1 30 10 10 10 10 10 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 1 1
+ciInstanceKlass java/lang/ThreadDeath 0 0 18 10 100 100 1 1 1 5 0 1 1 1 1 1 1 12 1 1
+instanceKlass com/github/javaparser/ParseException
+instanceKlass java/security/PrivilegedActionException
+instanceKlass java/net/URISyntaxException
+instanceKlass sun/nio/fs/WindowsException
+instanceKlass java/io/IOException
+instanceKlass java/lang/InterruptedException
+instanceKlass java/lang/ReflectiveOperationException
+instanceKlass java/lang/RuntimeException
+ciInstanceKlass java/lang/Exception 1 1 30 10 10 10 10 10 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 1 1
+instanceKlass java/util/EmptyStackException
+instanceKlass org/antlr/v4/runtime/RecognitionException
+instanceKlass com/github/javaparser/TokenMgrException
+instanceKlass com/github/javaparser/GeneratedJavaParser$LookaheadSuccess
+instanceKlass java/lang/IllegalStateException
+instanceKlass java/lang/UnsupportedOperationException
+instanceKlass com/github/javaparser/ParseProblemException
+instanceKlass java/lang/invoke/WrongMethodTypeException
+instanceKlass java/lang/IllegalArgumentException
+instanceKlass java/lang/ArithmeticException
+instanceKlass java/lang/NullPointerException
+instanceKlass java/lang/IllegalMonitorStateException
+instanceKlass java/lang/ArrayStoreException
+instanceKlass java/lang/ClassCastException
+ciInstanceKlass java/lang/RuntimeException 1 1 30 10 10 10 10 10 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 1 1
+ciInstanceKlass java/lang/SecurityManager 0 0 383 9 10 100 9 10 9 100 10 100 8 10 10 10 10 10 10 10 10 10 100 10 10 9 10 10 10 100 8 10 9 9 8 9 100 10 8 10 10 10 100 10 10 100 100 8 10 8 8 8 8 8 8 10 8 8 8 8 8 10 10 8 100 8 10 8 8 8 8 8 10 8 100 8 8 10 8 9 8 9 9 8 10 100 8 10 10 100 10 10 10 8 9 9 100 10 10 10 9 8 8 9 9 100 10 9 8 8 8 10 10 9 100 10 10 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 100 100 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 100 1 1 1 1 1 100 100 1 1 1 1 1 100 1 1 1 1 1 1 1 1 12 12 1 12 12 12 1 100 12 1 1 12 12 12 12 12 12 12 100 12 1 12 100 12 12 100 12 1 1 12 12 1 12 1 1 12 12 12 1 12 1 1 1 12 1 1 1 1 1 1 12 1 1 1 1 1 12 12 1 1 1 1 1 1 1 1 100 12 1 1 1 1 1 100 12 1 12 12 1 12 1 1 12 1 12 12 12 1 12 12 1 12 12 12 12 1 1 12 12 1 12 1 1 1 12 100 12 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/security/ProtectionDomain 1 1 287 9 10 9 7 10 9 9 9 10 7 9 9 7 9 10 100 10 10 10 10 9 10 8 100 8 10 10 10 10 10 8 11 8 10 8 8 10 10 10 10 8 10 8 8 10 9 10 9 10 100 100 10 10 7 10 100 10 10 11 11 11 100 10 10 11 11 10 10 11 10 7 10 10 8 10 7 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 100 100 1 100 100 100 100 100 100 100 1 1 1 1 1 1 12 12 12 1 12 12 12 12 12 1 12 12 1 12 100 12 100 100 12 12 12 100 12 1 1 1 12 12 100 12 12 1 1 12 1 1 12 12 12 12 1 12 1 1 100 12 12 12 12 100 12 1 1 100 12 1 1 12 12 100 12 12 100 12 1 12 12 12 12 100 12 12 12 1 12 7 12 1 7 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/security/ProtectionDomain debug Lsun/security/util/Debug; null
+ciInstanceKlass java/security/AccessControlContext 1 1 313 9 9 10 8 10 10 9 9 9 10 100 100 10 11 11 11 11 7 11 10 10 9 10 11 10 7 100 8 10 10 7 9 9 9 9 9 9 9 10 9 10 10 8 10 10 10 100 10 10 10 10 8 10 8 10 8 8 10 8 10 8 10 10 10 8 8 100 10 10 100 10 8 10 10 10 8 10 10 10 7 10 10 10 10 10 10 10 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 100 1 100 100 1 1 1 1 1 1 1 1 100 1 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 100 12 1 100 12 12 12 12 12 100 12 1 12 100 12 12 12 12 1 12 12 100 12 100 12 100 12 100 12 1 1 1 12 12 1 12 12 12 12 12 12 12 7 12 12 12 12 1 12 12 100 12 1 12 100 12 1 100 12 1 100 12 1 1 12 1 12 1 12 12 12 1 1 1 12 12 1 12 1 12 1 12 12 12 1 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/net/URLClassLoader
+ciInstanceKlass java/security/SecureClassLoader 1 1 134 10 7 10 9 10 10 9 10 10 10 10 10 7 10 10 7 10 10 10 9 100 10 8 10 10 10 10 8 100 8 10 8 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 12 1 12 12 7 12 100 12 12 12 12 12 12 12 1 12 1 12 12 12 12 1 1 12 12 12 7 12 1 1 1 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/security/SecureClassLoader debug Lsun/security/util/Debug; null
+instanceKlass java/lang/reflect/InvocationTargetException
+instanceKlass java/lang/IllegalAccessException
+instanceKlass java/lang/NoSuchFieldException
+instanceKlass java/lang/InstantiationException
+instanceKlass java/lang/NoSuchMethodException
+instanceKlass java/lang/ClassNotFoundException
+ciInstanceKlass java/lang/ReflectiveOperationException 1 1 27 10 10 10 10 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 12 12 12 12 1 1
+ciInstanceKlass java/lang/ClassNotFoundException 1 1 32 100 10 10 9 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 1 1 1
+instanceKlass java/lang/IncompatibleClassChangeError
+instanceKlass java/lang/BootstrapMethodError
+instanceKlass java/lang/NoClassDefFoundError
+ciInstanceKlass java/lang/LinkageError 1 1 24 10 10 10 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 12 12 12 1 1
+ciInstanceKlass java/lang/NoClassDefFoundError 0 0 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+ciInstanceKlass java/lang/ClassCastException 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+ciInstanceKlass java/lang/ArrayStoreException 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+instanceKlass java/lang/StackOverflowError
+instanceKlass java/lang/OutOfMemoryError
+ciInstanceKlass java/lang/VirtualMachineError 1 1 27 10 10 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 1 1 12 12 12 12 1 1
+ciInstanceKlass java/lang/OutOfMemoryError 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+ciInstanceKlass java/lang/StackOverflowError 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+ciInstanceKlass java/lang/IllegalMonitorStateException 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+instanceKlass java/lang/ref/PhantomReference
+instanceKlass java/lang/ref/FinalReference
+instanceKlass java/lang/ref/WeakReference
+instanceKlass java/lang/ref/SoftReference
+ciInstanceKlass java/lang/ref/Reference 1 1 141 9 9 100 9 10 100 10 100 10 9 9 10 9 9 10 10 7 10 10 10 10 7 8 10 7 10 10 10 7 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 12 12 1 12 12 1 12 1 12 12 7 12 12 12 12 12 12 1 12 12 12 7 12 1 1 12 1 12 12 12 1 7 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass sun/util/locale/provider/LocaleResources$ResourceReference
+instanceKlass java/util/ResourceBundle$BundleReference
+instanceKlass java/lang/invoke/LambdaFormEditor$Transform
+instanceKlass sun/util/locale/LocaleObjectCache$CacheEntry
+ciInstanceKlass java/lang/ref/SoftReference 1 1 35 10 9 9 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 12 12 12 12 12 1 1 1
+instanceKlass java/util/ResourceBundle$LoaderReference
+instanceKlass java/lang/invoke/MethodType$ConcurrentWeakInternSet$WeakEntry
+instanceKlass java/lang/ClassValue$Entry
+instanceKlass java/util/WeakHashMap$Entry
+instanceKlass java/lang/ThreadLocal$ThreadLocalMap$Entry
+ciInstanceKlass java/lang/ref/WeakReference 1 1 20 10 10 100 7 1 1 1 1 1 1 1 1 1 1 1 12 12 1 1
+instanceKlass java/lang/ref/Finalizer
+ciInstanceKlass java/lang/ref/FinalReference 1 1 16 10 100 7 1 1 1 1 1 1 1 1 1 12 1 1
+instanceKlass sun/misc/Cleaner
+ciInstanceKlass java/lang/ref/PhantomReference 1 1 19 10 100 7 1 1 1 1 1 1 1 1 1 1 1 1 12 1 1
+ciInstanceKlass sun/misc/Cleaner 1 1 75 9 9 9 9 10 9 7 10 10 10 11 100 100 10 10 7 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 12 12 12 12 12 12 1 12 12 12 100 12 1 1 12 100 12 1 12 1 1 1 1 1 1 1 1
+staticfield sun/misc/Cleaner dummyQueue Ljava/lang/ref/ReferenceQueue; java/lang/ref/ReferenceQueue
+ciInstanceKlass java/lang/ref/Finalizer 1 1 153 9 9 9 10 9 9 10 10 7 10 10 10 10 100 11 100 10 100 10 10 10 100 10 10 100 10 7 10 7 10 10 10 10 7 10 7 10 10 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 12 12 12 12 12 12 12 12 1 12 12 12 12 1 100 12 1 12 1 12 100 12 100 12 1 12 12 1 1 1 12 12 7 12 1 12 1 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/ref/Finalizer lock Ljava/lang/Object; java/lang/Object
+instanceKlass java/lang/ref/ReferenceQueue$Null
+ciInstanceKlass java/lang/ref/ReferenceQueue 1 1 133 10 7 10 9 9 9 9 9 9 9 100 10 9 100 10 10 10 100 8 10 10 10 5 0 10 11 7 10 7 10 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 12 1 12 12 12 12 100 12 12 12 12 1 12 1 100 12 12 12 1 1 12 100 12 12 12 100 12 1 7 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/ref/ReferenceQueue $assertionsDisabled Z 1
+instanceKlass java/lang/ref/Finalizer$FinalizerThread
+instanceKlass java/lang/ref/Reference$ReferenceHandler
+ciInstanceKlass java/lang/Thread 1 1 550 9 9 9 9 100 8 10 3 8 3 10 10 100 8 10 9 10 10 10 10 10 10 10 9 10 10 9 10 9 10 9 10 9 10 9 9 10 9 10 9 10 9 100 10 10 9 9 9 7 100 10 8 10 10 10 10 10 100 10 10 10 10 100 11 10 9 10 9 10 100 10 10 100 10 10 11 10 100 10 10 10 7 10 10 10 10 10 10 10 10 10 10 100 8 10 10 10 8 10 8 10 8 8 10 10 7 8 10 9 9 10 10 10 9 10 100 10 11 9 9 10 100 10 11 100 10 10 11 10 100 10 10 10 8 9 10 11 10 11 10 7 8 100 1 1 100 1 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 100 1 1 1 1 100 100 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 100 100 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 1 1 12 1 12 12 1 1 12 12 7 12 100 12 7 12 12 12 12 12 12 12 12 12 12 12 12 12 7 12 12 12 12 12 100 12 12 12 12 1 12 12 12 12 1 1 1 12 12 12 12 12 1 12 12 12 1 12 12 12 100 12 12 1 12 1 12 100 12 12 1 12 12 1 12 12 12 12 12 12 12 12 12 1 1 12 12 1 12 1 1 1 100 12 100 12 1 12 12 12 12 12 12 1 12 100 12 12 12 12 1 12 100 12 1 12 12 12 12 1 12 12 100 12 12 12 12 100 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Thread EMPTY_STACK_TRACE [Ljava/lang/StackTraceElement; 0 [Ljava/lang/StackTraceElement;
+staticfield java/lang/Thread SUBCLASS_IMPLEMENTATION_PERMISSION Ljava/lang/RuntimePermission; java/lang/RuntimePermission
+ciInstanceKlass java/lang/ThreadGroup 1 1 275 10 9 8 9 7 9 9 10 10 10 10 10 9 9 10 10 9 10 9 9 10 100 10 10 10 9 10 10 9 10 10 10 10 10 10 10 10 10 10 10 100 10 10 10 7 10 100 10 9 10 8 10 10 10 10 11 100 9 100 10 8 10 10 8 10 10 10 10 10 8 10 8 10 8 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 12 12 1 12 1 12 12 12 12 12 12 12 12 12 12 12 12 100 12 12 12 100 12 12 7 12 100 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 12 1 12 12 12 12 1 100 12 12 12 12 1 12 1 1 12 12 1 12 100 12 100 12 12 100 1 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/util/Hashtable
+ciInstanceKlass java/util/Dictionary 1 1 31 10 100 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 1 1
+instanceKlass java/util/Properties
+ciInstanceKlass java/util/Hashtable 1 1 431 100 9 9 9 10 10 100 100 10 8 10 10 10 10 10 8 10 9 7 7 4 10 9 4 10 11 10 10 10 100 10 9 10 9 10 10 3 9 9 3 10 10 10 11 11 11 11 7 11 11 10 10 10 9 9 9 100 100 10 10 8 10 10 8 10 8 10 7 10 10 100 10 10 7 10 100 10 10 7 11 11 100 10 10 10 11 100 10 100 11 11 10 10 10 10 10 100 10 10 8 10 10 100 11 10 10 10 7 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 3 1 3 1 3 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 100 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 1 1 1 12 12 12 12 7 12 1 12 12 1 1 7 12 12 12 12 12 12 12 1 12 7 12 12 12 12 12 12 12 12 12 12 7 12 7 12 12 1 12 12 12 12 12 12 12 1 1 12 1 12 1 1 7 12 1 12 12 1 12 12 1 1 12 1 12 12 1 100 12 100 12 1 100 12 100 12 12 100 12 12 12 100 12 1 12 1 12 100 12 1 100 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/util/Properties 1 1 273 10 10 9 10 100 10 10 10 10 9 10 100 3 100 8 10 7 10 10 100 10 10 10 10 10 8 10 10 10 10 10 100 100 10 10 100 8 10 10 100 10 10 100 10 10 10 10 11 11 10 10 8 10 10 100 10 10 8 10 100 10 10 10 7 10 10 10 10 8 10 8 10 10 9 7 100 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 100 1 1 100 100 1 1 100 1 1 1 1 1 100 1 1 100 100 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 1 12 12 12 12 12 12 1 1 1 12 1 12 12 1 12 12 12 12 12 1 12 12 12 12 12 1 1 12 12 1 1 12 12 1 12 1 12 100 12 12 12 12 1 12 100 12 1 12 12 1 12 1 12 12 1 12 12 12 1 100 12 1 100 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/util/Properties hexDigit [C 16
+instanceKlass java/lang/reflect/Executable
+instanceKlass java/lang/reflect/Field
+ciInstanceKlass java/lang/reflect/AccessibleObject 1 1 147 10 9 10 10 7 10 7 100 8 10 9 10 100 8 10 11 10 10 10 9 10 10 100 10 10 7 8 10 7 10 10 7 9 7 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 7 12 12 100 12 12 1 12 1 1 1 12 12 12 1 1 12 12 12 12 12 12 100 12 12 1 12 7 12 1 1 1 1 1 7 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/reflect/AccessibleObject ACCESS_PERMISSION Ljava/security/Permission; java/lang/reflect/ReflectPermission
+staticfield java/lang/reflect/AccessibleObject reflectionFactory Lsun/reflect/ReflectionFactory; sun/reflect/ReflectionFactory
+ciInstanceKlass java/lang/reflect/Field 1 1 372 9 10 10 10 9 10 10 10 10 9 9 9 9 9 9 9 100 8 10 7 10 9 9 10 100 10 10 10 10 10 10 10 100 10 8 10 10 8 10 10 8 10 11 9 10 10 10 10 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 10 10 9 10 10 10 10 11 10 100 10 10 9 10 11 10 10 9 10 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 100 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 12 12 100 12 100 12 12 12 12 100 12 12 12 12 12 12 12 12 12 1 1 12 1 12 12 12 12 1 12 12 12 12 12 100 100 12 1 1 12 12 1 12 12 1 100 12 7 12 12 12 12 7 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 7 12 12 100 12 12 100 12 1 100 12 100 12 12 100 12 100 12 12 12 100 12 100 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/reflect/Parameter 0 0 215 10 9 9 9 9 9 9 100 10 10 10 100 10 10 11 10 10 10 10 10 8 8 10 10 10 8 10 8 10 10 10 10 10 10 10 10 10 10 11 10 100 10 10 10 10 10 9 100 10 11 11 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 12 12 12 12 12 12 12 1 12 12 100 12 1 12 100 12 12 100 12 12 12 12 1 1 100 12 12 12 1 1 12 12 12 12 12 12 12 100 12 12 100 12 100 12 1 100 12 12 12 12 12 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/lang/reflect/Constructor
+instanceKlass java/lang/reflect/Method
+ciInstanceKlass java/lang/reflect/Executable 1 1 389 10 10 10 11 10 10 10 8 10 10 10 100 8 100 10 10 10 10 8 10 100 8 10 8 10 10 8 10 10 11 10 8 8 10 10 100 10 100 10 10 10 10 10 10 100 10 10 10 10 10 100 10 100 8 10 10 100 8 10 10 10 10 10 8 8 3 8 9 10 100 8 9 10 10 10 10 10 10 100 10 10 10 10 11 10 100 10 10 9 10 10 10 9 10 10 9 10 9 10 9 100 7 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 12 100 12 12 100 12 100 12 12 12 1 12 12 12 1 1 1 12 12 12 1 12 1 1 12 1 12 100 1 12 12 12 1 1 100 12 12 1 12 1 12 12 100 12 12 12 1 12 12 12 12 100 12 12 1 1 12 12 1 1 12 12 12 12 1 1 1 12 12 1 1 12 12 12 12 12 12 12 1 12 12 100 12 12 100 12 12 1 100 12 12 12 12 12 12 100 12 100 12 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/reflect/Method 1 1 353 9 10 10 9 10 10 10 10 9 9 9 9 9 9 9 9 9 9 9 100 8 10 7 10 9 10 10 100 100 10 10 10 7 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 11 9 10 10 10 10 11 10 100 10 10 10 10 9 10 10 10 10 10 11 10 100 100 100 10 8 10 10 10 10 10 10 10 8 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 100 12 100 12 12 12 12 100 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 12 1 12 12 12 12 1 1 12 12 7 12 12 100 12 12 12 100 12 12 100 100 12 12 12 12 12 12 12 12 12 100 12 100 12 12 12 12 7 12 12 1 12 12 12 12 12 7 12 12 100 12 100 12 100 12 100 12 100 12 1 1 1 1 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/reflect/Constructor 1 1 335 10 10 9 10 10 10 9 10 9 9 9 9 9 9 9 9 100 8 10 7 10 9 10 10 10 10 100 100 10 7 10 10 10 10 10 10 10 10 10 10 10 9 10 10 10 10 100 8 10 11 10 10 10 9 10 10 10 10 10 10 10 10 10 100 8 10 10 10 10 10 10 11 9 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 12 100 12 12 12 12 100 12 12 12 12 12 12 12 12 12 12 12 1 1 12 1 12 12 12 7 12 12 12 1 1 7 12 12 100 12 12 100 12 12 12 12 100 12 12 12 12 100 12 12 12 12 1 1 12 7 12 12 12 12 12 7 12 12 12 12 12 12 12 12 12 1 1 12 12 12 12 100 12 100 12 100 12 100 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1
+instanceKlass sun/reflect/FieldAccessorImpl
+instanceKlass sun/reflect/ConstructorAccessorImpl
+instanceKlass sun/reflect/MethodAccessorImpl
+ciInstanceKlass sun/reflect/MagicAccessorImpl 1 1 13 10 100 7 1 1 1 1 1 1 12 1 1
+instanceKlass sun/reflect/DelegatingMethodAccessorImpl
+instanceKlass sun/reflect/NativeMethodAccessorImpl
+ciInstanceKlass sun/reflect/MethodAccessorImpl 1 1 22 10 100 7 100 1 1 1 1 1 1 1 100 100 1 1 12 1 1 1 1 1
+instanceKlass sun/reflect/DelegatingConstructorAccessorImpl
+instanceKlass sun/reflect/NativeConstructorAccessorImpl
+ciInstanceKlass sun/reflect/ConstructorAccessorImpl 1 1 24 10 100 7 100 1 1 1 1 1 1 1 100 100 100 1 1 12 1 1 1 1 1 1
+ciInstanceKlass sun/reflect/DelegatingClassLoader 0 0 13 10 100 100 1 1 1 1 1 1 12 1 1
+ciInstanceKlass sun/reflect/ConstantPool 0 0 106 10 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 100 100 8 10 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 100 12 1 1 1 1
+instanceKlass sun/reflect/UnsafeFieldAccessorImpl
+ciInstanceKlass sun/reflect/FieldAccessorImpl 1 1 56 10 100 7 100 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 1 1 1 1 1
+instanceKlass sun/reflect/UnsafeObjectFieldAccessorImpl
+instanceKlass sun/reflect/UnsafeStaticFieldAccessorImpl
+ciInstanceKlass sun/reflect/UnsafeFieldAccessorImpl 1 1 233 10 9 10 10 9 10 9 10 10 9 10 10 10 10 100 10 10 10 8 10 10 100 8 10 8 10 8 10 100 10 10 8 10 8 10 8 10 8 10 8 10 8 10 8 10 8 10 8 10 10 8 8 8 8 8 8 10 8 8 8 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 7 12 7 12 12 7 12 12 12 12 12 12 7 12 7 12 12 1 12 12 1 12 1 1 12 1 12 1 12 1 12 1 12 1 100 12 1 100 12 1 100 12 1 100 12 1 100 12 1 100 12 1 100 12 1 100 12 12 1 1 1 1 1 1 100 12 1 1 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield sun/reflect/UnsafeFieldAccessorImpl unsafe Lsun/misc/Unsafe; sun/misc/Unsafe
+instanceKlass sun/reflect/UnsafeStaticObjectFieldAccessorImpl
+ciInstanceKlass sun/reflect/UnsafeStaticFieldAccessorImpl 1 1 38 10 9 10 9 7 7 8 10 7 1 1 1 1 1 1 1 1 1 1 12 12 7 12 12 1 1 7 12 1 1 1 1 1 1 1 1 1
+ciInstanceKlass sun/reflect/CallerSensitive 0 0 17 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/lang/invoke/DelegatingMethodHandle
+instanceKlass java/lang/invoke/BoundMethodHandle
+instanceKlass java/lang/invoke/DirectMethodHandle
+ciInstanceKlass java/lang/invoke/MethodHandle 1 1 444 9 10 10 10 9 10 10 10 10 10 10 11 10 10 10 9 10 100 100 10 8 10 10 8 10 10 10 10 10 10 10 10 10 7 10 10 10 8 10 10 10 10 10 8 10 8 10 8 10 9 100 10 9 9 8 10 10 10 10 10 10 10 10 8 10 10 10 10 10 10 9 8 10 10 8 10 10 10 10 10 10 8 10 10 100 9 10 7 10 10 9 10 10 8 9 9 9 10 10 10 10 7 10 10 8 10 10 100 10 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 100 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 12 12 12 7 12 12 12 7 12 12 100 12 12 12 100 12 12 12 12 12 12 1 1 1 12 12 1 12 12 7 12 12 12 12 12 7 12 7 12 1 12 12 12 1 7 12 12 12 12 12 1 12 1 12 1 100 12 12 1 100 12 100 1 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 1 12 12 1 12 12 7 12 12 12 1 12 12 1 12 1 100 12 12 12 12 12 1 12 12 12 7 12 12 12 12 1 12 12 12 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/MethodHandle FORM_OFFSET J 20
+staticfield java/lang/invoke/MethodHandle $assertionsDisabled Z 1
+instanceKlass java/lang/invoke/DirectMethodHandle$Special
+instanceKlass java/lang/invoke/DirectMethodHandle$StaticAccessor
+instanceKlass java/lang/invoke/DirectMethodHandle$Constructor
+instanceKlass java/lang/invoke/DirectMethodHandle$Accessor
+instanceKlass java/lang/invoke/DirectMethodHandle$Interface
+ciInstanceKlass java/lang/invoke/DirectMethodHandle 1 1 712 100 7 7 10 10 10 100 10 10 10 10 10 7 7 10 10 10 10 10 10 10 9 100 10 9 10 10 10 10 10 10 7 10 10 10 10 7 10 7 10 7 10 10 10 7 10 10 7 10 10 10 10 10 10 10 10 8 10 10 10 10 10 9 7 10 10 10 7 10 8 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 8 8 8 8 8 8 8 8 8 8 8 10 10 7 9 7 10 100 10 10 10 10 7 9 10 9 9 9 10 7 10 9 10 10 8 10 10 10 10 9 9 10 10 7 7 7 9 10 10 10 10 9 10 100 10 100 10 10 9 9 10 9 10 10 10 10 10 9 10 10 10 10 9 9 10 10 9 9 9 9 10 9 9 10 10 9 10 9 10 10 7 10 10 10 10 10 8 8 8 9 10 7 10 10 9 9 9 9 9 9 8 8 8 8 10 10 9 9 100 1 7 1 1 1 1 1 1 100 1 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 7 1 1 1 1 12 12 12 1 12 12 12 12 12 1 1 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 1 7 12 12 12 12 1 12 1 12 1 12 12 12 1 12 12 1 12 12 12 12 100 12 100 12 12 12 12 12 12 7 12 1 12 7 12 12 1 1 12 12 12 12 12 12 12 12 12 12 12 12 7 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 12 12 1 12 1 12 1 7 12 12 12 12 1 12 12 12 12 12 12 1 12 12 7 12 12 1 12 12 12 12 12 12 7 12 12 1 1 1 12 12 12 12 12 12 12 1 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 7 12 12 7 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 12 7 12 12 12 1 1 1 7 12 1 12 12 12 12 12 12 12 12 1 1 1 1 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/DirectMethodHandle IMPL_NAMES Ljava/lang/invoke/MemberName$Factory; java/lang/invoke/MemberName$Factory
+staticfield java/lang/invoke/DirectMethodHandle ACCESSOR_FORMS [Ljava/lang/invoke/LambdaForm; 132 [Ljava/lang/invoke/LambdaForm;
+staticfield java/lang/invoke/DirectMethodHandle $assertionsDisabled Z 1
+ciInstanceKlass java/lang/invoke/MemberName 1 1 654 7 7 100 10 10 10 9 9 10 9 10 10 10 10 10 10 10 9 10 100 7 10 8 10 10 10 10 9 8 10 7 7 10 10 7 7 7 10 9 100 8 10 10 10 10 10 10 10 10 10 8 8 8 10 10 9 3 10 10 10 10 10 10 10 10 10 7 8 10 10 8 9 8 9 10 8 10 10 10 10 10 100 10 10 8 10 10 8 10 10 100 10 10 8 8 10 10 10 10 10 10 10 10 10 3 10 3 10 3 3 3 3 3 3 10 100 10 3 10 3 10 10 10 10 10 10 10 10 10 10 10 10 100 10 10 10 100 10 10 10 10 100 10 10 8 10 10 10 10 10 10 10 10 10 10 10 100 10 100 8 10 10 10 10 10 10 10 8 8 8 8 10 10 10 8 8 10 8 10 10 10 8 8 10 10 8 8 100 10 8 8 8 8 10 7 7 7 10 100 10 7 10 9 10 100 100 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 3 1 3 1 3 1 3 1 1 1 1 1 1 1 1 3 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 100 12 12 1 1 12 1 12 12 12 12 12 1 100 12 1 1 12 1 1 1 12 12 1 1 12 12 12 12 12 12 12 12 12 1 1 1 100 12 12 12 12 12 12 12 12 12 12 12 1 12 12 100 100 12 1 12 12 12 12 12 1 12 12 1 12 12 1 12 12 1 12 12 1 1 12 12 12 12 12 12 12 12 12 12 12 100 1 1 7 12 12 12 12 12 7 12 12 12 12 12 12 1 12 1 12 12 1 12 100 12 100 12 12 12 12 12 12 12 1 12 1 1 7 12 12 7 12 12 12 1 1 1 1 12 12 12 1 1 12 1 12 12 1 1 12 1 1 1 1 1 1 1 12 1 1 1 1 1 7 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/MemberName $assertionsDisabled Z 1
+ciInstanceKlass java/lang/invoke/MethodHandleNatives 1 1 442 100 10 9 10 100 10 10 10 10 8 8 8 8 8 8 8 8 8 8 7 10 7 10 10 100 10 10 8 10 8 10 8 10 9 8 10 100 10 100 100 8 7 7 10 10 7 9 10 10 10 7 10 10 10 10 100 10 9 8 10 8 10 8 8 8 100 8 10 10 10 10 10 100 10 10 8 8 10 10 10 8 10 8 8 9 10 10 10 100 100 10 10 10 100 100 10 10 100 10 10 100 100 10 10 10 10 100 10 10 10 10 10 10 10 8 8 100 10 100 10 10 10 10 7 10 10 10 9 10 10 10 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 100 100 100 100 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 100 100 1 1 1 1 1 1 1 1 1 12 12 12 1 12 12 12 1 1 1 1 1 1 1 1 1 1 1 12 1 12 100 12 1 12 1 12 1 12 1 12 100 12 1 100 12 1 12 1 1 1 1 1 12 1 7 12 12 12 7 12 1 12 7 12 12 12 1 100 12 12 1 12 1 12 1 1 1 1 1 12 12 12 12 12 1 12 12 1 1 12 12 1 100 12 1 1 7 12 12 12 12 1 1 12 1 1 1 1 1 100 12 12 1 12 7 12 12 12 12 12 1 1 1 12 1 12 12 12 12 1 12 12 12 12 7 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/MethodHandleNatives COUNT_GWT Z 1
+staticfield java/lang/invoke/MethodHandleNatives $assertionsDisabled Z 1
+ciInstanceKlass java/lang/invoke/LambdaForm 1 1 986 7 100 9 10 10 9 9 10 100 10 9 10 9 10 7 9 10 9 9 9 10 7 10 10 10 10 10 10 10 9 10 8 10 10 10 10 7 10 10 8 10 10 10 100 8 10 10 10 10 10 7 10 7 10 10 9 9 10 10 100 10 10 10 10 10 10 10 10 10 10 8 10 10 8 8 9 9 9 10 10 10 9 10 10 10 10 10 10 10 10 8 8 8 8 8 8 8 8 10 9 10 10 10 10 10 10 10 7 10 10 9 10 10 10 10 10 10 8 10 100 100 10 10 10 10 11 11 11 7 10 10 10 10 7 10 8 10 10 8 10 10 10 7 10 8 10 9 10 10 8 8 10 10 8 8 8 10 10 9 10 8 8 9 10 10 8 8 8 100 8 100 8 100 8 10 8 10 9 10 10 9 10 10 10 10 10 10 10 10 10 10 8 100 10 10 9 10 8 8 100 8 8 9 8 8 8 10 8 8 8 10 10 8 8 8 10 8 10 8 8 8 8 8 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 9 8 10 11 11 9 9 9 9 9 10 10 8 10 8 9 7 10 100 10 7 10 9 10 10 10 10 9 10 10 9 10 9 10 9 7 9 9 10 100 10 10 10 10 9 100 1 100 1 100 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 3 1 1 1 3 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 100 100 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 12 12 12 12 12 12 1 12 12 12 7 12 12 12 12 12 12 12 1 12 12 100 12 100 12 12 12 12 12 12 1 12 12 12 7 12 1 12 1 12 12 12 1 1 12 12 12 12 12 1 12 1 12 12 12 12 12 12 1 12 12 12 12 12 12 100 12 12 1 12 12 1 1 12 12 12 12 7 12 12 12 7 12 12 12 12 12 12 12 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 7 12 12 1 1 7 12 12 12 7 12 7 12 12 1 12 12 12 12 1 12 1 12 12 1 12 12 1 12 1 12 12 12 12 1 1 12 12 1 1 1 12 12 100 12 12 1 1 12 12 12 1 1 1 1 1 1 1 1 1 12 1 12 7 12 12 12 12 12 12 12 12 12 12 12 12 1 1 12 12 12 12 1 1 1 1 1 12 1 1 1 100 12 1 1 1 12 12 1 1 1 12 1 12 1 1 1 1 1 12 12 12 7 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 12 12 12 1 12 1 12 1 12 1 12 1 12 12 12 12 12 12 12 7 12 12 12 12 12 12 12 12 1 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/LambdaForm COMPILE_THRESHOLD I 0
+staticfield java/lang/invoke/LambdaForm INTERNED_ARGUMENTS [[Ljava/lang/invoke/LambdaForm$Name; 5 [[Ljava/lang/invoke/LambdaForm$Name;
+staticfield java/lang/invoke/LambdaForm IMPL_NAMES Ljava/lang/invoke/MemberName$Factory; java/lang/invoke/MemberName$Factory
+staticfield java/lang/invoke/LambdaForm LF_identityForm [Ljava/lang/invoke/LambdaForm; 6 [Ljava/lang/invoke/LambdaForm;
+staticfield java/lang/invoke/LambdaForm LF_zeroForm [Ljava/lang/invoke/LambdaForm; 6 [Ljava/lang/invoke/LambdaForm;
+staticfield java/lang/invoke/LambdaForm NF_identity [Ljava/lang/invoke/LambdaForm$NamedFunction; 6 [Ljava/lang/invoke/LambdaForm$NamedFunction;
+staticfield java/lang/invoke/LambdaForm NF_zero [Ljava/lang/invoke/LambdaForm$NamedFunction; 6 [Ljava/lang/invoke/LambdaForm$NamedFunction;
+staticfield java/lang/invoke/LambdaForm DEBUG_NAME_COUNTERS Ljava/util/HashMap; null
+staticfield java/lang/invoke/LambdaForm TRACE_INTERPRETER Z 0
+staticfield java/lang/invoke/LambdaForm $assertionsDisabled Z 1
+ciInstanceKlass java/lang/invoke/MethodType 1 1 603 7 10 10 10 9 10 7 9 9 10 9 8 10 10 9 9 10 7 10 8 10 10 10 100 8 10 100 10 10 10 10 11 9 11 7 10 9 10 10 10 10 10 9 7 10 7 10 10 10 10 10 10 10 10 10 10 8 8 10 9 100 10 10 10 10 10 10 10 10 10 8 10 10 10 10 10 11 10 10 10 10 10 7 10 10 10 10 9 7 10 10 10 10 10 10 10 10 8 8 10 8 10 10 9 10 10 10 10 10 10 10 10 10 10 10 10 9 7 10 10 10 10 10 8 10 11 9 10 10 10 10 10 9 9 10 9 10 10 100 10 7 10 7 9 8 10 10 8 100 100 10 100 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 1 1 100 100 1 100 1 1 1 1 1 100 1 1 100 1 1 1 1 100 1 1 1 12 12 12 12 7 12 12 12 7 12 7 12 1 7 12 12 7 7 12 1 1 12 12 12 1 1 12 1 12 12 12 7 12 12 12 1 7 12 12 12 12 12 12 12 12 1 12 1 12 12 100 12 12 12 12 12 12 12 12 1 1 12 12 1 12 12 12 12 100 12 12 12 1 12 12 7 12 12 12 12 12 12 12 12 12 1 12 12 12 12 1 12 7 12 12 7 12 12 12 1 1 12 1 100 12 12 12 12 12 12 12 12 12 100 12 12 12 12 12 12 1 12 12 12 7 12 12 1 7 12 12 12 12 12 100 12 12 12 12 12 7 12 12 100 12 12 12 1 1 12 12 12 1 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/MethodType internTable Ljava/lang/invoke/MethodType$ConcurrentWeakInternSet; java/lang/invoke/MethodType$ConcurrentWeakInternSet
+staticfield java/lang/invoke/MethodType NO_PTYPES [Ljava/lang/Class; 0 [Ljava/lang/Class;
+staticfield java/lang/invoke/MethodType objectOnlyTypes [Ljava/lang/invoke/MethodType; 20 [Ljava/lang/invoke/MethodType;
+staticfield java/lang/invoke/MethodType serialPersistentFields [Ljava/io/ObjectStreamField; 0 [Ljava/io/ObjectStreamField;
+staticfield java/lang/invoke/MethodType rtypeOffset J 12
+staticfield java/lang/invoke/MethodType ptypesOffset J 16
+staticfield java/lang/invoke/MethodType $assertionsDisabled Z 1
+ciInstanceKlass java/lang/BootstrapMethodError 0 0 39 10 10 10 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 1 100 100 1 1 12 12 12 100 12 12 1 1 1 1 1 1 1 1
+instanceKlass java/lang/invoke/VolatileCallSite
+instanceKlass java/lang/invoke/MutableCallSite
+instanceKlass java/lang/invoke/ConstantCallSite
+ciInstanceKlass java/lang/invoke/CallSite 1 1 322 10 10 9 10 10 100 7 10 7 10 10 10 100 100 10 10 10 8 10 10 10 9 10 10 10 10 100 8 10 10 10 100 10 9 10 10 10 10 9 9 10 10 9 10 10 10 10 10 10 7 10 10 10 10 10 10 7 100 8 10 10 10 10 10 7 100 8 10 10 100 8 10 7 10 10 10 8 10 10 8 10 10 100 10 8 10 10 100 100 10 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 100 100 100 100 100 100 100 1 1 1 1 1 1 1 1 100 100 1 1 12 12 12 12 12 1 1 12 1 12 12 12 1 1 100 12 12 1 12 12 12 12 12 100 12 12 1 1 12 12 1 12 12 12 12 12 100 12 7 12 12 7 12 12 7 12 12 12 12 12 7 12 12 1 12 12 12 12 12 12 1 1 1 12 12 100 12 12 1 1 1 12 1 1 12 1 12 12 7 12 12 12 12 12 1 12 12 12 1 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/invoke/CallSite GET_TARGET Ljava/lang/invoke/MethodHandle; java/lang/invoke/DirectMethodHandle
+staticfield java/lang/invoke/CallSite THROW_UCS Ljava/lang/invoke/MethodHandle; java/lang/invoke/MethodHandleImpl$AsVarargsCollector
+staticfield java/lang/invoke/CallSite TARGET_OFFSET J 12
+ciInstanceKlass java/lang/invoke/ConstantCallSite 1 1 42 10 9 10 100 10 9 100 10 10 7 7 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 12 12 12 1 12 12 1 12 1 1 1 1 1 1
+ciInstanceKlass java/lang/invoke/MutableCallSite 0 0 57 10 10 9 10 10 10 9 10 10 100 10 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 100 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/invoke/VolatileCallSite 0 0 33 10 10 10 10 10 10 100 100 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 1 1 1 1 1 1 1
+instanceKlass java/lang/StringBuilder
+instanceKlass java/lang/StringBuffer
+ciInstanceKlass java/lang/AbstractStringBuilder 1 1 318 7 10 9 9 10 10 10 7 3 10 3 100 10 100 10 10 10 10 100 10 10 10 8 10 10 10 10 10 10 10 10 10 10 10 7 10 11 10 8 100 10 8 10 10 8 8 10 10 11 3 8 10 10 100 5 0 8 10 10 10 10 10 10 10 10 100 10 8 8 10 10 10 8 8 8 10 10 8 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 7 100 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 12 12 12 12 12 7 12 1 12 1 1 12 12 100 12 12 1 12 12 1 12 7 12 12 12 12 12 12 100 1 12 12 1 1 1 12 12 1 1 12 12 1 12 12 1 1 12 12 100 12 12 12 12 12 1 1 1 12 12 12 1 1 1 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/StringBuffer 1 1 371 10 10 10 11 10 10 9 9 10 10 9 10 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 7 10 10 8 10 8 10 8 10 10 10 10 7 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 7 10 9 9 9 7 7 100 100 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 7 12 1 12 100 12 1 100 12 1 12 1 12 12 100 12 100 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 7 12 7 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/StringBuffer serialPersistentFields [Ljava/io/ObjectStreamField; 3 [Ljava/io/ObjectStreamField;
+ciInstanceKlass java/lang/StringBuilder 1 1 326 10 10 10 11 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 7 9 9 10 10 10 10 10 10 10 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 7 7 100 100 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 12 12 100 12 12 12 100 12 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass sun/misc/Unsafe 1 1 390 10 10 10 10 100 8 10 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 100 10 10 7 7 8 10 10 7 10 9 7 9 7 9 7 9 7 9 7 9 7 9 7 9 7 9 10 9 9 9 9 9 9 9 9 9 10 9 7 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 7 12 7 12 7 12 1 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 100 12 100 12 12 12 12 12 12 12 12 12 12 12 1 12 1 1 12 1 12 12 1 12 1 12 1 12 1 12 1 12 1 12 1 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield sun/misc/Unsafe theUnsafe Lsun/misc/Unsafe; sun/misc/Unsafe
+staticfield sun/misc/Unsafe ARRAY_BOOLEAN_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_BYTE_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_SHORT_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_CHAR_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_INT_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_LONG_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_FLOAT_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_DOUBLE_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_OBJECT_BASE_OFFSET I 16
+staticfield sun/misc/Unsafe ARRAY_BOOLEAN_INDEX_SCALE I 1
+staticfield sun/misc/Unsafe ARRAY_BYTE_INDEX_SCALE I 1
+staticfield sun/misc/Unsafe ARRAY_SHORT_INDEX_SCALE I 2
+staticfield sun/misc/Unsafe ARRAY_CHAR_INDEX_SCALE I 2
+staticfield sun/misc/Unsafe ARRAY_INT_INDEX_SCALE I 4
+staticfield sun/misc/Unsafe ARRAY_LONG_INDEX_SCALE I 8
+staticfield sun/misc/Unsafe ARRAY_FLOAT_INDEX_SCALE I 4
+staticfield sun/misc/Unsafe ARRAY_DOUBLE_INDEX_SCALE I 8
+staticfield sun/misc/Unsafe ARRAY_OBJECT_INDEX_SCALE I 4
+staticfield sun/misc/Unsafe ADDRESS_SIZE I 8
+instanceKlass sun/nio/ch/ChannelInputStream
+instanceKlass java/util/zip/ZipFile$ZipFileInputStream
+instanceKlass java/io/FilterInputStream
+instanceKlass java/io/FileInputStream
+instanceKlass java/io/ByteArrayInputStream
+ciInstanceKlass java/io/InputStream 1 1 63 10 10 100 10 100 10 10 100 7 5 0 10 8 10 7 100 1 1 1 3 1 1 1 1 1 1 1 1 1 1 100 1 1 100 100 1 1 1 1 1 1 1 1 1 12 12 1 1 12 1 1 100 12 1 12 1 1 1 1 1 1 1
+ciInstanceKlass java/io/ByteArrayInputStream 1 1 62 10 9 9 9 9 10 100 10 100 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 12 12 12 12 12 100 12 1 1 7 12 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/io/File 1 1 598 9 9 10 9 9 9 10 9 100 10 8 10 9 10 100 10 10 10 10 10 100 8 10 10 8 10 8 10 8 10 8 10 8 10 8 10 8 10 9 10 10 10 10 10 10 10 7 10 10 10 10 10 100 8 10 10 10 8 10 7 10 10 10 10 100 10 100 10 10 10 10 10 8 100 10 100 100 10 10 10 7 10 10 10 10 10 10 10 10 10 10 10 7 100 10 11 11 11 11 100 10 10 10 10 100 11 10 10 10 10 10 10 10 8 10 10 10 10 10 10 10 10 100 8 10 10 10 8 8 10 10 100 8 10 10 10 10 10 10 10 10 8 10 10 9 9 10 9 10 9 10 10 10 10 10 10 9 10 9 9 10 10 10 8 100 7 100 100 100 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 100 100 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 100 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 100 100 100 1 1 100 1 1 1 1 12 12 12 12 12 12 12 12 1 1 12 12 12 1 12 12 12 12 1 1 12 12 1 12 1 12 1 12 1 12 1 12 1 12 1 12 12 12 12 12 12 12 12 12 1 12 12 12 12 12 1 1 12 12 1 12 1 12 12 12 1 1 12 12 12 12 1 1 12 1 1 12 7 12 100 12 1 12 12 12 12 12 12 12 12 100 12 12 12 1 1 100 12 100 12 12 12 1 12 1 100 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 12 1 1 12 12 1 1 12 12 1 1 12 12 12 12 100 12 12 100 12 100 12 12 12 12 7 12 12 12 12 100 12 100 12 7 12 7 12 12 12 12 12 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/io/File fs Ljava/io/FileSystem; java/io/WinNTFileSystem
+staticfield java/io/File separatorChar C 92
+staticfield java/io/File separator Ljava/lang/String; "\"
+staticfield java/io/File pathSeparatorChar C 59
+staticfield java/io/File pathSeparator Ljava/lang/String; ";"
+staticfield java/io/File PATH_OFFSET J 16
+staticfield java/io/File PREFIX_LENGTH_OFFSET J 12
+staticfield java/io/File UNSAFE Lsun/misc/Unsafe; sun/misc/Unsafe
+staticfield java/io/File $assertionsDisabled Z 1
+instanceKlass sun/misc/Launcher$ExtClassLoader
+instanceKlass sun/misc/Launcher$AppClassLoader
+ciInstanceKlass java/net/URLClassLoader 1 1 550 9 10 9 10 7 10 9 10 10 10 7 10 10 10 10 10 10 100 10 10 10 100 100 100 8 10 10 10 10 11 11 11 100 11 11 10 11 11 11 10 10 10 7 10 10 7 100 10 7 10 10 10 10 100 100 10 8 10 8 10 10 10 8 8 10 10 10 100 100 8 10 10 10 10 10 10 10 10 10 7 10 10 10 10 10 10 10 10 8 10 11 9 10 9 9 9 9 9 9 10 8 10 100 10 10 7 10 10 7 10 10 10 10 7 10 9 10 8 100 8 10 10 8 10 10 9 10 10 10 10 100 8 10 100 10 10 100 10 10 7 100 10 7 10 10 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 100 1 1 1 100 1 1 100 100 100 100 100 100 100 100 100 1 1 100 100 100 100 1 1 1 1 1 1 1 100 100 1 1 1 100 1 1 100 1 1 100 1 1 100 100 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 1 12 12 7 12 100 12 7 12 1 12 12 12 12 7 12 1 12 12 12 1 1 1 1 12 12 12 12 100 12 100 12 12 1 12 100 12 12 12 12 12 12 12 1 12 12 1 1 12 1 12 7 12 12 1 1 1 12 1 12 12 1 1 12 12 12 1 1 1 12 12 7 12 7 12 12 12 12 12 12 1 12 7 12 12 12 12 12 7 12 12 1 12 7 12 7 12 7 12 12 12 12 12 12 12 7 12 1 12 1 12 1 12 12 1 12 12 12 12 1 7 12 7 12 12 1 1 1 12 12 1 12 12 12 100 12 12 12 12 1 1 1 12 7 12 1 12 12 1 1 1 12 7 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/net/URL 1 1 596 10 10 10 9 9 10 10 10 9 10 8 10 7 10 10 8 10 9 100 8 10 10 8 9 7 10 10 9 10 9 8 9 10 9 10 8 9 10 10 8 10 7 10 10 10 10 10 8 10 10 10 8 9 8 10 10 100 10 10 10 10 9 10 9 10 10 10 7 10 10 10 10 10 100 10 10 10 100 10 10 100 8 10 9 10 10 9 10 100 10 10 10 10 10 10 10 10 10 10 10 9 9 100 8 10 10 9 10 10 7 11 7 8 8 10 10 7 8 8 7 10 10 10 10 8 8 10 100 10 10 10 10 10 10 8 10 100 10 8 8 10 8 8 8 8 100 10 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 100 8 10 10 10 10 10 7 10 7 7 10 9 9 100 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 100 100 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 100 100 1 1 1 1 1 1 1 100 1 1 100 100 100 1 1 1 1 100 100 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 7 12 12 12 12 12 1 12 1 12 1 12 12 1 1 12 12 1 12 1 12 12 12 12 1 12 12 12 12 1 12 12 7 12 1 12 1 12 12 12 12 12 1 12 12 12 1 12 1 12 12 1 12 12 100 12 12 100 12 100 12 12 12 12 12 1 12 12 12 12 12 1 12 1 12 12 1 1 100 12 100 12 12 100 12 12 1 12 12 12 12 12 100 12 12 12 100 12 12 12 12 12 1 1 12 12 12 12 1 100 12 1 1 1 7 12 1 1 1 1 12 12 12 1 1 7 12 1 100 12 12 12 12 100 12 100 12 100 12 1 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 1 12 12 100 12 1 1 1 12 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/net/URL serialPersistentFields [Ljava/io/ObjectStreamField; 7 [Ljava/io/ObjectStreamField;
+ciInstanceKlass java/util/jar/Manifest 1 1 265 10 7 10 9 7 10 9 9 10 10 10 10 10 11 11 10 10 100 100 10 8 10 10 10 10 11 100 10 10 11 11 11 11 100 100 8 10 11 100 8 10 10 10 8 10 10 10 11 10 10 10 8 10 7 10 10 10 100 8 10 10 8 10 10 10 10 11 10 10 10 100 7 10 11 10 11 10 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 100 100 100 100 1 1 1 100 100 100 100 1 1 100 1 1 1 1 1 1 1 1 1 1 12 1 12 1 12 12 12 12 12 12 12 7 12 12 100 12 1 1 1 12 12 12 12 1 12 12 12 100 12 100 12 12 1 1 1 1 12 1 1 12 12 12 1 12 12 12 12 12 12 1 12 1 12 12 12 1 1 12 1 12 100 12 12 12 12 12 100 12 12 1 1 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass sun/misc/Launcher 1 1 234 9 10 10 9 9 10 10 100 100 8 10 10 9 8 10 10 8 10 10 8 10 8 100 10 10 10 100 100 100 100 10 100 10 8 10 10 10 9 7 10 9 10 7 10 10 8 10 10 10 10 10 100 10 7 10 7 10 8 7 100 1 1 7 1 7 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 100 100 100 100 100 1 1 1 1 1 1 100 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 1 1 1 12 12 12 1 7 12 12 1 7 12 100 12 1 7 12 1 1 100 12 100 12 1 1 1 1 12 1 1 12 12 12 12 1 12 12 12 1 12 1 12 12 12 12 7 12 1 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass sun/misc/Launcher$AppClassLoader 1 1 203 8 10 100 10 7 10 10 7 10 10 10 11 9 10 10 10 10 10 10 10 10 100 10 10 10 7 8 10 10 9 10 100 10 10 10 10 100 10 100 100 10 100 10 10 100 10 7 10 10 7 7 1 1 1 1 1 1 1 1 1 1 1 100 100 1 100 1 1 1 1 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 7 12 1 12 1 12 7 12 1 12 12 7 12 7 12 12 7 12 7 12 12 12 100 12 12 12 12 1 12 12 12 1 1 7 12 12 100 12 1 12 12 12 1 12 1 1 12 1 12 12 1 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield sun/misc/Launcher$AppClassLoader $assertionsDisabled Z 1
+ciInstanceKlass sun/misc/Launcher$ExtClassLoader 1 1 243 10 9 7 10 7 10 10 100 10 100 10 10 10 10 10 11 10 8 10 7 9 10 10 7 10 10 7 10 10 8 10 10 10 10 10 7 10 10 10 10 100 10 11 10 10 8 10 10 10 100 10 100 100 10 100 10 10 100 10 10 7 1 1 1 1 1 1 1 1 1 100 100 1 1 100 1 1 1 1 1 1 100 100 100 1 1 100 100 1 1 100 100 100 100 1 1 1 1 1 1 1 12 12 7 1 12 1 12 7 12 1 12 1 12 12 12 12 7 12 7 12 7 12 1 7 12 1 12 12 12 1 12 12 1 12 1 7 12 12 12 12 12 1 12 12 12 12 1 100 12 100 12 12 1 100 12 12 12 1 12 1 1 12 1 12 12 1 12 7 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/security/CodeSource 1 1 351 10 9 9 9 9 10 100 10 100 10 7 10 10 10 100 10 10 10 10 10 100 10 10 10 10 10 10 10 10 10 10 10 10 10 8 10 10 10 10 8 10 10 100 10 10 8 10 10 10 8 8 9 100 8 10 10 8 10 8 8 8 10 10 10 10 10 10 100 100 10 10 10 10 10 100 10 10 8 10 10 10 100 10 100 100 8 8 10 10 10 100 10 10 11 10 10 11 10 10 8 100 10 10 100 10 11 11 7 100 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 100 1 1 100 100 100 1 1 1 100 100 100 100 100 100 100 100 1 1 1 1 12 12 12 12 12 100 12 100 7 12 1 12 12 100 1 12 100 12 12 12 1 12 100 100 12 100 12 12 100 12 12 12 12 1 12 12 12 12 1 12 1 12 1 12 12 12 1 1 12 1 1 12 12 1 12 1 1 1 100 12 12 12 12 12 12 1 1 12 12 12 100 12 12 1 12 1 12 12 12 1 12 1 1 1 1 12 100 12 1 12 12 100 12 12 12 100 1 1 12 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/StackTraceElement 1 1 101 10 8 10 100 9 8 9 9 9 7 10 10 10 8 10 8 8 8 10 8 10 8 7 10 10 10 10 100 100 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 1 12 1 100 12 1 12 1 12 12 12 1 12 12 1 12 1 1 1 12 1 12 1 1 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/nio/LongBuffer
+instanceKlass java/nio/CharBuffer
+instanceKlass java/nio/ByteBuffer
+ciInstanceKlass java/nio/Buffer 1 1 106 100 10 9 9 100 100 10 8 10 10 10 10 9 10 10 8 8 8 9 10 100 10 100 10 100 10 100 10 7 7 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 1 1 1 12 12 12 12 12 12 12 1 1 1 12 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/lang/Boolean 1 1 112 10 9 10 10 8 10 9 9 8 10 7 10 10 100 100 10 10 8 10 9 7 100 100 1 1 1 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 1 7 12 12 12 1 12 1 12 7 12 1 1 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Boolean TRUE Ljava/lang/Boolean; java/lang/Boolean
+staticfield java/lang/Boolean FALSE Ljava/lang/Boolean; java/lang/Boolean
+staticfield java/lang/Boolean TYPE Ljava/lang/Class; java/lang/Class
+ciInstanceKlass java/lang/Character 1 1 463 7 100 10 9 9 10 10 10 10 10 3 3 3 3 3 10 10 3 11 11 10 10 100 10 10 3 10 10 10 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 5 0 10 10 10 10 10 10 10 10 10 10 9 100 10 10 10 3 10 10 100 10 10 10 10 8 10 9 10 10 10 10 8 10 9 7 100 100 7 1 1 100 1 100 1 100 1 1 1 1 3 1 3 1 1 3 1 3 1 1 1 1 1 1 1 3 1 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 3 1 1 3 1 1 1 1 1 3 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 12 12 12 12 12 12 100 12 12 12 12 7 12 12 12 12 1 12 12 12 12 1 12 12 12 12 12 12 7 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 12 12 100 12 12 1 12 12 12 1 100 12 100 12 12 12 7 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Character TYPE Ljava/lang/Class; java/lang/Class
+staticfield java/lang/Character $assertionsDisabled Z 1
+instanceKlass java/util/concurrent/atomic/AtomicLong
+instanceKlass java/util/concurrent/atomic/AtomicInteger
+instanceKlass java/lang/Long
+instanceKlass java/lang/Integer
+instanceKlass java/lang/Short
+instanceKlass java/lang/Byte
+instanceKlass java/lang/Double
+instanceKlass java/lang/Float
+ciInstanceKlass java/lang/Number 1 1 34 10 10 100 7 100 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 1 1 1
+ciInstanceKlass java/lang/Float 1 1 175 7 100 10 10 100 4 100 10 10 8 8 10 10 10 10 4 4 4 10 9 10 10 10 10 10 10 3 3 3 10 10 10 10 8 10 9 7 100 1 1 1 1 1 4 1 1 1 4 1 1 3 1 3 1 3 1 3 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 12 100 12 1 1 12 100 12 1 1 100 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Float TYPE Ljava/lang/Class; java/lang/Class
+ciInstanceKlass java/lang/Double 1 1 229 7 100 10 10 10 100 10 10 6 0 8 10 8 10 8 100 6 0 10 5 0 5 0 8 8 10 10 8 10 8 8 8 10 10 10 10 10 10 10 10 6 0 6 0 6 0 10 9 10 10 10 10 5 0 5 0 10 10 10 10 8 10 9 7 100 1 1 1 1 1 6 0 1 1 1 6 0 1 1 3 1 3 1 3 1 3 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 100 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 12 12 12 1 12 100 12 1 12 1 12 1 1 12 1 1 100 12 100 12 1 12 1 1 1 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Double TYPE Ljava/lang/Class; java/lang/Class
+ciInstanceKlass java/lang/Byte 1 1 153 7 10 9 10 100 100 10 8 10 8 10 10 10 10 10 10 10 10 8 8 10 9 10 10 10 10 5 0 10 8 10 9 7 100 7 1 1 1 1 1 3 1 3 1 1 1 1 1 1 1 3 1 3 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 12 12 12 1 1 12 1 12 1 12 12 12 12 12 12 12 12 1 1 12 12 12 12 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Byte TYPE Ljava/lang/Class; java/lang/Class
+ciInstanceKlass java/lang/Short 1 1 161 7 100 10 10 100 100 10 8 10 8 10 10 10 10 10 10 9 10 10 10 8 8 10 9 10 10 10 10 3 3 5 0 10 8 10 9 7 100 7 1 1 1 1 1 3 1 3 1 1 1 1 1 1 1 3 1 3 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 12 12 1 1 12 1 12 1 12 12 12 12 12 12 12 12 12 12 1 1 12 12 12 12 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Short TYPE Ljava/lang/Class; java/lang/Class
+ciInstanceKlass java/lang/Integer 1 1 314 7 100 7 10 9 7 10 10 10 10 10 10 10 10 3 8 10 10 10 3 9 9 3 9 100 8 10 100 10 8 10 10 8 10 8 10 3 10 10 10 10 8 100 10 10 5 0 8 10 10 7 9 9 10 10 9 10 10 10 10 100 100 10 8 8 10 8 8 8 8 8 8 10 10 10 5 0 3 3 3 3 3 10 10 8 10 9 3 3 3 3 3 3 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 1 5 0 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 1 12 12 100 12 12 12 100 12 12 12 1 12 12 12 12 12 12 1 1 12 1 12 1 12 12 1 12 1 12 12 12 12 12 1 1 12 12 1 12 12 1 12 12 12 12 12 12 12 7 12 1 1 12 1 1 12 1 1 1 1 1 1 12 12 12 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Integer TYPE Ljava/lang/Class; java/lang/Class
+staticfield java/lang/Integer digits [C 36
+staticfield java/lang/Integer DigitTens [C 100
+staticfield java/lang/Integer DigitOnes [C 100
+staticfield java/lang/Integer sizeTable [I 10
+ciInstanceKlass java/lang/Long 1 1 361 7 100 7 10 9 7 10 10 10 10 10 5 0 5 0 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 5 0 8 10 10 10 100 5 0 5 0 9 9 3 3 100 8 10 8 10 8 8 10 5 0 10 10 10 10 8 100 10 10 8 10 8 10 10 5 0 5 0 9 10 8 8 10 8 8 8 8 8 8 10 10 10 10 9 10 10 10 100 100 10 10 10 10 10 5 0 5 0 5 0 5 0 5 0 10 10 10 8 10 9 7 100 7 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 3 1 3 1 5 0 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 1 12 12 12 12 12 1 12 12 12 12 12 12 100 12 12 12 12 12 12 100 12 12 12 1 12 12 12 1 12 12 1 1 12 1 12 1 1 12 12 12 12 12 1 1 12 12 1 12 1 12 12 12 12 1 1 12 1 1 1 1 1 1 12 12 12 12 12 12 100 12 1 1 12 12 12 12 12 12 12 1 7 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/lang/Long TYPE Ljava/lang/Class; java/lang/Class
+ciInstanceKlass java/lang/NullPointerException 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+ciInstanceKlass java/lang/ArithmeticException 1 1 21 10 10 100 100 1 1 1 5 0 1 1 1 1 1 1 1 12 12 1 1
+instanceKlass java/util/HashMap$Values
+instanceKlass java/util/ArrayDeque
+instanceKlass java/util/AbstractSet
+instanceKlass java/util/AbstractList
+ciInstanceKlass java/util/AbstractCollection 1 1 149 100 10 10 10 11 11 10 7 10 10 10 10 10 7 10 7 3 10 100 8 10 3 100 10 11 11 10 10 10 11 8 100 10 10 8 10 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 12 12 12 7 12 12 12 1 100 12 12 12 7 12 7 12 1 100 12 1 12 1 1 12 1 12 12 12 100 12 1 1 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/util/ArrayList$SubList
+instanceKlass java/util/SubList
+instanceKlass java/util/Arrays$ArrayList
+instanceKlass java/util/AbstractSequentialList
+instanceKlass java/util/Collections$EmptyList
+instanceKlass java/util/ArrayList
+instanceKlass java/util/Vector
+ciInstanceKlass java/util/AbstractList 1 1 172 10 9 10 10 100 10 10 11 11 11 10 10 11 11 11 10 10 11 11 11 7 10 7 10 7 7 10 100 10 100 11 10 10 11 100 10 10 100 10 8 10 10 8 10 7 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 12 12 12 12 1 12 100 12 12 12 100 12 12 12 12 12 12 12 100 12 100 1 12 1 12 1 1 12 1 1 12 12 1 12 12 1 1 12 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass java/util/Stack
+ciInstanceKlass java/util/Vector 1 1 394 100 10 100 100 10 8 10 10 10 10 7 9 9 10 10 11 9 10 100 100 10 10 9 10 10 10 7 3 10 100 10 3 100 10 10 10 10 100 8 10 100 10 10 100 10 10 8 10 10 10 100 100 10 10 10 10 10 10 10 10 10 10 10 10 10 8 10 8 10 100 8 10 10 10 8 10 10 10 10 8 100 10 100 10 10 11 100 10 100 10 11 10 10 11 10 100 10 7 100 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 100 100 1 1 100 100 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 1 1 1 12 12 12 12 1 12 12 12 12 100 12 12 12 1 7 12 7 12 12 12 12 12 1 12 1 1 12 12 12 12 1 1 1 12 1 1 12 12 12 1 1 12 12 12 12 12 12 12 12 12 100 12 100 12 100 12 12 1 1 100 100 12 100 12 100 12 12 1 1 12 1 12 100 12 100 12 1 1 100 12 12 12 100 12 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/util/Stack 1 1 56 10 10 10 10 10 100 10 10 10 7 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 1 12 12 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/util/ArrayList 1 1 365 100 9 10 7 9 9 100 100 10 8 10 10 10 10 9 11 10 7 7 10 9 10 10 10 10 10 3 10 100 10 3 10 10 10 100 100 10 10 10 10 10 10 10 100 10 10 8 8 10 10 11 10 10 10 100 10 10 10 10 11 10 7 10 7 10 10 7 10 8 8 8 8 8 11 7 10 100 10 11 10 10 11 10 7 100 100 100 100 1 1 1 1 1 1 1 1 5 0 1 1 3 1 1 1 1 1 1 1 1 1 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 100 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 1 12 12 1 1 1 12 12 12 12 12 7 12 12 1 7 12 12 12 12 7 12 12 12 12 1 12 12 12 1 1 12 7 12 12 12 12 12 12 1 12 1 1 7 12 12 12 100 12 12 12 1 100 12 12 100 12 100 12 12 1 12 1 12 12 1 12 1 1 1 1 1 7 12 1 12 1 12 100 12 12 12 100 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield java/util/ArrayList EMPTY_ELEMENTDATA [Ljava/lang/Object; 0 [Ljava/lang/Object;
+staticfield java/util/ArrayList DEFAULTCAPACITY_EMPTY_ELEMENTDATA [Ljava/lang/Object; 0 [Ljava/lang/Object;
+instanceKlass org/antlr/v4/runtime/atn/Transition$1
+instanceKlass java/util/LinkedHashMap
+ciInstanceKlass java/util/HashMap 1 1 495 10 100 10 100 10 100 11 11 11 7 3 10 100 100 10 8 10 10 10 10 10 8 10 9 10 9 4 10 10 11 9 4 10 11 11 11 11 7 11 11 10 10 9 10 9 9 9 10 9 7 10 10 10 10 10 9 10 100 3 7 7 10 10 9 9 10 10 10 10 9 7 10 9 7 10 9 7 10 100 10 11 11 11 100 10 10 100 100 10 10 10 10 10 10 10 100 10 10 8 4 10 4 10 4 10 100 11 10 10 10 10 7 7 100 100 1 1 100 1 100 1 100 1 100 1 100 1 100 1 100 1 100 1 1 1 1 1 1 1 1 5 0 1 1 3 1 1 1 1 3 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 100 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 12 1 12 1 100 12 1 12 12 12 1 12 1 1 1 12 12 12 12 7 12 1 12 12 12 12 12 12 12 12 12 12 7 12 7 12 12 1 12 12 12 12 12 12 12 12 12 12 12 1 12 12 12 12 12 12 12 1 1 12 12 12 12 12 12 12 12 1 12 12 1 12 1 1 100 12 100 12 100 12 1 12 1 1 12 12 12 100 12 12 12 100 12 1 12 1 100 12 12 100 12 1 100 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/io/PrintStream 1 1 287 100 10 8 10 10 100 100 100 10 10 9 9 9 7 10 9 7 10 9 10 10 10 8 7 10 10 100 10 10 10 9 100 8 10 10 10 10 10 10 7 10 10 100 10 10 10 10 10 10 10 10 10 8 8 10 10 10 10 10 10 10 8 10 10 10 10 10 10 10 10 10 10 10 10 9 10 10 100 10 10 10 11 11 10 10 10 7 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 100 100 100 100 1 1 1 1 1 1 1 100 1 1 1 1 1 100 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 12 1 12 100 12 1 1 1 12 12 12 12 1 12 1 12 12 12 12 12 1 1 12 12 1 12 12 12 1 1 12 12 12 1 12 12 1 100 12 12 12 12 12 12 7 12 12 1 1 12 12 12 12 12 1 12 12 12 12 12 12 12 12 12 12 12 12 12 100 12 1 12 12 12 100 12 12 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass sun/misc/URLClassPath 1 1 532 9 9 9 9 9 9 10 10 10 7 10 9 7 10 9 9 7 10 9 9 10 10 8 11 9 10 10 100 10 10 11 11 7 10 7 11 10 10 9 10 10 7 10 100 10 9 100 10 8 10 8 10 10 10 7 10 10 7 10 10 10 9 9 10 10 10 9 9 8 10 8 10 8 8 10 10 8 10 8 8 10 10 10 10 10 10 10 100 8 8 10 10 8 7 10 10 7 10 10 100 9 10 10 10 100 10 10 10 10 10 10 100 10 10 10 10 100 10 8 10 10 10 100 8 100 10 10 10 10 7 8 10 10 7 9 8 8 8 8 8 8 8 10 10 8 8 10 7 7 100 1 1 100 1 1 1 1 1 8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 1 1 1 1 100 100 100 100 1 1 1 100 100 1 1 1 1 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 1 100 1 1 1 1 100 100 1 1 100 1 100 100 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 12 1 12 1 12 12 1 12 12 12 12 1 7 12 12 12 100 12 1 12 100 12 12 1 12 1 100 12 12 12 12 12 1 12 12 100 12 1 1 12 1 12 100 12 12 1 12 1 12 12 12 12 12 12 12 12 12 1 12 1 12 1 1 7 12 12 1 12 1 1 12 12 12 12 12 12 12 1 1 1 12 12 1 1 12 7 12 1 12 12 1 12 12 12 12 1 12 12 12 100 12 12 12 1 12 12 100 12 100 12 1 100 12 1 12 12 12 1 1 1 12 12 12 12 1 1 12 1 12 1 1 1 1 1 1 1 12 1 1 7 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield sun/misc/URLClassPath JAVA_VERSION Ljava/lang/String; "1.8.0_292"
+staticfield sun/misc/URLClassPath DEBUG Z 0
+staticfield sun/misc/URLClassPath DEBUG_LOOKUP_CACHE Z 0
+staticfield sun/misc/URLClassPath DISABLE_JAR_CHECKING Z 0
+staticfield sun/misc/URLClassPath DISABLE_ACC_CHECKING Z 0
+staticfield sun/misc/URLClassPath DISABLE_CP_URL_CHECK Z 1
+staticfield sun/misc/URLClassPath DEBUG_CP_URL_CHECK Z 0
+ciInstanceKlass sun/net/util/URLUtil 1 1 116 10 7 10 10 10 10 8 10 10 10 8 10 10 10 10 8 10 8 10 8 8 8 10 10 10 7 10 10 10 10 10 100 10 100 100 1 1 1 1 1 1 1 100 100 1 1 100 1 100 1 1 1 12 1 12 7 12 12 1 12 12 12 1 12 12 12 1 12 1 12 1 1 1 12 12 12 1 12 12 100 12 12 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+instanceKlass sun/misc/URLClassPath$JarLoader
+ciInstanceKlass sun/misc/URLClassPath$Loader 1 1 128 9 10 100 10 10 100 100 8 10 10 10 100 8 10 10 10 10 10 100 100 10 10 9 100 10 10 10 7 7 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 100 100 1 1 1 1 1 1 100 1 1 1 1 1 1 12 12 1 100 12 12 1 1 1 12 100 12 12 1 1 12 12 100 12 12 100 12 1 1 12 100 12 12 1 12 12 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass sun/misc/URLClassPath$JarLoader 1 1 549 100 9 9 9 9 9 10 9 9 7 8 8 7 10 10 8 10 10 10 10 9 10 10 10 10 7 10 10 10 10 8 10 10 7 10 10 7 10 7 10 10 9 11 8 10 10 7 10 10 7 10 10 7 10 10 10 10 8 9 10 100 10 100 10 10 10 10 100 100 7 10 8 10 10 10 11 11 100 10 10 10 10 10 10 7 10 10 10 10 7 10 100 10 10 7 100 10 10 10 10 11 10 100 8 10 10 10 11 10 10 9 10 10 10 100 10 10 10 10 10 10 10 9 8 8 10 10 100 10 10 10 10 9 10 10 10 10 10 10 8 10 10 10 100 10 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 100 100 100 100 100 1 1 1 1 1 1 1 1 1 100 1 1 100 100 1 100 1 1 1 1 100 100 100 1 1 100 100 1 1 100 1 1 1 100 100 100 1 1 1 1 1 1 100 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 12 12 12 12 12 12 12 12 1 1 1 12 12 1 12 12 12 12 12 12 12 12 7 12 1 12 7 12 12 12 1 12 12 1 12 7 12 1 12 1 7 12 12 12 100 12 1 12 1 1 12 1 12 12 12 1 12 100 12 1 12 1 12 12 12 12 1 1 1 12 1 12 12 12 100 12 12 1 12 12 100 12 12 12 12 1 12 7 12 100 12 1 12 1 100 12 100 12 1 1 12 12 12 12 100 12 12 1 1 12 7 12 7 12 12 100 12 100 12 100 12 12 7 12 1 12 12 12 12 12 12 12 1 1 100 12 100 12 1 12 12 12 12 12 12 12 12 12 12 1 12 100 12 12 1 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+staticfield sun/misc/URLClassPath$JarLoader zipAccess Lsun/misc/JavaUtilZipFileAccess; java/util/zip/ZipFile$1
+instanceKlass java/io/ObjectStreamException
+instanceKlass java/nio/file/FileSystemException
+instanceKlass java/io/FileNotFoundException
+ciInstanceKlass java/io/IOException 1 1 27 10 10 10 10 100 7 1 1 1 5 0 1 1 1 1 1 1 1 1 1 12 12 12 12 1 1
+ciInstanceKlass java/util/EmptyStackException 0 0 18 10 100 100 1 1 1 5 0 1 1 1 1 1 1 12 1 1
+ciMethod java/lang/System arraycopy (Ljava/lang/Object;ILjava/lang/Object;II)V 7169 1 896 0 -1
+ciMethod java/util/Vector size ()I 1049 1 131 0 0
+ciMethod java/util/Vector elementAt (I)Ljava/lang/Object; 729 1 2148 0 0
+ciMethod java/util/Vector removeElementAt (I)V 129 1 2073 0 0
+ciMethod java/util/Vector elementData (I)Ljava/lang/Object; 1873 1 2148 0 0
+ciMethod java/util/Stack pop ()Ljava/lang/Object; 129 1 2073 0 0
+ciMethod java/util/Stack peek ()Ljava/lang/Object; 145 1 2075 0 0
+ciMethod java/util/Stack empty ()Z 257 1 1007 0 0
+ciMethod java/util/ArrayList size ()I 1065 1 133 0 0
+ciMethod java/util/ArrayList get (I)Ljava/lang/Object; 1977 1 5449 0 -1
+ciMethod java/util/ArrayList add (Ljava/lang/Object;)Z 1713 1 1584 0 -1
+ciMethod java/util/HashMap containsKey (Ljava/lang/Object;)Z 185 1 47 0 -1
+ciMethod java/util/HashMap put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; 1585 1 25289 0 -1
+ciMethod sun/misc/URLClassPath validateLookupCache (ILjava/lang/String;)V 105 1 19 0 -1
+ciMethod sun/misc/URLClassPath getNextLoader ([II)Lsun/misc/URLClassPath$Loader; 2129 1 5392 0 -1
+ciMethod sun/misc/URLClassPath getLoader (I)Lsun/misc/URLClassPath$Loader; 2129 105 5392 0 0
+ciMethod sun/misc/URLClassPath getLoader (Ljava/net/URL;)Lsun/misc/URLClassPath$Loader; 105 1 21 0 -1
+ciMethod sun/misc/URLClassPath push ([Ljava/net/URL;)V 17 105 3 0 -1
+ciMethod sun/net/util/URLUtil urlNoFragString (Ljava/net/URL;)Ljava/lang/String; 113 1 22 0 -1
+ciMethod sun/misc/URLClassPath$Loader getClassPath ()[Ljava/net/URL; 0 0 1 0 -1
+ciMethodData sun/misc/URLClassPath getLoader (I)Lsun/misc/URLClassPath$Loader; 2 5420 orig 264 96 145 18 114 0 0 0 0 48 172 191 237 162 2 0 0 16 7 0 0 48 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0 0 17 161 0 0 65 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 1 0 72 0 2 0 0 0 192 5 0 0 255 255 255 255 7 0 4 0 0 0 0 0 data 184 0x40007 0x1422 0x20 0x0 0xd0005 0x0 0x2a2f1db86c0 0x142a 0x0 0x0 0x130007 0x12b2 0x420 0x178 0x210005 0x0 0x2a2f1dbcc60 0x178 0x0 0x0 0x240007 0x8 0x20 0x170 0x2f0005 0x0 0x2a2f1dbcc60 0x8 0x0 0x0 0x320004 0x0 0x2a2f12274e0 0x8 0x0 0x0 0x380003 0x8 0x18 0x430002 0x8 0x4c0005 0x0 0x2a2f20dccd0 0x8 0x0 0x0 0x4f0007 0x8 0x38 0x0 0x520003 0x0 0xfffffffffffffe88 0x570002 0x8 0x5e0005 0x0 0x2a2f20df780 0x6 0x0 0x0 0x650007 0x6 0x30 0x0 0x6b0002 0x0 0x6e0003 0x6 0x198 0x730003 0x2 0xfffffffffffffde8 0x7b0007 0x0 0x150 0x0 0x850002 0x0 0x8a0005 0x0 0x0 0x0 0x0 0x0 0x8e0005 0x0 0x0 0x0 0x0 0x0 0x930005 0x0 0x0 0x0 0x0 0x0 0x980005 0x0 0x0 0x0 0x0 0x0 0x9b0005 0x0 0x0 0x0 0x0 0x0 0x9e0005 0x0 0x0 0x0 0x0 0x0 0xa10003 0x0 0xfffffffffffffc80 0xa90005 0x0 0x2a2f1db86c0 0x6 0x0 0x0 0xad0002 0x6 0xb60005 0x0 0x2a2f1db86c0 0x6 0x0 0x0 0xc10005 0x0 0x2a2f20dccd0 0x6 0x0 0x0 0xc50003 0x6 0xfffffffffffffbc8 0xcb0007 0x12b2 0xf0 0x0 0xd50002 0x0 0xda0005 0x0 0x0 0x0 0x0 0x0 0xde0005 0x0 0x0 0x0 0x0 0x0 0xe10005 0x0 0x0 0x0 0x0 0x0 0xe40005 0x0 0x0 0x0 0x0 0x0 0xec0005 0x0 0x2a2f1db86c0 0x12b2 0x0 0x0 0xef0004 0x0 0x2a2f20df780 0x12b2 0x0 0x0 oops 11 6 java/util/ArrayList 16 java/util/Stack 26 java/util/Stack 32 java/net/URL 43 java/util/HashMap 58 sun/misc/URLClassPath$JarLoader 121 java/util/ArrayList 129 java/util/ArrayList 135 java/util/HashMap 174 java/util/ArrayList 180 sun/misc/URLClassPath$JarLoader
+ciMethodData sun/misc/URLClassPath getNextLoader ([II)Lsun/misc/URLClassPath$Loader; 2 5392 orig 264 96 145 18 114 0 0 0 0 96 170 191 237 162 2 0 0 168 3 0 0 16 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0 0 49 160 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 14 0 2 0 0 0 80 2 0 0 255 255 255 255 7 0 4 0 0 0 0 0 data 74 0x40007 0x1406 0x20 0x0 0xa0007 0x1406 0x220 0x0 0x100007 0x0 0x200 0x0 0x1a0005 0x0 0x0 0x0 0x0 0x0 0x1d0004 0x0 0x0 0x0 0x0 0x0 0x240007 0x0 0x180 0x0 0x2e0002 0x0 0x330005 0x0 0x0 0x0 0x0 0x0 0x390005 0x0 0x0 0x0 0x0 0x0 0x3e0005 0x0 0x0 0x0 0x0 0x0 0x420005 0x0 0x0 0x0 0x0 0x0 0x450005 0x0 0x0 0x0 0x0 0x0 0x480005 0x0 0x0 0x0 0x0 0x0 0x4b0005 0x0 0x0 0x0 0x0 0x0 0x540002 0x1406 oops 0
+ciMethodData java/util/Stack empty ()Z 1 1009 orig 264 96 145 18 114 0 0 0 0 88 184 173 237 162 2 0 0 176 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 32 0 0 0 137 30 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 7 0 2 0 0 0 104 0 0 0 255 255 255 255 5 0 1 0 0 0 0 0 data 13 0x10005 0x0 0x2a2f1dbcc60 0x3d1 0x0 0x0 0x40007 0x188 0x38 0x249 0x80003 0x249 0x18 oops 1 2 java/util/Stack
+ciMethodData java/util/Stack pop ()Ljava/lang/Object; 2 2073 orig 264 96 145 18 114 0 0 0 0 8 183 173 237 162 2 0 0 216 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 0 73 64 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 9 0 2 0 0 0 144 0 0 0 255 255 255 255 5 0 1 0 0 0 0 0 data 18 0x10005 0x0 0x2a2f1dbcc60 0x809 0x0 0x0 0x60005 0x0 0x2a2f1dbcc60 0x809 0x0 0x0 0xe0005 0x0 0x2a2f1dbcc60 0x809 0x0 0x0 oops 3 2 java/util/Stack 8 java/util/Stack 14 java/util/Stack
+ciMethodData java/util/Stack peek ()Ljava/lang/Object; 2 2075 orig 264 96 145 18 114 0 0 0 0 184 183 173 237 162 2 0 0 216 1 0 0 80 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 18 0 0 0 73 64 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 6 0 2 0 0 0 144 0 0 0 255 255 255 255 5 0 1 0 0 0 0 0 data 18 0x10005 0x0 0x2a2f1dbcc60 0x809 0x0 0x0 0x60007 0x809 0x30 0x0 0xd0002 0x0 0x150005 0x0 0x2a2f1dbcc60 0x809 0x0 0x0 oops 2 2 java/util/Stack 14 java/util/Stack
+ciMethodData java/util/Vector elementAt (I)Ljava/lang/Object; 2 2148 orig 264 96 145 18 114 0 0 0 0 48 87 173 237 162 2 0 0 128 2 0 0 240 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 91 0 0 0 73 64 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 5 0 2 0 0 0 48 1 0 0 255 255 255 255 7 0 5 0 0 0 0 0 data 38 0x50007 0x809 0x100 0x0 0x100002 0x0 0x140005 0x0 0x0 0x0 0x0 0x0 0x190005 0x0 0x0 0x0 0x0 0x0 0x200005 0x0 0x0 0x0 0x0 0x0 0x230005 0x0 0x0 0x0 0x0 0x0 0x260002 0x0 0x2c0005 0x0 0x2a2f1dbcc60 0x809 0x0 0x0 oops 1 34 java/util/Stack
+ciMethodData java/util/Vector removeElementAt (I)V 2 2073 orig 264 96 145 18 114 0 0 0 0 96 90 173 237 162 2 0 0 224 2 0 0 80 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 0 73 64 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 10 0 2 0 0 0 144 1 0 0 255 255 255 255 7 0 15 0 0 0 0 0 data 50 0xf0007 0x809 0x100 0x0 0x1a0002 0x0 0x1e0005 0x0 0x0 0x0 0x0 0x0 0x230005 0x0 0x0 0x0 0x0 0x0 0x2a0005 0x0 0x0 0x0 0x0 0x0 0x2d0005 0x0 0x0 0x0 0x0 0x0 0x300002 0x0 0x350007 0x809 0x30 0x0 0x3d0002 0x0 0x4b0007 0x809 0x30 0x0 0x5b0002 0x0 0x710104 0x0 0x0 0x0 0x0 0x0 oops 0
+ciMethodData java/util/Vector elementData (I)Ljava/lang/Object; 2 2148 orig 264 96 145 18 114 0 0 0 0 88 96 173 237 162 2 0 0 40 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 234 0 0 0 209 59 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 data 0 oops 0
+compile sun/misc/URLClassPath getNextLoader ([II)Lsun/misc/URLClassPath$Loader; -1 4 inline 12 0 -1 sun/misc/URLClassPath getNextLoader ([II)Lsun/misc/URLClassPath$Loader; 1 84 sun/misc/URLClassPath getLoader (I)Lsun/misc/URLClassPath$Loader; 2 13 java/util/ArrayList size ()I 2 33 java/util/Stack empty ()Z 3 1 java/util/Vector size ()I 2 47 java/util/Stack pop ()Ljava/lang/Object; 3 1 java/util/Vector size ()I 3 6 java/util/Stack peek ()Ljava/lang/Object; 4 1 java/util/Vector size ()I 4 21 java/util/Vector elementAt (I)Ljava/lang/Object; 5 44 java/util/Vector elementData (I)Ljava/lang/Object; 3 14 java/util/Vector removeElementAt (I)V
