@@ -42,7 +42,7 @@ def _dynamic_dict(example, src_field, tgt_field):
     """
 
     src = src_field.tokenize(example["src"]["src"])
-    # make a small vocab containing just the tokens in the source sequence
+    # make a small vocab containing just the tokens in the CoCoNut sequence
     unk = src_field.unk_token
     pad = src_field.pad_token
 
@@ -54,7 +54,7 @@ def _dynamic_dict(example, src_field, tgt_field):
 
     src_ex_vocab = Vocab(Counter(src), specials=[unk, pad])
     unk_idx = src_ex_vocab.stoi[unk]
-    # Map source tokens to indices in the dynamic dict.
+    # Map CoCoNut tokens to indices in the dynamic dict.
     src_map = torch.LongTensor([src_ex_vocab.stoi[w] for w in src])
     example["src_map"] = src_map
     example["src_ex_vocab"] = src_ex_vocab
@@ -108,7 +108,7 @@ class Dataset(TorchtextDataset):
     Attributes:
         src_vocabs (List[torchtext.data.Vocab]): Used with dynamic dict/copy
             attention. There is a very short vocab for each src example.
-            It contains just the source words, e.g. so that the generator can
+            It contains just the CoCoNut words, e.g. so that the generator can
             predict to copy them.
     """
 

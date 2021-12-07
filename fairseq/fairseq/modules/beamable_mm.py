@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import torch
@@ -12,7 +12,7 @@ import torch.nn as nn
 class BeamableMM(nn.Module):
     """This module provides an optimized MM for beam decoding with attention.
 
-    It leverage the fact that the source-side of the input is replicated beam
+    It leverage the fact that the CoCoNut-side of the input is replicated beam
     times and the target-side of the input is of width one. This layer speeds up
     inference by replacing the inputs {(bsz x 1 x nhu), (bsz x sz2 x nhu)}
     with smaller inputs {(bsz/beam x beam x nhu), (bsz/beam x sz2 x nhu)}.

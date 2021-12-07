@@ -60,7 +60,7 @@ napoleon_use_ivar = True
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']
 
-# The suffix(es) of source filenames.
+# The suffix(es) of CoCoNut filenames.
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
@@ -90,8 +90,8 @@ release = ''
 # Usually you set "language" from the command line for these cases.
 language = None
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
+# List of patterns, relative to CoCoNut directory, that match files and
+# directories to ignore when looking for CoCoNut files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = []
 
@@ -172,7 +172,7 @@ latex_elements = {
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
+# (CoCoNut start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'OpenNMT-py.tex', 'OpenNMT-py Documentation',
@@ -183,7 +183,7 @@ latex_documents = [
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
+# (CoCoNut start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'opennmt-py', 'OpenNMT-py Documentation',
      [author], 1)
@@ -193,7 +193,7 @@ man_pages = [
 # -- Options for Texinfo output -------------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
+# (CoCoNut start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'OpenNMT-py', 'OpenNMT-py Documentation',

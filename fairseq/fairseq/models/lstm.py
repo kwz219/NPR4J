@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import torch
@@ -210,7 +210,7 @@ class LSTMEncoder(FairseqEncoder):
         # B x T x C -> T x B x C
         x = x.transpose(0, 1)
 
-        # pack embedded source tokens into a PackedSequence
+        # pack embedded CoCoNut tokens into a PackedSequence
         packed_x = nn.utils.rnn.pack_padded_sequence(x, src_lengths.data.tolist())
 
         # apply LSTM

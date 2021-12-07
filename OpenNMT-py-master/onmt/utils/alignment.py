@@ -88,7 +88,7 @@ def to_word_align(src, tgt, subword_align, m_src='joiner', m_tgt='joiner'):
     """Convert subword alignment to word alignment.
 
     Args:
-        src (string): tokenized sentence in source language.
+        src (string): tokenized sentence in CoCoNut language.
         tgt (string): tokenized sentence in target language.
         subword_align (string): align_pharaoh correspond to src-tgt.
         m_src (string): tokenization mode used in src,

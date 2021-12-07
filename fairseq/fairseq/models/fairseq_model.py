@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import torch
@@ -142,7 +142,7 @@ class FairseqModel(BaseFairseqModel):
         """
         Run the forward pass for an encoder-decoder model.
 
-        First feed a batch of source tokens through the encoder. Then, feed the
+        First feed a batch of CoCoNut tokens through the encoder. Then, feed the
         encoder output and previous decoder outputs (i.e., input feeding/teacher
         forcing) to the decoder to produce the next outputs::
 
@@ -150,9 +150,9 @@ class FairseqModel(BaseFairseqModel):
             return self.decoder(prev_output_tokens, encoder_out)
 
         Args:
-            src_tokens (LongTensor): tokens in the source language of shape
+            src_tokens (LongTensor): tokens in the CoCoNut language of shape
                 `(batch, src_len)`
-            src_lengths (LongTensor): source sentence lengths of shape `(batch)`
+            src_lengths (LongTensor): CoCoNut sentence lengths of shape `(batch)`
             prev_output_tokens (LongTensor): previous decoder outputs of shape
                 `(batch, tgt_len)`, for input feeding/teacher forcing
 
@@ -251,7 +251,7 @@ class FairseqLanguageModel(BaseFairseqModel):
         Args:
             src_tokens (LongTensor): tokens on which to condition the decoder,
                 of shape `(batch, tgt_len)`
-            src_lengths (LongTensor): source sentence lengths of shape `(batch)`
+            src_lengths (LongTensor): CoCoNut sentence lengths of shape `(batch)`
 
         Returns:
             the decoder's output, typically of shape `(batch, seq_len, vocab)`

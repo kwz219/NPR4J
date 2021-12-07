@@ -187,7 +187,7 @@ tgt_vocab_path = "toy-ende/run/example.vocab.tgt"
 ```python
 # initialize the frequency counter
 counters = defaultdict(Counter)
-# load source vocab
+# load CoCoNut vocab
 _src_vocab, _src_vocab_size = _load_vocab(
     src_vocab_path,
     'src',

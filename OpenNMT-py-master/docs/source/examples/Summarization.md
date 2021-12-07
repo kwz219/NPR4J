@@ -46,7 +46,7 @@ overwrite: False
 src_seq_length_trunc: 400
 tgt_seq_length_trunc: 100
 
-# common vocabulary for source and target
+# common vocabulary for CoCoNut and target
 share_vocab: True
 
 # Corpus opts:
@@ -181,7 +181,7 @@ overwrite: False
 src_seq_length: 10000
 tgt_seq_length: 10000
 
-# common vocabulary for source and target
+# common vocabulary for CoCoNut and target
 share_vocab: True
 
 # Corpus opts:

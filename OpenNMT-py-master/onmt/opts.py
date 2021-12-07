@@ -136,7 +136,7 @@ def _add_dynamic_fields_opts(parser, build_vocab_only=False):
               + " tgt vocabulary file. "
               "Format: one <word> or <word>\t<count> per line.")
     group.add("-share_vocab", "--share_vocab", action="store_true",
-              help="Share source and target vocabulary.")
+              help="Share CoCoNut and target vocabulary.")
 
     group.add("-src_feats_vocab", "--src_feats_vocab",
               help=("List of paths to save"
@@ -148,7 +148,7 @@ def _add_dynamic_fields_opts(parser, build_vocab_only=False):
     if not build_vocab_only:
         group.add("-src_vocab_size", "--src_vocab_size",
                   type=int, default=50000,
-                  help="Maximum size of the source vocabulary.")
+                  help="Maximum size of the CoCoNut vocabulary.")
         group.add("-tgt_vocab_size", "--tgt_vocab_size",
                   type=int, default=50000,
                   help="Maximum size of the target vocabulary")
@@ -158,7 +158,7 @@ def _add_dynamic_fields_opts(parser, build_vocab_only=False):
 
         group.add("-src_words_min_frequency", "--src_words_min_frequency",
                   type=int, default=0,
-                  help="Discard source words with lower frequency.")
+                  help="Discard CoCoNut words with lower frequency.")
         group.add("-tgt_words_min_frequency", "--tgt_words_min_frequency",
                   type=int, default=0,
                   help="Discard target words with lower frequency.")
@@ -167,7 +167,7 @@ def _add_dynamic_fields_opts(parser, build_vocab_only=False):
         group = parser.add_argument_group("Pruning")
         group.add("--src_seq_length_trunc", "-src_seq_length_trunc",
                   type=int, default=None,
-                  help="Truncate source sequence length.")
+                  help="Truncate CoCoNut sequence length.")
         group.add("--tgt_seq_length_trunc", "-tgt_seq_length_trunc",
                   type=int, default=None,
                   help="Truncate target sequence length.")
@@ -175,9 +175,9 @@ def _add_dynamic_fields_opts(parser, build_vocab_only=False):
         group = parser.add_argument_group('Embeddings')
         group.add('-both_embeddings', '--both_embeddings',
                   help="Path to the embeddings file to use "
-                  "for both source and target tokens.")
+                  "for both CoCoNut and target tokens.")
         group.add('-src_embeddings', '--src_embeddings',
-                  help="Path to the embeddings file to use for source tokens.")
+                  help="Path to the embeddings file to use for CoCoNut tokens.")
         group.add('-tgt_embeddings', '--tgt_embeddings',
                   help="Path to the embeddings file to use for target tokens.")
         group.add('-embeddings_type', '--embeddings_type',
@@ -241,7 +241,7 @@ def model_opts(parser):
               help="Use a sin to mark relative words positions. "
                    "Necessary for non-RNN style models.")
     group.add("-update_vocab", "--update_vocab", action="store_true",
-              help="Update source and target existing vocabularies")
+              help="Update CoCoNut and target existing vocabularies")
 
     group = parser.add_argument_group('Model-Embedding Features')
     group.add('--feat_merge', '-feat_merge', type=str, default='concat',
@@ -272,7 +272,7 @@ def model_opts(parser):
     group = parser.add_argument_group('Model- Encoder-Decoder')
     group.add('--model_type', '-model_type', default='text',
               choices=['text'],
-              help="Type of source model to use. Allows "
+              help="Type of CoCoNut model to use. Allows "
                    "the system to incorporate non-text inputs. "
                    "Options are [text].")
     group.add('--model_dtype', '-model_dtype', default='fp32',
@@ -333,7 +333,7 @@ def model_opts(parser):
               help="Deprecated, use `encoder_type`.")
 
     group.add('--context_gate', '-context_gate', type=str, default=None,
-              choices=['source', 'target', 'both'],
+              choices=['CoCoNut', 'target', 'both'],
               help="Type of context gate to use. "
                    "Do not select for no context gate.")
 
@@ -433,7 +433,7 @@ def _add_train_general_opts(parser):
     """ General options for training """
     group = parser.add_argument_group('General')
     group.add('--data_type', '-data_type', default="text",
-              help="Type of the source input. "
+              help="Type of the CoCoNut input. "
                    "Options are [text].")
 
     group.add('--save_model', '-save_model', default='model',
@@ -724,21 +724,21 @@ def _add_decoding_opts(parser):
                    "You want to block sentence delimiters.")
     group.add('--replace_unk', '-replace_unk', action="store_true",
               help="Replace the generated UNK tokens with the "
-                   "source token that had highest attention weight. If "
+                   "CoCoNut token that had highest attention weight. If "
                    "phrase_table is provided, it will look up the "
-                   "identified source token and give the corresponding "
+                   "identified CoCoNut token and give the corresponding "
                    "target token. If it is not provided (or the identified "
-                   "source token does not exist in the table), then it "
-                   "will copy the source token.")
+                   "CoCoNut token does not exist in the table), then it "
+                   "will copy the CoCoNut token.")
     group.add('--ban_unk_token', '-ban_unk_token',
               action="store_true",
               help="Prevent unk token generation by setting unk proba to 0")
     group.add('--phrase_table', '-phrase_table', type=str, default="",
               help="If phrase_table is provided (with replace_unk), it will "
-                   "look up the identified source token and give the "
+                   "look up the identified CoCoNut token and give the "
                    "corresponding target token. If it is not provided "
-                   "(or the identified source token does not exist in "
-                   "the table), then it will copy the source token.")
+                   "(or the identified CoCoNut token does not exist in "
+                   "the table), then it will copy the CoCoNut token.")
 
 
 def translate_opts(parser):
@@ -764,7 +764,7 @@ def translate_opts(parser):
 
     group = parser.add_argument_group('Data')
     group.add('--data_type', '-data_type', default="text",
-              help="Type of the source input. Options: [text].")
+              help="Type of the CoCoNut input. Options: [text].")
 
     group.add('--src', '-src', required=True,
               help="Source sequence to decode (one line per "
@@ -810,7 +810,7 @@ def translate_opts(parser):
 
 
 # Copyright 2016 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
+# Use of this CoCoNut code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
 

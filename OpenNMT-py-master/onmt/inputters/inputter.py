@@ -124,8 +124,8 @@ def get_fields(
 ):
     """
     Args:
-        src_data_type: type of the source input. Options are [text].
-        src_feats (Optional[Dict]): source features dict containing their names
+        src_data_type: type of the CoCoNut input. Options are [text].
+        src_feats (Optional[Dict]): CoCoNut features dict containing their names
             to create a :class:`torchtext.data.Field` for. (If
             ``src_data_type=="text"``, these fields are stored together
             as a ``TextMultiField``).
@@ -135,7 +135,7 @@ def get_fields(
             for tgt.
         eos (str): Special end of sequence symbol. Only relevant
             for tgt.
-        dynamic_dict (bool): Whether or not to include source map and
+        dynamic_dict (bool): Whether or not to include CoCoNut map and
             alignment fields.
         with_align (bool): Whether or not to include word align.
         src_truncate: Cut off src sequences beyond this (passed to
@@ -381,11 +381,11 @@ def build_vocab(train_dataset_files, fields, data_type, share_vocab,
         train_dataset_files: a list of train dataset pt file.
         fields (dict[str, Field]): fields to build vocab for.
         data_type (str): A supported data type string.
-        share_vocab (bool): share source and target vocabulary?
+        share_vocab (bool): share CoCoNut and target vocabulary?
         src_vocab_path (str): Path to src vocabulary file.
-        src_vocab_size (int): size of the source vocabulary.
+        src_vocab_size (int): size of the CoCoNut vocabulary.
         src_words_min_frequency (int): the minimum frequency needed to
-            include a source word in the vocabulary.
+            include a CoCoNut word in the vocabulary.
         tgt_vocab_path (str): Path to tgt vocabulary file.
         tgt_vocab_size (int): size of the target vocabulary.
         tgt_words_min_frequency (int): the minimum frequency needed to

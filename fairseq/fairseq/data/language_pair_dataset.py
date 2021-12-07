@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import numpy as np
@@ -27,9 +27,9 @@ def collate(
         )
 
     id = torch.LongTensor([s['id'] for s in samples])
-    src_tokens = merge('source', left_pad=left_pad_source)
-    # sort by descending source length
-    src_lengths = torch.LongTensor([s['source'].numel() for s in samples])
+    src_tokens = merge('CoCoNut', left_pad=left_pad_source)
+    # sort by descending CoCoNut length
+    src_lengths = torch.LongTensor([s['CoCoNut'].numel() for s in samples])
     src_lengths, sort_order = src_lengths.sort(descending=True)
     id = id.index_select(0, sort_order)
     src_tokens = src_tokens.index_select(0, sort_order)
@@ -51,7 +51,7 @@ def collate(
             )
             prev_output_tokens = prev_output_tokens.index_select(0, sort_order)
     else:
-        ntokens = sum(len(s['source']) for s in samples)
+        ntokens = sum(len(s['CoCoNut']) for s in samples)
 
     batch = {
         'id': id,
@@ -61,7 +61,7 @@ def collate(
             'src_lengths': src_lengths,
         },
         'target': target,
-        'nsentences': samples[0]['source'].size(0),
+        'nsentences': samples[0]['CoCoNut'].size(0),
     }
     if prev_output_tokens is not None:
         batch['net_input']['prev_output_tokens'] = prev_output_tokens
@@ -73,17 +73,17 @@ class LanguagePairDataset(FairseqDataset):
     A pair of torch.utils.data.Datasets.
 
     Args:
-        src (torch.utils.data.Dataset): source dataset to wrap
-        src_sizes (List[int]): source sentence lengths
-        src_dict (~fairseq.data.Dictionary): source vocabulary
+        src (torch.utils.data.Dataset): CoCoNut dataset to wrap
+        src_sizes (List[int]): CoCoNut sentence lengths
+        src_dict (~fairseq.data.Dictionary): CoCoNut vocabulary
         tgt (torch.utils.data.Dataset, optional): target dataset to wrap
         tgt_sizes (List[int], optional): target sentence lengths
         tgt_dict (~fairseq.data.Dictionary, optional): target vocabulary
-        left_pad_source (bool, optional): pad source tensors on the left side.
+        left_pad_source (bool, optional): pad CoCoNut tensors on the left side.
             Default: ``True``
         left_pad_target (bool, optional): pad target tensors on the left side.
             Default: ``False``
-        max_source_positions (int, optional): max number of tokens in the source
+        max_source_positions (int, optional): max number of tokens in the CoCoNut
             sentence. Default: ``1024``
         max_target_positions (int, optional): max number of tokens in the target
             sentence. Default: ``1024``
@@ -93,7 +93,7 @@ class LanguagePairDataset(FairseqDataset):
             to be passed into the model for input feeding/teacher forcing.
             Default: ``True``
         remove_eos_from_source (bool, optional): if set, removes eos from end of
-            source if it's present. Default: ``False``
+            CoCoNut if it's present. Default: ``False``
         append_eos_to_target (bool, optional): if set, appends eos to end of
             target if it's absent. Default: ``False``
     """
@@ -144,7 +144,7 @@ class LanguagePairDataset(FairseqDataset):
 
         return {
             'id': index,
-            'source': src_item,
+            'CoCoNut': src_item,
             'target': tgt_item,
         }
 
@@ -165,10 +165,10 @@ class LanguagePairDataset(FairseqDataset):
                 - `net_input` (dict): the input to the Model, containing keys:
 
                   - `src_tokens` (LongTensor): a padded 2D Tensor of tokens in
-                    the source sentence of shape `(bsz, src_len)`. Padding will
+                    the CoCoNut sentence of shape `(bsz, src_len)`. Padding will
                     appear on the left if *left_pad_source* is ``True``.
                   - `src_lengths` (LongTensor): 1D Tensor of the unpadded
-                    lengths of each source sentence of shape `(bsz)`
+                    lengths of each CoCoNut sentence of shape `(bsz)`
                   - `prev_output_tokens` (LongTensor): a padded 2D Tensor of
                     tokens in the target sentence, shifted right by one position
                     for input feeding/teacher forcing, of shape `(bsz,
@@ -197,7 +197,7 @@ class LanguagePairDataset(FairseqDataset):
         return self.collater([
             {
                 'id': i,
-                'source': self.src_dict.dummy_sentence(src_len),
+                'CoCoNut': self.src_dict.dummy_sentence(src_len),
                 'target': self.tgt_dict.dummy_sentence(tgt_len) if self.tgt_dict is not None else None,
             }
             for i in range(bsz)

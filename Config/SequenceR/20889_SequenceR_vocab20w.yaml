@@ -9,7 +9,7 @@ tgt_seq_length: 100
 src_seq_length_trunc: 1010
 tgt_seq_length_trunc: 100
 
-# common vocabulary for source and target
+# common vocabulary for CoCoNut and target
 share_vocab: True
 dynamic_dict: True
 # Corpus opts:
@@ -55,11 +55,11 @@ learning_rate: 0.15
 adagrad_accumulator_init: 0.1
 
 seed: 912
-world_size: 4
-gpu_ranks: 2
+world_size: 3
+gpu_ranks: [0,1,2]
 
-log_file: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20889_SR_Origin.log
-save_model: /root/zwk/DDPR_DATA/model/M1000_SequenceR/20889_SR_Origin
+log_file: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20889_SR_vocab20w.log
+save_model: /root/zwk/DDPR_DATA/model/M1000_SequenceR/20889_SR_vocab20w
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20889_SR_origin.tensorlog
+tensorboard_log_dir: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20889_SR_vocab20w.tensorlog
 

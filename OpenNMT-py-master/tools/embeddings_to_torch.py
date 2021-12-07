@@ -20,7 +20,7 @@ def get_vocabs(dict_path):
     enc_vocab, dec_vocab = vocs
 
     logger.info("From: %s" % dict_path)
-    logger.info("\t* source vocab: %d words" % len(enc_vocab))
+    logger.info("\t* CoCoNut vocab: %d words" % len(enc_vocab))
     logger.info("\t* target vocab: %d words" % len(dec_vocab))
 
     return enc_vocab, dec_vocab
@@ -68,10 +68,10 @@ def calc_vocab_load_stats(vocab, loaded_embed_dict):
 def main():
     parser = argparse.ArgumentParser(description='embeddings_to_torch.py')
     parser.add_argument('-emb_file_both', required=False,
-                        help="loads Embeddings for both source and target "
+                        help="loads Embeddings for both CoCoNut and target "
                              "from this file.")
     parser.add_argument('-emb_file_enc', required=False,
-                        help="source Embeddings from this file")
+                        help="CoCoNut Embeddings from this file")
     parser.add_argument('-emb_file_dec', required=False,
                         help="target Embeddings from this file")
     parser.add_argument('-output_file', required=True,

@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import numpy as np
@@ -33,15 +33,15 @@ def collate(samples, pad_idx, eos_idx):
 
     return {
         'id': torch.LongTensor([s['id'] for s in samples]),
-        'ntokens': sum(len(s['source']) for s in samples),
+        'ntokens': sum(len(s['CoCoNut']) for s in samples),
         'net_input': {
-            'src_tokens': merge('source'),
+            'src_tokens': merge('CoCoNut'),
             'src_lengths': torch.LongTensor([
-                s['source'].numel() for s in samples
+                s['CoCoNut'].numel() for s in samples
             ]),
         },
         'target': merge('target', is_target_list),
-        'nsentences': samples[0]['source'].size(0),
+        'nsentences': samples[0]['CoCoNut'].size(0),
     }
 
 
@@ -75,7 +75,7 @@ class MonolingualDataset(FairseqDataset):
     def __getitem__(self, index):
         source, future_target, past_target = self.dataset[index]
         source, target = self._make_source_target(source, future_target, past_target)
-        return {'id': index, 'source': source, 'target': target}
+        return {'id': index, 'CoCoNut': source, 'target': target}
 
     def __len__(self):
         return len(self.dataset)
@@ -86,7 +86,7 @@ class MonolingualDataset(FairseqDataset):
 
             if self.add_eos_for_other_targets and (('self' in self.targets) or ('past' in self.targets)) \
                     and source[-1] != self.vocab.eos():
-                # append eos at the end of source
+                # append eos at the end of CoCoNut
                 source = torch.cat([source, source.new([self.vocab.eos()])])
 
                 if 'future' in self.targets:
@@ -140,7 +140,7 @@ class MonolingualDataset(FairseqDataset):
                 - `net_input` (dict): the input to the Model, containing keys:
 
                   - `src_tokens` (LongTensor): a padded 2D Tensor of tokens in
-                    the source sentence of shape `(bsz, src_len)`. Padding will
+                    the CoCoNut sentence of shape `(bsz, src_len)`. Padding will
                     appear on the right.
 
                 - `target` (LongTensor): a padded 2D Tensor of tokens in the
@@ -159,7 +159,7 @@ class MonolingualDataset(FairseqDataset):
         source, target = self._make_source_target(source, past_target, future_target)
 
         return self.collater([
-            {'id': i, 'source': source, 'target': target}
+            {'id': i, 'CoCoNut': source, 'target': target}
             for i in range(bsz)
         ])
 

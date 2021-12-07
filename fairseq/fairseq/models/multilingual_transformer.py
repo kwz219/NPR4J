@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 from collections import OrderedDict
@@ -32,9 +32,9 @@ class MultilingualTransformerModel(FairseqMultiModel):
     options that are specific to the multilingual setting.
 
     Args:
-        --share-encoder-embeddings: share encoder embeddings across all source languages
+        --share-encoder-embeddings: share encoder embeddings across all CoCoNut languages
         --share-decoder-embeddings: share decoder embeddings across all target languages
-        --share-encoders: share all encoder params (incl. embeddings) across all source languages
+        --share-encoders: share all encoder params (incl. embeddings) across all CoCoNut languages
         --share-decoders: share all decoder params (incl. embeddings) across all target languages
     """
 
@@ -106,7 +106,7 @@ class MultilingualTransformerModel(FairseqMultiModel):
             if args.share_encoder_embeddings:
                 shared_dict = task.dicts[src_langs[0]]
                 if any(task.dicts[src_lang] != shared_dict for src_lang in src_langs):
-                    raise ValueError('--share-encoder-embeddings requires a joined source dictionary')
+                    raise ValueError('--share-encoder-embeddings requires a joined CoCoNut dictionary')
                 shared_encoder_embed_tokens = build_embedding(
                     shared_dict, args.encoder_embed_dim, args.encoder_embed_path
                 )

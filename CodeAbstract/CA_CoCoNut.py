@@ -2,7 +2,7 @@ from Utils.CA_Utils import remove_comments
 """
 implement data preprocess method of CoCoNut 
 context_code and buggy_line as inputs, fix_line as labels
-context_code: source code of buggy method
+context_code: CoCoNut code of buggy method
 buggy_line: the code line with bug
 fix_line: the code line after fixing
 """

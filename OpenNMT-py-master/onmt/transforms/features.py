@@ -8,7 +8,7 @@ from collections import defaultdict
 
 @register_transform(name='filterfeats')
 class FilterFeatsTransform(Transform):
-    """Filter out examples with a mismatch between source and features."""
+    """Filter out examples with a mismatch between CoCoNut and features."""
 
     def __init__(self, opts):
         super().__init__(opts)
@@ -31,7 +31,7 @@ class FilterFeatsTransform(Transform):
             if len(example['src']) != len(feat_values):
                 logger.warning(
                     f"Skipping example due to mismatch "
-                    f"between source and feature {feat_name}")
+                    f"between CoCoNut and feature {feat_name}")
                 return None
         return example
 

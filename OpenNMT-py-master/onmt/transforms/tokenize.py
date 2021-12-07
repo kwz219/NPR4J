@@ -34,7 +34,7 @@ class TokenizerTransform(Transform):
                   help="Number of candidates in subword regularization. "
                        "Valid for unigram sampling, "
                        "invalid for BPE-dropout. "
-                       "(source side)")
+                       "(CoCoNut side)")
         group.add('-tgt_subword_nbest', '--tgt_subword_nbest',
                   type=int, default=1,
                   help="Number of candidates in subword regularization. "
@@ -45,7 +45,7 @@ class TokenizerTransform(Transform):
                   type=float, default=0,
                   help="Smoothing parameter for sentencepiece unigram "
                        "sampling, and dropout probability for BPE-dropout. "
-                       "(source side)")
+                       "(CoCoNut side)")
         group.add('-tgt_subword_alpha', '--tgt_subword_alpha',
                   type=float, default=0,
                   help="Smoothing parameter for sentencepiece unigram "

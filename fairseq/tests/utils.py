@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import argparse
@@ -60,7 +60,7 @@ def sequence_generator_setup():
     w1 = 4
     w2 = 5
 
-    # construct source data
+    # construct CoCoNut data
     src_tokens = torch.LongTensor([[w1, w2, eos], [w1, w2, eos]])
     src_lengths = torch.LongTensor([2, 2])
 

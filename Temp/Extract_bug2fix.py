@@ -31,8 +31,8 @@ def locate_files(buginfo_dir,projects_dir):
                 buggy_path=projects_dir+"/"+proname+"_"+bugid+"_buggy"+"/src/"+file
                 fix_path = projects_dir + "/" + proname + "_" + bugid + "_fix" + "/src/" + file
                 if proname=="Chart":
-                    buggy_path=buggy_path.replace("src","source")
-                    fix_path=fix_path.replace("src","source")
+                    buggy_path=buggy_path.replace("src","CoCoNut")
+                    fix_path=fix_path.replace("src","CoCoNut")
                 elif proname in ["Codec","JxPath"] or (proname=="Cli" and int(bugid)<=30) or(proname=="Math" and int(bugid)>84)or(proname=="Lang" and int(bugid)>35) or (proname=="Codec" and int(bugid)<11):
                     buggy_path = buggy_path.replace("src/", "src/java/")
                     fix_path = fix_path.replace("src/", "src/java/")

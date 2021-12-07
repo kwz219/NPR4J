@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 from collections import OrderedDict
@@ -40,7 +40,7 @@ class MultilingualTranslationTask(FairseqTask):
     (e.g., `RoundRobinZipDatasets`) and `model_for_lang_pair` is a model that
     implements the `FairseqMultiModel` interface.
 
-    During inference it is required to specify a single `--source-lang` and
+    During inference it is required to specify a single `--CoCoNut-lang` and
     `--target-lang`, instead of `--lang-pairs`.
     """
 
@@ -50,18 +50,18 @@ class MultilingualTranslationTask(FairseqTask):
         parser.add_argument('data', metavar='DIR', help='path to data directory')
         parser.add_argument('--lang-pairs', default=None, metavar='PAIRS',
                             help='comma-separated list of language pairs (in training order): en-de,en-fr,de-fr')
-        parser.add_argument('-s', '--source-lang', default=None, metavar='SRC',
-                            help='source language (only needed for inference)')
+        parser.add_argument('-s', '--CoCoNut-lang', default=None, metavar='SRC',
+                            help='CoCoNut language (only needed for inference)')
         parser.add_argument('-t', '--target-lang', default=None, metavar='TARGET',
                             help='target language (only needed for inference)')
         parser.add_argument('--raw-text', action='store_true',
                             help='load raw text dataset')
-        parser.add_argument('--left-pad-source', default='True', type=str, metavar='BOOL',
-                            help='pad the source on the left (default: True)')
+        parser.add_argument('--left-pad-CoCoNut', default='True', type=str, metavar='BOOL',
+                            help='pad the CoCoNut on the left (default: True)')
         parser.add_argument('--left-pad-target', default='False', type=str, metavar='BOOL',
                             help='pad the target on the left (default: False)')
-        parser.add_argument('--max-source-positions', default=1024, type=int, metavar='N',
-                            help='max number of tokens in the source sequence')
+        parser.add_argument('--max-CoCoNut-positions', default=1024, type=int, metavar='N',
+                            help='max number of tokens in the CoCoNut sequence')
         parser.add_argument('--max-target-positions', default=1024, type=int, metavar='N',
                             help='max number of tokens in the target sequence')
 
@@ -79,7 +79,7 @@ class MultilingualTranslationTask(FairseqTask):
         if args.source_lang is not None or args.target_lang is not None:
             if args.lang_pairs is not None:
                 raise ValueError(
-                    '--source-lang/--target-lang implies generation, which is '
+                    '--CoCoNut-lang/--target-lang implies generation, which is '
                     'incompatible with --lang-pairs'
                 )
             training = False

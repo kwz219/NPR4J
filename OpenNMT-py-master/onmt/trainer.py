@@ -89,7 +89,7 @@ class Trainer(object):
                the optimizer responsible for update
             trunc_size(int): length of truncated back propagation through time
             shard_size(int): compute loss in shards of this size for efficiency
-            data_type(string): type of the source input: [text]
+            data_type(string): type of the CoCoNut input: [text]
             norm_method(string): normalization methods: [sents|tokens]
             accum_count(list): accumulate gradients this many times.
             accum_steps(list): steps for accum gradients changes.

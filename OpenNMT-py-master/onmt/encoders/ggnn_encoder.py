@@ -81,7 +81,7 @@ class GGNNEncoder(EncoderBase):
        bridge_extra_node (bool): True indicates only 1st extra node
           (after token listing) should be used for decoder init.
        n_steps (int): Steps to advance graph encoder for stabilization
-       src_vocab (int): Path to source vocabulary.(The ggnn uses src_vocab
+       src_vocab (int): Path to CoCoNut vocabulary.(The ggnn uses src_vocab
             during training because the graph is built using edge information
             which requires parsing the input sequence.)
     """
@@ -279,7 +279,7 @@ class GGNNEncoder(EncoderBase):
 
         prop_state = prop_state.transpose(0, 1)
         if self.bridge_extra_node:
-            # Use first extra node as only source for decoder init
+            # Use first extra node as only CoCoNut for decoder init
             join_state = prop_state[first_extra, torch.arange(batch_size)]
         else:
             # Average all nodes to get bridge input

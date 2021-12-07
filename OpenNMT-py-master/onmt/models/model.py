@@ -16,7 +16,7 @@ class BaseModel(nn.Module):
         Possible initialized with a beginning decoder state.
 
         Args:
-            src (Tensor): A source sequence passed to encoder.
+            src (Tensor): A CoCoNut sequence passed to encoder.
                 typically for inputs this will be a padded `LongTensor`
                 of size ``(len, batch, features)``. However, may be an
                 image or other generic input depending on encoder.
@@ -115,7 +115,7 @@ class LanguageModel(BaseModel):
         """Forward propagate a `src` and `tgt` pair for training.
         Possible initialized with a beginning decoder state.
         Args:
-            src (Tensor): A source sequence passed to decoder.
+            src (Tensor): A CoCoNut sequence passed to decoder.
                 typically for inputs this will be a padded `LongTensor`
                 of size ``(len, batch, features)``. However, may be an
                 image or other generic input depending on decoder.

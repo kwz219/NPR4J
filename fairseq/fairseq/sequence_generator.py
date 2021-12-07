@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import math
@@ -20,7 +20,7 @@ class SequenceGenerator(object):
         sampling=False, sampling_topk=-1, sampling_temperature=1,
         diverse_beam_groups=-1, diverse_beam_strength=0.5,
     ):
-        """Generates translations of a given source sentence.
+        """Generates translations of a given CoCoNut sentence.
         Args:
             min/maxlen: The length of the generated output will be bounded by
                 minlen and maxlen (not including the end-of-sentence marker).
@@ -66,7 +66,7 @@ class SequenceGenerator(object):
         """Iterate over a batched dataset and yield individual translations.
         Args:
             maxlen_a/b: generate sequences of maximum length ax + b,
-                where x is the source sentence length.
+                where x is the CoCoNut sentence length.
             cuda: use GPU for generation
             timer: StopwatchMeter for timing generations.
         """

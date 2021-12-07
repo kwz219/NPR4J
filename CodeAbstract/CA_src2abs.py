@@ -43,4 +43,4 @@ def run_src2abs_all(id_file,src_dir,tgt_dir,idiom_path):
     writeL2F(error_ids, tgt_dir + "\\abs_error.txt")
 
 #run_src2abs_all(id_file="D:\DDPR\Dataset\\val_ids.txt",src_dir=r"E:\APR_data\data\raw\val",tgt_dir=r"E:\APR_data\data\Tufano\val",idiom_path=r"E:\APR_data\data\Tufano\Idioms_2w.txt")
-run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\val_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\val",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\val",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
+run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\trn",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\trn",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")

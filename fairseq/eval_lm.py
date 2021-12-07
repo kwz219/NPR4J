@@ -2,8 +2,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 """
@@ -66,7 +66,7 @@ def main(parsed_args):
     task.load_dataset(args.gen_subset)
     print('| {} {} {} examples'.format(args.data, args.gen_subset, len(task.dataset(args.gen_subset))))
 
-    # Optimize ensemble for generation and set the source and dest dicts on the model (required by scorer)
+    # Optimize ensemble for generation and set the CoCoNut and dest dicts on the model (required by scorer)
     for model in models:
         model.make_generation_fast_()
         if args.fp16:

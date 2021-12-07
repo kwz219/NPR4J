@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import argparse
@@ -164,7 +164,7 @@ class TestDiverseBeamSearch(unittest.TestCase):
         self.w1 = 4
         self.w2 = 5
 
-        # construct source data
+        # construct CoCoNut data
         self.src_tokens = torch.LongTensor([
             [self.w1, self.w2, self.eos],
             [self.w1, self.w2, self.eos],

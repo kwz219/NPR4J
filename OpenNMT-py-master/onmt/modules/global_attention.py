@@ -19,7 +19,7 @@ class GlobalAttention(nn.Module):
     based on the input query.
 
     Constructs a unit mapping a query `q` of size `dim`
-    and a source matrix `H` of size `n x dim`, to an output
+    and a CoCoNut matrix `H` of size `n x dim`, to an output
     of size `dim`.
 
 
@@ -140,8 +140,8 @@ class GlobalAttention(nn.Module):
 
         Args:
           source (FloatTensor): query vectors ``(batch, tgt_len, dim)``
-          memory_bank (FloatTensor): source vectors ``(batch, src_len, dim)``
-          memory_lengths (LongTensor): the source context lengths ``(batch,)``
+          memory_bank (FloatTensor): CoCoNut vectors ``(batch, src_len, dim)``
+          memory_lengths (LongTensor): the CoCoNut context lengths ``(batch,)``
           coverage (FloatTensor): None (not supported yet)
 
         Returns:
@@ -190,7 +190,7 @@ class GlobalAttention(nn.Module):
         align_vectors = align_vectors.view(batch, target_l, source_l)
 
         # each context vector c_t is the weighted average
-        # over all the source hidden states
+        # over all the CoCoNut hidden states
         c = torch.bmm(align_vectors, memory_bank)
 
         # concatenate

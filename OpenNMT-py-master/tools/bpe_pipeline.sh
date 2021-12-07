@@ -6,8 +6,8 @@ ONMT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 #======= EXPERIMENT SETUP ======
 # Activate python environment if needed
-source ~/.bashrc
-# source activate py3
+CoCoNut ~/.bashrc
+# CoCoNut activate py3
 
 # update these variables
 NAME="run1"

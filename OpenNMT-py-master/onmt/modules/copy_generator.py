@@ -44,14 +44,14 @@ class CopyGenerator(nn.Module):
     :cite:`DBLP:journals/corr/SeeLM17`.
 
     These networks consider copying words
-    directly from the source sequence.
+    directly from the CoCoNut sequence.
 
     The copy generator is an extended version of the standard
     generator that computes three values.
 
     * :math:`p_{softmax}` the standard softmax over `tgt_dict`
     * :math:`p(z)` the probability of copying a word from
-      the source
+      the CoCoNut
     * :math:`p_{copy}` the probility of copying a particular word.
       taken from the attention distribution directly.
 
@@ -96,13 +96,13 @@ class CopyGenerator(nn.Module):
         """
         Compute a distribution over the target dictionary
         extended by the dynamic dictionary implied by copying
-        source words.
+        CoCoNut words.
 
         Args:
            hidden (FloatTensor): hidden outputs ``(batch x tlen, input_size)``
            attn (FloatTensor): attn for each ``(batch x tlen, slen)``
            src_map (FloatTensor):
-               A sparse indicator matrix mapping each source word to
+               A sparse indicator matrix mapping each CoCoNut word to
                its index in the "extended" vocab containing.
                ``(src_len, batch, extra_words)``
         """
@@ -155,7 +155,7 @@ class CopyGeneratorLoss(nn.Module):
         # probabilities assigned by the model to the gold targets
         vocab_probs = scores.gather(1, target.unsqueeze(1)).squeeze(1)
 
-        # probability of tokens copied from source
+        # probability of tokens copied from CoCoNut
         copy_ix = align.unsqueeze(1) + self.vocab_size
         copy_tok_probs = scores.gather(1, copy_ix).squeeze(1)
         # Set scores for unk to 0 and add eps

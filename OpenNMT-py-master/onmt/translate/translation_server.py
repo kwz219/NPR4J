@@ -872,7 +872,7 @@ class ServerModel(object):
         """Convert alignment to match detokenized src/tgt (or not).
 
         Args:
-            src (str): The tokenized source sequence.
+            src (str): The tokenized CoCoNut sequence.
             tgt (str): The tokenized target sequence.
             align (str): The alignment correspand to src/tgt pair.
 

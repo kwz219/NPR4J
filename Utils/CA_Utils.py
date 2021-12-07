@@ -74,7 +74,7 @@ def jarWrapper(args:list):
     return stdout,stderr
 
 """
-remove comments of java source code
+remove comments of java CoCoNut code
 """
 def remove_comments(code:str):
     code_lines=code.split('\n')

@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import itertools
@@ -22,10 +22,10 @@ from . import FairseqTask, register_task
 @register_task('translation')
 class TranslationTask(FairseqTask):
     """
-    Translate from one (source) language to another (target) language.
+    Translate from one (CoCoNut) language to another (target) language.
 
     Args:
-        src_dict (Dictionary): dictionary for the source language
+        src_dict (Dictionary): dictionary for the CoCoNut language
         tgt_dict (Dictionary): dictionary for the target language
 
     .. note::
@@ -45,24 +45,24 @@ class TranslationTask(FairseqTask):
     def add_args(parser):
         """Add task-specific arguments to the parser."""
         parser.add_argument('data', nargs='+', help='path(s) to data directorie(s)')
-        parser.add_argument('-s', '--source-lang', default=None, metavar='SRC',
-                            help='source language')
+        parser.add_argument('-s', '--CoCoNut-lang', default=None, metavar='SRC',
+                            help='CoCoNut language')
         parser.add_argument('-t', '--target-lang', default=None, metavar='TARGET',
                             help='target language')
         parser.add_argument('--raw-text', action='store_true',
                             help='load raw text dataset')
-        parser.add_argument('--left-pad-source', default='True', type=str, metavar='BOOL',
-                            help='pad the source on the left')
+        parser.add_argument('--left-pad-CoCoNut', default='True', type=str, metavar='BOOL',
+                            help='pad the CoCoNut on the left')
         parser.add_argument('--left-pad-target', default='False', type=str, metavar='BOOL',
                             help='pad the target on the left')
-        parser.add_argument('--max-source-positions', default=1024, type=int, metavar='N',
-                            help='max number of tokens in the source sequence')
+        parser.add_argument('--max-CoCoNut-positions', default=1024, type=int, metavar='N',
+                            help='max number of tokens in the CoCoNut sequence')
         parser.add_argument('--max-target-positions', default=1024, type=int, metavar='N',
                             help='max number of tokens in the target sequence')
         parser.add_argument('--upsample-primary', default=1, type=int,
                             help='amount to upsample primary dataset')
         parser.add_argument('--use-context',action='store_true',
-                            help='use context in source dataset')
+                            help='use context in CoCoNut dataset')
 
     def __init__(self, args, src_dict, tgt_dict):
         super().__init__(args)
@@ -182,7 +182,7 @@ class TranslationTask(FairseqTask):
 
     @property
     def source_dictionary(self):
-        """Return the source :class:`~fairseq.data.Dictionary`."""
+        """Return the CoCoNut :class:`~fairseq.data.Dictionary`."""
         return self.src_dict
 
     @property

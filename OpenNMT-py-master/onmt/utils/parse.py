@@ -85,11 +85,11 @@ class DataOptsCheckerMixin(object):
                 if 'inferfeats' not in corpus["transforms"]:
                     raise ValueError(
                         "'inferfeats' transform is required "
-                        "when setting source features")
+                        "when setting CoCoNut features")
                 if 'filterfeats' not in corpus["transforms"]:
                     raise ValueError(
                         "'filterfeats' transform is required "
-                        "when setting source features")
+                        "when setting CoCoNut features")
             else:
                 corpus["src_feats"] = None
 
@@ -129,7 +129,7 @@ class DataOptsCheckerMixin(object):
         for cname, corpus in opt.data.items():
             if cname != CorpusName.VALID and corpus["src_feats"] is not None:
                 assert opt.src_feats_vocab, \
-                    "-src_feats_vocab is required if using source features."
+                    "-src_feats_vocab is required if using CoCoNut features."
                 if isinstance(opt.src_feats_vocab, str):
                     import yaml
                     opt.src_feats_vocab = yaml.safe_load(opt.src_feats_vocab)

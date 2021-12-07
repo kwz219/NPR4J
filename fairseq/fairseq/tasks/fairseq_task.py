@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 from fairseq.data import data_utils, FairseqDataset, iterators
@@ -196,7 +196,7 @@ class FairseqTask(object):
 
     @property
     def source_dictionary(self):
-        """Return the source :class:`~fairseq.data.Dictionary` (if applicable
+        """Return the CoCoNut :class:`~fairseq.data.Dictionary` (if applicable
         for this task)."""
         raise NotImplementedError
 

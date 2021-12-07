@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import torch
@@ -250,7 +250,7 @@ class NoisingDataset(torch.utils.data.Dataset):
         corresponding {noisy src, original src} batch
         Args:
             src_dataset: dataset which will be used to build self.src_dataset --
-                a LanguagePairDataset with src dataset as the source dataset and
+                a LanguagePairDataset with src dataset as the CoCoNut dataset and
                 None as the target dataset. Should NOT have padding so that
                 src_lengths are accurately calculated by language_pair_dataset
                 collate function.

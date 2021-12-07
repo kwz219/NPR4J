@@ -198,7 +198,7 @@ class RNNDecoderBase(DecoderBase):
                  ``(tgt_len, batch, nfeats)``.
             memory_bank (FloatTensor): vectors from the encoder
                  ``(src_len, batch, hidden)``.
-            memory_lengths (LongTensor): the padded source lengths
+            memory_lengths (LongTensor): the padded CoCoNut lengths
                 ``(batch,)``.
 
         Returns:
@@ -266,7 +266,7 @@ class StdRNNDecoder(RNNDecoderBase):
                 ``(len, batch, nfeats)``.
             memory_bank (FloatTensor): output(tensor sequence) from the
                 encoder RNN of size ``(src_len, batch, hidden_size)``.
-            memory_lengths (LongTensor): the source memory_bank lengths.
+            memory_lengths (LongTensor): the CoCoNut memory_bank lengths.
 
         Returns:
             (Tensor, List[FloatTensor], Dict[str, List[FloatTensor]):

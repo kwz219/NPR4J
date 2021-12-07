@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import unittest
@@ -24,16 +24,16 @@ class TestDataNoising(unittest.TestCase):
     def _get_test_data_with_bpe_cont_marker(self, append_eos=True):
         """
         Args:
-            append_eos: if True, each input sentence in the source tokens tensor
+            append_eos: if True, each input sentence in the CoCoNut tokens tensor
                 will have an EOS appended to the end.
 
         Returns:
             vocabs: BPE vocab with continuation markers as suffixes to denote
                 non-end of word tokens. This is the standard BPE format used in
                 fairseq's preprocessing.
-            x: input tensor containing numberized source tokens, with EOS at the
+            x: input tensor containing numberized CoCoNut tokens, with EOS at the
                 end if append_eos is true
-            src_lengths: and source lengths.
+            src_lengths: and CoCoNut lengths.
         """
         vocab = Dictionary()
         vocab.add_symbol("he@@")
@@ -59,7 +59,7 @@ class TestDataNoising(unittest.TestCase):
     def _get_test_data_with_bpe_end_marker(self, append_eos=True):
         """
         Args:
-            append_eos: if True, each input sentence in the source tokens tensor
+            append_eos: if True, each input sentence in the CoCoNut tokens tensor
                 will have an EOS appended to the end.
 
         Returns:
@@ -67,9 +67,9 @@ class TestDataNoising(unittest.TestCase):
                 tokens at the end of a word. This is an alternative to fairseq's
                 standard preprocessing framework and is not generally supported
                 within fairseq.
-            x: input tensor containing numberized source tokens, with EOS at the
+            x: input tensor containing numberized CoCoNut tokens, with EOS at the
                 end if append_eos is true
-            src_lengths: and source lengths.
+            src_lengths: and CoCoNut lengths.
         """
         vocab = Dictionary()
         vocab.add_symbol("he")
@@ -95,14 +95,14 @@ class TestDataNoising(unittest.TestCase):
     def _get_test_data_with_word_vocab(self, append_eos=True):
         """
         Args:
-            append_eos: if True, each input sentence in the source tokens tensor
+            append_eos: if True, each input sentence in the CoCoNut tokens tensor
                 will have an EOS appended to the end.
 
         Returns:
             vocabs: word vocab
-            x: input tensor containing numberized source tokens, with EOS at the
+            x: input tensor containing numberized CoCoNut tokens, with EOS at the
                 end if append_eos is true
-            src_lengths: and source lengths.
+            src_lengths: and CoCoNut lengths.
         """
         vocab = Dictionary()
 
@@ -415,10 +415,10 @@ class TestDataNoising(unittest.TestCase):
         """
         Constructs a NoisingDataset and the corresponding
         LanguagePairDataset(NoisingDataset(src), src). If we set
-        use_append_eos_dataset to True, wrap the source dataset in
-        AppendEosDataset to append EOS to the clean source when using it as the
+        use_append_eos_dataset to True, wrap the CoCoNut dataset in
+        AppendEosDataset to append EOS to the clean CoCoNut when using it as the
         target. In practice, we should use AppendEosDataset because our models
-        usually have source without EOS but target with EOS.
+        usually have CoCoNut without EOS but target with EOS.
         """
         src_dataset = test_utils.TestDataset(data=src_tokens_no_pad)
 
@@ -464,11 +464,11 @@ class TestDataNoising(unittest.TestCase):
 
         eos, pad = src_dict.eos(), src_dict.pad()
 
-        # Generated noisy source as source
+        # Generated noisy CoCoNut as CoCoNut
         expected_src = torch.LongTensor(
             [[4, 5, 10, 11, 8, 12, 13, eos], [pad, pad, pad, 6, 8, 9, 7, eos]]
         )
-        # Original clean source as target (right-padded)
+        # Original clean CoCoNut as target (right-padded)
         expected_tgt = torch.LongTensor(
             [[4, 5, 10, 11, 8, 12, 13, eos], [6, 7, 8, 9, eos, pad, pad, pad]]
         )
@@ -481,7 +481,7 @@ class TestDataNoising(unittest.TestCase):
     def test_noising_dataset_without_eos(self):
         """
         Similar to test noising dataset with eos except that we have to set
-        use_append_eos_dataset=True so that we wrap the source dataset in the
+        use_append_eos_dataset=True so that we wrap the CoCoNut dataset in the
         AppendEosDataset when using it as the target in LanguagePairDataset.
         """
 
@@ -504,11 +504,11 @@ class TestDataNoising(unittest.TestCase):
 
         eos, pad = src_dict.eos(), src_dict.pad()
 
-        # Generated noisy source as source
+        # Generated noisy CoCoNut as CoCoNut
         expected_src = torch.LongTensor(
             [[4, 5, 10, 11, 8, 12, 13], [pad, pad, pad, 6, 8, 9, 7]]
         )
-        # Original clean source as target (right-padded)
+        # Original clean CoCoNut as target (right-padded)
         expected_tgt = torch.LongTensor(
             [[4, 5, 10, 11, 8, 12, 13, eos], [6, 7, 8, 9, eos, pad, pad, pad]]
         )

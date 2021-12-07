@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import math
@@ -82,7 +82,7 @@ class TokenBlockDataset(torch.utils.data.Dataset):
         item = torch.LongTensor(self.tokens[s:e])
 
         if self.include_targets:
-            # target is the sentence, for source, rotate item one token to the left (would start with eos)
+            # target is the sentence, for CoCoNut, rotate item one token to the left (would start with eos)
             # past target is rotated to the left by 2 (padded if its first)
             if s == 0:
                 source = np.concatenate([[self.eos], self.tokens[0:e - 1]])

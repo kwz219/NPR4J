@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import contextlib
@@ -197,7 +197,7 @@ def preprocess_translation_data(data_dir, extra_flags=None):
     preprocess_parser = preprocess.get_parser()
     preprocess_args = preprocess_parser.parse_args(
         [
-            '--source-lang', 'in',
+            '--CoCoNut-lang', 'in',
             '--target-lang', 'out',
             '--trainpref', os.path.join(data_dir, 'train'),
             '--validpref', os.path.join(data_dir, 'valid'),
@@ -225,7 +225,7 @@ def train_translation_model(data_dir, arch, extra_flags=None):
             '--max-epoch', '1',
             '--no-progress-bar',
             '--distributed-world-size', '1',
-            '--source-lang', 'in',
+            '--CoCoNut-lang', 'in',
             '--target-lang', 'out',
         ] + (extra_flags or []),
     )
@@ -263,7 +263,7 @@ def generate_main(data_dir, extra_flags=None):
 def preprocess_lm_data(data_dir):
     preprocess_parser = preprocess.get_parser()
     preprocess_args = preprocess_parser.parse_args([
-        '--only-source',
+        '--only-CoCoNut',
         '--trainpref', os.path.join(data_dir, 'train.out'),
         '--validpref', os.path.join(data_dir, 'valid.out'),
         '--testpref', os.path.join(data_dir, 'test.out'),

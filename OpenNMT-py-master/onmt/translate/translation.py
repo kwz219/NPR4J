@@ -127,7 +127,7 @@ class Translation(object):
 
     Attributes:
         src (LongTensor): Source word IDs.
-        src_raw (List[str]): Raw source words.
+        src_raw (List[str]): Raw CoCoNut words.
         pred_sents (List[List[str]]): Words from the n-best translations.
         pred_scores (List[List[float]]): Log-probs of n-best translations.
         attns (List[FloatTensor]) : Attention distribution for each

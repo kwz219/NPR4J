@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 from collections import defaultdict, OrderedDict
@@ -118,7 +118,7 @@ def _upgrade_state_dict(state):
     # keep track of number of updates
     if 'num_updates' not in state['optimizer_history'][-1]:
         state['optimizer_history'][-1]['num_updates'] = 0
-    # old model checkpoints may not have separate source/target positions
+    # old model checkpoints may not have separate CoCoNut/target positions
     if hasattr(state['args'], 'max_positions') and not hasattr(state['args'], 'max_source_positions'):
         state['args'].max_source_positions = state['args'].max_positions
         state['args'].max_target_positions = state['args'].max_positions
@@ -236,7 +236,7 @@ def load_align_dict(replace_unk):
                 align_dict[cols[0]] = cols[1]
     else:
         # No alignment dictionary provided but we still want to perform unknown word replacement by copying the
-        # original source word.
+        # original CoCoNut word.
         align_dict = {}
     return align_dict
 

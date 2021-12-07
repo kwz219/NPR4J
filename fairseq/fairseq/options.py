@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import argparse
@@ -296,10 +296,10 @@ def add_generation_args(parser):
                        help='number of hypotheses to output')
     group.add_argument('--max-len-a', default=0, type=float, metavar='N',
                        help=('generate sequences of maximum length ax + b, '
-                             'where x is the source length'))
+                             'where x is the CoCoNut length'))
     group.add_argument('--max-len-b', default=200, type=int, metavar='N',
                        help=('generate sequences of maximum length ax + b, '
-                             'where x is the source length'))
+                             'where x is the CoCoNut length'))
     group.add_argument('--min-len', default=1, type=float, metavar='N',
                        help=('minimum generation length'))
     group.add_argument('--no-early-stop', action='store_true',
@@ -331,7 +331,7 @@ def add_generation_args(parser):
     group.add_argument('--diverse-beam-strength', default=0.5, type=float, metavar='N',
                        help='strength of diversity penalty for Diverse Beam Search')
     group.add_argument('--print-alignment', action='store_true',
-                       help='if set, uses attention feedback to compute and print alignment to source tokens')
+                       help='if set, uses attention feedback to compute and print alignment to CoCoNut tokens')
     return group
 
 

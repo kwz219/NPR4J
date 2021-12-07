@@ -20,7 +20,7 @@
 import os
 import sys
 
-# source code directory, relative to this file, for sphinx-autobuild
+# CoCoNut code directory, relative to this file, for sphinx-autobuild
 sys.path.insert(0, os.path.abspath('..'))
 
 source_suffix = ['.rst']
@@ -71,8 +71,8 @@ release = '0.6.0'
 # Usually you set "language" from the command line for these cases.
 language = None
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
+# List of patterns, relative to CoCoNut directory, that match files and
+# directories to ignore when looking for CoCoNut files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 

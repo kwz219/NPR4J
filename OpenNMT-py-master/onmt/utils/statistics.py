@@ -135,7 +135,8 @@ class Statistics(object):
         #writer.add_scalar(prefix + "/tgtper", self.n_words / t, step)
         #writer.add_scalar(prefix + "/lr", learning_rate, step)
         if patience is not None:
-            writer.add_scalar(prefix + "/patience", patience, step)
+            pass
+            #writer.add_scalar(prefix + "/patience", patience, step)
     def log_accuracy(self,prefix,writer,step):
         writer.add_scalar(prefix + "/accuracy", self.accuracy(), step)
     def log_loss(self,prefix,writer,step):

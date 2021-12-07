@@ -35,7 +35,7 @@ TEST_PATH=$DATA_PATH/test
 
 CUR_DIR=$(pwd)
 
-# set vocabulary size and source and target languages
+# set vocabulary size and CoCoNut and target languages
 vocab_size=32000
 sl=en
 tl=de

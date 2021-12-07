@@ -7,7 +7,7 @@ def context_gate_factory(gate_type, embeddings_size, decoder_size,
                          attention_size, output_size):
     """Returns the correct ContextGate class"""
 
-    gate_types = {'source': SourceContextGate,
+    gate_types = {'CoCoNut': SourceContextGate,
                   'target': TargetContextGate,
                   'both': BothContextGate}
 
@@ -23,7 +23,7 @@ class ContextGate(nn.Module):
     embedding, the current decoder state and the attention state, and
     produces a gate.
     The gate can be used to select the input from the target side context
-    (decoder state), from the source context (attention state) or both.
+    (decoder state), from the CoCoNut context (attention state) or both.
     """
 
     def __init__(self, embeddings_size, decoder_size,
@@ -46,7 +46,7 @@ class ContextGate(nn.Module):
 
 
 class SourceContextGate(nn.Module):
-    """Apply the context gate only to the source context"""
+    """Apply the context gate only to the CoCoNut context"""
 
     def __init__(self, embeddings_size, decoder_size,
                  attention_size, output_size):

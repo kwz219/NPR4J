@@ -1,8 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
 import torch
@@ -11,7 +11,7 @@ from fairseq import utils
 
 
 class SequenceScorer(object):
-    """Scores the target for a given source sentence."""
+    """Scores the target for a given CoCoNut sentence."""
 
     def __init__(self, models, tgt_dict):
         self.models = models

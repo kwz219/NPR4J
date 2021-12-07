@@ -1,4 +1,5 @@
 """ Report manager utility """
+import logging
 import time
 from datetime import datetime
 
@@ -148,7 +149,13 @@ class ReportMgr(ReportMgrBase):
         """
         See base class method `ReportMgrBase.report_step`.
         """
+        use_clearml=False
+        from clearml import Logger
         if train_stats is not None:
+            if use_clearml==True:
+
+                logger=Logger.current_logger()
+                logger.report_text(('Train perplexity: %g' % train_stats.ppl())+" "+('Train accuracy: %g' % train_stats.accuracy())+' Train step: '+str(step), level=logging.DEBUG, print_console=False)
             self.log('Train perplexity: %g' % train_stats.ppl())
             self.log('Train accuracy: %g' % train_stats.accuracy())
 
@@ -159,6 +166,12 @@ class ReportMgr(ReportMgrBase):
                                        step)
 
         if valid_stats is not None:
+            if use_clearml == True:
+
+                logger = Logger.current_logger()
+                logger.report_text(('Validation perplexity: %g' % valid_stats.ppl()) + " " + (
+                            'Validation accuracy: %g' % valid_stats.accuracy()) + ' Validation step: ' + str(step),
+                                   level=logging.DEBUG, print_console=False)
             self.log('Validation perplexity: %g' % valid_stats.ppl())
             self.log('Validation accuracy: %g' % valid_stats.accuracy())
 

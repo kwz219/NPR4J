@@ -2,8 +2,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the license found in the LICENSE file in
-# the root directory of this source tree. An additional grant of patent rights
+# This CoCoNut code is licensed under the license found in the LICENSE file in
+# the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 """
 Data pre-processing: build vocabularies and binarize training data.
@@ -24,7 +24,7 @@ from multiprocessing import Pool, Manager, Process
 def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-s", "--source-lang", default=None, metavar="SRC", help="source language"
+        "-s", "--CoCoNut-lang", default=None, metavar="SRC", help="CoCoNut language"
     )
     parser.add_argument(
         "-t", "--target-lang", default=None, metavar="TARGET", help="target language"
@@ -62,7 +62,7 @@ def get_parser():
         help="map words appearing less than threshold times to unknown",
     )
     parser.add_argument("--tgtdict", metavar="FP", help="reuse given target dictionary")
-    parser.add_argument("--srcdict", metavar="FP", help="reuse given source dictionary")
+    parser.add_argument("--srcdict", metavar="FP", help="reuse given CoCoNut dictionary")
     parser.add_argument(
         "--nwordstgt",
         metavar="N",
@@ -75,7 +75,7 @@ def get_parser():
         metavar="N",
         default=-1,
         type=int,
-        help="number of source words to retain",
+        help="number of CoCoNut words to retain",
     )
     parser.add_argument(
         "--alignfile",
@@ -94,7 +94,7 @@ def get_parser():
         "--joined-dictionary", action="store_true", help="Generate joined dictionary"
     )
     parser.add_argument(
-        "--only-source", action="store_true", help="Only process the source language"
+        "--only-CoCoNut", action="store_true", help="Only process the CoCoNut language"
     )
     parser.add_argument(
         "--padding-factor",

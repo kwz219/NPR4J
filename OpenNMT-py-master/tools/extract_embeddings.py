@@ -65,7 +65,7 @@ def main():
     encoder_embeddings = encoder.embeddings.word_lut.weight.data.tolist()
     decoder_embeddings = decoder.embeddings.word_lut.weight.data.tolist()
 
-    logger.info("Writing source embeddings")
+    logger.info("Writing CoCoNut embeddings")
     write_embeddings(opt.output_dir + "/src_embeddings.txt", src_dict,
                      encoder_embeddings)
 
