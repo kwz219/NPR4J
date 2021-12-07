@@ -93,6 +93,83 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
             writeL2F(correct_ids, correct_f)
         build(output_dir+"test.buggy",output_dir+"test.fix",output_dir+"test.fids",output_dir+"test.sids",ids)
         #build(output_dir+"buggy.val.txt",output_dir+"fix.val.txt",output_dir+"error_ids.val.txt",output_dir+"correct_ids.val.txt",val_ids)
+def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
+    print("CoCoNut-Style data preprocess start ")
+    def CoCoNut_tokenize(string):
+        final_token_list = []
+        string_replaced = extract_strings(string)
+        split_tokens = re.split(r'([\W_])', string_replaced)
+        split_tokens = list(filter(lambda a: a not in [' ', '', '"', "'", '\t', '\n'], split_tokens))
+        flag = False
+
+        # Special symbols
+        for idx, token in enumerate(split_tokens):
+            if idx < len(split_tokens) - 1:
+                reconstructed_token = token + split_tokens[idx + 1]
+                if reconstructed_token in COMPOSED_SYMBOLS:
+                    final_token_list.append(reconstructed_token)
+                    flag = True
+                elif not flag:
+                    final_token_list.append(token)
+                elif flag:
+                    flag = False
+            else:
+                final_token_list.append(token)
+        # Camel Case
+        no_camel = []
+        for token in final_token_list:
+            camel_tokens = camel_case_split(token)
+            for idx, camel_tok in enumerate(camel_tokens):
+                no_camel.append(camel_tok)
+
+        # number split
+        tokens = []
+        for token in no_camel:
+            number_sep = number_split(token)
+            for num in number_sep:
+                tokens.append(num)
+        tokens = remove_integer(tokens)
+        for idx, token in enumerate(tokens):
+            if token == 'SSSTRINGSS':
+                if idx > 0 and tokens[idx - 1] == '$STRING$':
+                    return []
+                else:
+                    tokens[idx] = '$STRING$'
+
+        return tokens
+    ids=readF2L(ids_f)
+    mongoClient=MongoHelper()
+    bug_col=mongoClient.get_col(BUG_COL)
+
+    add_lines=[]
+    remContext_lines=[]
+    ids=[]
+    ind=0
+    for id in ids:
+        bug = bug_col.find_one({"_id": ObjectId(id)})
+        if bug == None:
+            continue
+        buggy_context=bug['buggy_code']
+        remove_code=''.join([l.strip() for l in bug['errs'][0]['src_content']]).strip()
+        fix_code = ''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()
+        rem_contex=CoCoNut_tokenize(remove_code)+["<CTX>"]+CoCoNut_tokenize(buggy_context)
+        if len(rem_contex)<=max_length:
+            add=CoCoNut_tokenize(fix_code)
+            add_lines.append(' '.join(add).replace('\n', '').replace('\t', ''))
+            remContext_lines.append(' '.join(rem_contex).replace('\n', '').replace('\t', ''))
+            ids.append(id)
+        ind+=1
+        print(ind)
+    writeL2F(add_lines,output_dir+'/'+prefix+'.fix')
+    writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
+    writeL2F(ids,output_dir+'/'+prefix+".ids")
+
+#data preprocess of patch generation
+def preprocess_PG(ids_f,max_length=1000):
+    ids=readF2L(ids_f)
+
+
+
 
 def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_length=1000):
     ids=readF2L(ids_f)
@@ -197,9 +274,10 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
 
 def test_preprocess():
 
-    val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\val_ids.txt")
+    val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\\","val")
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
 
-preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
+preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\","val")
+#preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")

@@ -239,3 +239,6 @@ def token2statement(token_list, numbers, strings):
             for s in range(0, len(statements)):
                 statements[s] += token
     return statements
+
+toked=tokenize("ensureCapacity_unsynchronized(count + 1); value[count++] = ch; return this;")
+
