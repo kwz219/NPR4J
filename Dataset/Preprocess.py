@@ -191,10 +191,10 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
     fail_ids = []
     ind=0
     for id in ids:
-        out_a = input_dir + "\\" + id + "_buggy.txt.abs"
-        out_b = input_dir + "\\" + id + "_fix.txt.abs"
-        out_a2 = input_dir.replace('trn','test') + "\\" + id + "_buggy.txt.abs"
-        out_b2 = input_dir.replace('trn','test') + "\\" + id + "_fix.txt.abs"
+        out_a = input_dir + "/" + id + "_buggy.txt.abs"
+        out_b = input_dir + "/" + id + "_fix.txt.abs"
+        out_a2 = input_dir.replace('trn','test') + "/" + id + "_buggy.txt.abs"
+        out_b2 = input_dir.replace('trn','test') + "/" + id + "_fix.txt.abs"
         #print(out_a)
         if os.path.exists(out_a) and os.path.exists(out_b):
             print("already exists 1")
@@ -241,9 +241,8 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
                buggy_f.close()
                fix_f.close()
             """
-            tmp_a=out_a.replace("trn","tmp")
-            tmp_b=out_b.replace("trn","tmp")
-            run_src2abs("method",buggy_f,fix_f,tmp_a,tmp_b,idom_path)
+
+            run_src2abs("method",buggy_f,fix_f,out_a,out_b,idom_path)
             if os.path.exists(out_a) and os.path.exists(out_b):
                 try:
                     buggy_code = codecs.open(out_a, 'r', encoding='utf8').read()
@@ -290,6 +289,6 @@ def test_preprocess():
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
 
-preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\","val")
+#preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\","val")
 #preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
