@@ -1,5 +1,5 @@
 ## Where the vocab(s) will be written
-save_data: /root/zwk/DDPR_DATA/data/M1000_Tjava/
+save_data: /root/zwk/DDPR_DATA/data/M1000_Tufano/
 # Prevent overwriting existing files in the folder
 overwrite: True
 
@@ -15,19 +15,19 @@ dynamic_dict: True
 # Corpus opts:
 data:
     train:
-        path_src: /root/zwk/DDPR_DATA/data/M1000_Tjava/trn.buggy
-        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tjava/trn.fix
+        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano/trn.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano/trn.fix
         transforms: []
         weight: 1
     valid:
-        path_src: /root/zwk/DDPR_DATA/data/M1000_Tjava/val.buggy
-        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tjava/trn.fix
+        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano/val.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano/val.fix
         transforms: []
 
-src_vocab_size: 200000
+src_vocab_size: 200000 #SequenceR original vocab size
 tgt_vocab_size: 200000
-src_vocab: /root/zwk/DDPR_DATA/data/M1000_Tjava/M1000_Tjava.vocab
-tgt_vocab: /root/zwk/DDPR_DATA/data/M1000_Tjava/M1000_Tjava.vocab
+src_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano/idioms2w.vocab
+tgt_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano/idioms2w.vocab
 
 
 decoder_type: transformer
@@ -38,7 +38,12 @@ layers: 6
 transformer_ff: 2048
 heads: 8
 
+#add copy
+copy_attn: true
+copy_loss_by_seqlength: true
+reuse_copy_attn: true
 gpu_ranks: 0
+
 global_attention: general
 bridge: true
 
@@ -55,6 +60,7 @@ batch_type: tokens
 normalization: tokens
 dropout: 0.1
 label_smoothing: 0.1
+
 max_generator_batches: 2
 
 warmup_steps: 6000
@@ -72,7 +78,7 @@ seed: 912
 world_size: 1
 
 #model save and log
-log_file: /root/zwk/DDPR_DATA/log/RQ2/20890_CANone_transformerwv512.log
-save_model: /root/zwk/DDPR_DATA/model/RQ2/20890_CANone_transformerwv512
+log_file: /root/zwk/DDPR_DATA/log/RQ2/20873_CATufano_transformer+copy_wv512.log
+save_model: /root/zwk/DDPR_DATA/model/RQ2/20873_CATufano_transformer+copy_wv512
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/log/RQ2/20890_CANone_transformerwv512.tensorlog
+tensorboard_log_dir: /root/zwk/DDPR_DATA/log/RQ2/20873_CATufano_transformer+copy_wv512.tensorlog

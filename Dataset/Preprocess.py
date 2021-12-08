@@ -5,6 +5,9 @@ import re
 import javalang
 import nltk
 from bson import ObjectId
+
+from CoCoNut.tokenization.tokenization import extract_strings, COMPOSED_SYMBOLS, camel_case_split, number_split, \
+    remove_integer
 from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
@@ -143,8 +146,11 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
 
     add_lines=[]
     remContext_lines=[]
-    ids=[]
+    true_ids=[]
     ind=0
+    add_f=codecs.open(output_dir+'/'+prefix+'.fix','w',encoding='utf8')
+    contex_f=codecs.open(output_dir+'/'+prefix+'.buggy','w',encoding='utf8')
+    id_f=codecs.open(output_dir+'/'+prefix+".ids",'w',encoding='utf8')
     for id in ids:
         bug = bug_col.find_one({"_id": ObjectId(id)})
         if bug == None:
@@ -155,14 +161,20 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
         rem_contex=CoCoNut_tokenize(remove_code)+["<CTX>"]+CoCoNut_tokenize(buggy_context)
         if len(rem_contex)<=max_length:
             add=CoCoNut_tokenize(fix_code)
-            add_lines.append(' '.join(add).replace('\n', '').replace('\t', ''))
-            remContext_lines.append(' '.join(rem_contex).replace('\n', '').replace('\t', ''))
+            add_line=' '.join(add).replace('\n', '').replace('\t', '')
+            context_line=' '.join(rem_contex).replace('\n', '').replace('\t', '')
+            try:
+                add_f.write(add_line+'\n')
+                contex_f.write(context_line+'\n')
+                id_f.write(id+'\n')
+            except:
+                pass
             ids.append(id)
         ind+=1
         print(ind)
-    writeL2F(add_lines,output_dir+'/'+prefix+'.fix')
-    writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
-    writeL2F(ids,output_dir+'/'+prefix+".ids")
+    #writeL2F(add_lines,output_dir+'/'+prefix+'.fix')
+    #writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
+    #writeL2F(true_ids,output_dir+'/'+prefix+".ids")
 
 #data preprocess of patch generation
 def preprocess_PG(ids_f,max_length=1000):

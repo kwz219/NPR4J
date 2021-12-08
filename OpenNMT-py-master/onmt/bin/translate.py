@@ -30,7 +30,6 @@ def translate(opt):
         logger.info("Translating shard %d." % i)
         translator.translate(
             src=src_shard,
-            src_feats=features_shard_,
             tgt=tgt_shard,
             batch_size=opt.batch_size,
             batch_type=opt.batch_type,
@@ -41,7 +40,6 @@ def translate(opt):
 
 def _get_parser():
     parser = ArgumentParser(description='translate.py')
-
     opts.config_opts(parser)
     opts.translate_opts(parser)
     return parser
@@ -50,7 +48,7 @@ def _get_parser():
 def main():
     parser = _get_parser()
     opt = parser.parse_args()
-    model_nbest=str(opt.model).split("/")[-1]+"_nbest "+opt.n_best
+    model_nbest=str(opt.models[0]).split("/")[-1]+"_nbest "+str(opt.n_best)
     translation_task = Task.init(project_name="translate", task_name=model_nbest)
     translate(opt)
 

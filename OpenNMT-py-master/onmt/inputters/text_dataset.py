@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from functools import partial
 
+import six
 import torch
 from torchtext.data import Field, RawField
 
@@ -8,6 +9,19 @@ from onmt.constants import DefaultTokens
 from onmt.inputters.datareader_base import DataReaderBase
 
 
+def decode_data(line):
+    codecs = ['utf-8', 'iso-8859-1', 'gbk', 'unicode_escape']
+    # If data is already unicode don't try to redecode
+    if isinstance(line, six.text_type):
+        return line
+
+    for codec in codecs:
+        try:
+            data = line.decode(codec)
+            return data
+        except UnicodeDecodeError:
+            pass
+    return 'DecodeError'
 class TextDataReader(DataReaderBase):
     def read(self, sequences, side, features={}):
         """Read text data from disk.
@@ -40,11 +54,12 @@ class TextDataReader(DataReaderBase):
         for i, (seq, *feats) in enumerate(zip(sequences, *features_values)):
             ex_dict = {}
             if isinstance(seq, bytes):
-                seq = seq.decode("utf-8")
+                seq=decode_data(seq)
+
             ex_dict[side] = seq
             for j, f in enumerate(feats):
                 if isinstance(f, bytes):
-                    f = f.decode("utf-8")
+                    f = decode_data(f)
                 ex_dict[features_names[j]] = f
             yield {side: ex_dict, "indices": i}
 
