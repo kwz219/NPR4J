@@ -76,22 +76,24 @@ class TranslationTask(FairseqTask):
         Args:
             args (argparse.Namespace): parsed command-line arguments
         """
-        args.left_pad_source = options.eval_bool(args.left_pad_source)
+        #args.left_pad_source = options.eval_bool(args.left_pad_source)
+        args.left_pad_source = options.eval_bool(args.left_pad_CoCoNut)
         args.left_pad_target = options.eval_bool(args.left_pad_target)
 
         # find language pair automatically
-        if args.source_lang is None or args.target_lang is None:
-            args.source_lang, args.target_lang = data_utils.infer_language_pair(args.data[0])
-        if args.source_lang is None or args.target_lang is None:
+        #if args.source_lang is None or args.target_lang is None:
+        if args.CoCoNut_lang is None or args.target_lang is None:
+            args.CoCoNut_lang, args.target_lang = data_utils.infer_language_pair(args.data[0])
+        if args.CoCoNut_lang is None or args.target_lang is None:
             raise Exception('Could not infer language pair, please provide it explicitly')
 
         # load dictionaries
-        src_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.source_lang)))
+        src_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.CoCoNut_lang)))
         tgt_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.target_lang)))
         assert src_dict.pad() == tgt_dict.pad()
         assert src_dict.eos() == tgt_dict.eos()
         assert src_dict.unk() == tgt_dict.unk()
-        print('| [{}] dictionary: {} types'.format(args.source_lang, len(src_dict)))
+        print('| [{}] dictionary: {} types'.format(args.CoCoNut_lang, len(src_dict)))
         print('| [{}] dictionary: {} types'.format(args.target_lang, len(tgt_dict)))
 
         return cls(args, src_dict, tgt_dict)
@@ -128,7 +130,7 @@ class TranslationTask(FairseqTask):
                 split_k = split + (str(k) if k > 0 else '')
 
                 # infer langcode
-                src, tgt = self.args.source_lang, self.args.target_lang
+                src, tgt = self.args.CoCoNut_lang, self.args.target_lang
                 if split_exists(split_k, src, tgt, src, data_path):
                     prefix = os.path.join(data_path, '{}.{}-{}.'.format(split_k, src, tgt))
                 elif split_exists(split_k, tgt, src, src, data_path):
@@ -163,7 +165,7 @@ class TranslationTask(FairseqTask):
               tgt_dataset, tgt_dataset.sizes, self.tgt_dict,
               left_pad_source=self.args.left_pad_source,
               left_pad_target=self.args.left_pad_target,
-              max_source_positions=self.args.max_source_positions,
+              max_source_positions=self.args.max_CoCoNut_positions,
               max_target_positions=self.args.max_target_positions,
           )
         else:
@@ -172,13 +174,13 @@ class TranslationTask(FairseqTask):
               tgt_dataset, tgt_dataset.sizes, self.tgt_dict,
               left_pad_source=self.args.left_pad_source,
               left_pad_target=self.args.left_pad_target,
-              max_source_positions=self.args.max_source_positions,
+              max_source_positions=self.args.max_CoCoNut_positions,
               max_target_positions=self.args.max_target_positions,
           )
 
     def max_positions(self):
         """Return the max sentence length allowed by the task."""
-        return (self.args.max_source_positions, self.args.max_target_positions)
+        return (self.args.max_CoCoNut_positions, self.args.max_target_positions)
 
     @property
     def source_dictionary(self):

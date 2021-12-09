@@ -53,7 +53,7 @@ def train_context(dropout,
                   decoder_layers,
                   lr,
                   momentum, clip_norm, optimizer, criterion, savedir, trainbin):
-    fairseqdir = os.environ['FAIRSEQPY']
+    fairseqdir = "/root/zwk/DDPR/fairseq/"
     if not os.path.exists(savedir):
         os.makedirs(savedir)
 

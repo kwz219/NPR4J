@@ -96,7 +96,7 @@ def main_context(init_dir):
     :param init_dir:
     :return:
     """
-    saved_data_path = init_dir + "/../context/train/"
+    saved_data_path = init_dir + "/context/"
     print("Save data in :", saved_data_path)
     # Check if path exist
     if not os.path.exists(saved_data_path):
@@ -152,4 +152,5 @@ def main(data_dir, context):
         main_nocontext(data_dir)
 
 
-main(sys.argv[1], sys.argv[2])
+#main(sys.argv[1], sys.argv[2])
+main_context("D:\DDPR\CoCoNut\data_example")

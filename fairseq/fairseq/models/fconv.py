@@ -94,7 +94,7 @@ class FConvModel(FairseqModel):
             embed_dict=encoder_embed_dict,
             convolutions=eval(args.encoder_layers),
             dropout=args.dropout,
-            max_positions=args.max_source_positions,
+            max_positions=args.max_CoCoNut_positions,
         )
         decoder = FConvDecoder(
             dictionary=task.target_dictionary,
@@ -163,7 +163,7 @@ class FConvContextModel(FairseqContextModel):
             embed_dict=encoder_embed_dict,
             convolutions=eval(args.encoder_layers),
             dropout=args.dropout,
-            max_positions=args.max_source_positions,
+            max_positions=args.max_CoCoNut_positions,
         )
         decoder = FConvDecoder(
             dictionary=task.target_dictionary,

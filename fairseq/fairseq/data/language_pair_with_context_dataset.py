@@ -112,7 +112,8 @@ class LanguagePairWithContextDataset(LanguagePairDataset):
         src_item = self.src[index]
         ctx_item = src_item
 
-        for i,token in enumerate(src_item):
+        for i,token in enumerate(src_item):\
+          #这里分开了
           if token == self.src_dict.ctx():
             ctx_item = src_item[(i+1):]
             src_item = src_item[:i]

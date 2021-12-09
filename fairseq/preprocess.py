@@ -112,7 +112,7 @@ def get_parser():
 def main(args):
     print(args)
     os.makedirs(args.destdir, exist_ok=True)
-    target = not args.only_source
+    target = not args.only_CoCoNut
 
     def train_path(lang):
         return "{}{}".format(args.trainpref, ("." + lang) if lang else "")
@@ -133,7 +133,8 @@ def main(args):
         assert not args.srcdict, "cannot combine --srcdict and --joined-dictionary"
         assert not args.tgtdict, "cannot combine --tgtdict and --joined-dictionary"
         src_dict = build_dictionary(
-            {train_path(lang) for lang in [args.source_lang, args.target_lang]},
+            #{train_path(lang) for lang in [args.source_lang, args.target_lang]},
+            {train_path(lang) for lang in [args.CoCoNut_lang, args.target_lang]},
             args.workers,
         )
         tgt_dict = src_dict
@@ -144,7 +145,8 @@ def main(args):
             assert (
                 args.trainpref
             ), "--trainpref must be set if --srcdict is not specified"
-            src_dict = build_dictionary([train_path(args.source_lang)], args.workers)
+            #src_dict = build_dictionary([train_path(args.source_lang)], args.workers)
+            src_dict = build_dictionary([train_path(args.CoCoNut_lang)], args.workers)
         if target:
             if args.tgtdict:
                 tgt_dict = dictionary.Dictionary.load(args.tgtdict)
@@ -161,7 +163,8 @@ def main(args):
         nwords=args.nwordssrc,
         padding_factor=args.padding_factor,
     )
-    src_dict.save(dict_path(args.source_lang))
+    #src_dict.save(dict_path(args.source_lang))
+    src_dict.save(dict_path(args.CoCoNut_lang))
     if target:
         if not args.joined_dictionary:
             tgt_dict.finalize(
@@ -243,7 +246,8 @@ def main(args):
         elif args.output_format == "raw":
             # Copy original text file to destination folder
             output_text_file = dest_path(
-                output_prefix + ".{}-{}".format(args.source_lang, args.target_lang),
+                #output_prefix + ".{}-{}".format(args.source_lang, args.target_lang),
+                output_prefix + ".{}-{}".format(args.CoCoNut_lang, args.target_lang),
                 lang,
             )
             shutil.copyfile(file_name(input_prefix, lang), output_text_file)
@@ -260,7 +264,8 @@ def main(args):
                 outprefix = "test{}".format(k) if k > 0 else "test"
                 make_dataset(testpref, outprefix, lang)
 
-    make_all(args.source_lang)
+    #make_all(args.source_lang)
+    make_all(args.CoCoNut_lang)
     if target:
         make_all(args.target_lang)
 
@@ -268,9 +273,11 @@ def main(args):
 
     if args.alignfile:
         assert args.trainpref, "--trainpref must be set if --alignfile is specified"
-        src_file_name = train_path(args.source_lang)
+        #src_file_name = train_path(args.source_lang)
+        src_file_name = train_path(args.CoCoNut_lang)
         tgt_file_name = train_path(args.target_lang)
-        src_dict = dictionary.Dictionary.load(dict_path(args.source_lang))
+        #src_dict = dictionary.Dictionary.load(dict_path(args.source_lang))
+        src_dict = dictionary.Dictionary.load(dict_path(args.CoCoNut_lang))
         tgt_dict = dictionary.Dictionary.load(dict_path(args.target_lang))
         freq_map = {}
         with open(args.alignfile, "r") as align_file:
@@ -303,7 +310,8 @@ def main(args):
         with open(
             os.path.join(
                 args.destdir,
-                "alignment.{}-{}.txt".format(args.source_lang, args.target_lang),
+                #"alignment.{}-{}.txt".format(args.source_lang, args.target_lang),
+                "alignment.{}-{}.txt".format(args.CoCoNut_lang, args.target_lang),
             ),
             "w",
         ) as f:
@@ -350,7 +358,8 @@ def binarize_with_load(args, filename, dict_path, output_prefix, lang, offset, e
 def dataset_dest_prefix(args, output_prefix, lang):
     base = f"{args.destdir}/{output_prefix}"
     lang_part = (
-        f".{args.source_lang}-{args.target_lang}.{lang}" if lang is not None else ""
+        f".{args.CoCoNut_lang}-{args.target_lang}.{lang}" if lang is not None else ""
+
     )
     return f"{base}{lang_part}"
 

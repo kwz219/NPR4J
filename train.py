@@ -1,9 +1,34 @@
 import os
 import argparse
+import yaml
+
+from CoCoNut.training.train import train_context
+
+
 def train_ONMT(config_file,clearML):
     cmd="python OpenNMT-py-master/train.py "+"-config "+config_file +" -clearML "+str(clearML)
     os.system(cmd)
 
+def train_CoCoNut(config_file):
+    with open(config_file,'r') as f:
+        config_dict=yaml.safe_load(f)
+
+    print(config_dict)
+    dropout=config_dict['dropout']
+    share_input_output_embed=config_dict['share_input_output_embed']
+    encoder_embed_dim=config_dict['encoder_embed_dim']
+    decoder_embed_dim=config_dict['decoder_embed_dim']
+    decoder_out_embed_dim=config_dict['decoder_out_embed_dim']
+    encoder_layers=config_dict['encoder_layers']
+    decoder_layers=config_dict['decoder_layers']
+    lr=config_dict['lr']
+    momentum=config_dict['momentum']
+    clip_norm=config_dict['clip_norm']
+    optimizer=config_dict['optimizer']
+    criterion=config_dict['criterion']
+    savedir=config_dict['savedir']
+    trainbin=config_dict['trainbin']
+    train_context(dropout,share_input_output_embed,encoder_embed_dim,decoder_embed_dim,decoder_out_embed_dim,encoder_layers,decoder_layers,lr,momentum,clip_norm,optimizer,criterion,savedir,trainbin)
 def main():
     parser = argparse.ArgumentParser(
         description='build_vocab.py',
@@ -15,8 +40,11 @@ def main():
     opt=parser.parse_args()
     if opt.framework=="onmt":
         train_ONMT(config_file=opt.config,clearML=opt.clearML)
+    elif opt.framework=="fairseq":
+        train_CoCoNut(config_file=opt.config)
 
 if __name__ == "__main__":
+    #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.YAML")
     main()
 
 

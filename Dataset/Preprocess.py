@@ -141,12 +141,9 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
 
         return tokens
     ids=readF2L(ids_f)
+    print(len(ids))
     mongoClient=MongoHelper()
     bug_col=mongoClient.get_col(BUG_COL)
-
-    add_lines=[]
-    remContext_lines=[]
-    true_ids=[]
     ind=0
     add_f=codecs.open(output_dir+'/'+prefix+'.fix','w',encoding='utf8')
     contex_f=codecs.open(output_dir+'/'+prefix+'.buggy','w',encoding='utf8')
@@ -159,7 +156,7 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
         remove_code=''.join([l.strip() for l in bug['errs'][0]['src_content']]).strip()
         fix_code = ''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()
         rem_contex=CoCoNut_tokenize(remove_code)+["<CTX>"]+CoCoNut_tokenize(buggy_context)
-        if len(rem_contex)<=max_length:
+        if len(rem_contex)<max_length:
             add=CoCoNut_tokenize(fix_code)
             add_line=' '.join(add).replace('\n', '').replace('\t', '')
             context_line=' '.join(rem_contex).replace('\n', '').replace('\t', '')
@@ -169,7 +166,7 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
                 id_f.write(id+'\n')
             except:
                 pass
-            ids.append(id)
+
         ind+=1
         print(ind)
     #writeL2F(add_lines,output_dir+'/'+prefix+'.fix')
@@ -241,7 +238,10 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
                buggy_f.close()
                fix_f.close()
             """
-
+            if buggy_f=="error":
+                print("failed")
+                fail_ids.append(id)
+                continue
             run_src2abs("method",buggy_f,fix_f,out_a,out_b,idom_path)
             if os.path.exists(out_a) and os.path.exists(out_b):
                 try:
@@ -289,6 +289,7 @@ def test_preprocess():
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
 
-#preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\","val")
+#preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
+preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
 #preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
