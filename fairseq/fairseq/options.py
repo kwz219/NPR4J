@@ -132,7 +132,8 @@ def get_parser(desc, default_task='translation'):
                         help='default FP16 loss scale')
     parser.add_argument('--fp16-scale-window', type=int,
                         help='number of updates before increasing loss scale')
-
+    parser.add_argument('--clearml', type=int,default=True,
+                        help='report train information')
     # Task definitions can be found under fairseq/tasks/
     parser.add_argument(
         '--task', metavar='TASK', default=default_task,

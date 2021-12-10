@@ -5,9 +5,9 @@ overwrite: True
 
 # filter long examples
 src_seq_length: 1010
-tgt_seq_length: 110
+tgt_seq_length: 1010
 src_seq_length_trunc: 1010
-tgt_seq_length_trunc: 110
+tgt_seq_length_trunc: 1010
 
 # common vocabulary for CoCoNut and target
 share_vocab: True

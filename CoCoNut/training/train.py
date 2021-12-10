@@ -52,7 +52,7 @@ def train_context(dropout,
                   encoder_layers,
                   decoder_layers,
                   lr,
-                  momentum, clip_norm, optimizer, criterion, savedir, trainbin):
+                  momentum, clip_norm, optimizer, criterion, savedir, trainbin,deviceid,batchsize,logfile,tensorlog_dir):
     fairseqdir = "/root/zwk/DDPR/fairseq/"
     if not os.path.exists(savedir):
         os.makedirs(savedir)
@@ -77,7 +77,10 @@ def train_context(dropout,
           ' --criterion ' + criterion + \
           ' --momentum ' + str(momentum) + \
           ' --max-epoch ' + str(20) + \
-          ' --no-epoch-checkpoints  --min-lr 1e-4   --batch-size 48 ' + trainbin
+          ' --no-epoch-checkpoints  --min-lr 1e-4   --batch-size 48 ' + trainbin + \
+          ' --batch-size '+ str(batchsize)+\
+          ' --device-id '+ str(deviceid)+ \
+          ' --fp16'
 
     cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)

@@ -5,9 +5,9 @@ overwrite: True
 
 # filter long examples
 src_seq_length: 1010
-tgt_seq_length: 110
+tgt_seq_length: 1010
 src_seq_length_trunc: 1010
-tgt_seq_length_trunc: 110
+tgt_seq_length_trunc: 1010
 
 # common vocabulary for CoCoNut and target
 share_vocab: True
@@ -15,19 +15,19 @@ dynamic_dict: True
 # Corpus opts:
 data:
     trn:
-        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano/trn.buggy
-        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano/trn.fix
+        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/trn.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/trn.fix
         transforms: []
         weight: 1
     valid:
-        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano/val.buggy
-        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano/val.fix
+        path_src: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/val.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/val.fix
         transforms: []
 
 src_vocab_size: 40000 #SequenceR original vocab size
 tgt_vocab_size: 40000
-src_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
-tgt_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano/idioms_2w.vocab
+src_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/idioms_10w.vocab
+tgt_vocab: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/idioms_10w.vocab
 
 
 #model params
@@ -48,15 +48,15 @@ world_size: 1
 early_stopping: 5
 early_stopping_criteria: accuracy
 dropout: 0.1
-batch_size: 128
-valid_batch_size: 128
+batch_size: 32
+valid_batch_size: 32
 optim: adagrad
 learning_rate: 0.1
 adagrad_accumulator_init: 0.1
 seed: 912
 
 #model save and log
-log_file: /root/zwk/DDPR_DATA/data/M1000_Tufano/20889_tufano_wv512_bs128.log
-save_model: /root/zwk/DDPR_DATA/data/M1000_Tufano/20889_tufano_wv512_bs128
+log_file: /root/zwk/DDPR_DATA/log/M1000_Tufano_i10w/20889_tufano_wv512_idiom10w.log
+save_model: /root/zwk/DDPR_DATA/model/M1000_Tufano_i10w/20889_tufano_wv512_idiom10w
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/data/M1000_Tufano/20889_tufano_wv512_bs128.tensorlog
+tensorboard_log_dir: /root/zwk/DDPR_DATA/log/M1000_Tufano_i10w/20889_tufano_wv512_idiom10w.tensorlog

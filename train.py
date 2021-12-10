@@ -28,12 +28,17 @@ def train_CoCoNut(config_file):
     criterion=config_dict['criterion']
     savedir=config_dict['savedir']
     trainbin=config_dict['trainbin']
-    train_context(dropout,share_input_output_embed,encoder_embed_dim,decoder_embed_dim,decoder_out_embed_dim,encoder_layers,decoder_layers,lr,momentum,clip_norm,optimizer,criterion,savedir,trainbin)
+    deviceid=config_dict['device_id']
+    batchsize=config_dict['batch_size']
+    logfile=config_dict['log_file']
+    tensor_log=config_dict['tensorboard_logdir']
+    train_context(dropout,share_input_output_embed,encoder_embed_dim,decoder_embed_dim,decoder_out_embed_dim,encoder_layers,decoder_layers,lr,momentum,clip_norm,optimizer,criterion,savedir,trainbin,
+                  deviceid,batchsize,logfile,tensor_log)
 def main():
     parser = argparse.ArgumentParser(
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-clearML",help="record experiment by clearML",default=True)
+    parser.add_argument("-clearml",help="record experiment by clearml",default=True)
     parser.add_argument("-framework", help="", required=True,choices=["onmt","fairseq","None"])
     parser.add_argument("-config",help="location of config file",required=True)
 

@@ -81,18 +81,19 @@ def add_buggy_method(cont,res,max_length):
                 length_list.append(len(toked))
                 #toked_codes.append(' '.join(toked))
         #print("tokenized")
-        if length_list[err_pos]<=max_length:
+        assert len(length_list)==len(codelist)
+        if length_list[errorpos]<=max_length:
            post_left=(max_length-length_list[errorpos])//3
            pre_left=post_left*2
         else:
             return [codelist[errorpos]]
-        start_pos=max(err_pos-1,0);
+        start_pos=max(errorpos-1,0);
         pre_count=0
         while(start_pos>0 and pre_count<pre_left):
             pre_count+=length_list[start_pos]
             start_pos=start_pos-1
         #print(start_pos)
-        end_pos=min(err_pos-1,len(codelist)-1);
+        end_pos=min(errorpos-1,len(codelist)-1);
         post_count=0
         length=len(codelist)-1
         while(end_pos<length and post_count<post_left):
@@ -121,6 +122,7 @@ def add_buggy_method(cont,res,max_length):
     error_pos=new_lines.index(errorline)
 
     trunc_lines=truncate(new_lines,error_pos)
+
     return ' '.join(trunc_lines),hitflag
 def test_run_SeqeunceR_abs():
     cp="../Example/origin/EventEmitter.java"

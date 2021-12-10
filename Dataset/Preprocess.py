@@ -42,6 +42,8 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
             error_ids = []
             correct_ids=[]
             ind=1
+            not_count=0
+            in_count=0
             for id in ids:
                 bug=bug_col.find_one({"_id":ObjectId(id)})
                 if bug==None:
@@ -68,12 +70,16 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                 if len(buggy_code.strip())<=1:
                     hitflag=0
                 if hitflag==1:
+                    if "<START_BUG>" not in buggy_code:
+                        not_count+=1
+                    else:
+                        in_count+=1
                     try:
                         toked_fix = javalang.tokenizer.tokenize(fix_code)
-                        toked_fix = ' '.join([tok.value for tok in toked_fix])
+                        toked_fix = ' '.join([tok.value for tok in toked_fix]).replace('< START_BUG > ','<START_BUG>').replace('< END_BUG >','<END_BUG>')
                     except:
                         toked_fix = re.split(r"[.,!?;(){}]", fix_code)
-                        toked_fix = ' '.join(toked_fix)
+                        toked_fix = ' '.join(toked_fix).replace('< START_BUG > ','<START_BUG>').replace('< END_BUG >','<END_BUG>')
                     try:
                         toked_bug=javalang.tokenizer.tokenize(buggy_code)
                         toked_bug = ' '.join([tok.value for tok in toked_bug])
@@ -87,7 +93,7 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                     correct_ids.append(bug['_id'])
                 else:
                     error_ids.append(bug['_id'])
-                print(ind)
+                print(ind," not: ",not_count,"in:",in_count)
                 ind+=1
             buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
             writeL2F(buggy_codes,src_f)
@@ -290,6 +296,6 @@ def test_preprocess():
 
 
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
-preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
-#preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
+#preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
+preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
