@@ -100,7 +100,7 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
             writeL2F(fix_codes,tgt_f)
             writeL2F(error_ids,error_f)
             writeL2F(correct_ids, correct_f)
-        build(output_dir+"test.buggy",output_dir+"test.fix",output_dir+"test.fids",output_dir+"test.sids",ids)
+        build(output_dir+"val.buggy",output_dir+"val.fix",output_dir+"val.fids",output_dir+"val.sids",ids)
         #build(output_dir+"buggy.val.txt",output_dir+"fix.val.txt",output_dir+"error_ids.val.txt",output_dir+"correct_ids.val.txt",val_ids)
 def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     print("CoCoNut-Style data preprocess start ")
@@ -290,7 +290,6 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
 
 
 def test_preprocess():
-
     val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\\","val")
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 

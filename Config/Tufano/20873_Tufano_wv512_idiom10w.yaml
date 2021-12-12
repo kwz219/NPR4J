@@ -1,5 +1,5 @@
 ## Where the vocab(s) will be written
-save_data: /root/zwk/DDPR_DATA/data/M1000_Tufano
+save_data: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w
 # Prevent overwriting existing files in the folder
 overwrite: True
 
@@ -40,7 +40,7 @@ encoder_type: brnn
 
 #training params
 train_steps: 500000
-valid_steps: 5000
+valid_steps: 2000
 save_checkpoint_steps: 5000
 max_grad_norm: 2
 gpu_ranks: 0

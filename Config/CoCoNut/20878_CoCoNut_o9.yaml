@@ -1,0 +1,17 @@
+dropout: 0.21389838152720164
+share_input_output_embed: False
+encoder_embed_dim: 357
+decoder_embed_dim: 357
+decoder_out_embed_dim: 334
+encoder_layers: '[(384,4)] * 5'
+decoder_layers: '[(640,5)] * 3'
+lr: 0.3128703688177207
+momentum: 0.8456736601204957
+clip_norm: 0.5617417487136113
+optimizer: 'nag'
+criterion: 'label_smoothed_cross_entropy'
+savedir: '/root/zwk/DDPR_DATA/CoCoNut/20878_CoCoNut_o9'
+trainbin: '/root/zwk/DDPR_DATA/data/M1000_CoCoNut/dest'
+batch_size: 32
+device_id: 0
+max-epoch: 20

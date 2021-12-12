@@ -9,7 +9,7 @@ def train_ONMT(config_file,clearML):
     cmd="python OpenNMT-py-master/train.py "+"-config "+config_file +" -clearML "+str(clearML)
     os.system(cmd)
 
-def train_CoCoNut(config_file):
+def train_CoCoNut(config_file,clearml=False):
     with open(config_file,'r') as f:
         config_dict=yaml.safe_load(f)
 
@@ -30,10 +30,11 @@ def train_CoCoNut(config_file):
     trainbin=config_dict['trainbin']
     deviceid=config_dict['device_id']
     batchsize=config_dict['batch_size']
-    logfile=config_dict['log_file']
-    tensor_log=config_dict['tensorboard_logdir']
+    max_epoch=config_dict['max-epoch']
+    use_clearml=clearml
+    experiment_id=config_file.split('/')[-1].replace(".yaml",'')
     train_context(dropout,share_input_output_embed,encoder_embed_dim,decoder_embed_dim,decoder_out_embed_dim,encoder_layers,decoder_layers,lr,momentum,clip_norm,optimizer,criterion,savedir,trainbin,
-                  deviceid,batchsize,logfile,tensor_log)
+                  deviceid,batchsize,max_epoch,use_clearml,experiment_id)
 def main():
     parser = argparse.ArgumentParser(
         description='build_vocab.py',
@@ -44,12 +45,12 @@ def main():
 
     opt=parser.parse_args()
     if opt.framework=="onmt":
-        train_ONMT(config_file=opt.config,clearML=opt.clearML)
+        train_ONMT(config_file=opt.config,clearML=opt.clearml)
     elif opt.framework=="fairseq":
-        train_CoCoNut(config_file=opt.config)
+        train_CoCoNut(config_file=opt.config,clearml=opt.clearml)
 
 if __name__ == "__main__":
-    #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.YAML")
+    #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.yaml")
     main()
 
 

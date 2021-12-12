@@ -19,11 +19,13 @@ from fairseq import distributed_utils, options, progress_bar, tasks, utils
 from fairseq.data import iterators
 from fairseq.trainer import Trainer
 from fairseq.meters import AverageMeter, StopwatchMeter
-
+from clearml import Task as clTask
 
 def main(args):
     if args.max_tokens is None:
         args.max_tokens = 6000
+    if args.clearml ==True:
+        cltask=clTask.init(project_name='train',task_name=args.experiment_name)
     print(args)
 
     if not torch.cuda.is_available():
@@ -345,7 +347,10 @@ def load_dataset_splits(task, splits):
 
 if __name__ == '__main__':
     parser = options.get_training_parser()
+    parser.add_argument("-clearml",help="record experiment by clearml",type=bool,default=True)
+    parser.add_argument("-experiment_name", help="experiment name ", default=None)
     args = options.parse_args_and_arch(parser)
+
 
     if args.distributed_port > 0 or args.distributed_init_method is not None:
         from distributed_train import main as distributed_main

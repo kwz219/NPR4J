@@ -118,7 +118,7 @@ def train(opt):
 
     nb_gpu = len(opt.gpu_ranks)
 
-    if opt.world_size > 1:
+    if opt.world_size > 1 and nb_gpu>1:
 
         queues = []
         mp = torch.multiprocessing.get_context('spawn')
@@ -158,7 +158,8 @@ def train(opt):
         # Once training is done, we can terminate the producers
         for p in producers:
             p.terminate()
-
+    elif opt.world_size>1 and nb_gpu==1:
+        train_process(opt,device_id=opt.gpu_ranks)
     elif nb_gpu == 1:  # case 1 GPU only
         train_process(opt, device_id=0)
     else:   # case only CPU
