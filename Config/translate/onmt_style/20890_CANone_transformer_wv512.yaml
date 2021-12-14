@@ -1,0 +1,8 @@
+model: /root/zwk/DDPR_DATA/Artifacts/20890_CANone_transformer_wv512/20890_CANone_transformerwv512_best.pt
+beam_size: 10
+n_best: 10
+src:
+tgt:
+output:
+gpu:
+batch_size:

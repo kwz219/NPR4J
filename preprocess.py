@@ -1,6 +1,9 @@
+import argparse
 import codecs
 import os
 import subprocess
+
+import javalang.tokenizer
 
 from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.CA_Utils import writeL2F
@@ -107,8 +110,28 @@ def preprocess_CoCoNut(configdict:dict):
     print(cmd)
     subprocess.call(cmd, shell=True)
 
-if __name__ == "__main__":
+def preprocess_normal(dir,outputfile,checkfile):
+    files=os.listdir(dir)
+    toked_contents=[]
+    succeed_names=[]
+    for i,file in enumerate(files):
+        path=dir+'/'+file
+        content=codecs.open(path,'r',encoding='utf8').read()
+        try:
+            toked_content=[tok.value for tok in javalang.tokenizer.tokenize(content)]
+            toked_contents.append(' '.join(toked_content))
+            succeed_names.append(file)
+        except:
+            pass
+        print(i)
+    writeL2F(toked_contents,outputfile)
+    writeL2F(succeed_names,checkfile)
+def main(args):
+    if args.CA_method==None:
+        preprocess_normal(args.input_dir,args.output_file)
 
+if __name__ == "__main__":
+    """
     ids_f="Dataset/freq50_611/trn_ids.txt"
     idoms_f="CodeAbstract/CA_Resource/idioms.10w"
     input_dir="/root/zwk/DDPR_DATA/Tufano_i10w/trntmp"
@@ -131,4 +154,13 @@ if __name__ == "__main__":
                       "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\test",
                       "dest_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\dest_2"}
     #preprocess_CoCoNut(prerocess_config)
+    """
+    #preprocess_normal("D:\generate_data","D:\generate_data\\toked_normal.buggy","D:\generate_data\\toked_normal.name")
+
+    parser = argparse.ArgumentParser(
+        description='preprocess.py',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("CA_method","--CodeAbstractMethod",help="select a code abstract method. if none, use javalang to tokenize",default=['None'],choices=['None'])
+    parser.add_argument("--input_dir",help="source input dir ,contains a number of java files")
+    parser.add_argument("--output_file",help="processed result file. output tokenized codes to a file ,with each code a line")
 
