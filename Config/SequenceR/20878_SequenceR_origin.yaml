@@ -49,17 +49,17 @@ save_checkpoint_steps: 5000
 max_grad_norm: 2
 dropout: 0.1
 batch_size: 32
-valid_batch_size: 32
+valid_batch_size: 8
 optim: adagrad
 learning_rate: 0.15
 adagrad_accumulator_init: 0.1
 
 seed: 912
-world_size: 3
+world_size: 1
 gpu_ranks: 0
 
-log_file: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20878_SR_vocab20w.log
-save_model: /root/zwk/DDPR_DATA/model/M1000_SequenceR/20878_SR_vocab20w
+log_file: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20878_SR_origin.log
+save_model: /root/zwk/DDPR_DATA/model/M1000_SequenceR/20878_SR_origin
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20878_SR_vocab20w.tensorlog
+tensorboard_log_dir: /root/zwk/DDPR_DATA/log/M1000_SequenceR/20878_SR_origin.tensorlog
 

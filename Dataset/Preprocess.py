@@ -44,6 +44,7 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
             ind=1
             not_count=0
             in_count=0
+            bug_1=0
             for id in ids:
                 bug=bug_col.find_one({"_id":ObjectId(id)})
                 if bug==None:
@@ -76,31 +77,37 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                         in_count+=1
                     try:
                         toked_fix = javalang.tokenizer.tokenize(fix_code)
-                        toked_fix = ' '.join([tok.value for tok in toked_fix]).replace('< START_BUG > ','<START_BUG>').replace('< END_BUG >','<END_BUG>')
+                        toked_fix = ' '.join([tok.value for tok in toked_fix])
                     except:
                         toked_fix = re.split(r"[.,!?;(){}]", fix_code)
-                        toked_fix = ' '.join(toked_fix).replace('< START_BUG > ','<START_BUG>').replace('< END_BUG >','<END_BUG>')
+                        toked_fix = ' '.join(toked_fix)
                     try:
                         toked_bug=javalang.tokenizer.tokenize(buggy_code)
-                        toked_bug = ' '.join([tok.value for tok in toked_bug])
+                        toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
                     except:
                         toked_bug = re.split(r"[.,!?;(){}]", buggy_code)
-                        toked_bug = ' '.join(toked_bug)
+                        toked_bug = ' '.join(toked_bug).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
+                    bug_count=toked_bug.count('<START_BUG>'
+                    )
+                    if bug_count>1:
+                        bug_1+=1
                     buggy_codes.append(toked_bug)
                     fix_codes.append(toked_fix)
                     #print(toked_bug)
                     #print(toked_fix)
                     correct_ids.append(bug['_id'])
+                elif hitflag==2:
+                    print(tmp_f)
                 else:
                     error_ids.append(bug['_id'])
-                print(ind," not: ",not_count,"in:",in_count)
+                print(ind," not: ",not_count,"in:",in_count,"bug >1",bug_1)
                 ind+=1
             buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
             writeL2F(buggy_codes,src_f)
             writeL2F(fix_codes,tgt_f)
             writeL2F(error_ids,error_f)
             writeL2F(correct_ids, correct_f)
-        build(output_dir+"val.buggy",output_dir+"val.fix",output_dir+"val.fids",output_dir+"val.sids",ids)
+        build(output_dir+"test.buggy",output_dir+"test.fix",output_dir+"test.fids",output_dir+"test.sids",ids)
         #build(output_dir+"buggy.val.txt",output_dir+"fix.val.txt",output_dir+"error_ids.val.txt",output_dir+"correct_ids.val.txt",val_ids)
 def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     print("CoCoNut-Style data preprocess start ")
@@ -179,9 +186,6 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     #writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
     #writeL2F(true_ids,output_dir+'/'+prefix+".ids")
 
-#data preprocess of patch generation
-def preprocess_PG(ids_f,max_length=1000):
-    ids=readF2L(ids_f)
 
 
 
@@ -296,5 +300,5 @@ def test_preprocess():
 
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
-preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
+preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")

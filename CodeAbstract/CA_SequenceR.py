@@ -57,17 +57,20 @@ import javalang
 def add_buggy_method(cont,res,max_length):
     buggycode=res["buggy_code"].split("\n")
     err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
+    print("err_pos",err_pos)
     if str(buggycode[0].strip()).startswith("@"):
-        m_start=buggycode[1].strip().split("(")[0].strip()
+        m_start=buggycode[1].strip()
         buggycode[err_pos] = "<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
         errorline=buggycode[err_pos]
         buggy_m=buggycode[1:-2]
     else:
-        m_start=buggycode[0].strip().split("(")[0].strip()
+        m_start=buggycode[0].strip()
         buggycode[err_pos] = "<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
         errorline = buggycode[err_pos]
         buggy_m = buggycode[:-2]
-
+    bug_count=''.join(buggy_m).count('<START_BUG>')
+    if bug_count>1:
+        print('id',str(res['_id']))
     def truncate(codelist,errorpos):
         length_list=[]
 
@@ -107,6 +110,7 @@ def add_buggy_method(cont,res,max_length):
             continue
         else:
             buggy_m_body.append(line.strip())
+
     cont_lines=cont.split("\n")
     new_lines=[]
     hitflag=0
@@ -119,8 +123,11 @@ def add_buggy_method(cont,res,max_length):
                 hitflag=1
             else:
                 new_lines.append(line.strip())
-    error_pos=new_lines.index(errorline)
 
+    error_pos=new_lines.index(errorline)
+    bug_count=''.join(new_lines).count('<START_BUG>')
+    if bug_count>1:
+        hitflag=0
     trunc_lines=truncate(new_lines,error_pos)
 
     return ' '.join(trunc_lines),hitflag

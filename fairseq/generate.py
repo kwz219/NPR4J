@@ -8,6 +8,7 @@
 """
 Translate pre-processed data with a trained model.
 """
+import codecs
 
 import torch
 import numpy as np
@@ -15,8 +16,9 @@ from fairseq import bleu, data, options, progress_bar, tasks, tokenizer, utils
 from fairseq.meters import StopwatchMeter, TimeMeter
 from fairseq.sequence_generator import SequenceGenerator
 from fairseq.sequence_scorer import SequenceScorer
-import matplotlib.pyplot as plt
-from torchvision.utils import save_image
+from clearml import Task as clTask
+#import matplotlib.pyplot as plt
+#from torchvision.utils import save_image
 
 
 
@@ -29,6 +31,9 @@ def main(args):
 
     if args.max_tokens is None and args.max_sentences is None:
         args.max_tokens = 12000
+    if args.clearml==True:
+        trans_task=clTask.init(project_name="translation",task_name=args.taskname)
+    output_f=codecs.open(args.outputfile,"w",encoding='utf8')
     print(args)
 
     use_cuda = torch.cuda.is_available() and not args.cpu
@@ -94,6 +99,8 @@ def main(args):
     scorer = bleu.Scorer(tgt_dict.pad(), tgt_dict.eos(), tgt_dict.unk())
     num_sentences = 0
     has_target = True
+
+    translations_result=[]
     with progress_bar.build_progress_bar(args, itr) as t:
         if args.score_reference:
             translations = translator.score_batched_itr(t, cuda=use_cuda, timer=gen_timer)
@@ -119,9 +126,9 @@ def main(args):
                     target_str = tgt_dict.string(target_tokens, args.remove_bpe, escape_unk=True)
 
             if not args.quiet:
-                print('S-{}\t{}'.format(sample_id, src_str))
+                print('S-{}\t{}'.format(sample_id, src_str),file=output_f)
                 if has_target:
-                    print('T-{}\t{}'.format(sample_id, target_str))
+                    print('T-{}\t{}'.format(sample_id, target_str),file=output_f)
 
             # Process top predictions
             for i, hypo in enumerate(hypos[:min(len(hypos), args.nbest)]):
@@ -135,15 +142,15 @@ def main(args):
                 )
 
                 if not args.quiet:
-                    print('H-{}\t{}\t{}'.format(sample_id, hypo['score'], hypo_str))
+                    print('H-{}\t{}\t{}'.format(sample_id, hypo['score'], hypo_str),file=output_f)
                     print('P-{}\t{}'.format(
                         sample_id,
                         ' '.join(map(
                             lambda x: '{:.4f}'.format(x),
                             hypo['positional_scores'].tolist(),
                         ))
-                    ))
-
+                    ),file=output_f)
+                    """
                     if args.print_alignment:
                         try:
                             if hypo_str == target_str:
@@ -202,7 +209,7 @@ def main(args):
                         except:
                             continue
                         print('A-{}\t{}'.format(sample_id, ' '.join(map(lambda x: str(utils.item(x)), alignment))))
-
+                    """
                 # Score only the top hypothesis
                 if has_target and i == 0:
                     if align_dict is not None or args.remove_bpe is not None:
@@ -223,5 +230,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = options.get_generation_parser()
+    parser.add_argument("-clearml",default=False,type=bool)
+    parser.add_argument("-taskname",default=None)
+    parser.add_argument("-outputfile",default='pred.txt')
     args = options.parse_args_and_arch(parser)
     main(args)
