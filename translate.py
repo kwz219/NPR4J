@@ -24,9 +24,25 @@ def translate_CoCoNut(config_file,clearml):
     os.system(cmd)
 
 
-def translate_ONMT(config_file, clearML):
-    pass
-
+def translate_ONMT(config_file, clearml):
+    with open(config_file, 'r') as f:
+        config_dict = yaml.safe_load(f)
+        f.close()
+    use_clearml=clearml
+    model=config_dict['model']
+    src=config_dict['src']
+    tgt=config_dict['tgt']
+    beam_size=config_dict['beam_size']
+    n_best=config_dict['n_best']
+    output=config_dict['output']
+    gpu=config_dict['gpu']
+    batch_size=config_dict['batch_size']
+    task_name=config_file.split('/')[-1].replace('.yaml','')
+    max_length=config_dict['max_length']
+    cmd = "python "+" OpenNMT-py-master/onmt/bin/translate.py "+" --model "+str(model)+" --src "+str(src)+" --tgt "+str(tgt)+" --beam_size "+str(beam_size)+\
+        " --n_best "+str(n_best)+" --output "+str(output)+" --gpu "+str(gpu)+" --batch_size "+str(batch_size)+ " -clearml "+str(use_clearml)+' -taskname '+str(task_name)+\
+        " --verbose --replace_unk --max_length "+str(max_length)
+    os.system(cmd)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -38,7 +54,7 @@ def main():
 
     opt=parser.parse_args()
     if opt.model=="onmt":
-        translate_ONMT(config_file=opt.config,clearML=opt.clearml)
+        translate_ONMT(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="fairseq":
         translate_CoCoNut(config_file=opt.config,clearml=opt.clearml)
 
