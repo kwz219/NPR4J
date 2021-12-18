@@ -19,13 +19,15 @@ def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo,max_length):
         out,err=jarWrapper(args)
         #print(err)
     try:
-        class_content=codecs.open(outputcode_f,'r',encoding='utf8').read()
+        class_content=codecs.open(outputcode_f,'r',encoding='iso8859-1').read()
         #print("class_content readed")
         code,hitflag = add_buggy_method(class_content,buginfo,max_length)
+        if hitflag==3:
+            print(outputcode_f)
     except:
-        print("failed ",outputcode_f)
         code=''
         hitflag=0
+
     return code,hitflag
 def run_SequenceR_abs_p2(inputcode_f,outputcode_f,buginfo):
     args=["../lib-jar/abstraction-p2.jar",inputcode_f,outputcode_f]
@@ -34,7 +36,8 @@ def run_SequenceR_abs_p2(inputcode_f,outputcode_f,buginfo):
     try:
         class_content=codecs.open(outputcode_f,'r',encoding='unicode_escape').read()
         code,hitflag = add_buggy_method(class_content,buginfo)
-    except:
+    except err:
+        print(err)
         code=''
         hitflag=0
     return code,hitflag
@@ -43,7 +46,7 @@ def run_SequenceR_abs_p3(inputcode_f,outputcode_f,buginfo):
     if not os.path.exists(outputcode_f):
         out,err=jarWrapper(args)
     try:
-        class_content=codecs.open(outputcode_f,'r',encoding='unicode_escape').read()
+        class_content=codecs.open(outputcode_f,'r',encoding='iso8859-1').read()
         code,hitflag = add_buggy_method(class_content,buginfo)
     except:
         code=''
@@ -58,19 +61,29 @@ def add_buggy_method(cont,res,max_length):
     buggycode=res["buggy_code"].split("\n")
     err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
     print("err_pos",err_pos)
-    if str(buggycode[0].strip()).startswith("@"):
-        m_start=buggycode[1].strip()
-        buggycode[err_pos] = "<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
-        errorline=buggycode[err_pos]
-        buggy_m=buggycode[1:-2]
-    else:
-        m_start=buggycode[0].strip()
-        buggycode[err_pos] = "<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
-        errorline = buggycode[err_pos]
-        buggy_m = buggycode[:-2]
-    bug_count=''.join(buggy_m).count('<START_BUG>')
-    if bug_count>1:
-        print('id',str(res['_id']))
+    m_start_ind=0
+    for ind,line in enumerate(buggycode):
+        line =str(line.strip())
+        if line=="":
+            continue
+        elif line[0].isalpha():
+            m_start=line
+            m_start_ind=ind
+            break
+        else:
+            continue
+    last=m_start[-1]
+    postfix=m_start[-2]
+    if last=="{" and (not postfix==" "):
+        m_start.replace("{"," {")
+    m_start=m_start.replace("final public","public final").replace("String args[]","String[] args").replace(",Appt",", Appt")
+    buggycode[err_pos]="<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
+    errorline=buggycode[err_pos]
+
+    buggycode=buggycode[m_start_ind:-2]
+    #print(m_start)
+
+
     def truncate(codelist,errorpos):
         length_list=[]
 
@@ -104,30 +117,37 @@ def add_buggy_method(cont,res,max_length):
             end_pos=end_pos+1
         #print(start_pos,end_pos,len((codelist)))
         return codelist[start_pos:min(end_pos+1,length+1)]
-    buggy_m_body=[]
-    for line in buggy_m:
-        if line.strip().startswith("/") or line.strip().startswith("*"):
-            continue
-        else:
-            buggy_m_body.append(line.strip())
+
 
     cont_lines=cont.split("\n")
     new_lines=[]
     hitflag=0
-    for line in cont_lines:
-        if line.strip().startswith("/") or line.strip().startswith("*"):
-            continue
-        else:
-            if m_start in line:
-                new_lines+=buggy_m_body
-                hitflag=1
-            else:
-                new_lines.append(line.strip())
 
+    for line in cont_lines:
+        if m_start in line:
+            new_lines+=buggycode
+            hitflag=1
+        else:
+            new_lines.append(line.strip())
+    startpos=len(new_lines)//2
+    if hitflag==0:
+        rep_index=new_lines.index("}",startpos)
+        new_lines=new_lines[:rep_index+1]+buggycode+new_lines[rep_index+1:]
+
+        hitflag=1
+
+
+    def remove_comments(codelines):
+        pure_codes=[]
+        for line in codelines:
+            if str(line.strip()).startswith('/') or str(line.strip()).startswith('*'):
+                continue
+            else:
+                pure_codes.append(line.strip())
+        return pure_codes
+    new_lines=remove_comments(new_lines)
     error_pos=new_lines.index(errorline)
-    bug_count=''.join(new_lines).count('<START_BUG>')
-    if bug_count>1:
-        hitflag=0
+    print(error_pos)
     trunc_lines=truncate(new_lines,error_pos)
 
     return ' '.join(trunc_lines),hitflag

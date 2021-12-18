@@ -5,5 +5,5 @@ src: /root/zwk/DDPR_DATA/data/M1000_CANone/test.buggy
 tgt: /root/zwk/DDPR_DATA/data/M1000_CANone/test.fix
 output: /root/zwk/DDPR_DATA/Artifacts/20890_CANone_transformer_wv512/20890_CANone_transformerwv512_best_b10.pred
 gpu: 2
-batch_size: 10
+batch_size: 5
 max_length: 1010

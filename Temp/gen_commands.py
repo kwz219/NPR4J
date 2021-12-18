@@ -9,3 +9,8 @@ def gen_commands():
         print(command)
         #os.system(command)
 #gen_commands()
+l=[1,2,3,4]
+for i,item in enumerate(l):
+    print(i,item)
+print(l.index(3))
+print(l[:3])

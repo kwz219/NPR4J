@@ -1,0 +1,9 @@
+model: /root/zwk/DDPR_DATA/Artifacts/20873_Tufano_wv512_base64+copy/20873_Tufano_copy_step_100000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/M1000_CANone/test.buggy
+tgt: /root/zwk/DDPR_DATA/data/M1000_CANone/test.fix
+output: /root/zwk/DDPR_DATA/Artifacts/20873_Tufano_wv512_base64+copy/20873_Tufano_copy_step_100000.pt
+gpu: 2
+batch_size: 5
+max_length: 1010

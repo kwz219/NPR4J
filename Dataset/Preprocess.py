@@ -35,16 +35,19 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
     ids=readF2L(ids_f)
     mongoClient=MongoHelper()
     bug_col=mongoClient.get_col(BUG_COL)
+
     if method=="SequenceR":
-        def build(src_f, tgt_f, error_f, correct_f,ids):
+        def build(src_f, tgt_f, error_f, correct_f, ids):
             buggy_codes = []
             fix_codes = []
             error_ids = []
             correct_ids=[]
             ind=1
-            not_count=0
+            newline_count=0
             in_count=0
             bug_1=0
+            exist_count = 0
+            not_exist = 0
             for id in ids:
                 bug=bug_col.find_one({"_id":ObjectId(id)})
                 if bug==None:
@@ -57,12 +60,18 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                          buggy_parent_f.split("\\")[-1]
                 if os.path.exists(tmp_f1):
                     tmp_f=tmp_f1
+                    exist_count+=1
                 elif os.path.exists(tmp_f2):
                     tmp_f=tmp_f2
+                    exist_count += 1
                 elif os.path.exists(tmp_f3):
                     tmp_f=tmp_f3
+                    exist_count += 1
                 else:
+                    not_exist+=1
                     tmp_f=tmp_f1
+                #print("exist",exist_count,"not_exist",not_exist)
+
                 fix_code=''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()
 
 
@@ -71,10 +80,6 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                 if len(buggy_code.strip())<=1:
                     hitflag=0
                 if hitflag==1:
-                    if "<START_BUG>" not in buggy_code:
-                        not_count+=1
-                    else:
-                        in_count+=1
                     try:
                         toked_fix = javalang.tokenizer.tokenize(fix_code)
                         toked_fix = ' '.join([tok.value for tok in toked_fix])
@@ -89,26 +94,36 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                         toked_bug = ' '.join(toked_bug).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
                     bug_count=toked_bug.count('<START_BUG>'
                     )
-                    if bug_count>1:
+                    if not bug_count==1:
                         bug_1+=1
-                    buggy_codes.append(toked_bug)
-                    fix_codes.append(toked_fix)
-                    #print(toked_bug)
-                    #print(toked_fix)
-                    correct_ids.append(bug['_id'])
+                    else:
+                        buggy_codes.append(toked_bug)
+                        fix_codes.append(toked_fix)
+                        if '\n' in toked_bug:
+                            newline_count+=1
+                            print("newline_count",newline_count)
+                        #print(toked_bug)
+                        #print(toked_fix)
+                        correct_ids.append(bug['_id'])
+                        in_count+=1
                 elif hitflag==2:
                     print(tmp_f)
                 else:
                     error_ids.append(bug['_id'])
-                print(ind," not: ",not_count,"in:",in_count,"bug >1",bug_1)
+                print(ind,"in:",in_count,"bug >1",bug_1)
+                print("newline_count", newline_count)
                 ind+=1
+            assert len(buggy_codes)==len(fix_codes)
             buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
+            assert len(buggy_codes) == len(fix_codes)
+            print(len(buggy_codes),len(fix_codes))
+            print("newline_count", newline_count)
             writeL2F(buggy_codes,src_f)
             writeL2F(fix_codes,tgt_f)
             writeL2F(error_ids,error_f)
             writeL2F(correct_ids, correct_f)
-        build(output_dir+"test.buggy",output_dir+"test.fix",output_dir+"test.fids",output_dir+"test.sids",ids)
-        #build(output_dir+"buggy.val.txt",output_dir+"fix.val.txt",output_dir+"error_ids.val.txt",output_dir+"correct_ids.val.txt",val_ids)
+        #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
+        build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
 def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     print("CoCoNut-Style data preprocess start ")
     def CoCoNut_tokenize(string):
@@ -300,5 +315,5 @@ def test_preprocess():
 
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
-preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
-#preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
+preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
+#preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")

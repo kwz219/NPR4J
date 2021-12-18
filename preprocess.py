@@ -5,7 +5,7 @@ import subprocess
 
 import javalang.tokenizer
 
-from CodeAbstract.CA_src2abs import run_src2abs
+from CodeAbstract.CA_src2abs import run_src2abs, run_src2abs_all
 from Utils.CA_Utils import writeL2F
 
 from Utils.IOHelper import readF2L
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     preprocess_Tufano(ids_f,input_dir,output_dir,idoms_f,raw_dir,name="trn")
     #run_src2abs_all(ids_f,raw_dir,input_dir,idoms_f)
     #run_src2abs_all(val_ids, val_dir, val_ouy, idoms_f)
-
+    
     prerocess_config={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\trn",
                       "valid_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\val",
                       "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\test",
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     #preprocess_CoCoNut(prerocess_config)
     """
     #preprocess_normal("D:\generate_data","D:\generate_data\\toked_normal.buggy","D:\generate_data\\toked_normal.name")
-
+    run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\test_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\test",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\test",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
     parser = argparse.ArgumentParser(
         description='preprocess.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
