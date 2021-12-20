@@ -186,7 +186,27 @@ class FairseqContextModel(BaseFairseqModel):
     def max_positions(self):
         """Maximum length supported by the model."""
         return (self.encoder.max_positions(), self.decoder.max_positions())
-      
+
+
+class GPT2FairseqContextModel(BaseFairseqModel):
+    def __init__(self, encoder, decoder,gpt):
+        super().__init__()
+        self.gpt = gpt
+        self.encoder = encoder
+        self.decoder = decoder
+        assert isinstance(self.encoder, FairseqEncoder)
+        assert isinstance(self.decoder, FairseqDecoder)
+
+    """Base class for encoder-decoder models with context."""
+
+    def forward(self, src_tokens, src_lengths, ctx_tokens, ctx_lengths, prev_output_tokens):
+        encoder_out = self.encoder(src_tokens, src_lengths, ctx_tokens, ctx_lengths)
+        decoder_out = self.decoder(prev_output_tokens, encoder_out)
+        return decoder_out
+
+    def max_positions(self):
+        """Maximum length supported by the model."""
+        return (self.encoder.max_positions(), self.decoder.max_positions())
 
 class FairseqMultiModel(BaseFairseqModel):
     """Base class for combining multiple encoder-decoder models."""

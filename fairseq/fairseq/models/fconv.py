@@ -19,7 +19,7 @@ from fairseq.modules import (
 from . import (
     FairseqEncoder, FairseqIncrementalDecoder, FairseqModel,
     FairseqLanguageModel, FairseqContextModel, register_model,
-    register_model_architecture,
+    register_model_architecture, BaseFairseqModel, FairseqDecoder,
 )
 
 
@@ -109,7 +109,8 @@ class FConvModel(FairseqModel):
         )
         return FConvModel(encoder, decoder)
 
-
+@register_model('Cure')
+class GPT2FconvContextEncoder()
 @register_model('fconv_context')
 class FConvContextModel(FairseqContextModel):
 
@@ -230,6 +231,7 @@ class FConvLanguageModel(FairseqLanguageModel):
             adaptive_softmax_dropout=args.adaptive_softmax_dropout,
         )
         return FConvLanguageModel(decoder)
+
 
 
 class FConvEncoder(FairseqEncoder):

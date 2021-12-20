@@ -1,0 +1,10 @@
+model: /root/zwk/DDPR_DATA/Artifacts/20878_SequenceR_origin/20878_SR_origin_step_120000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/M1000_SequenceR/test.buggy
+tgt: /root/zwk/DDPR_DATA/data/M1000_SequenceR/test.fix
+output: /root/zwk/DDPR_DATA/Artifacts/20878_SequenceR_origin/20878_SR_origin_best_b10.pred
+gpu: 1
+batch_size: 2000
+batch_type: tokens
+max_length: 1010

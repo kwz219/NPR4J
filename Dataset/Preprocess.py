@@ -316,4 +316,4 @@ def test_preprocess():
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
 preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
-#preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
+preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","D:\DDPR\CodeAbstract\CA_Resource\idioms.10w","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
