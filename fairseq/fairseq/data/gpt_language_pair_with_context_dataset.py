@@ -29,6 +29,7 @@ def collate(
     id = torch.LongTensor([s['id'] for s in samples])
     src_tokens = merge('CoCoNut', left_pad=left_pad_source)
     ctx_tokens = merge('context', left_pad=left_pad_source)
+    ctx_types = merge('ctx_types',left_pad=left_pad_source)
 
     # sort by descending CoCoNut length
     src_lengths = torch.LongTensor([s['CoCoNut'].numel() for s in samples])
@@ -37,6 +38,7 @@ def collate(
     id = id.index_select(0, sort_order)
     src_tokens = src_tokens.index_select(0, sort_order)
     ctx_tokens = ctx_tokens.index_select(0, sort_order)
+    ctx_types = ctx_tokens.index_select(0,sort_order)
 
     prev_output_tokens = None
     target = None
@@ -65,6 +67,7 @@ def collate(
             'src_lengths': src_lengths,
             'ctx_tokens': ctx_tokens,
             'ctx_lengths': ctx_lengths,
+            'ctx_types': ctx_types,
         },
         'target': target,
         'nsentences': samples[0]['CoCoNut'].size(0),
@@ -125,6 +128,8 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
             token_types=[2 for i in range(len(ctx_item))]#context position,type=2
             buggy_pos=self.getsubindex(ctx_item,src_item)
             token_types[buggy_pos[0]:buggy_pos[1]]=3 #buggy position,type=3
+            ctx_types=torch.LongTensor(token_types)
+            print("ctx_types",ctx_types)
             break
 
         # Append EOS to end of tgt sentence if it does not have an EOS and remove
@@ -140,13 +145,13 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
             eos = self.src_dict.eos()
             if self.src[index][-1] == eos:
                 src_item = self.src[index][:-1]
-
+        assert ctx_item.size()==ctx_types.size()
         return {
             'id': index,
             'CoCoNut': src_item,
             'target': tgt_item,
             'context': ctx_item,
-            'token_types': token_types
+            'ctx_types': ctx_types
         }
 
     def __len__(self):

@@ -1,4 +1,5 @@
-import os
+
+、import os
 import argparse
 def build_vocab_ONMT(config_file,clearML):
     cmd="python OpenNMT-py-master/build_vocab.py"+" -config "+config_file+" -n_sample -1" +" -clearML "+str(clearML)
