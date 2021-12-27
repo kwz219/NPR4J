@@ -10,8 +10,8 @@ momentum:  0.5498989114182679
 clip_norm: 0.3526243918050602
 optimizer: 'nag'
 criterion: 'cross_entropy'
-savedir: '/root/zwk/DDPR_DATA/CoCoNut/20878_CoCoNut_o1'
-trainbin: 'D:/DDPR_DATA/OneLine_Replacement/M1000_Cure/dest'
+savedir: '/root/zwk/DDPR_DATA/data/M1000_Cure/save'
+trainbin: '/root/zwk/DDPR_DATA/data/M1000_Cure/dest'
 batch_size: 32
 device_id: 0
 max-epoch: 20

@@ -501,5 +501,7 @@ if __name__ == '__main__':
         multiprocessing_main(args)
     else:
         #test_datasetload(args)
-        main(args)
-        #mainGPT(args)
+        if args.task=="cure":
+            mainGPT(args)
+        else:
+            main(args)

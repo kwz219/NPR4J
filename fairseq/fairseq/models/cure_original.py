@@ -41,7 +41,7 @@ class GPT2FairseqContextModel(BaseFairseqModel):
         outputs=self.gpt(ctx_tokens)
 
         ctx_mask=ctx_types
-        prev_outputs=self.gpt(ctx_tokens)
+        prev_outputs=self.gpt(prev_output_tokens)
 
         encoder_out = self.encoder(outputs,ctx_mask)
         decoder_out = self.decoder(prev_outputs,encoder_out)
@@ -217,7 +217,7 @@ class Cure_FConvEncoder(FairseqEncoder):
         x = src_embedding
         x = F.dropout(x, p=self.dropout, training=self.training)
         input_embedding = x
-        print("input_embedding",input_embedding.size())
+        #print("input_embedding",input_embedding.size())
         # project to size of convolution
         x = self.fc1(x)
 
@@ -228,9 +228,9 @@ class Cure_FConvEncoder(FairseqEncoder):
 
         # B x T x C -> T x B x C
         x = x.transpose(0, 1)
-        print("x",x.size())
+        #print("x",x.size())
         if not encoder_padding_mask==None:
-            print("mask",encoder_padding_mask.size())
+            #print("mask",encoder_padding_mask.size())
             encoder_padding_mask = encoder_padding_mask.transpose(0, 1)
         residuals = [x]
         # temporal convolutions
@@ -272,7 +272,7 @@ class Cure_FConvEncoder(FairseqEncoder):
 
         # scale gradients (this only affects backward, not forward)
         x = GradMultiply.apply(x, 1.0 / (2.0 * self.num_attention_layers))
-        print("x",x.size())
+        #print("x",x.size())
         # add output to input embedding for attention
         y = (x + input_embedding) * math.sqrt(0.5)
 
@@ -374,9 +374,9 @@ class Cure_FConvDecoder(FairseqIncrementalDecoder):
 
             # split and transpose encoder outputs
             encoder_a, encoder_b = self._split_encoder_out(encoder_out, incremental_state)
-            print("encoder_a",encoder_a.size())
-            print("encoder_b", encoder_b.size())
-            print("encmask",encoder_padding_mask)
+            #print("encoder_a",encoder_a.size())
+            #print("encoder_b", encoder_b.size())
+            #print("encmask",encoder_padding_mask)
             pos_embed = 0
 
         if incremental_state is not None:
