@@ -10,7 +10,10 @@ import torch
 
 from fairseq import utils
 
-from . import data_utils, FairseqDataset, ConcatDataset, LanguagePairDataset
+
+from transformers import GPT2Tokenizer
+
+from fairseq.data import data_utils, LanguagePairDataset
 
 
 def collate(
@@ -27,16 +30,18 @@ def collate(
         )
 
     id = torch.LongTensor([s['id'] for s in samples])
-    src_tokens = merge('CoCoNut', left_pad=left_pad_source)
-    ctx_tokens = merge('context', left_pad=left_pad_source)
 
-    # sort by descending CoCoNut length
-    src_lengths = torch.LongTensor([s['CoCoNut'].numel() for s in samples])
+    ctx_tokens = merge('context', left_pad=left_pad_source)
+    ctx_types = merge('ctx_types', left_pad=left_pad_source)
+
+    assert len(ctx_types)==len(ctx_types)
+
     ctx_lengths = torch.LongTensor([s['context'].numel() for s in samples])
-    src_lengths, sort_order = src_lengths.sort(descending=True)
+    ctx_lengths, sort_order = ctx_lengths.sort(descending=True)
     id = id.index_select(0, sort_order)
-    src_tokens = src_tokens.index_select(0, sort_order)
+
     ctx_tokens = ctx_tokens.index_select(0, sort_order)
+    ctx_types = ctx_types.index_select(0, sort_order)
 
     prev_output_tokens = None
     target = None
@@ -55,19 +60,18 @@ def collate(
             )
             prev_output_tokens = prev_output_tokens.index_select(0, sort_order)
     else:
-        ntokens = sum(len(s['CoCoNut']) for s in samples)
+        ntokens = sum(len(s['context']) for s in samples)
 
     batch = {
         'id': id,
         'ntokens': ntokens,
         'net_input': {
-            'src_tokens': src_tokens,
-            'src_lengths': src_lengths,
             'ctx_tokens': ctx_tokens,
             'ctx_lengths': ctx_lengths,
+            'ctx_types': ctx_types,
         },
         'target': target,
-        'nsentences': samples[0]['CoCoNut'].size(0),
+        'nsentences': samples[0]['context'].size(0),
     }
     if prev_output_tokens is not None:
         batch['net_input']['prev_output_tokens'] = prev_output_tokens
@@ -106,6 +110,11 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
 
     def __init__(self, *args, **kwargs):
         super(GPT2LanguagePairWithContextDataset,self).__init__(*args, **kwargs)
+        additional_tokens=['CaMeL','$NUMBER$','$STRING$']
+        self.tokenizer=GPT2Tokenizer.from_pretrained("microsoft/CodeGPT-small-java")
+        self.tokenizer.add_tokens(additional_tokens)
+        self.sep_index=100000
+
 
     def getsubindex(self,list, sublist):
         listr = ' '.join([str(i) for i in list])
@@ -119,12 +128,10 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
         ctx_item = src_item
         for i,token in enumerate(src_item):
           #这里分开了
-          if token == self.src_dict.ctx():
-            ctx_item = src_item[(i+1):]
-            src_item = src_item[:i]
-            token_types=[2 for i in range(len(ctx_item))]#context position,type=2
-            buggy_pos=self.getsubindex(ctx_item,src_item)
-            token_types[buggy_pos[0]:buggy_pos[1]]=3 #buggy position,type=3
+          if token == self.sep_index:
+            ctx_types = src_item[(i+1):]
+            ctx_item = src_item[:i]
+
             break
 
         # Append EOS to end of tgt sentence if it does not have an EOS and remove
@@ -132,21 +139,20 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
         # use existing datasets for opposite directions i.e., when we want to
         # use tgt_dataset as src_dataset and vice versa
         if self.append_eos_to_target:
-            eos = self.tgt_dict.eos() if self.tgt_dict else self.src_dict.eos()
+            eos = self.tokenizer.eos_token_id
             if self.tgt and self.tgt[index][-1] != eos:
                 tgt_item = torch.cat([self.tgt[index], torch.LongTensor([eos])])
 
         if self.remove_eos_from_source:
-            eos = self.src_dict.eos()
+            eos = self.tokenizer.eos_token_id
             if self.src[index][-1] == eos:
                 src_item = self.src[index][:-1]
-
+        assert ctx_item.size()==ctx_types.size()
         return {
             'id': index,
-            'CoCoNut': src_item,
-            'target': tgt_item,
             'context': ctx_item,
-            'token_types': token_types
+            'target': tgt_item,
+            'ctx_types': ctx_types
         }
 
     def __len__(self):
@@ -184,11 +190,14 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
                   on the left if *left_pad_target* is ``True``.
         """
         return collate(
-            samples, pad_idx=self.src_dict.pad(), eos_idx=self.src_dict.eos(),
+            samples, pad_idx=self.tokenizer.pad_token_id, eos_idx=self.tokenizer.eos_token_id,
             left_pad_source=self.left_pad_source, left_pad_target=self.left_pad_target,
             input_feeding=self.input_feeding,
         )
-
+    def dummy_sentence(self, length):
+        t = torch.Tensor(length).uniform_(1, self.tokenizer.vocab_size).long()
+        t[-1] = self.tokenizer.eos_token_id
+        return t
     def get_dummy_batch(self, num_tokens, max_positions, src_len=128, tgt_len=128):
         """Return a dummy batch with a given number of tokens."""
         src_len, tgt_len = utils.resolve_max_positions(
@@ -196,13 +205,14 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
             max_positions,
             (self.max_source_positions, self.max_target_positions),
         )
+
         bsz = max(num_tokens // max(src_len, tgt_len), 1)
         return self.collater([
             {
                 'id': i,
-                'CoCoNut': self.src_dict.dummy_sentence(src_len),
-                'target': self.tgt_dict.dummy_sentence(tgt_len) if self.tgt_dict is not None else None,
-                'context': self.src_dict.dummy_sentence(src_len),
+                'target': self.dummy_sentence(tgt_len) ,
+                'context': self.dummy_sentence(src_len),
+                'ctx_types': self.dummy_sentence(src_len),
             }
             for i in range(bsz)
         ])

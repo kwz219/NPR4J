@@ -1,0 +1,10 @@
+model: /root/zwk/DDPR_DATA/Artifacts/20878_Tufano_idiom2w/20878_Tufano_idioms2w_step_140000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/M1000_Tufano/test.buggy
+
+output: /root/zwk/DDPR_DATA/Artifacts/20878_Tufano_idiom2w/20878_Tufano_idioms2w_best_nb10.pred
+gpu: 1
+batch_size: 2048
+batch_type: tokens
+max_length: 1010

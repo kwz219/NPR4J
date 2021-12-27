@@ -103,7 +103,30 @@ class Tokenizer:
                 consumer(ids)
                 line = f.readline()
         return {'nseq': nseq, 'nunk': sum(replaced.values()), 'ntok': ntok, 'replaced': replaced}
+    @staticmethod
+    def binarizeGPT(filename, consumer, tokenizer,
+                            append_eos=True, reverse_order=False,
+                            offset=0, end=-1):
+        nseq, ntok = 0, 0
+        replaced = Counter()
 
+        with open(filename, 'r',encoding='utf8') as f:
+            f.seek(offset)
+            # next(f) breaks f.tell(), hence readline() must be used
+            line = safe_readline(f)
+            while line:
+                if end > 0 and f.tell() > end:
+                    break
+
+                ids = Tokenizer.tokenizeGPT(line,tokenizer)
+                nseq += 1
+                ntok += len(ids)
+                print(ids[:2])
+                print(line[:20])
+                consumer(ids)
+                line = f.readline()
+
+        return {'nseq': nseq, 'nunk': sum(replaced.values()), 'ntok': ntok}
     @staticmethod
     def find_offsets(filename, num_chunks):
         with open(filename, 'r',encoding='utf8') as f:
@@ -135,4 +158,30 @@ class Tokenizer:
             ids[i] = idx
         if append_eos:
             ids[nwords] = dict.eos_index
+        return ids
+
+    @staticmethod
+    def tokenizeGPT(line,  tokenizer, add_if_not_exist=True,
+                 consumer=None, append_eos=True, reverse_order=False,sep_index=100000):
+        if "<SEP>" in line:
+            ctx,ctx_types=line.split("<SEP>")
+            #print("line",line)
+            #print("ctx",ctx)
+            #print("ctx_types",ctx_types)
+            ctx_ids=tokenizer.convert_tokens_to_ids(ctx.split())
+            ctx_types = [int(item) for item in ctx_types.split()]
+            if append_eos:
+                ctx_ids.append(tokenizer.eos_token_id)
+                ctx_types+=[0]
+
+            assert len(ctx_types)==len(ctx_ids)
+            totalids=ctx_ids+[sep_index]+ctx_types
+            #print(totalids)
+            ids = torch.IntTensor(totalids)
+        else:
+            fix_ids = tokenizer.convert_tokens_to_ids(line.split())
+            if append_eos:
+                fix_ids.append(tokenizer.eos_token_id)
+            ids = torch.IntTensor(fix_ids)
+        #print("ids",ids)
         return ids

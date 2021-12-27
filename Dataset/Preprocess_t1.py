@@ -193,4 +193,4 @@ def test_preprocess():
 
 
 preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR")
-#preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms_2w.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
+#preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","E:\APR_data\data\Tufano\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","E:\APR_data\data\Tufano\Idioms.2w","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")

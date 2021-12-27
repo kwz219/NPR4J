@@ -23,7 +23,7 @@ def translate_CoCoNut(config_file,clearml):
 
     os.system(cmd)
 
-
+#support models: sequenceR,Tufano,transformer,codit
 def translate_ONMT(config_file, clearml):
     with open(config_file, 'r') as f:
         config_dict = yaml.safe_load(f)

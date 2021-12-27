@@ -8,12 +8,16 @@ from bson import ObjectId
 
 from CoCoNut.tokenization.tokenization import extract_strings, COMPOSED_SYMBOLS, camel_case_split, number_split, \
     remove_integer
+from CodeAbstract.CA_src2abs import run_src2abs
 from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
-from CodeAbstract.CA_src2abs import run_src2abs
+#from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.IOHelper import writeL2F,readF2L
 import os
+from transformers import AutoTokenizer, GPT2Tokenizer
+
+
 def shuffle(list1, list2, list3):
     assert len(list1) == len(list2) and len(list2) == len(list3)
     all = []
@@ -127,6 +131,7 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
 def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     print("CoCoNut-Style data preprocess start ")
     def CoCoNut_tokenize(string):
+
         final_token_list = []
         string_replaced = extract_strings(string)
         split_tokens = re.split(r'([\W_])', string_replaced)
@@ -176,6 +181,7 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     add_f=codecs.open(output_dir+'/'+prefix+'.fix','w',encoding='utf8')
     contex_f=codecs.open(output_dir+'/'+prefix+'.buggy','w',encoding='utf8')
     id_f=codecs.open(output_dir+'/'+prefix+".ids",'w',encoding='utf8')
+    contex_fail=0
     for id in ids:
         bug = bug_col.find_one({"_id": ObjectId(id)})
         if bug == None:
@@ -183,7 +189,14 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
         buggy_context=bug['buggy_code']
         remove_code=''.join([l.strip() for l in bug['errs'][0]['src_content']]).strip()
         fix_code = ''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()
-        rem_contex=CoCoNut_tokenize(remove_code)+["<CTX>"]+CoCoNut_tokenize(buggy_context)
+        toked_rem=CoCoNut_tokenize(remove_code)
+        contex_list=CoCoNut_tokenize(buggy_context)
+        if len(contex_list)==0:
+            rem_contex=toked_rem+["<CTX>"]+toked_rem
+        else:
+            rem_contex = toked_rem + ["<CTX>"] + contex_list
+
+
         if len(rem_contex)<max_length:
             add=CoCoNut_tokenize(fix_code)
             add_line=' '.join(add).replace('\n', '').replace('\t', '')
@@ -192,17 +205,226 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
                 add_f.write(add_line+'\n')
                 contex_f.write(context_line+'\n')
                 id_f.write(id+'\n')
+                pass
             except:
                 pass
 
         ind+=1
-        print(ind)
+
+
     #writeL2F(add_lines,output_dir+'/'+prefix+'.fix')
     #writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
     #writeL2F(true_ids,output_dir+'/'+prefix+".ids")
 
+def preprocess_Cure(ids_f,output_dir,prefix,max_length=2000):
+    print("Cure-Style data preprocess start ")
+    tokenizer=AutoTokenizer.from_pretrained("microsoft/CodeGPT-small-java")
 
+    special_tokens=['CaMeL','$NUMBER$','$STRING$']
+    tokenizer.add_tokens(special_tokens)
 
+    def New_Cure_tokenize(string):
+        final_token_list = []
+        string_replaced = extract_strings(string)
+
+        split_tokens = re.split(r'([\W_])', string_replaced)
+
+        split_tokens = list(filter(lambda a: a not in ['', '"', "'", '\t', '\n'], split_tokens))
+        flag = False
+
+        # Special symbols
+        for idx, token in enumerate(split_tokens):
+            if idx < len(split_tokens) - 1:
+                reconstructed_token = token + split_tokens[idx + 1]
+                if reconstructed_token in COMPOSED_SYMBOLS:
+                    final_token_list.append(reconstructed_token)
+                    flag = True
+                elif not flag:
+                    final_token_list.append(token)
+                elif flag:
+                    flag = False
+            else:
+                final_token_list.append(token)
+        # Camel Case
+        no_camel = []
+        for token in final_token_list:
+            camel_tokens = camel_case_split(token)
+            for idx, camel_tok in enumerate(camel_tokens):
+                no_camel.append(camel_tok)
+
+        # number split
+        tokens = []
+        for token in no_camel:
+            number_sep = number_split(token)
+            for num in number_sep:
+                tokens.append(num)
+        tokens = remove_integer(tokens)
+        for idx, token in enumerate(tokens):
+            if token == 'SSSTRINGSS':
+                if idx > 0 and tokens[idx - 1] == '$STRING$':
+                    return []
+                else:
+                    tokens[idx] = '$STRING$'
+        line = ''.join(tokens)
+        finalline = re.sub('\s+', ' ', line)
+        return finalline
+
+    ids=readF2L(ids_f)
+    print(len(ids))
+    mongoClient=MongoHelper()
+    bug_col=mongoClient.get_col(BUG_COL)
+
+    add_f=codecs.open(output_dir+'/'+prefix+'.fix','w',encoding='utf8')
+    contex_f=codecs.open(output_dir+'/'+prefix+'.buggy','w',encoding='utf8')
+    id_f=codecs.open(output_dir+'/'+prefix+".ids",'w',encoding='utf8')
+    def get_types(context,bug):
+        step=len(bug)
+        bugtypes=["1" for i in range(len(bug))]
+        index=0
+        for i in range(0,len(context)-step):
+            if context[i:i+step]==bug:
+                index=i
+                break
+        types=["0" for i in range(index)]+bugtypes+["0" for i in range(len(context)-step-index)]
+        #print(len(types),len(context))
+        assert len(types)==len(context)
+
+        return types
+    ind=0
+    for id in ids:
+        bug = bug_col.find_one({"_id": ObjectId(id)})
+        if bug == None:
+            continue
+        try:
+            buggy_context = bug['buggy_code']
+            remove_code = ''.join([l for l in bug['errs'][0]['src_content']])
+            fix_code = ''.join([l for l in bug['errs'][0]['tgt_content']])
+            CoNut_buggy_context=New_Cure_tokenize(buggy_context)
+            CoNut_rem_code=New_Cure_tokenize(remove_code)
+            CoNut_fix_code=New_Cure_tokenize(fix_code)
+            GPT_buggy_context=tokenizer.tokenize(CoNut_buggy_context)
+            GPT_rem_code=tokenizer.tokenize(CoNut_rem_code)
+            GPT_fix_code=tokenizer.tokenize(CoNut_fix_code)
+            ctx_types=get_types(GPT_buggy_context,GPT_rem_code)
+            add_f.write(' '.join(GPT_fix_code)+'\n')
+            contex_f.write(' '.join(GPT_buggy_context)+"<SEP>"+' '.join(ctx_types)+'\n')
+            id_f.write(id+'\n')
+        except:
+            pass
+        print(ind)
+        ind+=1
+
+def preprocess_Cure2(ids_f,output_dir,prefix,max_length=2000):
+    print("Cure-Style data preprocess start ")
+    tokenizer=AutoTokenizer.from_pretrained("microsoft/CodeGPT-small-java")
+
+    special_tokens=['CaMeL','$NUMBER$','$STRING$']
+    tokenizer.add_tokens(special_tokens)
+
+    def New_Cure_tokenize(string):
+        final_token_list = []
+        string_replaced = extract_strings(string)
+
+        split_tokens = re.split(r'([\W_])', string_replaced)
+
+        split_tokens = list(filter(lambda a: a not in ['', '"', "'", '\t', '\n'], split_tokens))
+        flag = False
+
+        # Special symbols
+        for idx, token in enumerate(split_tokens):
+            if idx < len(split_tokens) - 1:
+                reconstructed_token = token + split_tokens[idx + 1]
+                if reconstructed_token in COMPOSED_SYMBOLS:
+                    final_token_list.append(reconstructed_token)
+                    flag = True
+                elif not flag:
+                    final_token_list.append(token)
+                elif flag:
+                    flag = False
+            else:
+                final_token_list.append(token)
+        # Camel Case
+        no_camel = []
+        for token in final_token_list:
+            camel_tokens = camel_case_split(token)
+            for idx, camel_tok in enumerate(camel_tokens):
+                no_camel.append(camel_tok)
+
+        # number split
+        tokens = []
+        for token in no_camel:
+            number_sep = number_split(token)
+            for num in number_sep:
+                tokens.append(num)
+        tokens = remove_integer(tokens)
+        for idx, token in enumerate(tokens):
+            if token == 'SSSTRINGSS':
+                if idx > 0 and tokens[idx - 1] == '$STRING$':
+                    return []
+                else:
+                    tokens[idx] = '$STRING$'
+        line = ''.join(tokens)
+        finalline = re.sub('\s+', ' ', line)
+        return finalline
+
+    ids=readF2L(ids_f)
+    print(len(ids))
+    mongoClient=MongoHelper()
+    bug_col=mongoClient.get_col(BUG_COL)
+
+    add_f=codecs.open(output_dir+'/'+prefix+'.fix','w',encoding='utf8')
+    contex_f=codecs.open(output_dir+'/'+prefix+'.buggy','w',encoding='utf8')
+    id_f=codecs.open(output_dir+'/'+prefix+".ids",'w',encoding='utf8')
+
+    ind=0
+    for id in ids:
+        bug = bug_col.find_one({"_id": ObjectId(id)})
+        if bug == None:
+            continue
+        try:
+            buggy_context = bug['buggy_code']
+            remove_code = ''.join([l for l in bug['errs'][0]['src_content']])
+            fix_code = ''.join([l for l in bug['errs'][0]['tgt_content']])
+            CoNut_buggy_context=New_Cure_tokenize(buggy_context)
+            CoNut_rem_code=New_Cure_tokenize(remove_code)
+            CoNut_fix_code=New_Cure_tokenize(fix_code)
+            GPT_buggy_context=tokenizer.tokenize(CoNut_buggy_context)
+            GPT_rem_code=tokenizer.tokenize(CoNut_rem_code)
+            GPT_fix_code=tokenizer.tokenize(CoNut_fix_code)
+
+            add_f.write(' '.join(GPT_fix_code)+'\n')
+            contex_f.write(' '.join(GPT_rem_code)+"<CTX>"+' '.join(GPT_buggy_context)+'\n')
+            id_f.write(id+'\n')
+        except:
+            pass
+        print(ind)
+        ind+=1
+
+def preprocess_Cure_fromCoCoNut(input_dir,out_dir):
+    tokenizer=AutoTokenizer.from_pretrained("microsoft/CodeGPT-small-java")
+    tokenizer.add_tokens(['CaMeL','<CTX>','$NUMBER$','$STRING$'])
+    subnames=['val','test','trn']
+
+    for subname in subnames:
+        buggy_f=input_dir+'/'+subname+'.buggy'
+        fix_f=input_dir+'/'+subname+'.fix'
+        out_buggyf=codecs.open(out_dir+'/'+subname+'.buggy','w',encoding='utf8')
+        out_fixf=codecs.open(out_dir+'/'+subname+'.fix','w',encoding='utf8')
+        #blines=codecs.open(buggy_f,'r',encoding='utf8').readlines()
+        flines=codecs.open(fix_f,'r',encoding='utf8').readlines()
+        blines=readF2L(buggy_f)
+        print(len(blines),len(flines))
+        assert len(blines)==len(flines)
+        ind=0
+        for bline,fline in zip(blines,flines):
+            toked_bline=tokenizer.tokenize(bline.strip())
+            toked_fline=tokenizer.tokenize(fline.strip())
+            out_buggyf.write(' '.join(toked_bline)+'\n')
+            out_fixf.write(' '.join(toked_fline)+'\n')
+            print(ind)
+            ind+=1
+        out_buggyf.close()
+        out_fixf.close()
 
 
 def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_length=1000):
@@ -313,7 +535,12 @@ def test_preprocess():
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
 
+#preprocess_Cure_fromCoCoNut("D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","D:\DDPR_DATA\OneLine_Replacement\M1000_Cure")
+#preprocess_Cure("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\M1000_Cure","test")
+preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","trn")
+preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","val")
+preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","test")
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
-#preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","test")
-preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
-preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","D:\DDPR\CodeAbstract\CA_Resource\idioms.10w","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
+#preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","trn")
+#preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
+#preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","D:\DDPR\CodeAbstract\CA_Resource\idioms.10w","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")

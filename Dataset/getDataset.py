@@ -1,7 +1,8 @@
 import codecs
-
 import javalang
-
+from bson import ObjectId
+from Dataset.DataConstants import BUG_COL
+from Dataset.MongoHelper import MongoHelper
 from Utils.IOHelper import readF2L,writeL2F
 from Query import get_buginfos
 def write_IDs(bugtype):
@@ -184,10 +185,25 @@ def write_FilteredDataset(inputdir,outputdir,trn_metas_f,val_metas_f,test_metas_
     writeL2F(trn_sids, outputdir + "/trn.sids")
     writeL2F(trn_fids, outputdir + "/trn.fids")
 
+def getErrorsbymeta(meta_f,errors_f):
+    mongoClient=MongoHelper()
+    bug_col=mongoClient.get_col(BUG_COL)
+    metas=readF2L(meta_f)
+    errors=[]
+    for meta in metas:
+        infos=meta.split("<SEP>")
+        id=ObjectId(infos[0])
+        bug = bug_col.find_one({"_id":id})
+        remove_code=''.join([l.strip() for l in bug['errs'][0]['src_content']]).strip()
+        fix_code = ''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()
+        err_pos = int(bug['errs'][0]["src_pos"][1:-1].split(":")[0])
+        errors.append(str(id)+"<SEP>"+str(err_pos)+"<SEP>"+remove_code+"<SEP>"+fix_code)
+    assert len(errors)==len(metas)
+    writeL2F(errors,errors_f)
 #write_FilteredDatasetOther("test_d4j","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j\meta_info.txt",1000)
 #write_FilteredDatasetOther("test_bears","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears\meta_info.txt",1000)
 #write_FilteredDatasetOther("test_bdjar","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar\meta_info.txt",1000)
-
+getErrorsbymeta("D:/DDPR_DATA/OneLine_Replacement/Raw/test/meta_info.txt","D:/DDPR_DATA/OneLine_Replacement/Raw/test/error_info.txt")
 #write_Rawdatasets("./freq50_611/trn_ids.txt","./freq50_611/val_ids.txt","./freq50_611/test_ids.txt")
 #write_RawdatasetsOther("D:\DDPR\Dataset\OR\OR_d4j.txt","D:\DDPR\Dataset\OR\OR_bears.txt","D:\DDPR\Dataset\OR\OR_bdjar.txt")
-write_FilteredDataset("D:\DDPR_DATA\OneLine_Replacement\Raw","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test\\meta_info.txt")
+#write_FilteredDataset("D:\DDPR_DATA\OneLine_Replacement\Raw","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test\\meta_info.txt")

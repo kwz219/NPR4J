@@ -107,9 +107,22 @@ def preprocess_CoCoNut(configdict:dict):
     dest_dir=configdict['dest_dir']
     cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers 10 "\
          +" --trainpref "+train_dir+" --validpref "+valid_dir+" --testpref "+test_dir+" --destdir "+dest_dir
+    if 'joined_dictionary' in configdict.keys():
+        cmd=cmd+" --joined-dictionary "+str(configdict["joined-dictionary"])
     print(cmd)
     subprocess.call(cmd, shell=True)
+def preprocess_Cure(configdict:dict):
 
+    src_lang=configdict['src_lang']
+    tgt_lang=configdict['tgt_lang']
+    train_dir=configdict['train_dir']
+    valid_dir=configdict['valid_dir']
+    test_dir=configdict['test_dir']
+    dest_dir=configdict['dest_dir']
+    cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers 1 "\
+         +" --trainpref "+train_dir+" --validpref "+valid_dir+" --testpref "+test_dir+" --destdir "+dest_dir+" --use-gpt "+"microsoft/CodeGPT-small-java"
+    print(cmd)
+    subprocess.call(cmd, shell=True)
 def preprocess_normal(dir,outputfile,checkfile):
     files=os.listdir(dir)
     toked_contents=[]
@@ -156,11 +169,20 @@ if __name__ == "__main__":
     #preprocess_CoCoNut(prerocess_config)
     """
     #preprocess_normal("D:\generate_data","D:\generate_data\\toked_normal.buggy","D:\generate_data\\toked_normal.name")
-    run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\test_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\test",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\test",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
+    #run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\test_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\test",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\test",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
+    """
     parser = argparse.ArgumentParser(
         description='preprocess.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("CA_method","--CodeAbstractMethod",help="select a code abstract method. if none, use javalang to tokenize",default=['None'],choices=['None'])
     parser.add_argument("--input_dir",help="source input dir ,contains a number of java files")
     parser.add_argument("--output_file",help="processed result file. output tokenized codes to a file ,with each code a line")
+    """
+    process_cureconfig={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\trn",
+                      "valid_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\val",
+                      "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\test",
+                      "dest_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\dest",
+                      }
+
+    preprocess_CoCoNut(process_cureconfig)
 

@@ -4,7 +4,7 @@
 # This CoCoNut code is licensed under the license found in the LICENSE file in
 # the root directory of this CoCoNut tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
-
+import json
 from collections import Counter
 import os
 
@@ -193,6 +193,12 @@ class Dictionary(object):
             d.count.append(count)
         return d
 
+    @classmethod
+    def load_fromjson(cls,f,ignore_utf_errors=False):
+        """Loads the dictionary from a json file with the format:
+        { indice: token }
+        """
+        pass
     def save(self, f):
         """Stores dictionary into a text file"""
         if isinstance(f, str):

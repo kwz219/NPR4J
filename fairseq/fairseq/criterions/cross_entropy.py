@@ -19,6 +19,7 @@ class CrossEntropyCriterion(FairseqCriterion):
     def __init__(self, args, task):
         super().__init__(args, task)
 
+        self.padding_idx #TODO-should load from gptconfig
     def forward(self, model, sample, reduce=True):
         """Compute the loss for the given sample.
 
@@ -27,11 +28,16 @@ class CrossEntropyCriterion(FairseqCriterion):
         2) the sample size, which is used as the denominator for the gradient
         3) logging outputs to display while training
         """
+        #print(sample['net_input']['ctx_tokens'].size())
+        #print(sample['target'].size())
+        #print(type(model))
         net_output = model(**sample['net_input'])
         lprobs = model.get_normalized_probs(net_output, log_probs=True)
+        #print("lprobs",lprobs.size())
         lprobs = lprobs.view(-1, lprobs.size(-1))
-        target = model.get_targets(sample, net_output).view(-1)
-        loss = F.nll_loss(lprobs, target, size_average=False, ignore_index=self.padding_idx,
+        target = model.get_targets(sample, net_output)
+        #print("target",target.size())
+        loss = F.nll_loss(lprobs, target.view(-1), size_average=False, ignore_index=self.padding_idx,
                           reduce=reduce)
         sample_size = sample['target'].size(0) if self.args.sentence_avg else sample['ntokens']
         logging_output = {

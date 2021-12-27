@@ -27,7 +27,13 @@ def readF2L(filepath):
             lines.append(line.strip())
         f.close()
     return lines
-
+def readF2L_enc(filepath,enc):
+    lines=[]
+    with open(filepath,'r',encoding=enc)as f:
+        for line in f:
+            lines.append(line.strip())
+        f.close()
+    return lines
 "directly write"
 def write2F(content:str,filepath):
     f=codecs.open(filepath,'w',encoding='utf8')

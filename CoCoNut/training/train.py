@@ -62,8 +62,8 @@ def train_context(dropout,
     else:
         share = ''
 
-    cmd = 'python ' + fairseqdir + 'train.py --use-context --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
-          ' --arch fconv_context  --max-tokens 2000 --distributed-world-size 1  --log-format json ' + \
+    cmd = 'python fairseq/train.py --use-context --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
+          ' --arch fconv_context  --max-tokens 4000 --distributed-world-size 1  --log-format json ' + \
           '--encoder-embed-dim ' + str(encoder_embed_dim) + \
           ' --decoder-embed-dim ' + str(decoder_embed_dim) + \
           ' --decoder-out-embed-dim ' + str(decoder_out_embed_dim) + \

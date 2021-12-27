@@ -65,7 +65,28 @@ def run_src2abs_all_test(id_file,src_dir,tgt_dir,idiom_path):
         ind+=1
     writeL2F(correct_ids,tgt_dir+"/abs_correct.txt")
     writeL2F(error_ids, tgt_dir + "/abs_error.txt")
+def run_src2abs_all_test_tgt(id_file,src_dir,tgt_dir,idiom_path):
+    ids=readF2L(id_file)
+    ind=0
+    correct_ids=[]
+    error_ids=[]
+    for id in ids:
+        input_a=src_dir+"/"+id+".fix"
+
+        out_a=tgt_dir+"/"+id+"_fix.txt.abs"
+
+        if not (os.path.exists(out_a)):
+            try:
+                run_src2abs("method",input_a,"",out_a,"",idiom_path,mode='single')
+                correct_ids.append(correct_ids)
+            except:
+                error_ids.append(id)
+        print(ind)
+        ind+=1
+    writeL2F(correct_ids,tgt_dir+"/abs_correct.txt")
+    writeL2F(error_ids, tgt_dir + "/abs_error.txt")
 
 #test_src2abs()
-run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom10w_abs/test",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
+#run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom2w_abs/test",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
 #run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\trn",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\trn",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
+run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom10w_abs/test-tgt",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")

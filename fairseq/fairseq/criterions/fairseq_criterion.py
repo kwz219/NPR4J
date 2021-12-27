@@ -13,7 +13,10 @@ class FairseqCriterion(_Loss):
     def __init__(self, args, task):
         super().__init__()
         self.args = args
-        self.padding_idx = task.target_dictionary.pad()
+        if args.arch=="cure":
+            self.padding_idx=1
+        else:
+            self.padding_idx = task.target_dictionary.pad()
 
     @staticmethod
     def add_args(parser):

@@ -129,6 +129,7 @@ def main(args):
     def dict_path(lang):
         return dest_path("dict", lang) + ".txt"
 
+    #build vocab
     if args.joined_dictionary:
         assert not args.srcdict, "cannot combine --srcdict and --joined-dictionary"
         assert not args.tgtdict, "cannot combine --tgtdict and --joined-dictionary"
@@ -347,7 +348,17 @@ def binarize(args, filename, dict, output_prefix, lang, offset, end):
     res = Tokenizer.binarize(filename, dict, consumer, offset=offset, end=end)
     ds.finalize(dataset_dest_file(args, output_prefix, lang, "idx"))
     return res
+def binarizeGPT(args, filename, tokenizer, output_prefix, lang, offset, end):
+    ds = indexed_dataset.IndexedDatasetBuilder(
+        dataset_dest_file(args, output_prefix, lang, "bin")
+    )
 
+    def consumer(tensor):
+        ds.add_item(tensor)
+
+    res = Tokenizer.binarizeGPT(filename,  consumer,tokenizer=tokenizer, offset=offset, end=end)
+    ds.finalize(dataset_dest_file(args, output_prefix, lang, "idx"))
+    return res
 
 def binarize_with_load(args, filename, dict_path, output_prefix, lang, offset, end):
     dict = dictionary.Dictionary.load(dict_path)
@@ -382,7 +393,118 @@ def merge_files(files, outpath):
     ds.finalize("{}.idx".format(outpath))
 
 
+def main_gpt(args):
+    from transformers import GPT2Tokenizer
+    print(args)
+    os.makedirs(args.destdir, exist_ok=True)
+    target = not args.only_CoCoNut
+    tokenizer = GPT2Tokenizer.from_pretrained(args.use_gpt)
+    tokenizer.add_tokens(['CaMeL','$NUMBER$','$STRING$'])
+
+    def train_path(lang):
+        return "{}{}".format(args.trainpref, ("." + lang) if lang else "")
+
+    def file_name(prefix, lang):
+        fname = prefix
+        if lang is not None:
+            fname += ".{lang}".format(lang=lang)
+        return fname
+
+    def dest_path(prefix, lang):
+        return os.path.join(args.destdir, file_name(prefix, lang))
+
+    def dict_path(lang):
+        return dest_path("dict", lang) + ".txt"
+
+
+    def make_binary_dataset(gpttokenizer,input_prefix, output_prefix, lang, num_workers):
+
+
+        n_seq_tok = [0, 0]
+
+
+        def merge_result(worker_result):
+
+            n_seq_tok[0] += worker_result["nseq"]
+            n_seq_tok[1] += worker_result["ntok"]
+
+        input_file = "{}{}".format(
+            input_prefix, ("." + lang) if lang is not None else ""
+        )
+        offsets = Tokenizer.find_offsets(input_file, num_workers)
+        pool = None
+        if num_workers > 1:
+            pool = Pool(processes=num_workers - 1)
+            for worker_id in range(1, num_workers):
+                prefix = "{}{}".format(output_prefix, worker_id)
+                pool.apply_async(
+
+                    binarizeGPT,
+                    (
+                        args,
+                        input_file,
+                        prefix,
+                        gpttokenizer,
+                        lang,
+                        offsets[worker_id],
+                        offsets[worker_id + 1],
+                    ),
+                    callback=merge_result,
+                )
+            pool.close()
+
+        ds = indexed_dataset.IndexedDatasetBuilder(
+            dataset_dest_file(args, output_prefix, lang, "bin")
+        )
+        merge_result(
+            Tokenizer.binarizeGPT(
+                input_file,  lambda t: ds.add_item(t),gpttokenizer, offset=0, end=offsets[1]
+            )
+        )
+        if num_workers > 1:
+            pool.join()
+            for worker_id in range(1, num_workers):
+                prefix = "{}{}".format(output_prefix, worker_id)
+                temp_file_path = dataset_dest_prefix(args, prefix, lang)
+                ds.merge_file_(temp_file_path)
+                os.remove(indexed_dataset.data_file_path(temp_file_path))
+                os.remove(indexed_dataset.index_file_path(temp_file_path))
+
+        ds.finalize(dataset_dest_file(args, output_prefix, lang, "idx"))
+
+
+    def make_dataset(gpttokenizer,input_prefix, output_prefix, lang, num_workers=1):
+        if args.output_format == "binary":
+            make_binary_dataset(gpttokenizer,input_prefix, output_prefix, lang, num_workers)
+
+    def make_all(lang,tokenizer):
+        if args.trainpref:
+            make_dataset(tokenizer,args.trainpref, "train", lang, num_workers=args.workers)
+        if args.validpref:
+            for k, validpref in enumerate(args.validpref.split(",")):
+                outprefix = "valid{}".format(k) if k > 0 else "valid"
+                make_dataset(tokenizer,validpref, outprefix, lang)
+        if args.testpref:
+            for k, testpref in enumerate(args.testpref.split(",")):
+                outprefix = "test{}".format(k) if k > 0 else "test"
+                make_dataset(tokenizer,testpref, outprefix, lang)
+
+    # make_all(args.source_lang)
+    make_all(args.CoCoNut_lang,tokenizer)
+    if target:
+        make_all(args.target_lang,tokenizer)
+
+    print("| Wrote preprocessed data to {}".format(args.destdir))
+
+
+
 if __name__ == "__main__":
     parser = get_parser()
+    parser.add_argument("--use-gpt",default=False)
     args = parser.parse_args()
-    main(args)
+    if not args.use_gpt:
+        main(args)
+    else:
+        print("preprocess with pretrained gpt")
+        main_gpt(args)
+

@@ -1,0 +1,17 @@
+dropout: 0.14750324647058333
+share_input_output_embed: True
+encoder_embed_dim: 512
+decoder_embed_dim: 512
+decoder_out_embed_dim: 512
+encoder_layers: '[(512,6)] * 8'
+decoder_layers: '[(512,10)] * 5'
+lr: 0.1528703688177207
+momentum:  0.5498989114182679
+clip_norm: 0.3526243918050602
+optimizer: 'nag'
+criterion: 'cross_entropy'
+savedir: '/root/zwk/DDPR_DATA/data/Cure_nopre/save'
+trainbin: '/root/zwk/DDPR_DATA/data/Cure_nopre/dest'
+batch_size: 32
+device_id: 0
+max-epoch: 20
