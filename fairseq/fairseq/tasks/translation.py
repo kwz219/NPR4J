@@ -45,9 +45,9 @@ class TranslationTask(FairseqTask):
     def add_args(parser):
         """Add task-specific arguments to the parser."""
         parser.add_argument('data', nargs='+', help='path(s) to data directorie(s)')
-        parser.add_argument('-s', '--CoCoNut-lang', default=None, metavar='SRC',
+        parser.add_argument('-s', '--CoCoNut-lang', default='buggy', metavar='SRC',
                             help='CoCoNut language')
-        parser.add_argument('-t', '--target-lang', default=None, metavar='TARGET',
+        parser.add_argument('-t', '--target-lang', default='fix', metavar='TARGET',
                             help='target language')
         parser.add_argument('--raw-text', action='store_true',
                             help='load raw text dataset')

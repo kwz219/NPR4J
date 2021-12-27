@@ -12,7 +12,7 @@ import codecs
 
 import torch
 import numpy as np
-from fairseq import bleu, data, options, progress_bar, tasks, tokenizer, utils
+from fairseq import  bleu,data, options, progress_bar, tasks, tokenizer, utils
 from fairseq.meters import StopwatchMeter, TimeMeter
 from fairseq.sequence_generator import SequenceGenerator
 from fairseq.sequence_scorer import SequenceScorer
@@ -226,6 +226,7 @@ def main(args):
         num_sentences, gen_timer.n, gen_timer.sum, num_sentences / gen_timer.sum, 1. / gen_timer.avg))
     if has_target:
         print('| Generate {} with beam={}: {}'.format(args.gen_subset, args.beam, scorer.result_string()))
+        #print('| Generate {} with beam={}: {}'.format(args.gen_subset, args.beam))
 
 
 if __name__ == '__main__':
