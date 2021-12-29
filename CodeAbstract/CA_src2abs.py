@@ -58,11 +58,15 @@ def run_src2abs_all_test(id_file,src_dir,tgt_dir,idiom_path):
         if not (os.path.exists(out_a)):
             try:
                 run_src2abs("method",input_a,"",out_a,"",idiom_path,mode='single')
-                correct_ids.append(correct_ids)
+                correct_ids.append(id)
             except:
                 error_ids.append(id)
+        else:
+            correct_ids.append(id)
+
         print(ind)
         ind+=1
+    print(len(correct_ids))
     writeL2F(correct_ids,tgt_dir+"/abs_correct.txt")
     writeL2F(error_ids, tgt_dir + "/abs_error.txt")
 def run_src2abs_all_test_tgt(id_file,src_dir,tgt_dir,idiom_path):
@@ -78,15 +82,16 @@ def run_src2abs_all_test_tgt(id_file,src_dir,tgt_dir,idiom_path):
         if not (os.path.exists(out_a)):
             try:
                 run_src2abs("method",input_a,"",out_a,"",idiom_path,mode='single')
-                correct_ids.append(correct_ids)
+                correct_ids.append(id)
             except:
                 error_ids.append(id)
+        correct_ids.append(id)
         print(ind)
         ind+=1
     writeL2F(correct_ids,tgt_dir+"/abs_correct.txt")
     writeL2F(error_ids, tgt_dir + "/abs_error.txt")
 
 #test_src2abs()
-#run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom2w_abs/test",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
+#run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom10w_abs/test",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
 #run_src2abs_all("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\trn",tgt_dir="E:\APR_data\data\Tufano_idiom10w\\trn",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
-run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom2w_abs/test-tgt",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
+#run_src2abs_all_test_tgt(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom2w_abs/test_tgt",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")

@@ -1,0 +1,4 @@
+clearml: False
+input: /root/zwk/DDPR_DATA/data/Raw_clean/trn.buggy
+vocab_size: 50000
+model_prefix: /root/zwk/DDPR_DATA/bpe/bpe_5w_rawclean

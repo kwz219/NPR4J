@@ -84,7 +84,7 @@ def train_context(dropout,
           ' -experiment_name '+str(ex_name)+ \
           ' --fp16'
 
-    cmd = cmd + " | tee " + savedir + "/log.txt"
+    #cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
     subprocess.call(cmd, shell=True)
 

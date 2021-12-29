@@ -2,8 +2,8 @@ model: /root/zwk/DDPR_DATA/Artifacts/20889_Tufano_wv512_idiom10w/20889_tufano_wv
 beam_size: 10
 n_best: 10
 src: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/test.buggy
-tgt: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/test.fix
 output: /root/zwk/DDPR_DATA/Artifacts/20889_Tufano_wv512_idiom10w/20889_tufano_wv512_idiom10w_best_b10.pred
-gpu: 3
-batch_size: 5
+gpu: 0
+batch_size: 2048
+batch_type: tokens
 max_length: 1010

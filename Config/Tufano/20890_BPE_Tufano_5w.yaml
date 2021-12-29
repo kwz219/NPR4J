@@ -1,0 +1,65 @@
+## Where the vocab(s) will be written
+save_data: /root/zwk/DDPR_DATA/data/Raw_clean
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 4000
+tgt_seq_length: 4000
+src_seq_length_trunc: 4000
+tgt_seq_length_trunc: 4000
+
+# common vocabulary for CoCoNut and target
+share_vocab: True
+dynamic_dict: True
+# Corpus opts:
+data:
+    trn:
+        path_src: /root/zwk/DDPR_DATA/data/Raw_clean/trn.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/Raw_clean/trn.fix
+        transforms: [sentencepiece,filtertoolong]
+        weight: 1
+    valid:
+        path_src: /root/zwk/DDPR_DATA/data/Raw_clean/val.buggy
+        path_tgt: /root/zwk/DDPR_DATA/data/Raw_clean/val.fix
+        transforms: [sentencepiece,filtertoolong]
+src_vocab: /root/zwk/DDPR_DATA/bpe/bpe_2w_rawclean.vocab
+tgt_vocab: /root/zwk/DDPR_DATA/bpe/bpe_2w_rawclean.vocab
+src_vocab_size: 50000
+tgt_vocab_size: 50000
+#### Subword
+src_subword_model: /root/zwk/DDPR_DATA/bpe/bpe_5w_rawclean.model
+tgt_subword_model: /root/zwk/DDPR_DATA/bpe/bpe_5w_rawclean.model
+
+
+
+#model params
+global_attention: general
+word_vec_size: 512
+rnn_size: 512
+bridge: true
+layers: 2
+encoder_type: brnn
+
+#training params
+train_steps: 300000
+valid_steps: 5000
+save_checkpoint_steps: 5000
+max_grad_norm: 2
+gpu_ranks: 0
+world_size: 1
+early_stopping: 15
+early_stopping_criteria: accuracy
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 32
+optim: adagrad
+learning_rate: 0.1
+adagrad_accumulator_init: 0.1
+seed: 912
+
+#model save and log
+log_file: /root/zwk/DDPR_DATA/data/Raw_clean/bpe5w_tufano.log
+save_model: /root/zwk/DDPR_DATA/data/M1000_Tufano/bpe5w_tufano
+tensorboard: True
+tensorboard_log_dir: /root/zwk/DDPR_DATA/data/M1000_Tufano/bpe5w_tufano.tensorlog

@@ -527,6 +527,41 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
     writeL2F(fail_ids, output_dir + "/" + name + ".fids")
 
 
+def get_cleandata(ids_f,input_dir,output_dir,name):
+    ids=readF2L(ids_f)
+    def clean_data(codes):
+        cleancodeline=''
+        for line in codes:
+            if line.strip().startswith("//") or line.strip().startswith("#"):
+                continue
+            else:
+                line=re.sub('\s+',' ',line)
+
+                cleancodeline=cleancodeline+" "+line.strip()+" "
+        cleancodeline = re.sub('\s+', ' ', cleancodeline)
+
+        return cleancodeline.strip()
+    correct_ids=[]
+    bugs=[]
+    fixs=[]
+    for i,id in enumerate(ids):
+        buggy_txt=input_dir+"/"+id+".buggy"
+        fix_f=input_dir+'/'+id+".fix"
+        try:
+            buggy_codes=codecs.open(buggy_txt,'r',encoding='utf8').read().split('\n')
+            fix_codes=codecs.open(fix_f,'r',encoding='utf8').read().split('\n')
+            clean_bugcode=clean_data(buggy_codes)
+            clean_fix=clean_data(fix_codes)
+            if clean_bugcode!=clean_fix:
+                bugs.append(clean_bugcode)
+                fixs.append(clean_fix)
+                correct_ids.append(id)
+        except:
+            continue
+        print(i)
+    writeL2F(bugs,output_dir+"/"+name+'.buggy')
+    writeL2F(fixs,output_dir+'/'+name+'.fix')
+    writeL2F(correct_ids,output_dir+'/'+name+".ids")
 
 
 
@@ -534,12 +569,11 @@ def test_preprocess():
     val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\\","val")
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
-
+get_cleandata("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\Raw_clean","val")
 #preprocess_Cure_fromCoCoNut("D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","D:\DDPR_DATA\OneLine_Replacement\M1000_Cure")
 #preprocess_Cure("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\M1000_Cure","test")
-preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","trn")
-preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","val")
-preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","test")
+#preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","trn")
+#preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","val")
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","val")
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","trn")
 #preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")

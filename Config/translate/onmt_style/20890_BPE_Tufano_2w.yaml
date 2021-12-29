@@ -1,0 +1,9 @@
+model: /root/zwk/DDPR_DATA/data/M1000_Tufano/bpe2w_tufano_step_50000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/Raw_clean/test.buggy.bpe
+tgt: /root/zwk/DDPR_DATA/data/Raw_clean/test.fix.bpe
+output: /root/zwk/DDPR_DATA/data/M1000_Tufano/bpe2w_tufano_step_50000_nb10.pred
+gpu: 1
+batch_size: 1
+max_length: 1500

@@ -1,0 +1,9 @@
+clearml: True
+taskname: Curenopretrain_o9_translate_nb10
+datadir: /root/zwk/DDPR_DATA/data/M1000_CoCoNut/dest
+modelpath: /root/zwk/DDPR_DATA/model/20889_CoCoNut_o9/checkpoint_best.pt
+source: buggy
+target: fix
+outputfile: /root/zwk/DDPR_DATA/model/20889_CoCoNut_o9/20878_CoCoNut_o1_translate_nb10.pred
+beam: 10
+nbest: 10

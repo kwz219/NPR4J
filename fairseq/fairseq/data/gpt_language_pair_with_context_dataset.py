@@ -126,6 +126,7 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
         tgt_item = self.tgt[index] if self.tgt is not None else None
         src_item = self.src[index]
         ctx_item = src_item
+        ctx_types = torch.zeros(ctx_item.size())
         for i,token in enumerate(src_item):
           #这里分开了
           if token == self.sep_index:
@@ -147,7 +148,7 @@ class GPT2LanguagePairWithContextDataset(LanguagePairDataset):
             eos = self.tokenizer.eos_token_id
             if self.src[index][-1] == eos:
                 src_item = self.src[index][:-1]
-        assert ctx_item.size()==ctx_types.size()
+
         return {
             'id': index,
             'context': ctx_item,

@@ -31,7 +31,7 @@ def translate_ONMT(config_file, clearml):
     use_clearml=clearml
     model=config_dict['model']
     src=config_dict['src']
-    tgt=config_dict['tgt']
+    #tgt=config_dict['tgt']
     beam_size=config_dict['beam_size']
     n_best=config_dict['n_best']
     output=config_dict['output']
@@ -40,7 +40,7 @@ def translate_ONMT(config_file, clearml):
     task_name=config_file.split('/')[-1].replace('.yaml','')
     max_length=config_dict['max_length']
 
-    cmd = "python "+" OpenNMT-py-master/onmt/bin/translate.py "+" --model "+str(model)+" --src "+str(src)+" --tgt "+str(tgt)+" --beam_size "+str(beam_size)+\
+    cmd = "python "+" OpenNMT-py-master/onmt/bin/translate.py "+" --model "+str(model)+" --src "+str(src)+" --beam_size "+str(beam_size)+\
         " --n_best "+str(n_best)+" --output "+str(output)+" --gpu "+str(gpu)+" --batch_size "+str(batch_size)+ " -clearml "+str(use_clearml)+' -taskname '+str(task_name)+\
         " --verbose --replace_unk --max_length "+str(max_length)
     if "batch_type" in config_dict.keys():

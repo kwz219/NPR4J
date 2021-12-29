@@ -57,7 +57,7 @@ def train_Cure(config_file,clearml=False):
     deviceid=config_dict['device_id']
     batchsize=config_dict['batch_size']
     max_epoch=config_dict['max-epoch']
-
+    experiment_id = config_file.split('/')[-1].replace(".yaml", '')
 
     if not os.path.exists(savedir):
         os.makedirs(savedir)
@@ -86,8 +86,8 @@ def train_Cure(config_file,clearml=False):
           ' --batch-size ' + str(batchsize) + \
           ' --device-id ' + str(deviceid) + \
           ' -clearml ' + str(clearml) + \
-          ' -experiment_name ' + "NONE" + \
-          ' --fp16'
+          ' -experiment_name ' + experiment_id
+
 
     #cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
@@ -97,7 +97,7 @@ def main():
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","None","CoCoNut"])
+    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -105,6 +105,8 @@ def main():
         train_ONMT(config_file=opt.config,clearML=opt.clearml)
     elif opt.model=="CoCoNut":
         train_CoCoNut(config_file=opt.config,clearml=opt.clearml)
+    elif opt.model=="Cure":
+        train_Cure(config_file=opt.config,clearml=opt.clearml)
 
 if __name__ == "__main__":
     #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.yaml")
