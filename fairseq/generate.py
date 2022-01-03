@@ -14,9 +14,10 @@ import torch
 import numpy as np
 from fairseq import  bleu,data, options, progress_bar, tasks, tokenizer, utils
 from fairseq.meters import StopwatchMeter, TimeMeter
-from fairseq.sequence_generator import SequenceGenerator
+from fairseq.sequence_generator import SequenceGenerator,Cure_SequenceGenerator
 from fairseq.sequence_scorer import SequenceScorer
 from clearml import Task as clTask
+from transformers import GPT2Tokenizer
 #import matplotlib.pyplot as plt
 #from torchvision.utils import save_image
 
@@ -63,16 +64,19 @@ def main(args):
     # Load alignment dictionary for unknown word replacement
     # (None if no unknown word replacement, empty if no path to align dictionary)
     align_dict = utils.load_align_dict(args.replace_unk)
-
+    if args.task=="cure":
+        max_positions=(1022,1022)
+    else:
+        max_positions = utils.resolve_max_positions(
+            task.max_positions(),
+            *[model.max_positions() for model in models]
+        )
     # Load dataset (possibly sharded)
     itr = task.get_batch_iterator(
         dataset=task.dataset(args.gen_subset),
         max_tokens=args.max_tokens,
         max_sentences=args.max_sentences,
-        max_positions=utils.resolve_max_positions(
-            task.max_positions(),
-            *[model.max_positions() for model in models]
-        ),
+        max_positions=max_positions,
         ignore_invalid_inputs=args.skip_invalid_size_inputs_valid_test,
         required_batch_size_multiple=8,
         num_shards=args.num_shards,
@@ -81,22 +85,38 @@ def main(args):
 
     # Initialize generator
     gen_timer = StopwatchMeter()
+    if args.task=="cure":
+        tokenizer = GPT2Tokenizer.from_pretrained("microsoft/CodeGPT-small-java")
+        tokenizer.add_tokens(["CaMeL", "$NUMBER", "$STRING$"])
     if args.score_reference:
         translator = SequenceScorer(models, task.target_dictionary)
     else:
-        translator = SequenceGenerator(
-            models, task.target_dictionary, beam_size=args.beam, minlen=args.min_len,
-            stop_early=(not args.no_early_stop), normalize_scores=(not args.unnormalized),
-            len_penalty=args.lenpen, unk_penalty=args.unkpen,
-            sampling=args.sampling, sampling_topk=args.sampling_topk, sampling_temperature=args.sampling_temperature,
-            diverse_beam_groups=args.diverse_beam_groups, diverse_beam_strength=args.diverse_beam_strength,
-        )
+        if args.task=="cure":
+            translator=Cure_SequenceGenerator(
+                models, tokenizer, beam_size=args.beam, minlen=args.min_len,
+                stop_early=(not args.no_early_stop), normalize_scores=(not args.unnormalized),
+                len_penalty=args.lenpen, unk_penalty=args.unkpen,
+                sampling=args.sampling, sampling_topk=args.sampling_topk,
+                sampling_temperature=args.sampling_temperature,
+                diverse_beam_groups=args.diverse_beam_groups, diverse_beam_strength=args.diverse_beam_strength,
+            )
+        else:
+            translator = SequenceGenerator(
+                models, task.target_dictionary, beam_size=args.beam, minlen=args.min_len,
+                stop_early=(not args.no_early_stop), normalize_scores=(not args.unnormalized),
+                len_penalty=args.lenpen, unk_penalty=args.unkpen,
+                sampling=args.sampling, sampling_topk=args.sampling_topk, sampling_temperature=args.sampling_temperature,
+                diverse_beam_groups=args.diverse_beam_groups, diverse_beam_strength=args.diverse_beam_strength,
+            )
 
     if use_cuda:
         translator.cuda()
 
     # Generate and compute BLEU score
-    scorer = bleu.Scorer(tgt_dict.pad(), tgt_dict.eos(), tgt_dict.unk())
+    if args.task=="cure":
+        scorer = bleu.Scorer(tokenizer.pad_token_id, tokenizer.eos_token_id, tokenizer.unk_token_id)
+    else:
+        scorer = bleu.Scorer(tgt_dict.pad(), tgt_dict.eos(), tgt_dict.unk())
     num_sentences = 0
     has_target = True
 
@@ -121,10 +141,23 @@ def main(args):
                 src_str = task.dataset(args.gen_subset).src.get_original_text(sample_id)
                 target_str = task.dataset(args.gen_subset).tgt.get_original_text(sample_id)
             else:
-                src_str = src_dict.string(src_tokens, args.remove_bpe)
-                if has_target:
-                    target_str = tgt_dict.string(target_tokens, args.remove_bpe, escape_unk=True)
+                if args.task=="cure":
+                    def bpe_string( tensor, tokenizer,bpe_symbol=None, escape_unk=False):
+                        if torch.is_tensor(tensor) and tensor.dim() == 2:
+                            return '\n'.join(self.string(t) for t in tensor)
 
+                        sent = tokenizer.decode(tensor)
+                        print(sent)
+                        if bpe_symbol is not None:
+                            sent = (sent + ' ').replace(bpe_symbol, '').rstrip()
+                        return sent
+                    src_str = bpe_string(src_tokens,tokenizer, args.remove_bpe)
+                    if has_target:
+                        target_str = bpe_string(target_tokens,tokenizer, args.remove_bpe, escape_unk=True)
+                else:
+                    src_str = src_dict.string(src_tokens, args.remove_bpe)
+                    if has_target:
+                        target_str = tgt_dict.string(target_tokens, args.remove_bpe, escape_unk=True)
             if not args.quiet:
                 print('S-{}\t{}'.format(sample_id, src_str),file=output_f)
                 if has_target:
@@ -132,14 +165,23 @@ def main(args):
 
             # Process top predictions
             for i, hypo in enumerate(hypos[:min(len(hypos), args.nbest)]):
-                hypo_tokens, hypo_str, alignment = utils.post_process_prediction(
-                    hypo_tokens=hypo['tokens'].int().cpu(),
-                    src_str=src_str,
-                    alignment=hypo['alignment'].int().cpu() if hypo['alignment'] is not None else None,
-                    align_dict=align_dict,
-                    tgt_dict=tgt_dict,
-                    remove_bpe=args.remove_bpe,
-                )
+                if args.task=="cure":
+                    hypo_tokens, hypo_str, alignment = utils.post_process_prediction_bpe(
+                        hypo_tokens=hypo['tokens'].int().cpu(),
+                        tokenizer=tokenizer,
+                        alignment=hypo['alignment'].int().cpu() if hypo['alignment'] is not None else None,
+
+                        remove_bpe=args.remove_bpe,
+                    )
+                else:
+                    hypo_tokens, hypo_str, alignment = utils.post_process_prediction(
+                        hypo_tokens=hypo['tokens'].int().cpu(),
+                        src_str=src_str,
+                        alignment=hypo['alignment'].int().cpu() if hypo['alignment'] is not None else None,
+                        align_dict=align_dict,
+                        tgt_dict=tgt_dict,
+                        remove_bpe=args.remove_bpe,
+                    )
 
                 if not args.quiet:
                     print('H-{}\t{}\t{}'.format(sample_id, hypo['score'], hypo_str),file=output_f)
@@ -216,6 +258,8 @@ def main(args):
                         # Convert back to tokens for evaluation with unk replacement and/or without BPE
                         target_tokens = tokenizer.Tokenizer.tokenize(
                             target_str, tgt_dict, add_if_not_exist=True)
+                    print("target_tokens",target_tokens)
+                    print("hypo_tokens",hypo_tokens)
                     scorer.add(target_tokens, hypo_tokens)
 
             wps_meter.update(src_tokens.size(0))

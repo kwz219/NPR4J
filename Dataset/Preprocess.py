@@ -11,7 +11,7 @@ from CoCoNut.tokenization.tokenization import extract_strings, COMPOSED_SYMBOLS,
 from CodeAbstract.CA_src2abs import run_src2abs
 from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL
-from CodeAbstract.CA_SequenceR import run_SequenceR_abs
+from CodeAbstract.CA_SequenceR import run_SequenceR_abs, run_SequenceR_ContextM
 #from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.IOHelper import writeL2F,readF2L
 import os
@@ -128,6 +128,66 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
             writeL2F(correct_ids, correct_f)
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
         build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
+def preprocess_SequenceR_ContextM(ids_f,output_dir):
+    ids=readF2L(ids_f)
+    mongoClient=MongoHelper()
+    bug_col=mongoClient.get_col(BUG_COL)
+    if True:
+        def build(src_f, tgt_f, error_f, correct_f, ids):
+            buggy_codes = []
+            fix_codes = []
+
+            correct_ids=[]
+            ind=1
+            in_count=0
+            bug_1=0
+            for id in ids:
+                bug=bug_col.find_one({"_id":ObjectId(id)})
+                if bug==None:
+                    continue
+                fix_code=''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()#specific fix line
+                buggymethod = bug["buggy_code"]#buggy method
+                #buggymethod = re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",buggymethod)
+                bm_lines=buggymethod.split('\n')
+                err_pos = int(bug['errs'][0]["src_pos"][1:-1].split(":")[0])
+                toked_bmlines=[]
+                for line in bm_lines:
+                    try:
+                        toked_bug = javalang.tokenizer.tokenize(line)
+                        toked_bug = ' '.join([tok.value for tok in toked_bug])
+                    except:
+                        toked_bug = re.split(r"[.,!?;(){}]", line)
+                        toked_bug = ' '.join(toked_bug)
+                    toked_bmlines.append(toked_bug)
+                assert len(toked_bmlines)==len(bm_lines)
+                toked_bmlines[err_pos]="<START_BUG> "+toked_bmlines[err_pos]+" <END_BUG>"
+                toked_method=' '.join(toked_bmlines)
+                toked_method=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",toked_method)
+                toked_method=re.sub('\s+', ' ', toked_method)
+                try:
+                    toked_fix = javalang.tokenizer.tokenize(fix_code)
+                    toked_fix = ' '.join([tok.value for tok in toked_fix])
+                except:
+                    toked_fix = re.split(r"[.,!?;(){}]", fix_code)
+                    toked_fix = ' '.join(toked_fix)
+                print(ind)
+                #print(toked_method)
+                #print(toked_fix)
+                buggy_codes.append(toked_method)
+                fix_codes.append(toked_fix)
+                correct_ids.append(id)
+                ind+=1
+            assert len(buggy_codes)==len(fix_codes)
+            buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
+            assert len(buggy_codes) == len(fix_codes)
+            print(len(buggy_codes),len(fix_codes))
+
+            writeL2F(buggy_codes,src_f)
+            writeL2F(fix_codes,tgt_f)
+            writeL2F(correct_ids, correct_f)
+        #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
+        build(output_dir+"/test.buggy",output_dir+"/test.fix",output_dir+"/test.fids",output_dir+"/test.sids",ids)
+
 def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     print("CoCoNut-Style data preprocess start ")
     def CoCoNut_tokenize(string):
@@ -530,14 +590,7 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
 def get_cleandata(ids_f,input_dir,output_dir,name):
     ids=readF2L(ids_f)
     def clean_data(codes):
-        cleancodeline=''
-        for line in codes:
-            if line.strip().startswith("//") or line.strip().startswith("#"):
-                continue
-            else:
-                line=re.sub('\s+',' ',line)
-
-                cleancodeline=cleancodeline+" "+line.strip()+" "
+        cleancodeline=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",codes)
         cleancodeline = re.sub('\s+', ' ', cleancodeline)
 
         return cleancodeline.strip()
@@ -548,8 +601,8 @@ def get_cleandata(ids_f,input_dir,output_dir,name):
         buggy_txt=input_dir+"/"+id+".buggy"
         fix_f=input_dir+'/'+id+".fix"
         try:
-            buggy_codes=codecs.open(buggy_txt,'r',encoding='utf8').read().split('\n')
-            fix_codes=codecs.open(fix_f,'r',encoding='utf8').read().split('\n')
+            buggy_codes=codecs.open(buggy_txt,'r',encoding='utf8').read()
+            fix_codes=codecs.open(fix_f,'r',encoding='utf8').read()
             clean_bugcode=clean_data(buggy_codes)
             clean_fix=clean_data(fix_codes)
             if clean_bugcode!=clean_fix:
@@ -563,13 +616,108 @@ def get_cleandata(ids_f,input_dir,output_dir,name):
     writeL2F(fixs,output_dir+'/'+name+'.fix')
     writeL2F(correct_ids,output_dir+'/'+name+".ids")
 
+def preprocess_Line(ids_f,input_dir,output_dir,save_prefix):
+    ids = readF2L(ids_f)
+    correct_ids=[]
+    buggy_codes=[]
+    fix_codes=[]
+    for i,id in enumerate(ids):
+        buggy_f=input_dir+'/'+id+'.buggy'
+        fix_f=input_dir+'/'+id+'.fix'
+        buggy_code=codecs.open(buggy_f,'r',encoding='utf8').read()
+        fix_code=codecs.open(fix_f,'r',encoding='utf8').read()
+        try:
+            toked_fix = javalang.tokenizer.tokenize(fix_code)
+            toked_fix = ' '.join([tok.value for tok in toked_fix])
+        except:
+            toked_fix = re.split(r"[.,!?;(){}]", fix_code)
+            toked_fix = ' '.join(toked_fix)
+        try:
+            toked_bug = javalang.tokenizer.tokenize(buggy_code)
+            toked_bug = ' '.join([tok.value for tok in toked_bug])
+        except:
+            toked_bug = re.split(r"[.,!?;(){}]", buggy_code)
+            toked_bug = ' '.join(toked_bug)
+        if len(toked_bug.strip())>1 and len(toked_fix.strip())>1:
+            buggy_codes.append(toked_bug.strip())
+            fix_codes.append(toked_fix.strip())
+            correct_ids.append(id)
+        print(i)
+    print(len(buggy_codes))
+    def shuffle(list1,list2,list3):
+        assert  len(list1)==len(list2) and len(list2)==len(list3)
+        all=[]
+        for line1,line2,line3 in zip(list1,list2,list3):
+            if len(line1.strip())>1 and len(line2.strip())>1:
+                all.append(line1+"<SEP>"+line2+"<SEP>"+line3)
+        import random
+        random.shuffle(all)
+        new_l1=[]
+        new_l2=[]
+        new_l3=[]
+        for line in all:
+            line1,line2,line3=line.split('<SEP>')
+            new_l1.append(line1)
+            new_l2.append(line2)
+            new_l3.append(line3)
+        return new_l1,new_l2,new_l3
+    buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
+    assert len(buggy_codes)==len(fix_codes)
+    writeL2F(buggy_codes,output_dir+'/'+save_prefix+".buggy")
+    writeL2F(fix_codes,output_dir+'/'+save_prefix+'.fix')
+    writeL2F(correct_ids,output_dir+'/'+save_prefix+'.ids')
 
+def preprocess_M2M4BPE(ids_f,input_dir,output_dir,save_prefix):
+    ids = readF2L(ids_f)
+    correct_ids = []
+    buggy_codes = []
+    fix_codes = []
+    def clean_data(codes):
+        cleancodeline=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",codes)
+        cleancodeline = re.sub('\s+', ' ', cleancodeline)
+        return cleancodeline.strip()
+    for i, id in enumerate(ids):
+        buggy_f = input_dir + '/' + id + '.buggy'
+        fix_f = input_dir + '/' + id + '.fix'
+        buggy_code = codecs.open(buggy_f, 'r', encoding='utf8').read()
+        fix_code = codecs.open(fix_f, 'r', encoding='utf8').read()
+        buggy_code=clean_data(buggy_code)
+        fix_code=clean_data(fix_code)
+        if not buggy_code==fix_code:
+            buggy_codes.append(buggy_code)
+            fix_codes.append(fix_code)
+            correct_ids.append(id)
+        print(i)
+    print(len(buggy_codes))
 
+    def shuffle(list1, list2, list3):
+        assert len(list1) == len(list2) and len(list2) == len(list3)
+        all = []
+        for line1, line2, line3 in zip(list1, list2, list3):
+            if len(line1.strip()) > 1 and len(line2.strip()) > 1:
+                all.append(line1 + "<SEP>" + line2 + "<SEP>" + line3)
+        import random
+        random.shuffle(all)
+        new_l1 = []
+        new_l2 = []
+        new_l3 = []
+        for line in all:
+            line1, line2, line3 = line.split('<SEP>')
+            new_l1.append(line1)
+            new_l2.append(line2)
+            new_l3.append(line3)
+        return new_l1, new_l2, new_l3
+
+    buggy_codes, fix_codes, correct_ids = shuffle(buggy_codes, fix_codes, correct_ids)
+    assert len(buggy_codes) == len(fix_codes)
+    writeL2F(buggy_codes, output_dir + '/' + save_prefix + ".buggy")
+    writeL2F(fix_codes, output_dir + '/' + save_prefix + '.fix')
+    writeL2F(correct_ids, output_dir + '/' + save_prefix + '.ids')
 def test_preprocess():
-    val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\val_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\\","val")
+    val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\\","test")
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 
-get_cleandata("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\Raw_clean","val")
+#get_cleandata("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_clean","test")
 #preprocess_Cure_fromCoCoNut("D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","D:\DDPR_DATA\OneLine_Replacement\M1000_Cure")
 #preprocess_Cure("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\M1000_Cure","test")
 #preprocess_Cure2("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Cure","trn")
@@ -578,3 +726,18 @@ get_cleandata("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DAT
 #preprocess_CoCoNut("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut","trn")
 #preprocess_SequenceR("D:\DDPR\Dataset\\freq50_611\\trn_ids.txt","SequenceR","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","D:\DDPR\CodeAbstract\CA_Resource\idioms.10w","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
+#preprocess_SequenceR_ContextM("G:\DDPR_backup\OneLine_Replacement\Raw\\val_max1k.ids","G:\DDPR_backup\OneLine_Replacement\SequenceR_Method")
+#preprocess_SequenceR_ContextM("G:\DDPR_backup\OneLine_Replacement\Raw\\test_max1k.ids","G:\DDPR_backup\OneLine_Replacement\SequenceR_Method")
+preprocess_Line("D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_line","test")
+#preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","trn")
+#preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","val")
+#preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","test")
+
+
+
+
+
+
+
+
+

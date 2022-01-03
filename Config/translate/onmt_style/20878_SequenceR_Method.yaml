@@ -1,0 +1,10 @@
+model: /root/zwk/DDPR_DATA/20878_SequenceR_Method/20878_SR_Method_step_125000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/SequenceR_Method/test.buggy
+tgt: /root/zwk/DDPR_DATA/data/SequenceR_Method/test.fix
+output: /root/zwk/DDPR_DATA/20878_SequenceR_Method/20878_SR_Method_step_125000_nb10.pred
+gpu: 0
+batch_size: 2000
+batch_type: tokens
+max_length: 1010

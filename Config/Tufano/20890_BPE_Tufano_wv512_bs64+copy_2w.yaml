@@ -1,13 +1,13 @@
 ## Where the vocab(s) will be written
-save_data: /root/zwk/DDPR_DATA/data/Raw_clean
+save_data: /root/zwk/DDPR_DATA/data/M1000_Tufano
 # Prevent overwriting existing files in the folder
 overwrite: True
 
 # filter long examples
-src_seq_length: 4000
-tgt_seq_length: 4000
-src_seq_length_trunc: 4000
-tgt_seq_length_trunc: 4000
+src_seq_length: 2000
+tgt_seq_length: 2000
+src_seq_length_trunc: 2000
+tgt_seq_length_trunc: 2000
 
 # common vocabulary for CoCoNut and target
 share_vocab: True
@@ -27,10 +27,9 @@ src_vocab: /root/zwk/DDPR_DATA/bpe/bpe_2w_rawclean.onmt.vocab
 tgt_vocab: /root/zwk/DDPR_DATA/bpe/bpe_2w_rawclean.onmt.vocab
 src_vocab_size: 21000
 tgt_vocab_size: 21000
-#### Subword
+
 src_subword_model: /root/zwk/DDPR_DATA/bpe/bpe_2w_rawclean.model
 tgt_subword_model: /root/zwk/DDPR_DATA/bpe/bpe_2w_rawclean.model
-
 
 
 #model params
@@ -40,6 +39,11 @@ rnn_size: 512
 bridge: true
 layers: 2
 encoder_type: brnn
+
+#add copy mechanism
+copy_attn: true
+copy_loss_by_seqlength: true
+reuse_copy_attn: true
 
 #training params
 train_steps: 500000
@@ -51,15 +55,15 @@ world_size: 1
 early_stopping: 5
 early_stopping_criteria: accuracy
 dropout: 0.1
-batch_size: 32
-valid_batch_size: 32
+batch_size: 16
+valid_batch_size: 16
 optim: adagrad
 learning_rate: 0.1
 adagrad_accumulator_init: 0.1
 seed: 912
 
 #model save and log
-log_file: /root/zwk/DDPR_DATA/data/Raw_clean/bpe2w_tufano.log
-save_model: /root/zwk/DDPR_DATA/data/M1000_Tufano/bpe2w_tufano
+log_file: /root/zwk/DDPR_DATA/log/M1000_Tufano/20890_BPE_Tufano_wv512_copy.log
+save_model: /root/zwk/DDPR_DATA/model/M1000_Tufano/20890_BPE_Tufano_wv512_copy
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/data/M1000_Tufano/bpe2w_tufano.tensorlog
+tensorboard_log_dir: /root/zwk/DDPR_DATA/data/M1000_Tufano/20890_BPE_Tufano_wv512_copy.log.tensorlog

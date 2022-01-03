@@ -60,6 +60,8 @@ class Scorer(object):
         # don't match unknown words
         rref = ref.clone()
         assert not rref.lt(0).any()
+        if self.unk==None:
+            self.unk=50000
         rref[rref.eq(self.unk)] = -999
 
         rref = rref.contiguous().view(-1)

@@ -212,6 +212,55 @@ class Dictionary(object):
         t = torch.Tensor(length).uniform_(self.nspecial + 1, len(self)).long()
         t[-1] = self.eos()
         return t
+class GPTDictionary(object):
+    def __init__(self,tokenizer):
+        self.tokenizer=tokenizer
+        self.unk_word, self.pad_word, self.eos_word = tokenizer.unk_token,tokenizer.pad_token,tokenizer.eos_token
+        self.symbols = []
+        self.count = []
+        self.indices = {}
+        # dictionary indexing starts at 1 for consistency with Lua
+
+        self.pad_index = tokenizer.pad_token_id
+        self.eos_index = tokenizer.eos_token_id
+        self.unk_index = tokenzier.unk_token_id
+
+        self.nspecial = len(self.symbols)
+    def string(self, tensor, bpe_symbol=None, escape_unk=False):
+        """Helper for converting a tensor of token indices to a string.
+
+        Can optionally remove BPE symbols or escape <unk> words.
+        """
+        if torch.is_tensor(tensor) and tensor.dim() == 2:
+            return '\n'.join(self.string(t) for t in tensor)
+
+        def token_string(i):
+            if i == self.unk():
+                return self.unk_string(escape_unk)
+            else:
+                return self[i]
+
+        sent = ' '.join(token_string(i) for i in tensor if i != self.eos())
+        if bpe_symbol is not None:
+            sent = (sent + ' ').replace(bpe_symbol, '').rstrip()
+        return sent
+    def unk_string(self, escape=False):
+        """Return unknown string, optionally escaped as: <<unk>>"""
+        if escape:
+            return '<{}>'.format(self.unk_word)
+        else:
+            return self.unk_word
+    def pad(self):
+        """Helper to get index of pad symbol"""
+        return self.pad_index
+
+    def eos(self):
+        """Helper to get index of end-of-sentence symbol"""
+        return self.eos_index
+
+    def unk(self):
+        """Helper to get index of unk symbol"""
+        return self.unk_index
 
 class TruncatedDictionary(object):
 

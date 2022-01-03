@@ -43,7 +43,21 @@ def write_IDs(bugtype):
         writeL2F(trn_ids, "./freq50_611/trn_ids.txt")
         writeL2F(val_ids, "./freq50_611/val_ids.txt")
         writeL2F(test_ids, "./freq50_611/test_ids.txt")
-
+    elif bugtype=="multi-hunk":
+        repo_commits = readF2L("commits_inrepo.txt")
+        special_repo_commits = readF2L("commits_special.txt")
+        special_commits_test = []
+        special_commits_val = []
+        for line in special_repo_commits:
+            contents = line.strip().split("<sep>")
+            num = int(contents[-1])
+            if num > 50:
+                special_commits_test += contents[1:-2]
+            else:
+                special_commits_val +=contents[1:-2]
+        #print(len(repo_commits), len(special_commits))
+        exclude_commits_fortest = set(repo_commits + special_commits_test)
+        exclude_commits_forval = set(special_commits_val)
 def write_Rawdatasets(trn_ids_f,val_ids_f,test_ids_f):
     trn_ids=readF2L(trn_ids_f)
     val_ids=readF2L(val_ids_f)
@@ -75,6 +89,38 @@ def write_Rawdatasets(trn_ids_f,val_ids_f,test_ids_f):
     #write_bugcontents(val_bugs, "D:\DDPR_DATA\Raw\\val")
     write_bugcontents(trn_bugs, "D:\DDPR_DATA\Raw\\trn")
 
+
+def write_Linedatasets(trn_ids_f,val_ids_f,test_ids_f):
+    trn_ids=readF2L(trn_ids_f)
+    val_ids=readF2L(val_ids_f)
+    test_ids=readF2L(test_ids_f)
+    trn_bugs = get_buginfos(trn_ids)
+    #val_bugs = get_buginfos(val_ids)
+    test_bugs = get_buginfos(test_ids)
+    def write_bugfix_lines(bugs,dir):
+        print(len(bugs))
+        metas=[]
+        for i,bug in enumerate(bugs):
+            try:
+                id=bug['_id']
+                metas.append(str(id))
+                buggy_code=bug['errs'][0]['src_content'][0]
+                fix_code=bug['errs'][0]['tgt_content'][0]
+                buggy_file=dir+"/"+str(id)+".buggy"
+                fix_file = dir + "/" + str(id) + ".fix"
+                buggy_f=codecs.open(buggy_file,'w',encoding='utf8')
+                fix_f=codecs.open(fix_file,'w',encoding='utf8')
+                buggy_f.write(buggy_code.strip())
+                fix_f.write(fix_code.strip())
+                buggy_f.close()
+                fix_f.close()
+            except:
+                continue
+            print(i)
+        writeL2F(metas,dir+"/meta_info.txt")
+    write_bugfix_lines(test_bugs,"D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test")
+    #write_bugfix_lines(val_bugs, "D:\DDPR_DATA\OneLine_Replacement\Raw_line\\val")
+    write_bugfix_lines(trn_bugs, "D:\DDPR_DATA\OneLine_Replacement\Raw_line\\trn")
 def write_RawdatasetsOther(d4j_f,bears_f,bdjar_f):
     d4j_ids=readF2L(d4j_f)
     bears_ids=readF2L(bears_f)
@@ -203,7 +249,8 @@ def getErrorsbymeta(meta_f,errors_f):
 #write_FilteredDatasetOther("test_d4j","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\d4j\meta_info.txt",1000)
 #write_FilteredDatasetOther("test_bears","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bears\meta_info.txt",1000)
 #write_FilteredDatasetOther("test_bdjar","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\bdjar\meta_info.txt",1000)
-getErrorsbymeta("D:/DDPR_DATA/OneLine_Replacement/Raw/test/meta_info.txt","D:/DDPR_DATA/OneLine_Replacement/Raw/test/error_info.txt")
+#getErrorsbymeta("D:/DDPR_DATA/OneLine_Replacement/Raw/test/meta_info.txt","D:/DDPR_DATA/OneLine_Replacement/Raw/test/error_info.txt")
 #write_Rawdatasets("./freq50_611/trn_ids.txt","./freq50_611/val_ids.txt","./freq50_611/test_ids.txt")
 #write_RawdatasetsOther("D:\DDPR\Dataset\OR\OR_d4j.txt","D:\DDPR\Dataset\OR\OR_bears.txt","D:\DDPR\Dataset\OR\OR_bdjar.txt")
 #write_FilteredDataset("D:\DDPR_DATA\OneLine_Replacement\Raw","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test\\meta_info.txt")
+write_Linedatasets("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids")

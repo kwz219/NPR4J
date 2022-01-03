@@ -110,8 +110,8 @@ def main():
 
 if __name__ == "__main__":
     #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.yaml")
-    #main()
-    train_Cure("D:\DDPR\Config\Cure\cure_test.yaml",False)
+    main()
+    #train_Cure("D:\DDPR\Config\Cure\cure_test.yaml",False)
     #train_CoCoNut("D:\DDPR\Config\CoCoNut\CoCoNut_test.yaml",False)
 
 

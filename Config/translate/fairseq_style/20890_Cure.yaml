@@ -1,0 +1,10 @@
+clearml: True
+taskname: 20890_cure_translate_nb10
+datadir: /root/zwk/DDPR_DATA/data/M1000_Cure/dest
+modelpath: /root/zwk/DDPR_DATA/20890_cure/checkpoint_best.pt
+source: buggy
+target: fix
+outputfile: /root/zwk/DDPR_DATA/20890_cure/20890_Cure_translate_nb10.pred
+beam: 10
+nbest: 10
+use_context: True

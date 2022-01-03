@@ -2,6 +2,7 @@ import codecs
 import os.path
 import re
 
+import javalang
 import nltk
 
 from Utils.CA_Utils import jarWrapper
@@ -29,18 +30,9 @@ def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo,max_length):
         hitflag=0
 
     return code,hitflag
-def run_SequenceR_abs_p2(inputcode_f,outputcode_f,buginfo):
-    args=["../lib-jar/abstraction-p2.jar",inputcode_f,outputcode_f]
-    out,err=jarWrapper(args)
-    err=str(err)
-    try:
-        class_content=codecs.open(outputcode_f,'r',encoding='unicode_escape').read()
-        code,hitflag = add_buggy_method(class_content,buginfo)
-    except err:
-        print(err)
-        code=''
-        hitflag=0
-    return code,hitflag
+def run_SequenceR_ContextM(buginfo):
+    code = add_buggy_method(buginfo)
+    return code
 def run_SequenceR_abs_p3(inputcode_f,outputcode_f,buginfo):
     args=["../lib-jar/abstraction-p3.jar",inputcode_f,outputcode_f]
     if not os.path.exists(outputcode_f):
@@ -56,7 +48,6 @@ def run_SequenceR_abs_p3(inputcode_f,outputcode_f,buginfo):
 add <START_BUG> before buggyline and <END_BUG> after buggyline
 remove comments of code 
 """
-import javalang
 def add_buggy_method(cont,res,max_length):
     buggycode=res["buggy_code"].split("\n")
     err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
@@ -151,6 +142,18 @@ def add_buggy_method(cont,res,max_length):
     trunc_lines=truncate(new_lines,error_pos)
 
     return ' '.join(trunc_lines),hitflag
+
+def add_buggy_method_contextM(res):
+    buggycode=res["buggy_code"].split("\n")
+    err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
+    buggycode[err_pos]="<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
+
+    def clean_data(codes):
+        cleancodeline=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",codes)
+        return cleancodeline.strip()
+
+    codes=clean_data(' '.join(buggycode))
+    return codes
 def test_run_SeqeunceR_abs():
     cp="../Example/origin/EventEmitter.java"
 

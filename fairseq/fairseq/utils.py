@@ -300,7 +300,23 @@ def post_process_prediction(hypo_tokens, src_str, alignment, align_dict, tgt_dic
         # Note that the dictionary can be modified inside the method.
         hypo_tokens = tokenizer.Tokenizer.tokenize(hypo_str, tgt_dict, add_if_not_exist=True)
     return hypo_tokens, hypo_str, alignment
+def post_process_prediction_bpe(hypo_tokens, tokenizer, alignment,  remove_bpe):
+    def bpe_string(tensor, tokenizer, bpe_symbol=None, escape_unk=False):
+        if torch.is_tensor(tensor) and tensor.dim() == 2:
+            return '\n'.join(self.string(t) for t in tensor)
 
+        def token_string(i):
+            if i == self.unk():
+                return self.unk_string(escape_unk)
+            else:
+                return self[i]
+        sent = tokenizer.decode(tensor)
+        if bpe_symbol is not None:
+            sent = (sent + ' ').replace(bpe_symbol, '').rstrip()
+        return sent
+    hypo_str = bpe_string(hypo_tokens,tokenizer, remove_bpe)
+
+    return hypo_tokens, hypo_str, alignment
 
 def make_positions(tensor, padding_idx, left_pad, onnx_trace=False):
     """Replace non-padding symbols with their position numbers.

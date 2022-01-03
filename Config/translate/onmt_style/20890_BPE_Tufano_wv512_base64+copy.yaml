@@ -1,0 +1,9 @@
+model: /root/zwk/DDPR_DATA/Artifacts/20890_BPE_Tufano_wv512_bs64+copy_2w/20890_BPE_Tufano_wv512_copy_step_120000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/Raw_clean/test.buggy.2w.bpe
+
+output: /root/zwk/DDPR_DATA/Artifacts/20890_BPE_Tufano_wv512_bs64+copy_2w/20890_BPE_Tufano_wv512_copy_step_120000.pred
+gpu: 0
+batch_size: 5
+max_length: 1010

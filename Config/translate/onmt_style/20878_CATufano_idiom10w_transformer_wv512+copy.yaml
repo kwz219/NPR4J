@@ -1,0 +1,9 @@
+model: /root/zwk/DDPR_DATA/20878_CATufano_idiom10w_transformer+copy_wv512/20878_CATufano_idiom10w_transformer+copy_wv512_step_35000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/M1000_Tufano_i10w/test.buggy
+
+output: /root/zwk/DDPR_DATA/20878_CATufano_idiom10w_transformer+copy_wv512/20878_CATufano_idiom10w_transformer+copy_wv512_step_35000._nb10.pred
+gpu: 0
+batch_size: 5
+max_length: 1010

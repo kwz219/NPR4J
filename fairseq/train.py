@@ -336,14 +336,21 @@ def validate(args, trainer, task, epoch_itr, subsets):
     valid_losses = []
     for subset in subsets:
         # Initialize data iterator
+        if args.task=="cure":
+            max_positions=utils.resolve_max_positions(
+                task.max_positions(),
+                (1024,1024),#TODO
+            )
+        else:
+            max_positions = utils.resolve_max_positions(
+                task.max_positions(),
+                trainer.get_model().max_positions(),
+            )
         itr = task.get_batch_iterator(
             dataset=task.dataset(subset),
             max_tokens=args.max_tokens,
             max_sentences=args.max_sentences_valid,
-            max_positions=utils.resolve_max_positions(
-                task.max_positions(),
-                trainer.get_model().max_positions(),
-            ),
+            max_positions=max_positions,
             ignore_invalid_inputs=args.skip_invalid_size_inputs_valid_test,
             required_batch_size_multiple=8,
             seed=args.seed,

@@ -66,7 +66,7 @@ warmup_steps: 6000
 param_init: 0.0
 param_init_glorot: 'true'
 position_encoding: 'true'
-train_steps: 1000000
+train_steps: 500000
 save_checkpoint_steps: 5000
 valid_steps: 5000
 valid_batch_size: 512
@@ -77,7 +77,7 @@ seed: 912
 world_size: 1
 
 #model save and log
-log_file: /root/zwk/DDPR_DATA/log/RQ2/20878_CATufano_idiom10w_transformer+copy_wv512.log
-save_model: /root/zwk/DDPR_DATA/model/RQ2/20878_CATufano_idiom10w_transformer+copy_wv512
+log_file: /root/zwk/DDPR_DATA/20878_CATufano_idiom10w_transformer+copy_wv512/20878_CATufano_idiom10w_transformer+copy_wv512.log
+save_model: /root/zwk/DDPR_DATA/20878_CATufano_idiom10w_transformer+copy_wv512/20878_CATufano_idiom10w_transformer+copy_wv512
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/log/RQ2/20878_CATufano_idiom10w_transformer+copy_wv512.tensorlog
+tensorboard_log_dir: /root/zwk/DDPR_DATA/20878_CATufano_idiom10w_transformer+copy_wv512/20878_CATufano_idiom10w_transformer+copy_wv512.tensorlog
