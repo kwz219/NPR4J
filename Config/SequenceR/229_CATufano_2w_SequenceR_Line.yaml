@@ -1,5 +1,5 @@
 ## Where the vocab(s) will be written
-save_data: /root/zwk/DDPR_DATA/data/Raw_line/
+save_data: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/
 # Prevent overwriting existing files in the folder
 overwrite: True
 
@@ -15,19 +15,19 @@ dynamic_dict: True
 # Corpus opts:
 data:
     train:
-        path_src: /root/zwk/DDPR_DATA/data/Raw_line/trn.buggy
-        path_tgt: /root/zwk/DDPR_DATA/data/Raw_line/trn.fix
+        path_src: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/trn.buggy
+        path_tgt: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/trn.fix
         transforms: []
         weight: 1
     valid:
-        path_src: /root/zwk/DDPR_DATA/data/Raw_line/val.buggy
-        path_tgt: /root/zwk/DDPR_DATA/data/Raw_line/val.fix
+        path_src: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/val.buggy
+        path_tgt: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/val.fix
         transforms: []
 
-src_vocab_size: 200000
-tgt_vocab_size: 200000
-src_vocab: /root/zwk/DDPR_DATA/data/Raw_line/SequenceR.vocab
-tgt_vocab: /root/zwk/DDPR_DATA/data/Raw_line/SequenceR.vocab
+src_vocab_size: 30000
+tgt_vocab_size: 30000
+src_vocab: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/SequenceR_Tufano2w_line.vocab
+tgt_vocab: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/SequenceR_Tufano2w_line.vocab
 
 
 #log_file
@@ -58,8 +58,8 @@ seed: 912
 world_size: 1
 gpu_ranks: 0
 
-log_file: /root/zwk/DDPR_DATA/20878_SequenceR_Line/20878_SR_Line.log
-save_model: /root/zwk/DDPR_DATA/20878_SequenceR_Line/20878_SR_Line
+log_file: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/229_CATufano_2w_SequenceR_Line.log
+save_model: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/229_CATufano_2w_SequenceR_Line
 tensorboard: True
-tensorboard_log_dir: /root/zwk/DDPR_DATA/20878_SequenceR_Line/20878_SR_Line.tensorlog
+tensorboard_log_dir: /home/zhongwenkang/DDPR_DATA/data/L2L_Tufano2w/229_CATufano_2w_SequenceR_Line.tensorlog
 

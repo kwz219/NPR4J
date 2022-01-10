@@ -1,0 +1,10 @@
+clearml: True
+taskname: Cure_nopretrain
+datadir: /root/zwk/DDPR_DATA/data/Cure/dest
+modelpath: /root/zwk/DDPR_DATA/20873_Cure_nopre/checkpoint_best.pt
+source: buggy
+target: fix
+outputfile: /root/zwk/DDPR_DATA/20873_Cure_nopre/translate_nb10.pred
+beam: 10
+nbest: 10
+use_context: True

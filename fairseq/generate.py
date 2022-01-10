@@ -144,7 +144,7 @@ def main(args):
                 if args.task=="cure":
                     def bpe_string( tensor, tokenizer,bpe_symbol=None, escape_unk=False):
                         if torch.is_tensor(tensor) and tensor.dim() == 2:
-                            return '\n'.join(self.string(t) for t in tensor)
+                            return '\n'.join(bpe_string(t) for t in tensor)
 
                         sent = tokenizer.decode(tensor)
                         print(sent)
@@ -258,8 +258,8 @@ def main(args):
                         # Convert back to tokens for evaluation with unk replacement and/or without BPE
                         target_tokens = tokenizer.Tokenizer.tokenize(
                             target_str, tgt_dict, add_if_not_exist=True)
-                    print("target_tokens",target_tokens)
-                    print("hypo_tokens",hypo_tokens)
+                    #print("target_tokens",target_tokens)
+                    #print("hypo_tokens",hypo_tokens)
                     scorer.add(target_tokens, hypo_tokens)
 
             wps_meter.update(src_tokens.size(0))

@@ -1,0 +1,65 @@
+## Where the vocab(s) will be written
+save_data: /root/zwk/Codit_data/Codit_processed3
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 1010
+tgt_seq_length: 1010
+src_seq_length_trunc: 1010
+tgt_seq_length_trunc: 1010
+
+# common vocabulary for CoCoNut and target
+share_vocab: True
+dynamic_dict: True
+# Corpus opts:
+data:
+    train:
+        path_src: /root/zwk/Codit_data/Codit_processed3/trn/prev.token
+        path_tgt: /root/zwk/Codit_data/Codit_processed3/trn/next.token
+        transforms: []
+        weight: 1
+    valid:
+        path_src: /root/zwk/Codit_data/Codit_processed3/val/prev.token
+        path_tgt: /root/zwk/Codit_data/Codit_processed3/val/next.token
+        transforms: []
+
+src_vocab_size: 200000
+tgt_vocab_size: 200000
+src_vocab: /root/zwk/Codit_data/Codit_processed3/codit_token.vocab
+tgt_vocab: /root/zwk/Codit_data/Codit_processed3/codit_token.vocab
+
+
+#log_file
+
+copy_attn: true
+copy_loss_by_seqlength: true
+reuse_copy_attn: true
+global_attention: general
+word_vec_size: 512
+rnn_size: 512
+bridge: true
+layers: 2
+encoder_type: brnn
+early_stopping: 3
+early_stopping_criteria: accuracy
+train_steps: 500000
+valid_steps: 5000
+save_checkpoint_steps: 5000
+max_grad_norm: 2
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 8
+optim: adagrad
+learning_rate: 0.15
+adagrad_accumulator_init: 0.1
+
+seed: 912
+world_size: 1
+gpu_ranks: 0
+
+log_file: /root/zwk/Codit_data/Codit_processed3/20878_codit_token.log
+save_model: /root/zwk/Codit_data/Codit_processed3/20878_codit_token
+tensorboard: True
+tensorboard_log_dir: /root/zwk/Codit_data/Codit_processed3/20878_codit_token.tensorlog
+

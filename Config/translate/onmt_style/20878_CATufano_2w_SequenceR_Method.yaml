@@ -1,0 +1,10 @@
+model: /root/zwk/DDPR_DATA/20878_CATufano_2w_SequenceR_Method/20878_CATufano_2w_SequenceR_Method_step_85000.pt
+beam_size: 10
+n_best: 10
+src: /root/zwk/DDPR_DATA/data/M2L_Tufano2w/test.buggy
+tgt: /root/zwk/DDPR_DATA/data/M2L_Tufano2w/test.fix
+output: /root/zwk/DDPR_DATA/20878_CATufano_2w_SequenceR_Method/20878_CATufano_2w_SequenceR_Method_step_85000_nb10.pred
+gpu: 0
+batch_size: 2000
+batch_type: tokens
+max_length: 1010

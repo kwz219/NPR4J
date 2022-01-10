@@ -1,5 +1,6 @@
 #-*- coding : utf-8-*-
 import codecs
+import json
 import re
 
 import javalang
@@ -13,7 +14,7 @@ from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs, run_SequenceR_ContextM
 #from CodeAbstract.CA_src2abs import run_src2abs
-from Utils.IOHelper import writeL2F,readF2L
+from Utils.IOHelper import writeL2F, readF2L, readF2L_enc
 import os
 from transformers import AutoTokenizer, GPT2Tokenizer
 
@@ -713,6 +714,71 @@ def preprocess_M2M4BPE(ids_f,input_dir,output_dir,save_prefix):
     writeL2F(buggy_codes, output_dir + '/' + save_prefix + ".buggy")
     writeL2F(fix_codes, output_dir + '/' + save_prefix + '.fix')
     writeL2F(correct_ids, output_dir + '/' + save_prefix + '.ids')
+
+def preprocee_M2M_Tufano(map_dir,buggy_f,fix_f,ids_f,output_prefix):
+    buggy_codes=readF2L_enc(buggy_f,enc='iso8859-1')
+    fix_codes=readF2L_enc(fix_f,enc='iso8859-1')
+    ids=readF2L(ids_f)
+    assert len(buggy_codes)==len(fix_codes) and len(fix_codes)==len(ids)
+    def get_map_origin(map_f):
+        maplines = codecs.open(map_f, 'r', encoding='utf8').readlines()
+        lines=[]
+        for line in maplines:
+            if (not line == '\r\n') and (len(line.strip())>0):
+                lines.append(line)
+        map=dict()
+        for i in range(1,len(lines),2):
+            keys=lines[i-1].split(',')[:-1]
+            values=lines[i].split(',')[:-1]
+
+            if len(keys)==len(values):
+                for key,value in zip(keys,values):
+                    map[key]=value
+        return map
+    def load_map_asjson(map_f):
+        map_f=codecs.open(map_f,'r',encoding='iso8859-1')
+        map=json.load(map_f)
+        new_map=dict()
+        for key in map.keys():
+            value=map[key]
+            new_map[value]=key
+        return new_map
+    final_ids=[]
+    abs_bugs=[]
+    abs_fixs=[]
+    ind=0
+    for id,bug,fix in zip(ids,buggy_codes,fix_codes):
+        map_file=map_dir+'/'+id+'_buggy.txt.abs.map'
+        if "tgt" in map_dir:
+            map_file=map_file.replace("buggy","fix")
+        if not os.path.exists(map_file):
+            map_file=map_file.replace('trn','test')
+        print(ind)
+        ind+=1
+        try:
+            if "tgt" in map_dir:
+                map=load_map_asjson(map_file)
+            else:
+                map=get_map_origin(map_file)
+            #print(map)
+            abs_bug=' '+bug+' '
+            abs_fix = ' ' + fix + ' '
+            for key in map.keys():
+                abs_bug=abs_bug.replace(' '+key+' ',' '+map[key]+' ')
+                abs_fix = abs_fix.replace(' ' + key + ' ', ' ' + map[key] + ' ')
+            abs_bug = re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "", abs_bug)
+            abs_fix = re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "", abs_fix)
+            abs_bugs.append(abs_bug.strip())
+            abs_fixs.append(abs_fix.strip())
+            final_ids.append(id)
+        except:
+            continue
+
+    writeL2F(ids,output_prefix+'.ids')
+    writeL2F(abs_bugs, output_prefix + '.buggy')
+    writeL2F(abs_fixs, output_prefix + '.fix')
+
+
 def test_preprocess():
     val_ids=readF2L("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\\","test")
     #preprocess(val_ids,"SequenceR","E:\\bug-fix\\","D:\DDPR_DATA\OneLine_Replacement\M1000_SequenceR\\")
@@ -728,11 +794,13 @@ def test_preprocess():
 #preprocess_Tufano("D:\DDPR\Dataset\\freq50_611\\test_ids.txt","E:\APR_data\data\Tufano\\test","D:\DDPR_DATA\OneLine_Replacement\M1000_Tufano","D:\DDPR\CodeAbstract\CA_Resource\idioms.10w","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","val")
 #preprocess_SequenceR_ContextM("G:\DDPR_backup\OneLine_Replacement\Raw\\val_max1k.ids","G:\DDPR_backup\OneLine_Replacement\SequenceR_Method")
 #preprocess_SequenceR_ContextM("G:\DDPR_backup\OneLine_Replacement\Raw\\test_max1k.ids","G:\DDPR_backup\OneLine_Replacement\SequenceR_Method")
-preprocess_Line("D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_line","test")
+#preprocess_Line("D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw_line\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_line","test")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","trn")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","val")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","test")
 
+preprocee_M2M_Tufano(map_dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\test_tgt",buggy_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\M2L_Tufano2w\\test")
+#preprocee_M2M_Tufano(map_dir="E:\APR_data\data\Tufano\\trn",buggy_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\C2L_Tufano2w\\test")
 
 
 

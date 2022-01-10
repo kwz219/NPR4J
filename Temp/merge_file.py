@@ -28,7 +28,7 @@ def testindex():
     end_idx=start_idx+len(list2)
     print(list1[start_idx:end_idx])
 def merge_test_abs():
-    dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\test"
+    dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\test2(map json)"
     codelist=[]
     idlist=[]
     import os

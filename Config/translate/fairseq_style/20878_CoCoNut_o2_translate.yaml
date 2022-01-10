@@ -1,5 +1,5 @@
 clearml: True
-taskname: 20878_CoCoNut_o2_translate_nb10
+taskname: new_20878_CoCoNut_o2_translate_nb10
 datadir: /root/zwk/DDPR_DATA/data/M1000_CoCoNut/dest
 modelpath: /root/zwk/DDPR_DATA/CoCoNut/20878_CoCoNut_o2/checkpoint_best.pt
 source: buggy

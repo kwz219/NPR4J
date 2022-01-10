@@ -17,7 +17,7 @@ def translate_CoCoNut(config_file,clearml):
     target=config_dict['target']
     taskname=config_dict['taskname']
     outputfile=config_dict['outputfile']
-    use_context=config_dict['use_context']
+
     cmd ="python "+"fairseq/generate.py "+datadir+" --path "+modelpath+" --beam "+str(beam)+" --nbest "+str(nbest)+\
         " -s "+source+" -t "+target+" --use-context "+" -clearml "+str(use_clearml)+" -taskname "+taskname+" -outputfile "+outputfile
 
