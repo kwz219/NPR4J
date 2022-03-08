@@ -1,7 +1,7 @@
 from bson import ObjectId
 
 from MongoHelper import MongoHelper
-from DataConstants import BUG_COL,METHOD_COL,COMMIT_COL,Defects4j_repos,Bugs_dot_jar_repos,Bears_repos,SEP
+from DataConstants import BUG_COL,METHOD_COL,COMMIT_COL,Defects4j_repos,Bugs_dot_jar_repos,Bears_repos,SEP,Benchmark_repos,APR_tool_repos
 from Utils.IOHelper import writeD2J, writeL2F, write2F,readF2L
 import re
 """
@@ -83,19 +83,43 @@ find commits that from repos in [Defects4j,bugs.jar,bears]
 exclude these bug-fix data from training data set 
 """
 def get_commits_byrepo():
-    repos=set(Defects4j_repos+Bears_repos+Bugs_dot_jar_repos)
+    repos=set(Defects4j_repos+Bears_repos+Bugs_dot_jar_repos+Benchmark_repos+APR_tool_repos)
     all_commits=[]
     mongoClient=MongoHelper()
     commit_col=mongoClient.get_col(COMMIT_COL)
     for repo in repos:
         print(repo)
-        for commit in commit_col.find({"repo":{"$regex":repo}}):
-            print(commit['repo'])
+        for commit in commit_col.find({"repo":{"$regex":"/"+repo}}):
+            print("find: ",commit['repo'])
             all_commits.append(commit["_id"])
-    writeL2F(all_commits,"commits_inrepo.txt")
+    writeL2F(all_commits,"Commits_Exclude.txt")
 """
 find commits whose message contains explicit bug or issue ID
 """
+def get_clean_trainCommits():
+    commits_exclude=readF2L("Commits_Exclude.txt")
+
+    info_special=readF2L("commits_special.txt")
+    repos_special=[]
+    for info in info_special:
+        info_list=info.split('<sep>')
+        repos_special.append(info_list[0])
+
+    mongoClient=MongoHelper()
+    commit_col=mongoClient.get_col(COMMIT_COL)
+    commits4trn=[]
+    i=0
+
+    for commit in commit_col.find():
+        sha=commit['_id']
+        if sha not in commits_exclude:
+            repo=commit['repo']
+            if repo not in repos_special:
+                commits4trn.append(commit['_id'])
+                print(i)
+                i+=1
+
+    writeL2F(commits4trn,"Commits4trn.txt")
 def get_commits_special():
     mongoClient=MongoHelper()
     commit_col=mongoClient.get_col(COMMIT_COL)
@@ -136,7 +160,10 @@ def get_buginfos(idlist:list,bugcolname="default"):
         bugs.append(bug)
     return bugs
 
-
+def extractContext(meta_file):
+    metas=readF2L(meta_file)
+    for meta in metas:
+        pass
 
 
 def test_get_buginfos():
@@ -162,5 +189,7 @@ def test_get_buginfos():
 
 
 
-#test_get_buginfos()
 
+#test_get_buginfos()
+#get_commits_byrepo()
+#get_clean_trainCommits()

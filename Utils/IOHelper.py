@@ -4,8 +4,9 @@ import json
 import codecs
 "write list to file"
 def writeL2F(contents:list,filepath):
-    with open(filepath,'w',encoding='utf8',errors='surrogatepass')as f:
+    with open(filepath,'w',encoding='utf-8',errors='surrogatepass')as f:
         for line in contents:
+            #print(line)
             f.write(str(line)+'\n')
         f.close()
 "read java file, using javalang tokenizer to tokenize "
@@ -22,7 +23,7 @@ def writeD2J(contents:dict,filepath):
 "read file content and return a list"
 def readF2L(filepath):
     lines=[]
-    with open(filepath,'r',encoding='utf8')as f:
+    with open(filepath,'r',encoding='utf-8')as f:
         for line in f:
             lines.append(line.strip())
         f.close()

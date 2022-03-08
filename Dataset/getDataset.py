@@ -5,6 +5,8 @@ from Dataset.DataConstants import BUG_COL
 from Dataset.MongoHelper import MongoHelper
 from Utils.IOHelper import readF2L,writeL2F
 from Query import get_buginfos
+
+
 def write_IDs(bugtype):
     if bugtype=="onelineReplace":
         #1.firstly,find special commits and commits in Defects4j,Bears,Bugs.jar; bug-fix pairs from these commits should be used for validation and test, excluded from train dataset
@@ -89,6 +91,63 @@ def write_Rawdatasets(trn_ids_f,val_ids_f,test_ids_f):
     #write_bugcontents(val_bugs, "D:\DDPR_DATA\Raw\\val")
     write_bugcontents(trn_bugs, "D:\DDPR_DATA\Raw\\trn")
 
+def write_trainIDs():
+    diffs=readF2L("Replace_diffs.txt")
+    train_Commits=readF2L("Commits4trn.txt")
+
+    buggy=[]
+    fix=[]
+    meta=[]
+    i=0
+    bfset=set()
+    #print(train_Commits[0])
+    for diff in diffs:
+        infos=diff.split('<sep>')
+        #print(train_Commits[0])
+        #print(infos[1])
+        if infos[1] in train_Commits:
+            if ((infos[2]+"<sep>"+infos[3]) in bfset) or infos[2]==infos[3] or infos[2] in ['{','}']:
+                pass
+            else:
+                buggy.append(infos[2])
+                fix.append(infos[3])
+                meta.append(infos[0]+'<sep>'+infos[1]+'<sep>'+infos[6]+'<sep>'+infos[7])
+                bfset.add(infos[2]+"<sep>"+infos[3])
+                print(i)
+
+                i+=1
+
+    writeL2F(buggy,'F:/NPR_DATA0306/Original/trn/buggy.txt')
+    writeL2F(fix, 'F:/NPR_DATA0306/Original/trn/fix.txt')
+    writeL2F(meta, 'F:/NPR_DATA0306/Original/trn/meta.txt')
+
+def write_testIDs():
+    diffs = readF2L("Replace_diffs.txt")
+    train_Commits = readF2L("Commits4trn.txt")
+    Exclude_Commits=readF2L("Commits_Exclude.txt")
+    buggy = []
+    fix = []
+    meta = []
+    i = 0
+    bfset = set()
+    for diff in diffs:
+        infos = diff.split('<sep>')
+        if (infos[1] not in train_Commits) and (infos[1] not in Exclude_Commits):
+            if ((infos[2] + "<sep>" + infos[3]) in bfset) or infos[2] == infos[3] or infos[2] in ['{', '}']:
+                pass
+            else:
+                #print(infos[2])
+                #print(infos[3])
+                buggy.append(infos[2])
+                fix.append(infos[3])
+                meta.append(infos[0] + '<sep>' + infos[1] + '<sep>' + infos[6] + '<sep>' + infos[7])
+                bfset.add(infos[2] + "<sep>" + infos[3])
+                print(i)
+
+                i += 1
+    writeL2F(buggy, 'F:/NPR_DATA0306/Original/test/buggy.txt')
+    writeL2F(fix, 'F:/NPR_DATA0306/Original/test/fix.txt')
+    writeL2F(meta, 'F:/NPR_DATA0306/Original/test/meta.txt')
 
 def write_Linedatasets(trn_ids_f,val_ids_f,test_ids_f):
     trn_ids=readF2L(trn_ids_f)
@@ -252,5 +311,8 @@ def getErrorsbymeta(meta_f,errors_f):
 #getErrorsbymeta("D:/DDPR_DATA/OneLine_Replacement/Raw/test/meta_info.txt","D:/DDPR_DATA/OneLine_Replacement/Raw/test/error_info.txt")
 #write_Rawdatasets("./freq50_611/trn_ids.txt","./freq50_611/val_ids.txt","./freq50_611/test_ids.txt")
 #write_RawdatasetsOther("D:\DDPR\Dataset\OR\OR_d4j.txt","D:\DDPR\Dataset\OR\OR_bears.txt","D:\DDPR\Dataset\OR\OR_bdjar.txt")
+write_testIDs()
+write_trainIDs()
+
 #write_FilteredDataset("D:\DDPR_DATA\OneLine_Replacement\Raw","D:\DDPR_DATA\OneLine_Replacement\M1000_Tjava","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\val\\meta_info.txt","D:\DDPR_DATA\OneLine_Replacement\Raw\\test\\meta_info.txt")
-write_Linedatasets("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids")
+#write_Linedatasets("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids")

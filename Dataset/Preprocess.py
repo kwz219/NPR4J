@@ -277,6 +277,84 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     #writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
     #writeL2F(true_ids,output_dir+'/'+prefix+".ids")
 
+def preprocess_FConv_line(ids_f,output_dir,prefix,max_length=1000):
+    def CoCoNut_tokenize(string):
+
+        final_token_list = []
+        string_replaced = extract_strings(string)
+        split_tokens = re.split(r'([\W_])', string_replaced)
+        split_tokens = list(filter(lambda a: a not in [' ', '', '"', "'", '\t', '\n'], split_tokens))
+        flag = False
+
+        # Special symbols
+        for idx, token in enumerate(split_tokens):
+            if idx < len(split_tokens) - 1:
+                reconstructed_token = token + split_tokens[idx + 1]
+                if reconstructed_token in COMPOSED_SYMBOLS:
+                    final_token_list.append(reconstructed_token)
+                    flag = True
+                elif not flag:
+                    final_token_list.append(token)
+                elif flag:
+                    flag = False
+            else:
+                final_token_list.append(token)
+        # Camel Case
+        no_camel = []
+        for token in final_token_list:
+            camel_tokens = camel_case_split(token)
+            for idx, camel_tok in enumerate(camel_tokens):
+                no_camel.append(camel_tok)
+
+        # number split
+        tokens = []
+        for token in no_camel:
+            number_sep = number_split(token)
+            for num in number_sep:
+                tokens.append(num)
+        tokens = remove_integer(tokens)
+        for idx, token in enumerate(tokens):
+            if token == 'SSSTRINGSS':
+                if idx > 0 and tokens[idx - 1] == '$STRING$':
+                    return []
+                else:
+                    tokens[idx] = '$STRING$'
+
+        return tokens
+
+    ids = readF2L(ids_f)
+    print(len(ids))
+    mongoClient = MongoHelper()
+    bug_col = mongoClient.get_col(BUG_COL)
+    ind = 0
+    add_f = codecs.open(output_dir + '/' + prefix + '.fix', 'w', encoding='utf8')
+    contex_f = codecs.open(output_dir + '/' + prefix + '.buggy', 'w', encoding='utf8')
+    id_f = codecs.open(output_dir + '/' + prefix + ".ids", 'w', encoding='utf8')
+
+    for id in ids:
+        bug = bug_col.find_one({"_id": ObjectId(id)})
+        if bug == None:
+            continue
+
+        remove_code = ''.join([l.strip() for l in bug['errs'][0]['src_content']]).strip()
+        fix_code = ''.join([l.strip() for l in bug['errs'][0]['tgt_content']]).strip()
+        toked_rem = CoCoNut_tokenize(remove_code)
+        toked_fix = CoCoNut_tokenize(fix_code)
+
+
+        if len(toked_rem) < max_length:
+            add_line = ' '.join(toked_fix).replace('\n', '').replace('\t', '')
+            rem_line = ' '.join(toked_rem).replace('\n', '').replace('\t', '')
+            try:
+                add_f.write(add_line + '\n')
+                contex_f.write(rem_line + '\n')
+                id_f.write(id + '\n')
+                pass
+            except:
+                pass
+
+        ind += 1
+
 def preprocess_Cure(ids_f,output_dir,prefix,max_length=2000):
     print("Cure-Style data preprocess start ")
     tokenizer=AutoTokenizer.from_pretrained("microsoft/CodeGPT-small-java")
@@ -771,6 +849,7 @@ def preprocee_M2M_Tufano(map_dir,buggy_f,fix_f,ids_f,output_prefix):
             abs_bugs.append(abs_bug.strip())
             abs_fixs.append(abs_fix.strip())
             final_ids.append(id)
+
         except:
             continue
 
@@ -798,8 +877,8 @@ def test_preprocess():
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","trn")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","val")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","test")
-
-preprocee_M2M_Tufano(map_dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\test_tgt",buggy_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\M2L_Tufano2w\\test")
+preprocess_FConv_line(ids_f="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",output_dir="D:\DDPR_DATA\OneLine_Replacement\FConv_line",prefix='test')
+#preprocee_M2M_Tufano(map_dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\test_tgt",buggy_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\M2L_Tufano2w\\test")
 #preprocee_M2M_Tufano(map_dir="E:\APR_data\data\Tufano\\trn",buggy_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\C2L_Tufano2w\\test")
 
 

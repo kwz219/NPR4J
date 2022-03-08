@@ -10,8 +10,8 @@ def train_fconv(dropout,
                 encoder_layers,
                 decoder_layers,
                 lr,
-                momentum, clip_norm, optimizer, criterion, savedir, trainbin):
-    fairseqdir = os.environ['FAIRSEQPY']
+                momentum, clip_norm, optimizer, criterion, savedir, trainbin,deviceid,batchsize,max_epoch,clearml,ex_name):
+
     if not os.path.exists(savedir):
         os.makedirs(savedir)
 
@@ -20,7 +20,7 @@ def train_fconv(dropout,
     else:
         share = ''
     # ' --no-epoch-checkpoints ' + \
-    cmd = 'python ' + fairseqdir + 'train.py --save-dir ' + savedir + \
+    cmd = 'python fairseq/train.py --save-dir ' + savedir + \
           ' --arch fconv  --max-tokens 1000 --distributed-world-size 1  --log-format json ' + \
           '--encoder-embed-dim ' + str(encoder_embed_dim) + \
           ' --decoder-embed-dim ' + str(decoder_embed_dim) + \
@@ -35,9 +35,11 @@ def train_fconv(dropout,
           ' --optimizer ' + optimizer + \
           ' --criterion ' + criterion + \
           ' --momentum ' + str(momentum) + \
-          ' --max-epoch ' + str(20) + \
+          ' --max-epoch ' + str(max_epoch) + \
           ' --no-epoch-checkpoints ' + \
-          ' --min-lr 1e-4   --batch-size 128 ' + trainbin
+          ' --min-lr 1e-4   --batch-size '+str(batchsize)+' ' + trainbin+ \
+          ' -clearml ' + str(clearml) + \
+          ' -experiment_name ' + str(ex_name) +' --device-id '+str(deviceid)
 
     cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
@@ -104,13 +106,13 @@ def train_trans(dropout,
                 optimizer,
                 criterion,
                 savedir,
-                trainbin):
-    fairseqdir = os.environ['FAIRSEQPY']
+                trainbin,deviceid,batchsize,max_epoch,clearml,ex_name):
+
 
     if not os.path.exists(savedir):
         os.makedirs(savedir)
 
-    cmd = 'python ' + fairseqdir + 'train.py --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
+    cmd = 'python fairseq/train.py --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
           ' --arch transformer --max-tokens 2000 --distributed-world-size 1 --log-format json ' + \
           '--encoder-embed-dim ' + str(encoder_embed_dim) + \
           ' --decoder-embed-dim ' + str(decoder_embed_dim) + \
@@ -127,7 +129,9 @@ def train_trans(dropout,
           ' --criterion ' + str(criterion) + \
           ' --momentum ' + str(momentum) + \
           ' --no-epoch-checkpoints ' + \
-          ' --max-epoch 20  --batch-size 32 ' + str(trainbin)
+          ' --max-epoch ' +str(max_epoch)+'  --batch-size 32 ' + str(trainbin) + ' --device-id '+ str(deviceid)+ \
+          ' -clearml '+str(clearml)+ \
+          ' -experiment_name '+str(ex_name)
 
     cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
@@ -148,12 +152,12 @@ def train_lstm(dropout,
                criterion,
                savedir,
                trainbin):
-    fairseqdir = os.environ['FAIRSEQPY']
+
 
     if not os.path.exists(savedir):
         os.makedirs(savedir)
 
-    cmd = 'python ' + fairseqdir + 'train.py --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
+    cmd = 'python fairseq/train.py --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
           ' --arch lstm --max-tokens 2000 --distributed-world-size 1  --no-epoch-checkpoints --log-format json ' + \
           '--encoder-embed-dim ' + str(encoder_embed_dim) + \
           ' --decoder-embed-dim ' + str(decoder_embed_dim) + \

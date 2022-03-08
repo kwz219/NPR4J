@@ -1,0 +1,17 @@
+dropout: 0.10750324647058333
+share_input_output_embed: True
+encoder_embed_dim: 512
+decoder_embed_dim: 512
+decoder_out_embed_dim: 512
+encoder_layers: '[(512,6)] * 8'
+decoder_layers: '[(512,10)] * 5'
+lr: 0.1228703688177207
+momentum:  0.5498989114182679
+clip_norm: 0.3526243918050602
+optimizer: 'nag'
+criterion: 'cross_entropy'
+savedir: '/home/group/zwk_save/FConv_Line_o2'
+trainbin: '/home/group/DDPR_DATA/FConv_Line'
+batch_size: 32
+device_id: 0
+max-epoch: 30

@@ -1,7 +1,7 @@
 import argparse
 
 import sentencepiece as sp
-
+import javalang
 from Utils.IOHelper import readF2L, writeL2F
 
 
@@ -13,6 +13,7 @@ def tokenize_bpe(spm_model_f,src_f,out_f):
     for line in toked_lines:
         final_lines.append(' '.join(line))
     writeL2F(final_lines,out_f)
+
 
 if __name__ =="__main__":
     parser = argparse.ArgumentParser(

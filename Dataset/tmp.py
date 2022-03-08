@@ -27,4 +27,8 @@ def filter_commit():
     writeL2F(trn_ids,"trn_ids.txt")
     writeL2F(val_ids,"val_ids.txt")
 
-filter_commit()
+#filter_commit()
+def count_special():
+    commits=readF2L("repo&commits_special.txt")
+    print(len(commits))
+count_special()

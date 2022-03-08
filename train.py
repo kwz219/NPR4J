@@ -4,13 +4,38 @@ import subprocess
 
 import yaml
 
-from CoCoNut.training.train import train_context
+from CoCoNut.training.train import train_context, train_fconv, train_trans
 
 
 def train_ONMT(config_file,clearML):
     cmd="python OpenNMT-py-master/train.py "+"-config "+config_file +" -clearML "+str(clearML)
     os.system(cmd)
+def train_FConv(config_file,clearml=False):
+    with open(config_file,'r') as f:
+        config_dict=yaml.safe_load(f)
 
+    print(config_dict)
+    dropout=config_dict['dropout']
+    share_input_output_embed=config_dict['share_input_output_embed']
+    encoder_embed_dim=config_dict['encoder_embed_dim']
+    decoder_embed_dim=config_dict['decoder_embed_dim']
+    decoder_out_embed_dim=config_dict['decoder_out_embed_dim']
+    encoder_layers=config_dict['encoder_layers']
+    decoder_layers=config_dict['decoder_layers']
+    lr=config_dict['lr']
+    momentum=config_dict['momentum']
+    clip_norm=config_dict['clip_norm']
+    optimizer=config_dict['optimizer']
+    criterion=config_dict['criterion']
+    savedir=config_dict['savedir']
+    trainbin=config_dict['trainbin']
+    deviceid=config_dict['device_id']
+    batchsize=config_dict['batch_size']
+    max_epoch=config_dict['max-epoch']
+    use_clearml=clearml
+    experiment_id=config_file.split('/')[-1].replace(".yaml",'')
+    train_fconv(dropout,share_input_output_embed,encoder_embed_dim,decoder_embed_dim,decoder_out_embed_dim,encoder_layers,decoder_layers,lr,momentum,clip_norm,optimizer,criterion,savedir,trainbin,
+                  deviceid,batchsize,max_epoch,use_clearml,experiment_id)
 def train_CoCoNut(config_file,clearml=False):
     with open(config_file,'r') as f:
         config_dict=yaml.safe_load(f)
@@ -97,7 +122,7 @@ def main():
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut"])
+    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut","FConv"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -107,6 +132,15 @@ def main():
         train_CoCoNut(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="Cure":
         train_Cure(config_file=opt.config,clearml=opt.clearml)
+    elif opt.model=="FConv":
+        train_FConv(config_file=opt.config,clearml=opt.clearml)
+    elif opt.model=="fairseq":
+        train_trans(0.36757118429123703, 0.2077472553022901, 0.23458028958313615, 256, 256, 4, 4, 4, 4,
+                    0.04523705535400846,
+                    0.5171673914366653, 0.1705892332229475, 'adagrad', 'label_smoothed_cross_entropy',
+                    '/home/group/zwk_save/Co_trans',
+                    '/home/group/DDPR_DATA/FConv_Line',deviceid=0,batchsize=32,max_epoch=30,clearml="True",ex_name="CoCoNet_trans")
+
 
 if __name__ == "__main__":
     #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.yaml")
