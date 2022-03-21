@@ -1,0 +1,63 @@
+## Where the vocab(s) will be written
+save_data: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 200
+tgt_seq_length: 200
+src_seq_length_trunc: 200
+tgt_seq_length_trunc: 200
+
+# common vocabulary for CoCoNut and target
+share_vocab: True
+dynamic_dict: True
+# Corpus opts:
+data:
+    trn:
+        path_src: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/trn.buggy
+        path_tgt: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/trn.fix
+        transforms: []
+        weight: 1
+    valid:
+        path_src: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/val.buggy
+        path_tgt: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/val.fix
+        transforms: []
+
+src_vocab_size: 20000 #SequenceR original vocab size
+tgt_vocab_size: 20000
+src_vocab: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/buggy.vocab
+tgt_vocab: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/fix.vocab
+
+
+#model params
+global_attention: general
+word_vec_size: 512
+rnn_size: 512
+bridge: true
+enc_layers: 2
+dec_layers: 4
+encoder_type: brnn
+
+#training params
+train_steps: 100000
+save_checkpoint_steps: 2000
+valid_steps: 2000
+max_grad_norm: 2
+gpu_ranks: 0
+world_size: 1
+early_stopping: 3
+early_stopping_criteria: accuracy
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 32
+optim: adagrad
+learning_rate: 0.1
+adagrad_accumulator_init: 0.1
+seed: 912
+
+#model save and log
+log_file: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/Logs/221_origin.log
+save_model: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/ModelSave/221_origin
+tensorboard: True
+tensorboard_log_dir: /home/zhongwenkang/NPR_DATA0306/Processed_Tufano/Logs/221_origin.tensorlog

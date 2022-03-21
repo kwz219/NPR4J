@@ -11,7 +11,7 @@ clip_norm: 0.5617417487136113
 optimizer: 'nag'
 criterion: 'cross_entropy'
 savedir: 'D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\savetest'
-trainbin: 'D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\dest'
+trainbin: 'F:\NPR_DATA0306\CoCoNut\processed_context_47500'
 batch_size: 32
 log_file: 'D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\savetest'
 device_id: 0

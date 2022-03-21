@@ -86,7 +86,7 @@ def get_parser():
     parser.add_argument(
         "--output-format",
         metavar="FORMAT",
-        default="binary",
+        default="raw",
         choices=["binary", "raw"],
         help="output format (optional)",
     )
@@ -175,6 +175,33 @@ def main(args):
             )
         tgt_dict.save(dict_path(args.target_lang))
 
+    def _make_binary_dataset(
+            vocab: Dictionary,
+            input_prefix: str,
+            output_prefix: str,
+            lang: tp.Optional[str],
+            num_workers: int,
+            args: Namespace,
+    ):
+        logger.info("[{}] Dictionary: {} types".format(lang, len(vocab)))
+
+        binarizer = VocabularyDatasetBinarizer(
+            vocab,
+            append_eos=True,
+        )
+
+        input_file = "{}{}".format(input_prefix, ("." + lang) if lang is not None else "")
+        full_output_prefix = dataset_dest_prefix(args, output_prefix, lang)
+
+        final_summary = FileBinarizer.multiprocess_dataset(
+            input_file,
+            args.dataset_impl,
+            binarizer,
+            full_output_prefix,
+            vocab_size=len(vocab),
+            num_workers=num_workers,
+        )
+        logger.info(f"[{lang}] {input_file}: {final_summary} (by {vocab.unk_word})")
     def make_binary_dataset(input_prefix, output_prefix, lang, num_workers):
         dict = dictionary.Dictionary.load(dict_path(lang))
         print("| [{}] Dictionary: {} types".format(lang, len(dict) - 1))
@@ -228,7 +255,7 @@ def main(args):
                 os.remove(indexed_dataset.index_file_path(temp_file_path))
 
         ds.finalize(dataset_dest_file(args, output_prefix, lang, "idx"))
-        '''
+
         print(
             "| [{}] {}: {} sents, {} tokens, {:.3}% replaced by {}".format(
                 lang,
@@ -239,7 +266,7 @@ def main(args):
                 dict.unk_word,
             )
         )
-        '''
+
 
     def make_dataset(input_prefix, output_prefix, lang, num_workers=1):
         if args.output_format == "binary":

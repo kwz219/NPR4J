@@ -88,6 +88,10 @@ class TranslationTask(FairseqTask):
             raise Exception('Could not infer language pair, please provide it explicitly')
 
         # load dictionaries
+        src_dict_f=os.path.join(args.data[0], 'dict.{}.txt'.format(args.CoCoNut_lang))
+
+        if not os.path.exists(src_dict_f):
+            args.CoCoNut_lang="ctx"
         src_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.CoCoNut_lang)))
         tgt_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.target_lang)))
         assert src_dict.pad() == tgt_dict.pad()
@@ -145,6 +149,7 @@ class TranslationTask(FairseqTask):
                 tgt_datasets.append(indexed_dataset(prefix + tgt, self.tgt_dict))
 
                 print('| {} {} {} examples'.format(data_path, split_k, len(src_datasets[-1])))
+                print('| {} {} {} examples'.format(data_path, split_k, len(tgt_datasets[-1])))
 
                 if not combine:
                     break
@@ -160,13 +165,16 @@ class TranslationTask(FairseqTask):
             tgt_dataset = ConcatDataset(tgt_datasets, sample_ratios)
 
         if (self.args.use_context):
-          self.datasets[split] = LanguagePairWithContextDataset(
-              src_dataset, src_dataset.sizes, self.src_dict,
-              tgt_dataset, tgt_dataset.sizes, self.tgt_dict,
-              left_pad_source=self.args.left_pad_source,
-              left_pad_target=self.args.left_pad_target,
-              max_source_positions=self.args.max_CoCoNut_positions,
-              max_target_positions=self.args.max_target_positions,
+            print("use_context")
+            print(len(src_dataset.sizes))
+            print(len(tgt_dataset.sizes))
+            self.datasets[split] = LanguagePairWithContextDataset(
+            src_dataset, src_dataset.sizes, self.src_dict,
+            tgt_dataset, tgt_dataset.sizes, self.tgt_dict,
+            left_pad_source=self.args.left_pad_source,
+            left_pad_target=self.args.left_pad_target,
+            max_source_positions=self.args.max_CoCoNut_positions,
+            max_target_positions=self.args.max_target_positions,
           )
         else:
           self.datasets[split] = LanguagePairDataset(

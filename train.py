@@ -8,7 +8,48 @@ from CoCoNut.training.train import train_context, train_fconv, train_trans
 
 
 def train_ONMT(config_file,clearML):
+    with open(config_file,'r') as f:
+        config_dict=yaml.safe_load(f)
+    # filter long examples
+    src_seq_length=config_dict["src_seq_length"]
+    tgt_seq_length=config_dict["tgt_seq_length"]
+    src_seq_length_trunc=config_dict["src_seq_length_trunc"]
+    tgt_seq_length_trunc=config_dict["tgt_seq_length_trunc"]
+
+    # vocabulary
+    share_vocab=config_dict["share_vocab"]
+    dynamic_dict=config_dict["dynamic_dict"]
+    src_vocab_size=config_dict["src_vocab_size"]
+    tgt_vocab_size=config_dict["tgt_vocab_size"]
+    src_vocab=config_dict["src_vocab"]
+    tgt_vocab=config_dict["tgt_vocab"]
+
+    # model parameters
+    copy_attn=config_dict["copy_attn"]
+    copy_loss_by_seqlength=config_dict["copy_loss_by_seqlength"]
+    reuse_copy_attn=config_dict["reuse_copy_attn"]
+    global_attention=config_dict["global_attention"]
+    word_vec_size=config_dict["word_vec_size"]
+    rnn_size=config_dict["rnn_size"]
+    bridge=config_dict["bridge"]
+    layers=config_dict["layers"]
+    encoder_type=config_dict["encoder_type"]
+    early_stopping=config_dict["early_stopping"]
+    early_stopping_criteria=config_dict["early_stopping_criteria"]
+    train_steps=config_dict["train_steps"]
+    valid_steps=config_dict["valid_steps"]
+    save_checkpoint_steps=config_dict["save_checkpoint_steps"]
+    max_grad_norm=config_dict["max_grad_norm"]
+    dropout=config_dict["dropout"]
+    batch_size=config_dict["batch_size"]
+    valid_batch_size=config_dict["valid_batch_size"]
+    optim=config_dict["optim"]
+    learning_rate=config_dict["learning_rate"]
+    adagrad_accumulator_init=config_dict["adagrad_accumulator_init"]
+
     cmd="python OpenNMT-py-master/train.py "+"-config "+config_file +" -clearML "+str(clearML)
+
+    #cmd = "python OpenNMT-py-master/train.py " + "-config " + config_file + " -clearML " + str(clearML)
     os.system(cmd)
 def train_FConv(config_file,clearml=False):
     with open(config_file,'r') as f:
@@ -143,7 +184,8 @@ def main():
 
 
 if __name__ == "__main__":
-    #train_CoCoNut("D:\DDPR\Config\CoCoNut\\20889_CoCoNut_o9.yaml")
+    #train_CoCoNut("D:\DDPR\Config\CoCoNut\\CoCoNut_test.yaml")
+    #train_FConv("D:\DDPR\Config\CoCoNut\Ali_FconvLine_o1.yaml",True)
     main()
     #train_Cure("D:\DDPR\Config\Cure\cure_test.yaml",False)
     #train_CoCoNut("D:\DDPR\Config\CoCoNut\CoCoNut_test.yaml",False)

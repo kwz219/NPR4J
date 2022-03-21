@@ -32,10 +32,14 @@ def clean_CoCoNut(src_prefix):
     buggy_lines=readF2L(src_prefix+'.buggy')
     buggy_ctx=readF2L(src_prefix+'.ctx')
     fix_lines=readF2L(src_prefix+'.fix')
-    metas=readF2L("F:/NPR_DATA0306/Large/val.meta")
+    metas=readF2L("F:/NPR_DATA0306/Large/trn.meta")
     clean_buggy,clean_fix,clean_ctx,clean_meta=[],[],[],[]
     for line, ctx, fix,meta in zip(buggy_lines, buggy_ctx, fix_lines,metas):
         if line != fix :
+            tgt_len=len(line.split())
+            if tgt_len>1000:
+                print(tgt_len)
+            #print(len(fix.split()))
             clean_buggy.append(line)
             clean_ctx.append(ctx)
             clean_fix.append(fix)
@@ -44,7 +48,15 @@ def clean_CoCoNut(src_prefix):
     writeL2F(clean_ctx[2000:22100], src_prefix + '.clean.ctx')
     writeL2F(clean_fix[2000:22100], src_prefix + '.clean.fix')
     writeL2F(clean_meta[2000:22100], src_prefix + '.clean.meta')
-#Tokenize_CoCoNut("F:/NPR_DATA0306/Original/trn.buggy","F:/NPR_DATA0306/CoCoNut/trn.buggy")
-#Tokenize_CoCoNut("F:/NPR_DATA0306/Original/trn.fix","F:/NPR_DATA0306/CoCoNut/trn.fix")
-prepare_CoCoNut("F:/NPR_DATA0306/Large/test","F:/NPR_DATA0306/CoCoNut/test")
-clean_CoCoNut("F:/NPR_DATA0306/CoCoNut/test")
+
+def get_sublist(src_prefix):
+    buggy_ctx=readF2L(src_prefix+'.ctx')
+    fix_lines=readF2L(src_prefix+'.fix')
+    writeL2F(buggy_ctx[:47500],src_prefix+'_47500.ctx')
+    writeL2F([fix.replace('\n', '').replace('\t', '') for fix in fix_lines[:47500]], src_prefix + '_47500.fix')
+#Tokenize_CoCoNut("F:/NPR_DATA0306/Processed_CoCoNut/trn.buggy","F:/NPR_DATA0306/Processed_CoCoNut/trn.buggy")
+#Tokenize_CoCoNut("F:/NPR_DATA0306/Processed_CoCoNut/trn.fix","F:/NPR_DATA0306/Processed_CoCoNut/trn.fix")
+prepare_CoCoNut("F:/NPR_DATA0306/Processed_CoCoNut/trn","F:/NPR_DATA0306/Processed_CoCoNut/processed/trn")
+prepare_CoCoNut("F:/NPR_DATA0306/Processed_CoCoNut/val","F:/NPR_DATA0306/Processed_CoCoNut/processed/val")
+#clean_CoCoNut("F:/NPR_DATA0306/CoCoNut/trn")
+#get_sublist("F:/NPR_DATA0306/CoCoNut/trn")

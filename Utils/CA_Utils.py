@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 
 import javalang.tokenizer
 
+from Utils.IOHelper import readF2L
 
 """
 implement Idioms-Generating method of tufano18&19 
@@ -38,6 +39,19 @@ def writeL2F(contents:list,filepath):
     with open(filepath,'w',encoding='utf8',errors='surrogatepass')as f:
         for line in contents:
             f.write(str(line)+'\n')
+        f.close()
+def build_vocabulary(lines_f,output_f):
+    lines=readF2L(lines_f)
+    print(len(lines))
+    vocab_counter=Counter()
+    for i,line in enumerate(lines):
+        tmp=Counter(line.split())
+        vocab_counter+=tmp
+        print(i)
+    vocab_ranked=[(l,k) for k,l in sorted([(j,i) for i,j in vocab_counter.items()], reverse=True)]
+    with open(output_f,'w',encoding='utf8')as f:
+        for line in vocab_ranked:
+            f.write(line[0]+' '+str(line[1])+'\n')
         f.close()
 
 def genIdioms_fromlines(corpus_f,top_n,targerfile,tokenize="javalang",byFrequency=True):
@@ -95,3 +109,4 @@ def test_genIdiom():
     print(genIdioms_fromlines(corpus_dir,top_n,targetfile))
 
 #test_genIdiom()
+#build_vocabulary("F:/NPR_DATA0306/CoCoNut/trn.fix","F:/NPR_DATA0306/CoCoNut/dict.fix")

@@ -105,10 +105,15 @@ def preprocess_CoCoNut(configdict:dict):
     valid_dir=configdict['valid_dir']
     test_dir=configdict['test_dir']
     dest_dir=configdict['dest_dir']
-    cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers 10 "\
+
+    cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers 1 "\
          +" --trainpref "+train_dir+" --validpref "+valid_dir+" --testpref "+test_dir+" --destdir "+dest_dir
     if 'joined_dictionary' in configdict.keys():
         cmd=cmd+" --joined-dictionary "+str(configdict["joined-dictionary"])
+    if "srcdict" in configdict.keys():
+        cmd=cmd+" --srcdict "+str(configdict['srcdict'])
+    if "tgtdict" in configdict.keys():
+        cmd = cmd + " --tgtdict " + str(configdict['tgtdict'])
     print(cmd)
     subprocess.call(cmd, shell=True)
 def preprocess_Cure(configdict:dict):
@@ -178,19 +183,24 @@ if __name__ == "__main__":
     parser.add_argument("--input_dir",help="source input dir ,contains a number of java files")
     parser.add_argument("--output_file",help="processed result file. output tokenized codes to a file ,with each code a line")
     """
-    CoCoNut_config={"src_lang":"ctx","tgt_lang":"fix","train_dir":r"F:\NPR_DATA0306\CoCoNut\trn",
-                      "valid_dir":r"F:\NPR_DATA0306\CoCoNut\val",
-                      "test_dir":r"F:\NPR_DATA0306\CoCoNut\test",
-                      "dest_dir":r"F:\NPR_DATA0306\CoCoNut\processed_context"}
+    CoCoNut_config={"src_lang":"ctx","tgt_lang":"fix","train_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/trn_47500",
+                      "valid_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/val",
+                      "test_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/test",
+                      "dest_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/processed_context"}
     process_cureconfig={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"F:\NPR_DATA0306\CoCoNut\trn",
                       "valid_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\val",
                       "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\test",
                       "dest_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\dest",
                       }
-    FConv_line_config={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"F:\NPR_DATA0306\CoCoNut\trn",
-                      "valid_dir":r"F:\NPR_DATA0306\CoCoNut\val",
-                      "test_dir":r"F:\NPR_DATA0306\CoCoNut\test",
+    FConv_line_config={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/trn",
+                      "valid_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/val",
+                      "test_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/test",
                       "dest_dir":r"F:\NPR_DATA0306\CoCoNut\processed_nocontext"}
+    preprocess_config={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\trn",
+                      "valid_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\val",
+                      "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\test",
+                      "dest_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/processed_context"}
+    preprocess_CoCoNut(CoCoNut_config)
     preprocess_CoCoNut(FConv_line_config)
 
 

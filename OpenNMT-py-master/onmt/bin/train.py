@@ -174,8 +174,15 @@ def _get_parser():
 
 def main():
     parser = _get_parser()
-
+    """
+    if True:
+        from clearml import Task
+        taskname=str("task").split('/')[-1].replace(".yaml","")
+        task=Task.init(project_name="train",task_name=taskname)
+    """
     opt, unknown = parser.parse_known_args()
+
+
     train(opt)
 
 

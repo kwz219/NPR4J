@@ -10,8 +10,8 @@ momentum:  0.5498989114182679
 clip_norm: 0.3526243918050602
 optimizer: 'nag'
 criterion: 'cross_entropy'
-savedir: '/home/group/zwk_save/FConv_Line_o1'
-trainbin: '/home/group/DDPR_DATA/FConv_Line'
+savedir: 'D:\DDPR_DATA\OneLine_Replacement\FConv_line\save'
+trainbin: 'D:\DDPR_DATA\OneLine_Replacement\FConv_line\dest'
 batch_size: 32
 device_id: 0
 max-epoch: 30

@@ -41,7 +41,7 @@ def train_fconv(dropout,
           ' -clearml ' + str(clearml) + \
           ' -experiment_name ' + str(ex_name) +' --device-id '+str(deviceid)
 
-    cmd = cmd + " | tee " + savedir + "/log.txt"
+    #cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
     subprocess.call(cmd, shell=True)
 
@@ -55,7 +55,7 @@ def train_context(dropout,
                   decoder_layers,
                   lr,
                   momentum, clip_norm, optimizer, criterion, savedir, trainbin,deviceid,batchsize,max_epoch,clearml,ex_name):
-    fairseqdir = "/root/zwk/DDPR/fairseq/"
+
     if not os.path.exists(savedir):
         os.makedirs(savedir)
 
@@ -65,7 +65,7 @@ def train_context(dropout,
         share = ''
 
     cmd = 'python fairseq/train.py --use-context --skip-invalid-size-inputs-valid-test --save-dir ' + savedir + \
-          ' --arch fconv_context  --max-tokens 4000 --distributed-world-size 1  --log-format json ' + \
+          ' --arch fconv_context  --max-tokens 2000 --distributed-world-size 1  --log-format json ' + \
           '--encoder-embed-dim ' + str(encoder_embed_dim) + \
           ' --decoder-embed-dim ' + str(decoder_embed_dim) + \
           ' --decoder-out-embed-dim ' + str(decoder_out_embed_dim) + \
@@ -79,14 +79,12 @@ def train_context(dropout,
           ' --criterion ' + criterion + \
           ' --momentum ' + str(momentum) + \
           ' --max-epoch ' + str(max_epoch) + \
-          ' --no-epoch-checkpoints  --min-lr 1e-4   --batch-size 48 ' + trainbin + \
-          ' --batch-size '+ str(batchsize)+\
+          ' --no-epoch-checkpoints  --min-lr 1e-4   --batch-size 128 ' + trainbin + \
           ' --device-id '+ str(deviceid)+ \
           ' -clearml '+str(clearml)+ \
-          ' -experiment_name '+str(ex_name)+ \
-          ' --fp16'
+          ' -experiment_name '+str(ex_name)+' --fp16'
 
-    #cmd = cmd + " | tee " + savedir + "/log.txt"
+    cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
     subprocess.call(cmd, shell=True)
 
