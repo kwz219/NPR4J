@@ -25,9 +25,12 @@ def train_ONMT(config_file,clearML):
     tgt_vocab=config_dict["tgt_vocab"]
 
     # model parameters
-    copy_attn=config_dict["copy_attn"]
-    copy_loss_by_seqlength=config_dict["copy_loss_by_seqlength"]
-    reuse_copy_attn=config_dict["reuse_copy_attn"]
+    if "copy_attn" in config_dict.keys():
+        copy_attn=config_dict["copy_attn"]
+    if "copy_loss_by_seqlength" in config_dict.keys():
+        copy_loss_by_seqlength=config_dict["copy_loss_by_seqlength"]
+    if "reuse_copy_attn" in config_dict.keys():
+        reuse_copy_attn=config_dict["reuse_copy_attn"]
     global_attention=config_dict["global_attention"]
     word_vec_size=config_dict["word_vec_size"]
     rnn_size=config_dict["rnn_size"]

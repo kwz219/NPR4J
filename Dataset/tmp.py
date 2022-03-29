@@ -31,4 +31,20 @@ def filter_commit():
 def count_special():
     commits=readF2L("repo&commits_special.txt")
     print(len(commits))
-count_special()
+def combine_SR(dir,postfix):
+    d4jfile=dir+'/d4j_.'+postfix
+    bdjarfile=dir+'/bdjar_.'+postfix
+    qbsfile=dir+'/qbs_.'+postfix
+    bearsfile=dir+'/bears_.'+postfix
+    d4jlines=readF2L(d4jfile)
+    bdjarlines=readF2L(bdjarfile)
+    qbslines=readF2L(qbsfile)
+    bearslines=readF2L(bearsfile)
+    writeL2F(d4jlines+bdjarlines+qbslines+bearslines,dir+'/benchmark.'+postfix)
+
+
+
+#count_special()
+#combine_SR("F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR",'buggy')
+#combine_SR("F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR",'fix')
+combine_SR("F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR",'sids')

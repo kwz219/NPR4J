@@ -12,6 +12,58 @@ from Utils.IOHelper import readF2L
 
 
 
+def preprocess_Tufano2(buggy_dir,fix_dir,idom_path,tmp_dir,output_dir,name):
+    bug_files=os.listdir(buggy_dir)
+    buggy_codes = []
+    fix_codes = []
+    success_ids = []
+    fail_ids = []
+    for idx,file in enumerate(bug_files):
+        buggy_f=buggy_dir+'/'+file
+        fix_f=fix_dir+'/'+file
+        if os.path.exists(buggy_f) and os.path.exists(fix_f):
+            out_a = tmp_dir + "/" + file + "_buggy.txt.abs"
+            out_b = tmp_dir + "/" + file + "_fix.txt.abs"
+            # print(out_a)
+            if os.path.exists(out_a) and os.path.exists(out_b):
+                print("already exists ")
+                try:
+                    buggy_code = codecs.open(out_a, 'r', encoding='utf8').read()
+                    fix_code = codecs.open(out_b, 'r', encoding='utf8').read()
+                    if buggy_code != fix_code :
+                        print('added')
+                        buggy_codes.append(buggy_code)
+                        fix_codes.append(fix_code)
+                        success_ids.append(file)
+                except:
+                    fail_ids.append(file)
+            else:
+                print("generate abstraction of code")
+
+
+                run_src2abs("method", buggy_f, fix_f, out_a, out_b, idom_path)
+                if os.path.exists(out_a) and os.path.exists(out_b):
+                    try:
+                        buggy_code = codecs.open(out_a, 'r', encoding='utf8').read()
+                        fix_code = codecs.open(out_b, 'r', encoding='utf8').read()
+                        if buggy_code != fix_code :
+                            buggy_codes.append(buggy_code)
+                            fix_codes.append(fix_code)
+                            success_ids.append(file)
+                    except:
+                        fail_ids.append(file)
+        else:
+            fail_ids.append(file)
+    assert len(buggy_codes)==len(fix_codes) and len(buggy_codes)==len(success_ids)
+    writeL2F(buggy_codes,output_dir+"/"+name+".buggy")
+    writeL2F(fix_codes, output_dir + "/" + name + ".fix")
+    writeL2F(success_ids, output_dir + "/" + name + ".sids")
+    writeL2F(fail_ids, output_dir + "/" + name + ".fids")
+
+
+
+
+
 def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_length=1000):
     ids=readF2L(ids_f)
     buggy_codes = []
@@ -91,7 +143,7 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
             new_l2.append(line2)
             new_l3.append(line3)
         return new_l1,new_l2,new_l3
-    buggy_codes,fix_codes,success_ids=shuffle(buggy_codes,fix_codes,success_ids)
+    #buggy_codes,fix_codes,success_ids=shuffle(buggy_codes,fix_codes,success_ids)
     writeL2F(buggy_codes,output_dir+"/"+name+".buggy")
     writeL2F(fix_codes, output_dir + "/" + name + ".fix")
     writeL2F(success_ids, output_dir + "/" + name + ".sids")

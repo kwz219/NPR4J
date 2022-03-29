@@ -1,0 +1,65 @@
+## Where the vocab(s) will be written
+save_data: None
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 1010
+tgt_seq_length: 1010
+src_seq_length_trunc: 1010
+tgt_seq_length_trunc: 1010
+
+# common vocabulary for CoCoNut and target
+share_vocab: False
+dynamic_dict: True
+# Corpus opts:
+data:
+    train:
+        path_src: /root/zwk/NPR_DATA0306/Processed_SR/trn.buggy
+        path_tgt: /root/zwk/NPR_DATA0306/Processed_SR/trn.fix
+        transforms: []
+        weight: 1
+    valid:
+        path_src: /root/zwk/NPR_DATA0306/Processed_SR/val.buggy
+        path_tgt: /root/zwk/NPR_DATA0306/Processed_SR/val.fix
+        transforms: []
+
+src_vocab_size: 20000
+tgt_vocab_size: 20000
+src_vocab: /root/zwk/NPR_DATA0306/Processed_SR/buggy.vocab
+tgt_vocab: /root/zwk/NPR_DATA0306/Processed_SR/fix.vocab
+
+
+#log_file
+
+copy_attn: true
+copy_loss_by_seqlength: true
+reuse_copy_attn: true
+global_attention: general
+word_vec_size: 256
+rnn_size: 256
+bridge: true
+layers: 2
+encoder_type: brnn
+early_stopping: 3
+early_stopping_criteria: accuracy
+train_steps: 10000
+valid_steps: 5000
+save_checkpoint_steps: 5000
+max_grad_norm: 2
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 16
+optim: adagrad
+learning_rate: 0.15
+adagrad_accumulator_init: 0.1
+
+seed: 912
+world_size: 1
+gpu_ranks: 0
+
+log_file: /root/zwk/NPR_DATA0306/Processed_SR/save/221_SR_origin.log
+save_model: /root/zwk/NPR_DATA0306/Processed_SR/save/221_SR_origin
+tensorboard: True
+tensorboard_log_dir: /root/zwk/NPR_DATA0306/Processed_SR/save/221_SR_origin.tensorlog
+

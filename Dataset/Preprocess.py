@@ -129,15 +129,15 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
             writeL2F(correct_ids, correct_f)
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
         build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
-def preprocess_SequenceR_ContextM(ids_f,output_dir):
+def preprocess_SequenceR_ContextM(col,ids_f,output_prefix):
     ids=readF2L(ids_f)
     mongoClient=MongoHelper()
-    bug_col=mongoClient.get_col(BUG_COL)
+    bug_col=mongoClient.get_col(col)
     if True:
         def build(src_f, tgt_f, error_f, correct_f, ids):
             buggy_codes = []
             fix_codes = []
-
+            error_ids= []
             correct_ids=[]
             ind=1
             in_count=0
@@ -161,10 +161,14 @@ def preprocess_SequenceR_ContextM(ids_f,output_dir):
                         toked_bug = ' '.join(toked_bug)
                     toked_bmlines.append(toked_bug)
                 assert len(toked_bmlines)==len(bm_lines)
-                toked_bmlines[err_pos]="<START_BUG> "+toked_bmlines[err_pos]+" <END_BUG>"
-                toked_method=' '.join(toked_bmlines)
-                toked_method=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",toked_method)
-                toked_method=re.sub('\s+', ' ', toked_method)
+                try:
+                    toked_bmlines[err_pos]="<START_BUG> "+toked_bmlines[err_pos]+" <END_BUG>"
+                    toked_method=' '.join(toked_bmlines)
+                    toked_method=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","",toked_method)
+                    toked_method=re.sub('\s+', ' ', toked_method)
+                except:
+                    error_ids.append(id)
+                    continue
                 try:
                     toked_fix = javalang.tokenizer.tokenize(fix_code)
                     toked_fix = ' '.join([tok.value for tok in toked_fix])
@@ -186,8 +190,9 @@ def preprocess_SequenceR_ContextM(ids_f,output_dir):
             writeL2F(buggy_codes,src_f)
             writeL2F(fix_codes,tgt_f)
             writeL2F(correct_ids, correct_f)
+            writeL2F(error_ids, error_f)
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
-        build(output_dir+"/test.buggy",output_dir+"/test.fix",output_dir+"/test.fids",output_dir+"/test.sids",ids)
+        build(output_prefix+".buggy",output_prefix+".fix",output_prefix+".fids",output_prefix+".sids",ids)
 
 def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     print("CoCoNut-Style data preprocess start ")
@@ -877,11 +882,14 @@ def test_preprocess():
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\trn","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","trn")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\val_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\val","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","val")
 #preprocess_M2M4BPE("D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids","D:\DDPR_DATA\OneLine_Replacement\Raw\\test","D:\DDPR_DATA\OneLine_Replacement\Raw_M2M4BPE","test")
-preprocess_FConv_line(ids_f="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",output_dir="D:\DDPR_DATA\OneLine_Replacement\FConv_line",prefix='test')
+#preprocess_FConv_line(ids_f="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",output_dir="D:\DDPR_DATA\OneLine_Replacement\FConv_line",prefix='test')
 #preprocee_M2M_Tufano(map_dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\test_tgt",buggy_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\SequenceR_Method\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\M2L_Tufano2w\\test")
 #preprocee_M2M_Tufano(map_dir="E:\APR_data\data\Tufano\\trn",buggy_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\C2L_Tufano2w\\test")
-
-
+#preprocess_SequenceR_ContextM("Binfo_d4j","F:/NPR_DATA0306/Evaluationdata/Benchmark/d4j.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/d4j_")
+#preprocess_SequenceR_ContextM("Binfo_bdjar","F:/NPR_DATA0306/Evaluationdata/Benchmark/bdjar.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/bdjar_")
+#preprocess_SequenceR_ContextM("Binfo_bears","F:/NPR_DATA0306/Evaluationdata/Benchmark/bears.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/bears_")
+#preprocess_SequenceR_ContextM("Binfo_quixbugs","F:/NPR_DATA0306/Evaluationdata/Benchmark/qbs.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/qbs_")
+preprocess_SequenceR_ContextM("Buginfo","F:/NPR_DATA0306/Evaluationdata/Diversity/test.ids","F:/NPR_DATA0306/Evaluationdata/Diversity-processed/SequenceR/diversity_")
 
 
 

@@ -1,0 +1,22 @@
+Nllen: 500
+CodeLen: 60
+batch_size: 40
+embedding_size: 256
+WoLen: 15
+Vocsize: 100
+Nl_Vocsize: 100
+max_step: 3
+margin: 0.5
+poolsize: 50
+Code_Vocsize: 100 # for embedding
+num_steps: 50
+rulenum: 10
+cnum: 695
+trndata_pkl_f: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/data_pl.pkl
+rulead_f: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/rulead_pl.pkl
+valdatapkl_f: /root/zwk/NPR_DATA0306/Processed_Recoder/val_pl/valdata_pl.pkl
+save_dir: /root/zwk/NPR_DATA0306/Processed_Recoder/save
+nl_voc_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/nl_voc_pl.pkl
+rule_path: None
+code_voc_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/code_voc_pl.pkl
+char_voc_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/char_voc_pl.pkl
