@@ -24,10 +24,10 @@ from clearml import Task as clTask
 def main(args):
     if args.max_tokens is None:
         args.max_tokens = 6000
-
+    """
     if args.clearml ==True:
         cltask=clTask.init(project_name='train',task_name=args.experiment_name)
-
+    """
     print(args)
 
     if not torch.cuda.is_available():

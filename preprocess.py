@@ -39,8 +39,6 @@ def preprocess_Tufano2(buggy_dir,fix_dir,idom_path,tmp_dir,output_dir,name):
                     fail_ids.append(file)
             else:
                 print("generate abstraction of code")
-
-
                 run_src2abs("method", buggy_f, fix_f, out_a, out_b, idom_path)
                 if os.path.exists(out_a) and os.path.exists(out_b):
                     try:
@@ -59,10 +57,6 @@ def preprocess_Tufano2(buggy_dir,fix_dir,idom_path,tmp_dir,output_dir,name):
     writeL2F(fix_codes, output_dir + "/" + name + ".fix")
     writeL2F(success_ids, output_dir + "/" + name + ".sids")
     writeL2F(fail_ids, output_dir + "/" + name + ".fids")
-
-
-
-
 
 def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_length=1000):
     ids=readF2L(ids_f)
@@ -148,8 +142,7 @@ def preprocess_Tufano(ids_f,input_dir,output_dir,idom_path,raw_dir,name,max_leng
     writeL2F(fix_codes, output_dir + "/" + name + ".fix")
     writeL2F(success_ids, output_dir + "/" + name + ".sids")
     writeL2F(fail_ids, output_dir + "/" + name + ".fids")
-def get_TufanoData(ids_f, input_dir, output_dir, idom_path, raw_dir, name, max_length=1000):
-    preprocess_Tufano(ids_f, input_dir, output_dir, idom_path, raw_dir, name)
+
 def preprocess_CoCoNut(configdict:dict):
     src_lang=configdict['src_lang']
     tgt_lang=configdict['tgt_lang']
@@ -159,7 +152,7 @@ def preprocess_CoCoNut(configdict:dict):
     dest_dir=configdict['dest_dir']
 
     cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers 1 "\
-         +" --trainpref "+train_dir+" --validpref "+valid_dir+" --testpref "+test_dir+" --destdir "+dest_dir
+         +" --trainpref "+train_dir+" --validpref "+valid_dir+" --testpref "+test_dir+" --destdir "+dest_dir + " --output-format binary "
     if 'joined_dictionary' in configdict.keys():
         cmd=cmd+" --joined-dictionary "+str(configdict["joined-dictionary"])
     if "srcdict" in configdict.keys():
@@ -176,7 +169,7 @@ def preprocess_Cure(configdict:dict):
     valid_dir=configdict['valid_dir']
     test_dir=configdict['test_dir']
     dest_dir=configdict['dest_dir']
-    cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers 1 "\
+    cmd="python fairseq/preprocess.py "+"--CoCoNut-lang "+src_lang+" --target-lang "+tgt_lang+" --workers  10"\
          +" --trainpref "+train_dir+" --validpref "+valid_dir+" --testpref "+test_dir+" --destdir "+dest_dir+" --use-gpt "+"microsoft/CodeGPT-small-java"
     print(cmd)
     subprocess.call(cmd, shell=True)
@@ -235,10 +228,13 @@ if __name__ == "__main__":
     parser.add_argument("--input_dir",help="source input dir ,contains a number of java files")
     parser.add_argument("--output_file",help="processed result file. output tokenized codes to a file ,with each code a line")
     """
-    CoCoNut_config={"src_lang":"ctx","tgt_lang":"fix","train_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/trn_47500",
-                      "valid_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/val",
-                      "test_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/test",
-                      "dest_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/processed_context"}
+    CoCoNut_config={"src_lang":"ctx","tgt_lang":"fix","train_dir":r"F:/NPR_DATA0306/Processed_CoCoNut/trn",
+                      "valid_dir":r"F:/NPR_DATA0306/Processed_CoCoNut/val",
+                      "test_dir":r"F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears",
+                      "dest_dir":r"F:/NPR_DATA0306/Processed_CoCoNut/processed/destbear",
+                      "srcdict":r"F:\NPR_DATA0306\Processed_CoCoNut\dict.ctx.txt",
+                      "tgtdict": r"F:\NPR_DATA0306\Processed_CoCoNut\dict.fix.txt"
+                    }
     process_cureconfig={"src_lang":"buggy","tgt_lang":"fix","train_dir":r"F:\NPR_DATA0306\CoCoNut\trn",
                       "valid_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\val",
                       "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\Cure\test",
@@ -253,6 +249,6 @@ if __name__ == "__main__":
                       "test_dir":r"D:\DDPR_DATA\OneLine_Replacement\M1000_CoCoNut\test",
                       "dest_dir":r"/home/zhongwenkang/NPR_DATA0306/CoCoNut/processed_context"}
     preprocess_CoCoNut(CoCoNut_config)
-    preprocess_CoCoNut(FConv_line_config)
+    #preprocess_CoCoNut(FConv_line_config)
 
 

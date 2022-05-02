@@ -81,11 +81,11 @@ def run_src2abs_all_test_dir(input_dir,tgt_dir,idiom_path):
         if not (os.path.exists(out_a)):
             try:
                 run_src2abs("method",input_a,"",out_a,"",idiom_path,mode='single')
-                correct_ids.append(id)
+                correct_ids.append(file.split(".")[0])
             except:
-                error_ids.append(id)
+                error_ids.append(file.split(".")[0])
         else:
-            correct_ids.append(id)
+            correct_ids.append(file.split(".")[0])
         print(idx)
     print(len(correct_ids))
     writeL2F(correct_ids,tgt_dir+"/abs_correct.txt")
@@ -113,9 +113,12 @@ def run_src2abs_all_test_tgt(id_file,src_dir,tgt_dir,idiom_path):
     writeL2F(error_ids, tgt_dir + "/abs_error.txt")
 
 #test_src2abs()
-run_src2abs_all_test("F:/NPR_DATA0306/Evaluationdata/Diversity/test.ids",)
+#run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Diversity/buggy_methods","F:/NPR_DATA0306/Evaluationdata/Diversity-processed/for_Tufano/srcabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
+#run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Diversity/fix_methods","F:/NPR_DATA0306/Evaluationdata/Diversity-processed/for_Tufano/tgtabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
+
+#run_src2abs_all_test("F:/NPR_DATA0306/Evaluationdata/Diversity/test.ids",)
 #run_src2abs_all_test(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom10w_abs/test-utf8",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
 #run_src2abs_all("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\trn",tgt_dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\trn_class",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
 #run_src2abs_all_test_tgt(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom2w_abs/test_tgt",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
 #run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/srcabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
-#run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Benchmark/fix_methods","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/tgtabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
+run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Benchmark/fix_methods","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/tgtabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")

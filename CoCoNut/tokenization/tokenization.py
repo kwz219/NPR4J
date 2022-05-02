@@ -240,5 +240,11 @@ def token2statement(token_list, numbers, strings):
                 statements[s] += token
     return statements
 
-toked=tokenize("ensureCapacity_unsynchronized(count + 1); value[count++] = ch; return this;")
+str_re=" throw new RepositoryException(\"Could not index user to bucket \")"
+toked=tokenize(str_re)
+print(toked)
+string,number=get_strings_numbers(str_re)
+rec_str=token2statement(toked,number,string)
+print(rec_str)
+
 

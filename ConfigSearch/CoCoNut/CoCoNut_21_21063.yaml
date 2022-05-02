@@ -1,0 +1,17 @@
+batch_size: 64
+clip_norm: 0.8942046674530763
+criterion: label_smoothed_cross_entropy
+decoder_embed_dim: 288
+decoder_layers: '[(512,9)] * 7'
+decoder_out_embed_dim: 288
+device_id: 0
+dropout: 0.1721127320406235
+encoder_embed_dim: 288
+encoder_layers: '[(128,9)] * 9'
+lr: 0.4552481880061059
+max-epoch: 20
+momentum: 0.17860125862387732
+optimizer: sgd
+savedir: /root/zwk/DDPR_DATA/CoCoNut/CoCoNut_21_save
+share_input_output_embed: 'true'
+trainbin: /root/zwk/NPR_DATA0306/Processed_CoCoNut/dest3

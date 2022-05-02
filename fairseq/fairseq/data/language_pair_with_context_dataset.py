@@ -66,6 +66,7 @@ def collate(
             'ctx_tokens': ctx_tokens,
             'ctx_lengths': ctx_lengths,
         },
+
         'target': target,
         'nsentences': samples[0]['CoCoNut'].size(0),
     }
@@ -118,6 +119,8 @@ class LanguagePairWithContextDataset(LanguagePairDataset):
             ctx_item = src_item[(i+1):]
             src_item = src_item[:i]
             break
+        print("src_len",len(src_item))
+        print("ctx_len",len(ctx_item))
 
         # Append EOS to end of tgt sentence if it does not have an EOS and remove
         # EOS from end of src sentence if it exists. This is useful when we use

@@ -59,8 +59,7 @@ def main():
 
     opt = parser.parse_args()
 
-    if opt.clearml == True:
-        task=Task.init(project_name="translate",task_name=opt.taskname)
+
     translate(opt)
 
 

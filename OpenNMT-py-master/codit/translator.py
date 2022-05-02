@@ -18,9 +18,9 @@ from onmt.utils.misc import tile, set_random_seed, report_matrix
 from onmt.utils.alignment import extract_alignment, build_align_pharaoh
 from onmt.modules.copy_generator import collapse_copy_scores
 from onmt.constants import ModelTask
+from token_translator import TokenTranslator
 
-
-def build_translator(opt, report_score=True, logger=None, out_file=None):
+def build_translator(opt, report_score=True, logger=None, out_file=None,codit=False,beam_size=10):
     if out_file is None:
         out_file = codecs.open(opt.output, "w+", "utf-8")
 
@@ -33,7 +33,12 @@ def build_translator(opt, report_score=True, logger=None, out_file=None):
 
     scorer = onmt.translate.GNMTGlobalScorer.from_opt(opt)
 
-    if model_opt.model_task == ModelTask.LANGUAGE_MODEL:
+    if codit:
+        translator = TokenTranslator(model, fields, beam_size=beam_size,global_scorer=scorer,
+                                     out_file=out_file, report_score=report_score,
+                                     copy_attn=model_opt.copy_attn, logger=logger,
+                                     option=opt)
+    elif model_opt.model_task == ModelTask.LANGUAGE_MODEL:
         translator = GeneratorLM.from_opt(
             model,
             fields,
@@ -337,6 +342,7 @@ class Inference(object):
         tgt=None,
         batch_size=None,
         batch_type="sents",
+            tree_count=2,
         attn_debug=False,
         align_debug=False,
         phrase_table="",node_type_seq=None,atc=None
@@ -435,9 +441,9 @@ class Inference(object):
                 atc_item = None
             scores = []
             predictions = []
-            tree_count = self.option.tree_count
+
             for type_sequence, type_score in zip(nt_sequences[:tree_count], nt_scores[:tree_count]):
-                batch_data = self.translate_batch(batch, data, node_type_str=type_sequence, atc=atc_item)
+                batch_data = self.codit_translate_batch(batch, data, node_type_str=type_sequence, atc=atc_item)
                 translations = xlation_builder.from_batch(batch_data)
                 already_found = False
                 for trans in translations:
@@ -563,7 +569,177 @@ class Inference(object):
                 codecs.open(self.dump_beam, "w", "utf-8"),
             )
         return all_scores, all_predictions
+    def codit_translate_batch(self, batch, data, node_type_str, atc=None):
+        with torch.no_grad():
+            return self.codit_fast_translate_batch(batch, data, node_type_str, atc)
 
+    def codit_fast_translate_batch(self, batch, data, node_type, atc):
+        # TODO: faster code path for beam_size == 1.
+        # TODO: support these blacklisted features.
+        #assert data.data_type == 'text'
+        #assert not self.copy_attn
+        #assert not self.dump_beam
+        #assert not self.use_filter_pred
+        assert self.block_ngram_repeat == 0
+        assert self.global_scorer.beta == 0
+        beam_size = self.beam_size
+        batch_size = batch.batch_size
+        #vocab = data.srcvocabs
+        for field in self.fields:
+            print(field)
+        node_type_vocab = self.fields['tgt_feat_0'].vocab
+        start_token = vocab.stoi[inputters.BOS_WORD]
+        end_token = vocab.stoi[inputters.EOS_WORD]
+        unk_token = vocab.stoi[inputters.UNK]
+
+        def var(a):
+            if isinstance(a, torch.Tensor):
+                return a.clone().detach().requires_grad_(False)
+            else:
+                return torch.tensor(a, requires_grad=False)
+        def generate_token_mask(atc, node_type_vocab, vocab):
+            if atc is None:
+                atc = dict()
+            token_mask_all = dict()
+            allowed_tokens_indices = dict()
+            not_allowed_token_indices = dict()
+            node_ids = node_type_vocab.stoi.keys()
+            for node_id in node_ids:
+                if node_id in atc.keys():
+                    tokens = atc[node_id]
+                else:
+                    tokens = []
+                if node_id == '-1':
+                    tokens = [inputters.EOS_WORD]
+                if node_id in ['40', '800', '801', '802']:
+                    tokens.append(inputters.UNK)
+                token_mask = [1. for _ in range(len(vocab))]
+                inverse_token_indices = []
+                if len(tokens) >= 0:
+                    token_mask = [1e-20 for _ in range(len(vocab))]
+                    token_indices = []
+                    inverse_token_indices = [idx for idx in range(len(vocab))]
+                    for token in tokens:
+                        tidx = vocab.stoi[token]
+                        token_mask[tidx] = 1.0
+                        token_indices.append(tidx)
+                        if tidx in inverse_token_indices:
+                            inverse_token_indices.remove(tidx)
+                allowed_tokens_indices[node_id] = tokens
+                token_mask_all[node_id] = torch.FloatTensor(token_mask)
+                not_allowed_token_indices[node_id] = inverse_token_indices
+            return token_mask_all, allowed_tokens_indices, not_allowed_token_indices
+            pass
+        _, allowed_tokens, not_allowed_token_indices = generate_token_mask(atc, node_type_vocab, vocab)
+        # debug(token_masks.keys())
+        assert batch_size == 1, "Only 1 example decoding at a time supported"
+        assert (node_type is not None) and isinstance(node_type, str), \
+            "Node type string must be provided to translate tokens"
+
+        node_types = [var(node_type_vocab.stoi[n_type.strip()]) for n_type in node_type.split()]
+        # node_types.append(var(node_type_vocab.stoi['-1']))
+        if self.cuda: node_types = [n_type.cuda() for n_type in node_types]
+        # debug(node_types)
+        max_length = len(node_types)
+        # Encoder forward.
+        src = inputters.make_features(batch, 'src', data.data_type)
+        _, src_lengths = batch.src
+        enc_states, memory_bank = self.model.encoder(src, src_lengths)
+        dec_states = self.model.decoder.init_decoder_state(src, memory_bank, enc_states, with_cache=True)
+        # Tile states and memory beam_size times.
+        dec_states.map_batch_fn(lambda state, dim: tile(state, beam_size, dim=dim))
+        memory_bank = tile(memory_bank, beam_size, dim=1)
+        memory_lengths = tile(src_lengths, beam_size)
+        batch_offset = torch.arange(batch_size, dtype=torch.long, device=memory_bank.device)
+        beam_offset = torch.arange(
+            0, batch_size * beam_size, step=beam_size, dtype=torch.long, device=memory_bank.device)
+        alive_seq = torch.full(
+            [batch_size * beam_size, 1], start_token, dtype=torch.long, device=memory_bank.device)
+        alive_attn = None
+        # Give full probability to the first beam on the first step.
+        topk_log_probs = (torch.tensor([0.0] + [float("-inf")] * (beam_size - 1),
+                         device=memory_bank.device).repeat(batch_size))
+        results = dict()
+        results["predictions"] = [[] for _ in range(batch_size)]  # noqa: F812
+        results["scores"] = [[] for _ in range(batch_size)]  # noqa: F812
+        results["attention"] = [[] for _ in range(batch_size)]  # noqa: F812
+        results["gold_score"] = [0] * batch_size
+        results["batch"] = batch
+        save_attention = [[] for _ in range(batch_size)]
+        # max_length += 1
+        for step in range(max_length):
+            decoder_input = alive_seq[:, -1].view(1, -1, 1)
+            curr_node_type = node_types[step]
+            node_type_str = str(node_type_vocab.itos[curr_node_type.item()])
+            not_allowed_indices = not_allowed_token_indices[node_type_str]
+            extra_input = torch.stack([var(2) for _ in range(decoder_input.shape[1])])
+            extra_input = extra_input.view(1, -1, 1)
+            if self.cuda:
+                extra_input = extra_input.cuda()
+            final_input = torch.cat((decoder_input, extra_input), dim=-1)
+            # Decoder forward.
+            dec_out, dec_states, attn = self.model.decoder(
+                final_input, memory_bank, dec_states, memory_lengths=memory_lengths,  step=step)
+            # Generator forward.
+            generator_input = dec_out.squeeze(0)
+            # debug(generator_input.shape)
+            log_probs = self.model.generator.forward(generator_input)
+            vocab_size = log_probs.size(-1)
+            # log_probs[:, unk_token] = -1.1e30
+            log_probs[:, end_token] = -1.1e10
+            log_probs[:, not_allowed_indices] = -1.1e10
+            log_probs = torch.log_softmax(log_probs, dim=-1)
+            reshaped_topk = topk_log_probs.view(-1).unsqueeze(1)
+            # debug(reshaped_topk.shape)
+            # debug(topk_log_probs)
+            log_probs += reshaped_topk
+            attn_probs = attn['std'].squeeze()  # (beam_size, source_length)
+            alpha = self.global_scorer.alpha
+            length_penalty = ((5.0 + (step + 1)) / 6.0) ** alpha
+            # Flatten probs into a list of possibilities.
+            curr_scores = log_probs / length_penalty
+            curr_scores = curr_scores.reshape(-1, beam_size * vocab_size)
+            topk_scores, topk_ids = curr_scores.topk(beam_size, dim=-1)
+            # Recover log probs.
+            topk_log_probs = topk_scores * length_penalty
+            # Resolve beam origin and true word ids.
+            topk_beam_index = topk_ids.div(vocab_size)
+            topk_ids = topk_ids.fmod(vocab_size)
+            # debug(topk_ids)
+            beam_indices = topk_beam_index.squeeze().cpu().numpy().tolist()
+            if len(attn_probs.shape) == 1:
+                attn_to_save = attn_probs[:]
+            else:
+                attn_to_save = attn_probs[beam_indices , :]
+            save_attention[0].append(attn_to_save)
+            # Map beam_index to batch_index in the flat representation.
+            batch_index = (topk_beam_index + beam_offset[:topk_beam_index.size(0)].unsqueeze(1))
+            # Select and reorder alive batches.
+            select_indices = batch_index.view(-1)
+            alive_seq = alive_seq.index_select(0, select_indices)
+            memory_bank = memory_bank.index_select(1, select_indices)
+            memory_lengths = memory_lengths.index_select(0, select_indices)
+            dec_states.map_batch_fn(lambda state, dim: state.index_select(dim, select_indices))
+            alive_seq = torch.cat([alive_seq, topk_ids.view(-1, 1)], -1)
+        predictions = alive_seq.view(-1, beam_size, alive_seq.size(-1))
+        scores = topk_scores.view(-1, beam_size)
+        attention = None
+        if alive_attn is not None:
+            attention = alive_attn.view(alive_attn.size(0), -1, beam_size, alive_attn.size(-1))
+        for i in range(len(predictions)):
+            b = batch_offset[i]
+            for n in range(self.n_best):
+                results["predictions"][b].append(predictions[i, n, 1:])
+                results["scores"][b].append(scores[i, n])
+                if attention is None:
+                    results["attention"][b].append([])
+                else:
+                    results["attention"][b].append(attention[:, i, n, :memory_lengths[i]])
+                results["save_attention"] = save_attention
+        results["gold_score"] = [0] * batch_size
+        if "tgt" in batch.__dict__:
+            results["gold_score"] = self._run_target(batch , data)
+        return results
     def translate(
         self,
         src,

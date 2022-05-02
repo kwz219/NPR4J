@@ -86,7 +86,7 @@ def get_parser():
     parser.add_argument(
         "--output-format",
         metavar="FORMAT",
-        default="raw",
+        default="binary",
         choices=["binary", "raw"],
         help="output format (optional)",
     )
@@ -174,7 +174,7 @@ def main(args):
                 padding_factor=args.padding_factor,
             )
         tgt_dict.save(dict_path(args.target_lang))
-
+    """
     def _make_binary_dataset(
             vocab: Dictionary,
             input_prefix: str,
@@ -202,6 +202,7 @@ def main(args):
             num_workers=num_workers,
         )
         logger.info(f"[{lang}] {input_file}: {final_summary} (by {vocab.unk_word})")
+    """
     def make_binary_dataset(input_prefix, output_prefix, lang, num_workers):
         dict = dictionary.Dictionary.load(dict_path(lang))
         print("| [{}] Dictionary: {} types".format(lang, len(dict) - 1))
@@ -498,6 +499,15 @@ def main_gpt(args):
                 os.remove(indexed_dataset.index_file_path(temp_file_path))
 
         ds.finalize(dataset_dest_file(args, output_prefix, lang, "idx"))
+        print(
+            "| [{}] {}: {} sents, {} tokens".format(
+                lang,
+                input_file,
+                n_seq_tok[0],
+                n_seq_tok[1],
+
+            )
+        )
 
 
     def make_dataset(gpttokenizer,input_prefix, output_prefix, lang, num_workers=1):

@@ -12,7 +12,7 @@ from CoCoNut.tokenization.tokenization import extract_strings, COMPOSED_SYMBOLS,
 from CodeAbstract.CA_src2abs import run_src2abs
 from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL
-from CodeAbstract.CA_SequenceR import run_SequenceR_abs, run_SequenceR_ContextM
+#from CodeAbstract.CA_SequenceR import run_SequenceR_abs, run_SequenceR_ContextM
 #from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.IOHelper import writeL2F, readF2L, readF2L_enc
 import os
@@ -89,13 +89,13 @@ def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
                         toked_fix = javalang.tokenizer.tokenize(fix_code)
                         toked_fix = ' '.join([tok.value for tok in toked_fix])
                     except:
-                        toked_fix = re.split(r"[.,!?;(){}]", fix_code)
+                        toked_fix = re.split(r"([.,!?;(){}])", fix_code)
                         toked_fix = ' '.join(toked_fix)
                     try:
                         toked_bug=javalang.tokenizer.tokenize(buggy_code)
                         toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
                     except:
-                        toked_bug = re.split(r"[.,!?;(){}]", buggy_code)
+                        toked_bug = re.split(r"([.,!?;(){}])", buggy_code)
                         toked_bug = ' '.join(toked_bug).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
                     bug_count=toked_bug.count('<START_BUG>'
                     )
@@ -194,7 +194,7 @@ def preprocess_SequenceR_ContextM(col,ids_f,output_prefix):
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
         build(output_prefix+".buggy",output_prefix+".fix",output_prefix+".fids",output_prefix+".sids",ids)
 
-def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
+def preprocess_CoCoNut(ids_f,output_dir,prefix,bug_col="Buginfo",max_length=2000):
     print("CoCoNut-Style data preprocess start ")
     def CoCoNut_tokenize(string):
 
@@ -242,7 +242,7 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     ids=readF2L(ids_f)
     print(len(ids))
     mongoClient=MongoHelper()
-    bug_col=mongoClient.get_col(BUG_COL)
+    bug_col=mongoClient.get_col(bug_col)
     ind=0
     add_f=codecs.open(output_dir+'/'+prefix+'.fix','w',encoding='utf8')
     contex_f=codecs.open(output_dir+'/'+prefix+'.buggy','w',encoding='utf8')
@@ -281,6 +281,8 @@ def preprocess_CoCoNut(ids_f,output_dir,prefix,max_length=1000):
     #writeL2F(add_lines,output_dir+'/'+prefix+'.fix')
     #writeL2F(remContext_lines,output_dir+'/'+prefix+'.buggy')
     #writeL2F(true_ids,output_dir+'/'+prefix+".ids")
+
+
 
 def preprocess_FConv_line(ids_f,output_dir,prefix,max_length=1000):
     def CoCoNut_tokenize(string):
@@ -887,10 +889,13 @@ def test_preprocess():
 #preprocee_M2M_Tufano(map_dir="E:\APR_data\data\Tufano\\trn",buggy_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.buggy",fix_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.fix",ids_f="G:\DDPR_backup\OneLine_Replacement\M1000_SequenceR\\test.sids",output_prefix="G:\DDPR_backup\OneLine_Replacement\C2L_Tufano2w\\test")
 #preprocess_SequenceR_ContextM("Binfo_d4j","F:/NPR_DATA0306/Evaluationdata/Benchmark/d4j.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/d4j_")
 #preprocess_SequenceR_ContextM("Binfo_bdjar","F:/NPR_DATA0306/Evaluationdata/Benchmark/bdjar.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/bdjar_")
-#preprocess_SequenceR_ContextM("Binfo_bears","F:/NPR_DATA0306/Evaluationdata/Benchmark/bears.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/bears_")
+#preprocess_SequenceR_ContextM("Binfo_Bears","F:/NPR_DATA0306/Evaluationdata/Benchmark/bears.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/Bears")
 #preprocess_SequenceR_ContextM("Binfo_quixbugs","F:/NPR_DATA0306/Evaluationdata/Benchmark/qbs.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/SequenceR/qbs_")
-preprocess_SequenceR_ContextM("Buginfo","F:/NPR_DATA0306/Evaluationdata/Diversity/test.ids","F:/NPR_DATA0306/Evaluationdata/Diversity-processed/SequenceR/diversity_")
-
+#preprocess_SequenceR_ContextM("Buginfo","F:/NPR_DATA0306/Evaluationdata/Diversity/success.ids","F:/NPR_DATA0306/Evaluationdata/Diversity-processed/SequenceR/diversity_")
+#preprocess_CoCoNut("F:/NPR_DATA0306/Evaluationdata/Benchmark/bdjar.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut","bdjar_","Binfo_bdjar")
+preprocess_CoCoNut("F:/NPR_DATA0306/Evaluationdata/Benchmark/bears.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut","bears_","Binfo_bears")
+#preprocess_CoCoNut("F:/NPR_DATA0306/Evaluationdata/Benchmark/d4j.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut","d4j_","Binfo_d4j")
+#preprocess_CoCoNut("F:/NPR_DATA0306/Evaluationdata/Benchmark/qbs.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut","qbs_","Binfo_QuixBugs")
 
 
 

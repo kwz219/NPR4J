@@ -1,0 +1,9 @@
+model: /root/zwk/SequenceR/SR_26_step_50000.pt
+beam_size: 100
+n_best: 100
+src: /root/zwk/SequenceR/Bears.buggy
+output: /root/zwk/SequenceR/SR_26_bears.pred
+gpu: 0
+batch_size: 2000
+batch_type: tokens
+max_length: 250

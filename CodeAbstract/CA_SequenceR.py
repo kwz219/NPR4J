@@ -160,5 +160,3 @@ def test_run_SeqeunceR_abs():
     outputfile="../Example/abstract/EventEmitter_SRabs.java"
     run_SequenceR_abs(cp,outputfile)
     #print(code)
-
-

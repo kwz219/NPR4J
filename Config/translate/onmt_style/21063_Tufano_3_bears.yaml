@@ -1,0 +1,8 @@
+model: /root/zwk/Tufano/Tufano_3_step_50000.pt
+beam_size: 100
+n_best: 100
+src: /root/zwk/Tufano/Tufano_bears.buggy
+output: /root/zwk/Tufano/Tufano_bears_b100.pred
+gpu: 0
+batch_size: 1
+max_length: 1010

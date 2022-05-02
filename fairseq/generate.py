@@ -32,8 +32,10 @@ def main(args):
 
     if args.max_tokens is None and args.max_sentences is None:
         args.max_tokens = 12000
+    """
     if args.clearml==True:
         trans_task=clTask.init(project_name="translation",task_name=args.taskname)
+    """
     output_f=codecs.open(args.outputfile,"w",encoding='utf8')
     print(args)
 
@@ -185,6 +187,7 @@ def main(args):
 
                 if not args.quiet:
                     print('H-{}\t{}\t{}'.format(sample_id, hypo['score'], hypo_str),file=output_f)
+                    """
                     print('P-{}\t{}'.format(
                         sample_id,
                         ' '.join(map(
@@ -192,7 +195,7 @@ def main(args):
                             hypo['positional_scores'].tolist(),
                         ))
                     ),file=output_f)
-                    """
+                    
                     if args.print_alignment:
                         try:
                             if hypo_str == target_str:
@@ -271,6 +274,38 @@ def main(args):
     if has_target:
         print('| Generate {} with beam={}: {}'.format(args.gen_subset, args.beam, scorer.result_string()))
         #print('| Generate {} with beam={}: {}'.format(args.gen_subset, args.beam))
+def load_dicts(args):
+    assert args.path is not None, '--path required for generation!'
+    assert not args.sampling or args.nbest == args.beam, \
+        '--sampling requires --nbest to be equal to --beam'
+    assert args.replace_unk is None or args.raw_text, \
+        '--replace-unk requires a raw text dataset (--raw-text)'
+
+    if args.max_tokens is None and args.max_sentences is None:
+        args.max_tokens = 12000
+    """
+    if args.clearml==True:
+        trans_task=clTask.init(project_name="translation",task_name=args.taskname)
+    """
+    output_f=codecs.open(args.outputfile,"w",encoding='utf8')
+    print(args)
+
+    use_cuda = torch.cuda.is_available() and not args.cpu
+
+    # Load dataset splits
+    task = tasks.setup_task(args)
+    #task.load_dataset(args.gen_subset)
+    #print('| {} {} {} examples'.format(args.data, args.gen_subset, len(task.dataset(args.gen_subset))))
+
+    # Set dictionaries
+    src_dict = task.source_dictionary
+    tgt_dict = task.target_dictionary
+
+    # Load ensemble
+    print('| loading model(s) from {}'.format(args.path))
+    models, _ = utils.load_ensemble_for_inference(args.path.split(':'), task, model_arg_overrides=eval(args.model_overrides))
+    print(src_dict)
+    print(tgt_dict)
 
 
 if __name__ == '__main__':
@@ -280,3 +315,4 @@ if __name__ == '__main__':
     parser.add_argument("-outputfile",default='pred.txt')
     args = options.parse_args_and_arch(parser)
     main(args)
+    #load_dicts(args)
