@@ -17,4 +17,4 @@ All experiment results are uploaded to the release
 &#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Defects4J    
 &#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Bears    
 &#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---QuixBugs      
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Manual_Check  
+&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Manual_Check: manual check results of plausible/correct patches
