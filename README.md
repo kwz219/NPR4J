@@ -9,6 +9,6 @@ ___
 ## Experiment Results
 See Release  
 *1. Evaluation_Results*  
-|---Evaluation_Results
-    |---Diversity
+|---Evaluation_Results  
+    |---Diversity  
     |---Empirical
