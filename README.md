@@ -7,7 +7,6 @@ ___
 TBC
 ___
 ## Experiment Results
-All experiment results are uploaded to the release  
 1. Evaluation_Results.zip: concrete evaluation results of every candidate predicted by the six NPR systems.  
 |---Evaluation_Result   
 &#8194;&#8194;&#8194;|---Diversity  
