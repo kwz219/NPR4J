@@ -14,7 +14,7 @@ SequenceR: 20GB for training, less than 10GB for predicting
 Recoder: 40GB for training, 20GB for predicting  
 CODIT:  less than 10GB for training and predicting  
 Edits: less than 10GB for training and predicting  
-CoCoNut (single mode): less than 10GB for training and predicting  
+CoCoNut (singleton mode): less than 10GB for training and predicting  
 Tufano: less than 10GB for trainging and predicting  
 ___
 ## NPR4J-Benchmark
