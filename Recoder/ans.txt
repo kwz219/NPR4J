@@ -1,0 +1,329 @@
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.placeholder) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+double g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = this.lowerBound;
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = this.upperBound;
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.v) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.placeholder - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.v - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = placeholder();
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.value) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((v - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) - (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+final int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.value - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.upperBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+long g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+placeholder();
+    int g = (int) ((value - this.lowerBound) / (this.upperBound  - this.lowerBound) * 255.0);     return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)((value - this.lowerBound) / (this.upperBound - this.lowerBound));
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = value;
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.lowerBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((lowerBound - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((upperBound - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = 0;
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+v = Math.min(v, this.upperBound);
+    int g = (int) ((value - this.lowerBound) / (this.upperBound  - this.lowerBound) * 255.0);     return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.g) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value + this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((placeholder - this.lowerBound) / (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) + (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+int g = (int)(((value - this.lowerBound) * (this.upperBound - this.lowerBound)) * 255.0);
+    return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+return;
+    int g = (int) ((value - this.lowerBound) / (this.upperBound  - this.lowerBound) * 255.0);     return new Color(g, g, g); 
+}
+
+-------
+
+public Paint getPaint(double value) {
+    double v = Math.max(value, this.lowerBound); 
+    v = Math.min(v, this.upperBound); 
+    int g = (int) ((value - this.lowerBound) / (this.upperBound  - this.lowerBound) * 255.0);     return new Color(g, g, g); 
+}
