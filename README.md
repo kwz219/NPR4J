@@ -21,7 +21,7 @@ ___
 ### Leaderboard
 preparing
 ### Raw Data
->Raw data can be downloaded from this url (currently not available because this anonymous repository can not afford a too-large file (nearly 1.5GB)):   
+>Raw data can be downloaded from this url (currently not available because this anonymous repository can not afford a too-large file (nearly 1.5GB after zipped)):   
 Structure of the raw data:  
 |---Raw_Data   
 &#8194;&#8194;&#8194;|---Evaluation  
