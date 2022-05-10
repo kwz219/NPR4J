@@ -1,0 +1,20 @@
+transformer:
+  embed_dim: 512
+  hidden_dim: 512
+  ff_dim: 2048
+  num_layers: 8
+  attention_dim: 512
+  num_heads: 8
+  dropout_rate: 0.1
+data:
+  max_batch_size: 5000
+  beam_size: 100
+  max_context_length: 500
+  max_bug_length: 50
+  max_buffer_size: 50
+  add_context: false
+  edits: true
+training:
+  num_epochs: 50
+  print_freq: 10
+  lr: 0.0001

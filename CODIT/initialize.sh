@@ -1,0 +1,15 @@
+cd data;
+bash get_data.sh;
+cd ../models;
+bash get_models.sh;
+cd ..;
+mkdir full_report;
+mkdir full_report/bleu_scores;
+mkdir full_report/correct_ids;
+mkdir full_report/details;
+mkdir full_report/edit_distances;
+mkdir full_report/bleu_scores/code_change_data;
+mkdir full_report/correct_ids/code_change_data;
+mkdir full_report/details/code_change_data;
+mkdir full_report/edit_distances/code_change_data;
+mkdir tmp;

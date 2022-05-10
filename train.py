@@ -83,7 +83,6 @@ def train_FConv(config_file,clearml=False):
 def train_CoCoNut(config_file,clearml=False):
     with open(config_file,'r') as f:
         config_dict=yaml.safe_load(f)
-
     print(config_dict)
     dropout=config_dict['dropout']
     share_input_output_embed=config_dict['share_input_output_embed']
@@ -161,12 +160,31 @@ def train_Cure(config_file,clearml=False):
     #cmd = cmd + " | tee " + savedir + "/log.txt"
     print(cmd)
     subprocess.call(cmd, shell=True)
+def train_Recoder(config_file):
+    with open(config_file, 'r') as f:
+        config_dict = yaml.safe_load(f)
+    trn_data=config_dict["trn_data_pkl"]
+    val_data=config_dict["valdata_pkl"]
+    save_dir=config_dict["save_dir"]
+    nl_voc=config_dict["nl_voc_path"]
+    rule=config_dict["rule_path"]
+    code_voc=config_dict["code_voc_path"]
+    char_voc=config_dict["char_voc_path"]
+    max_epoch=config_dict["max_epoch"]
+
+    cmd="python ./Recoder/run.py -trn_data "+trn_data +" -val_data "+val_data+" -save_dir "+save_dir+" -nl_voc "+nl_voc\
+        +" rule "+rule+" code_voc "+code_voc+" char_voc "+char_voc+" max_epoch "+str(max_epoch)
+    os.system(cmd)
+def train_Edits(config_file):
+    with open(config_file, 'r') as f:
+        config_dict = yaml.safe_load(f)
+    pass
 def main():
     parser = argparse.ArgumentParser(
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut","FConv"])
+    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut","FConv","CODIT","Recoder","Edits"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -178,12 +196,12 @@ def main():
         train_Cure(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="FConv":
         train_FConv(config_file=opt.config,clearml=opt.clearml)
-    elif opt.model=="fairseq":
-        train_trans(0.36757118429123703, 0.2077472553022901, 0.23458028958313615, 256, 256, 4, 4, 4, 4,
-                    0.04523705535400846,
-                    0.5171673914366653, 0.1705892332229475, 'adagrad', 'label_smoothed_cross_entropy',
-                    '/home/group/zwk_save/Co_trans',
-                    '/home/group/DDPR_DATA/FConv_Line',deviceid=0,batchsize=32,max_epoch=30,clearml="True",ex_name="CoCoNet_trans")
+    elif opt.model=="Recoder":
+        train_Recoder(opt.config)
+    elif opt.model=="Edits":
+        train_Edits(opt.config)
+
+
 
 
 if __name__ == "__main__":

@@ -1,0 +1,10 @@
+trn_data_pkl: /root/user/NPR_DATA0306/Processed_Recoder/trn_pl/data_pl.pkl
+rulead: /root/user/NPR_DATA0306/Processed_Recoder/trn_pl/rulead_pl.pkl
+valdata_pkl: /root/zwk/NPR_DATA0306/Processed_Recoder/val_pl/valdata_pl.pkl
+save_dir: /root/zwk/NPR_DATA0306/Processed_Recoder/save
+nl_voc_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/nl_voc_pl.pkl
+rule_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/rule.pkl
+code_voc_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/code_voc_pl.pkl
+char_voc_path: /root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/char_voc_pl.pkl
+max_epoch: 20
+task_name: Recoder
