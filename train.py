@@ -183,7 +183,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-clearml",help="record experiment by clearml",default=True)
+    parser.add_argument("-clearml",help="record experiment by clearml",default=False)
     parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut","FConv","CODIT","Recoder","Edits"])
     parser.add_argument("-config",help="location of config file",required=True)
 
