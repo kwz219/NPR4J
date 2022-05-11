@@ -7,7 +7,7 @@ from bson import ObjectId
 from Dataset.MongoHelper import MongoHelper
 from Utils.IOHelper import readF2L, writeL2F
 from Utils._tokenize import CoCoNut_tokenize
-
+import shutil
 
 def Tokenize_CoCoNut(src_file,output_file):
     src_lines=readF2L(src_file)
@@ -82,12 +82,19 @@ def clean_CoCoNut(src_prefix):
     writeL2F(clean_ctx[2000:22100], src_prefix + '.clean.ctx')
     writeL2F(clean_fix[2000:22100], src_prefix + '.clean.fix')
     writeL2F(clean_meta[2000:22100], src_prefix + '.clean.meta')
-def prepare_data(name,ids_f,output_dir):
+def prepare_data(name,ids_f,output_dir,local_dir):
     ids=readF2L(ids_f)
     mongoClient = MongoHelper()
     bug_col=mongoClient.get_col("Buginfo")
     failed_ids=[]
     success_ids=[]
+    os.makedirs(output_dir+'/buggy_methods')
+    os.makedirs(output_dir + '/fix_methods')
+    os.makedirs(output_dir + '/buggy_lines')
+    os.makedirs(output_dir + '/fix_lines')
+    os.makedirs(output_dir + '/buggy_classes')
+    os.makedirs(output_dir + '/fix_classes')
+    os.makedirs(output_dir + '/metas')
     for i,id in enumerate(ids):
         try:
             bug = bug_col.find_one({'_id': ObjectId(id)})
@@ -96,6 +103,7 @@ def prepare_data(name,ids_f,output_dir):
             buggy_code=bug['buggy_code']
             fix_code=bug['fix_code']
             parent_id=bug['parent_id']
+            parent_f=local_dir+'\\'+parent_id.split('@')[0]
             buggy_content = bug['errs'][0]['src_content'][0].strip()
             tgt_pos = bug['errs'][0]['tgt_pos']
             patch_content = bug['errs'][0]['tgt_content']
@@ -120,6 +128,9 @@ def prepare_data(name,ids_f,output_dir):
             meta_f = codecs.open(output_dir + '/metas/' + id + ".txt", 'w', encoding='utf8')
             meta_f.write(meta)
             meta_f.close()
+
+            shutil.copy(parent_f,output_dir+'/buggy_classes/'+id+'.txt')
+            shutil.copy(parent_f.replace("P_dir","F_dir"), output_dir + '/fix_classes/' + id + '.txt')
             success_ids.append(id)
         except:
             failed_ids.append(id)
@@ -127,7 +138,7 @@ def prepare_data(name,ids_f,output_dir):
         print(i)
     writeL2F(success_ids,output_dir+"/success.ids")
     writeL2F(failed_ids, output_dir + "/failed.ids")
-prepare_data("train",r"F:\NPR_DATA0306\Medium\trn.ids","F:/NPR_DATA0306/train")
+prepare_data("data",r"F:\NPR_DATA0306\buggy_id_ahf.txt","F:/NPR_DATA0306/ahf_data",r"E:\\bug-fix")
 def prepare_benchmark_4test(output_dir):
     mongoClient = MongoHelper()
     d4j_col=mongoClient.get_col("Binfo_d4j")
