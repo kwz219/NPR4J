@@ -13,8 +13,15 @@ ___
 &#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Manual_Check: manual check results of plausible/correct patches
 ___
 ## NPR4J-Benchmark
-### Leaderboard
-preparing
+### Leaderboard (top-100 candidates)
+| Diversity-Main <br> 12,815 bugs    | Bugs.jar <br> 480 bugs  | Defects4J <br> 260 bugs |Bears<br> 119 bugs |QuixBugs<br> 32 bugs |
+| :----:| :----: | :----: | :----: | :----: |
+| SequenceR / 2,900 | CoCoNut / 57 | SequenceR / 48 | CoCoNut / 19 |SequenceR / 15 |
+| CoCoNut / 2,403 | SequenceR / 56 | CoCoNut / 48 |SequenceR / 16 |CoCoNut / 13 |
+| Recoder /1,538 | Tufano / 43 | Recoder / 46 |Tufano / 9|Recoder / 10 |
+| Tufano / 1,080 | Recoder / 34 | Tufano / 25 |Recoder / 5 |Tufano / 7|
+| Edits / 179 | Edits / 20 | Edits / 15 |Edits 2 |Edits 6 |
+| CODIT / 96 | CODIT / 8 | CODIT / 5 |CODIT 1 |CODIT 1 |
 
 ### Raw Data
 >Raw data can be downloaded from this url (currently not available because this anonymous repository can not afford a too-large file (nearly 1.5GB)):   
