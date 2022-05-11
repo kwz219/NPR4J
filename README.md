@@ -54,7 +54,7 @@ To use a trained NPR system to generate patches, you can use a simple command li
 We are preparing a detailed documentation for how to write config files to use trained model.  
 Currently, for a reference, the directory "Config" contains some examples
 ### Evaluating patches
-Check if a patch is correct: see "Evaluation.py"  
+Check if a patch is identical to the human-written patch: see "Evaluation.py"  
 Run candidates on Defects4J, Bears and QuixBugs: still preparing, see Run_bears.py and Run_quixbugs.py for temporary reference
 ### Resources of trained NPR systems
 We will release the six NPR models we trained for public usage  
