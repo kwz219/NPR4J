@@ -24,7 +24,7 @@ ___
 | CODIT / 96 | CODIT / 8 | CODIT / 5 |CODIT 1 |CODIT 1 |
 
 ### Raw Data
->Raw data can be downloaded from this url (currently not available because this anonymous repository can not afford a too-large file (nearly 1.5GB)):   
+>Raw data can be downloaded from this url (currently not available because this anonymous repository can not afford a too-large file):   
 Structure of the raw data:  
 |---Raw_Data   
 &#8194;&#8194;&#8194;|---Evaluation  
