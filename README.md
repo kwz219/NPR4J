@@ -39,7 +39,12 @@ ___
 ## NPR4J-Framework
 ### Data Preprocess
 We are preparing a detailed documentation......   
-Code Abstract: see directory "CodeAbstract"   
+Code Abstract: see directory "CodeAbstract", including:
+>generating abstract codes for Tufano's system  
+>generating classcontents for Recoder  
+>generating abstract buggy context for SequenceR  
+>......
+
 Preprocess: see files "Dataset/Preprocess.py" and "Dataset/PrepareData.py"  
 ### Training
 To train a NPR system, you can use a simple command like this:
