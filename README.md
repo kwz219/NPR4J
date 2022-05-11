@@ -14,7 +14,8 @@ ___
 ___
 ## NPR4J-Benchmark
 ### Leaderboard
-preparing. 
+preparing
+
 ### Raw Data
 >Raw data can be downloaded from this url (currently not available because this anonymous repository can not afford a too-large file (nearly 1.5GB)):   
 Structure of the raw data:  
@@ -30,7 +31,9 @@ Each sub dir contains seven types of data for each sample :
 ___
 ## NPR4J-Framework
 ### Data Preprocess
-preparing
+We are preparing a detailed documentation......   
+Code Abstract: see directory "CodeAbstract"   
+Preprocess: see files "Dataset/Preprocess.py" and "Dataset/PrepareData.py"  
 ### Training
 To train a NPR system, you can use a simple command like this:
 >python train.py -model <NPR_SYSTEM_NAME> -config <CONFIG_FILE_PATH>  
