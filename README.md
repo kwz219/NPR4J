@@ -48,16 +48,16 @@ Code Abstract: see directory "CodeAbstract", including:
 >generating abstract buggy context for SequenceR  
 >......
 
-Preprocess: see files "Dataset/Preprocess.py" and "Dataset/PrepareData.py"  
+Preprocess: see files "Dataset/Preprocess.py, Dataset/Preprocess_RawData.py" and "Dataset/PrepareData.py"  
 ### Training
 To train a NPR system, you can use a simple command like this:
->python train.py -model <NPR_SYSTEM_NAME> -config <CONFIG_FILE_PATH>  
+>python train.py -model NPR_SYSTEM_NAME -config CONFIG_FILE_PATH  
 
 We are preparing a detailed documentation for how to write config files to train each model.  
 Currently, for a reference, the directory "Config" contains some examples
 ### Generating Patches
 To use a trained NPR system to generate patches, you can use a simple command like this:
->python translate.py -model <NPR_SYSTEM_NAME> -config <CONFIG_FILE_PATH>  
+>python translate.py -model NPR_SYSTEM_NAME -config CONFIG_FILE_PATH  
   
 We are preparing a detailed documentation for how to write config files to use trained model.  
 Currently, for a reference, the directory "Config" contains some examples
