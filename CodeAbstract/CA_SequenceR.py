@@ -50,7 +50,10 @@ remove comments of code
 """
 def add_buggy_method(cont,res,max_length):
     buggycode=res["buggy_code"].split("\n")
-    err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
+    if "err_pos" in res.keys():
+        err_pos=res["err_pos"]
+    else:
+        err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
     print("err_pos",err_pos)
     m_start_ind=0
     for ind,line in enumerate(buggycode):

@@ -9,6 +9,7 @@ from bson import ObjectId
 
 from CoCoNut.tokenization.tokenization import extract_strings, COMPOSED_SYMBOLS, camel_case_split, number_split, \
     remove_integer
+from CodeAbstract.CA_SequenceR import run_SequenceR_abs
 from CodeAbstract.CA_src2abs import run_src2abs
 from MongoHelper import MongoHelper
 from DataConstants import BUG_COL,METHOD_COL
@@ -36,6 +37,7 @@ def shuffle(list1, list2, list3):
         new_l2.append(line2)
         new_l3.append(line3)
     return new_l1, new_l2, new_l3
+
 def preprocess_SequenceR(ids_f,method,input_dir,output_dir):
     ids=readF2L(ids_f)
     mongoClient=MongoHelper()

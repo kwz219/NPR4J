@@ -34,7 +34,10 @@ Structure of the raw data:
 &#8194;&#8194;&#8194;|---Valid  (13739 samples)   
 &#8194;&#8194;&#8194;|---commit.json : commit message of each data sample  
 Each sub dir contains seven types of data for each sample :   
->(1)buggy line (2)fix line (3)buggy method (4)fix method (5)buggy class (6)fix class (7)metas 
+>(1)buggy line (2)fix line (3)buggy method (4)fix method (5)buggy class (6)fix class (7)metas
+ 
+We will also provide well-formed data stored in mongodb like following:
+<img alt="one sample stored in the database" src="./images/mongodb_sample.PNG"/>
 ___
 ## NPR4J-Framework
 ### Data Preprocess
