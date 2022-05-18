@@ -5,6 +5,7 @@ import re
 import javalang
 
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
+from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.IOHelper import readF2L, writeL2F
 
 
@@ -83,3 +84,60 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
         writeL2F(correct_ids, correct_f)
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
     build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
+
+"""
+ids_f: a list of bug-fix ids
+input_dir: raw data dir 
+output_dir: where you want to output the processed code of SequenceR
+tmp_dir: when building a SequenceR-type context, you need a directory to restore temp files
+idiom_path: tokens that will not be abstracted , eg_path: CodeAbstract/CA_Resource/Idioms.2w
+mode: when you are preparing test or valid data, using mode 'test'
+"""
+def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode,max_length=1000):
+    ids=readF2L(ids_f)
+    buggy_codes = []
+    fix_codes = []
+    success_ids = []
+    fail_ids = []
+    ind=0
+    for id in ids:
+        out_a = temp_dir + "/" + id + "_buggy.txt.abs"
+        out_b = temp_dir + "/" + id + "_fix.txt.abs"
+        if os.path.exists(out_a) and os.path.exists(out_b):
+            print("abstraction file already exists ")
+            try:
+                buggy_code=codecs.open(out_a,'r',encoding='utf8').read()
+                fix_code=codecs.open(out_b,'r',encoding='utf8').read()
+                if buggy_code!=fix_code and 1<=len(buggy_code.split())<=max_length :
+                    print('added')
+                    buggy_codes.append(buggy_code)
+                    fix_codes.append(fix_code)
+                    success_ids.append(id)
+            except:
+                fail_ids.append(id)
+        else:
+            buggy_f = input_dir + '/buggy_methods/' + id + "_buggy.txt"
+            fix_f = input_dir + '/fix_methods/' + id + "_fix.txt"
+
+            if mode=="test":
+                run_src2abs("method",buggy_f,"",out_a,"",idom_path,mode='single')
+                run_src2abs("method", fix_f, "", out_b, "", idom_path, mode='single')
+            else:
+                run_src2abs("method",buggy_f,fix_f,out_a,out_b,idom_path)
+            if os.path.exists(out_a) and os.path.exists(out_b):
+                try:
+                    buggy_code = codecs.open(out_a, 'r', encoding='utf8').read()
+                    fix_code = codecs.open(out_b, 'r', encoding='utf8').read()
+                    if buggy_code != fix_code and 1<=len(buggy_code.split()) <= max_length:
+                        buggy_codes.append(buggy_code)
+                        fix_codes.append(fix_code)
+                        success_ids.append(id)
+                except:
+                    fail_ids.append(id)
+        print(ind)
+        ind+=1
+
+    writeL2F(buggy_codes,output_dir+"/"+mode+".buggy")
+    writeL2F(fix_codes, output_dir + "/" + mode + ".fix")
+    writeL2F(success_ids, output_dir + "/" + mode + ".sids")
+    writeL2F(fail_ids, output_dir + "/" + mode + ".fids")
