@@ -1,0 +1,67 @@
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 210
+tgt_seq_length: 310
+src_seq_length_trunc: 210
+tgt_seq_length_trunc: 310
+
+# common vocabulary for CoCoNut and target
+share_vocab: False
+dynamic_dict: True
+# Corpus opts:
+data:
+    train:
+        # buggy 和 fix的位置
+        path_src:
+        path_tgt:
+        transforms: []
+        weight: 1
+    valid:
+        path_src:
+        path_tgt:
+        transforms: []
+
+src_vocab_size: 200000
+tgt_vocab_size: 200000
+
+# src vocab和 tgt vocab要保存的位置
+src_vocab:
+tgt_vocab:
+
+
+#log_file
+
+#copy_attn: true
+#copy_loss_by_seqlength: true
+#reuse_copy_attn: true
+global_attention: general
+word_vec_size: 512
+rnn_size: 512
+bridge: true
+layers: 2
+encoder_type: brnn
+early_stopping: 3
+early_stopping_criteria: accuracy
+train_steps: 500000
+valid_steps: 5000
+save_checkpoint_steps: 5000
+max_grad_norm: 2
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 8
+optim: adagrad
+learning_rate: 0.15
+adagrad_accumulator_init: 0.1
+
+seed: 912
+world_size: 1
+gpu_ranks: 0
+
+#log文件的位置(包含训练过程)
+log_file:
+#模型保存的位置
+save_model:
+
+

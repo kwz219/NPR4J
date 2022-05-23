@@ -9,9 +9,9 @@ replace literals with INT_#,FLOAT_#,CHAR_#,STRING_#
 """
 def run_src2abs(code_granularity,input_code_path_A,input_code_path_B,output_abstract_path_A,output_abstract_path_B,idioms_path,mode="pair"):
     if mode=='single':
-        arglist=["D:\DDPR\lib-jar\src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,output_abstract_path_A,idioms_path]
+        arglist=["/home/zhongwenkang/NPR4J-local/lib-jar/src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,output_abstract_path_A,idioms_path]
     else:
-        arglist=["D:\DDPR\lib-jar\src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,input_code_path_B,output_abstract_path_A,output_abstract_path_B,idioms_path]
+        arglist=["/home/zhongwenkang/NPR4J-local/lib-jar/src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,input_code_path_B,output_abstract_path_A,output_abstract_path_B,idioms_path]
     result=jarWrapper(arglist)
     #print(result)
 
@@ -121,4 +121,4 @@ def run_src2abs_all_test_tgt(id_file,src_dir,tgt_dir,idiom_path):
 #run_src2abs_all("D:\DDPR_DATA\OneLine_Replacement\Raw\\trn_max1k.ids",src_dir="D:\DDPR_DATA\OneLine_Replacement\Raw\\trn",tgt_dir="D:\DDPR_DATA\OneLine_Replacement\Tufano_idiom10w_abs\\trn_class",idiom_path="D:\DDPR\CodeAbstract\CA_Resource\idioms.10w")
 #run_src2abs_all_test_tgt(id_file="D:\DDPR_DATA\OneLine_Replacement\Raw\\test_max1k.ids",src_dir=r"D:/DDPR_DATA/OneLine_Replacement/Raw/test",tgt_dir=r"D:/DDPR_DATA/OneLine_Replacement/Tufano_idiom2w_abs/test_tgt",idiom_path=r"D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
 #run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/srcabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
-run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Benchmark/fix_methods","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/tgtabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")
+#run_src2abs_all_test_dir("F:/NPR_DATA0306/Evaluationdata/Benchmark/fix_methods","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/tgtabs","D:\DDPR\CodeAbstract\CA_Resource\idioms.2w")

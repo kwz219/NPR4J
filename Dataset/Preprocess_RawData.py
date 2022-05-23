@@ -116,8 +116,9 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
             except:
                 fail_ids.append(id)
         else:
-            buggy_f = input_dir + '/buggy_methods/' + id + "_buggy.txt"
-            fix_f = input_dir + '/fix_methods/' + id + "_fix.txt"
+            print("generating abstraction")
+            buggy_f = input_dir + '/buggy_methods/' + id + ".txt"
+            fix_f = input_dir + '/fix_methods/' + id + ".txt"
 
             if mode=="test":
                 run_src2abs("method",buggy_f,"",out_a,"",idom_path,mode='single')
@@ -141,3 +142,12 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
     writeL2F(fix_codes, output_dir + "/" + mode + ".fix")
     writeL2F(success_ids, output_dir + "/" + mode + ".sids")
     writeL2F(fail_ids, output_dir + "/" + mode + ".fids")
+preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/test/success.ids", "/home/zhongwenkang/ML/test",
+                              "/home/zhongwenkang/ML_Processed/Tufano",
+                              r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt",
+                              "/home/zhongwenkang/ML_Processed/Tufano/temp", "test")
+preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train","/home/zhongwenkang/ML_Processed/Tufano",
+                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","train")
+preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",
+                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","valid")
+
