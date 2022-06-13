@@ -142,12 +142,49 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
     writeL2F(fix_codes, output_dir + "/" + mode + ".fix")
     writeL2F(success_ids, output_dir + "/" + mode + ".sids")
     writeL2F(fail_ids, output_dir + "/" + mode + ".fids")
-preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/test/success.ids", "/home/zhongwenkang/ML/test",
-                              "/home/zhongwenkang/ML_Processed/Tufano",
-                              r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt",
-                              "/home/zhongwenkang/ML_Processed/Tufano/temp", "test")
-preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train","/home/zhongwenkang/ML_Processed/Tufano",
-                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","train")
-preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",
-                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","valid")
+#peprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/test/success.ids", "/home/zhongwenkang/ML/test",
+#                              "/home/zhongwenkang/ML_Processed/Tufano",
+#                              r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt",
+#                              "/home/zhongwenkang/ML_Processed/Tufano/temp", "test")
+#preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train","/home/zhongwenkang/ML_Processed/Tufano",
+#                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","train")
+#preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",
+#                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","valid")
 
+def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,temp_dir):
+    ids=readF2L(ids_f)
+    buggy_codes = []
+    fix_codes = []
+    error_ids = []
+    correct_ids = []
+    for id in ids:
+        buginfo = {"_id": id}
+        buginfo["buggy_code"] = codecs.open(input_dir + "/buggy_methods/" + id + '.txt', 'r',
+                                            encoding='utf8').read().strip()
+        id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+        buginfo["err_pos"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+        tmp_f = tmp_dir + id + '.txt'
+        fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip().replace('\t','')
+
+        buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
+                                                max_length=1000)
+        print("hitflag", hitflag)
+        if len(buggy_code.strip()) <= 1:
+            hitflag = 0
+        if hitflag == 1:
+            buggy_context=buggy_code.replace("<START_BUG>","").replace("<END_BUG>","").replace('\t','')
+            buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','')
+
+            buggy_src="buggy: "+buggy_line+" context: "+buggy_context
+            buggy_codes.append(buggy_src)
+            fix_codes.append(fix_code)
+            correct_ids.append(buginfo['_id'])
+            print("success: ", len(correct_ids))
+        elif hitflag == 2:
+            error_ids.append(buginfo['_id'])
+        else:
+            error_ids.append(buginfo['_id'])
+        writeL2F(buggy_codes,output_prefix+'.buggy')
+        writeL2F(fix_codes,output_prefix+'.fix')
+        writeL2F(error_ids,output_prefix+'.fids')
+        writeL2F(correct_ids, output_prefix+'.sids')
