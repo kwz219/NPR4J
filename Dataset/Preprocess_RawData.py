@@ -151,12 +151,21 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
 #preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",
 #                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","valid")
 
+"""
+ids_f: a list of bug-fix ids
+input_dir: raw data dir 
+output_preix: where you want to output the processed code of RewardRepair
+tmp_dir: when building a SequenceR-type context, you need a directory to restore temp files
+idiom_path: tokens that will not be abstracted , eg_path: CodeAbstract/CA_Resource/Idioms.2w
+mode: when you are preparing test or valid data, using mode 'test'
+"""
 def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,temp_dir):
     ids=readF2L(ids_f)
-    buggy_codes = []
-    fix_codes = []
+    bug_fix=[]
     error_ids = []
     correct_ids = []
+
+    bug_fix.append("bugid"+'\t'+"buggy"+'\t'+"patch")
     for id in ids:
         buginfo = {"_id": id}
         buginfo["buggy_code"] = codecs.open(input_dir + "/buggy_methods/" + id + '.txt', 'r',
@@ -176,15 +185,14 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,temp_dir):
             buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','')
 
             buggy_src="buggy: "+buggy_line+" context: "+buggy_context
-            buggy_codes.append(buggy_src)
-            fix_codes.append(fix_code)
+            bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
             correct_ids.append(buginfo['_id'])
             print("success: ", len(correct_ids))
         elif hitflag == 2:
             error_ids.append(buginfo['_id'])
         else:
             error_ids.append(buginfo['_id'])
-        writeL2F(buggy_codes,output_prefix+'.buggy')
-        writeL2F(fix_codes,output_prefix+'.fix')
+        assert len(correct_ids)==len(correct_ids)
+        writeL2F(buggy_codes,output_prefix+'.bug-fix.csv')
         writeL2F(error_ids,output_prefix+'.fids')
-        writeL2F(correct_ids, output_prefix+'.sids')
+        writeL2F(correct_ids, output_prefix+'.ids')
