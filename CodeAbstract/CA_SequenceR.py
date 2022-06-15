@@ -16,7 +16,7 @@ code abstract at 3 levels:
 """
 def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo,max_length):
     inputcode_f=inputcode_f.replace(".txt",".java")
-    args=["../lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
+    args=["./lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
     if not os.path.exists(outputcode_f):
         out,err=jarWrapper(args)
         #print(err)

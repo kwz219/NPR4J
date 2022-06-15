@@ -1,0 +1,62 @@
+## Where the vocab(s) will be written
+save_data: /home/zhongwenkang/ML_Save/Tufano
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# filter long examples
+src_seq_length: 1010
+tgt_seq_length: 1010
+src_seq_length_trunc: 1010
+tgt_seq_length_trunc: 1010
+
+# common vocabulary for CoCoNut and target
+share_vocab: True
+dynamic_dict: True
+# Corpus opts:
+data:
+    trn:
+        path_src: /home/zhongwenkang/ML_Preprocess/Tufano/train.buggy
+        path_tgt: /home/zhongwenkang/ML_Preprocess/Tufano/train.fix
+        transforms: []
+        weight: 1
+    valid:
+        path_src: /home/zhongwenkang/ML_Preprocess/Tufano/valid.buggy
+        path_tgt: /home/zhongwenkang/ML_Preprocess/Tufano/valid.fix
+        transforms: []
+
+src_vocab_size: 40000
+tgt_vocab_size: 40000
+src_vocab: /home/zhongwenkang/ML_Save/Tufano/idioms_2w.vocab
+tgt_vocab: /home/zhongwenkang/ML_Save/Tufano/idioms_2w.vocab
+
+
+#model params
+global_attention: general
+word_vec_size: 512
+rnn_size: 512
+bridge: true
+layers: 2
+encoder_type: brnn
+
+#training params
+train_steps: 500000
+valid_steps: 5000
+save_checkpoint_steps: 5000
+max_grad_norm: 2
+gpu_ranks: 0
+world_size: 1
+early_stopping: 5
+early_stopping_criteria: accuracy
+dropout: 0.1
+batch_size: 32
+valid_batch_size: 32
+optim: adagrad
+learning_rate: 0.1
+adagrad_accumulator_init: 0.1
+seed: 912
+
+#model save and log
+log_file: /home/zhongwenkang/ML_Save/Tufano/229_0615.log
+save_model: /home/zhongwenkang/ML_Save/Tufano/Model/229_0615
+tensorboard: True
+tensorboard_log_dir: /home/zhongwenkang/ML_Save/Tufano/229_0615

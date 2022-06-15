@@ -24,12 +24,14 @@ def build_vocab_main(opts):
     ArgumentParser.validate_prepare_opts(opts, build_vocab_only=True)
     assert opts.n_sample == -1 or opts.n_sample > 1, \
         f"Illegal argument n_sample={opts.n_sample}."
+    """
     if opts.clearML==True:
         print("report to clearML")
         task_name=opts.config.split("/")[-1].replace(".yaml","")
         task = Task.init(project_name='build_vocab', task_name=task_name)
     else:
         print("use clearML ",opts.clearML)
+    """
     logger = init_logger()
     set_random_seed(opts.seed, False)
     transforms_cls = get_transforms_cls(opts._all_transform)

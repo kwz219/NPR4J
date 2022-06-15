@@ -37,7 +37,8 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
 
             buggy_code,hitflag=run_SequenceR_abs(input_dir+"/buggy_classes/"+id+'.txt',tmp_f,buginfo,max_length=1000)
             print("hitflag",hitflag)
-
+            if len(buggy_code.strip())<=1:
+                    hitflag=0
             if hitflag==1:
                     try:
                         toked_fix = javalang.tokenizer.tokenize(fix_code)
@@ -66,7 +67,6 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
                         correct_ids.append(buginfo['_id'])
                         in_count+=1
             elif hitflag==2:
-                    error_ids.append(buginfo['_id'])
                     print(tmp_f)
             else:
                     error_ids.append(buginfo['_id'])
@@ -159,14 +159,14 @@ tmp_dir: when building a SequenceR-type context, you need a directory to restore
 idiom_path: tokens that will not be abstracted , eg_path: CodeAbstract/CA_Resource/Idioms.2w
 mode: when you are preparing test or valid data, using mode 'test'
 """
-def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,temp_dir):
+def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
     ids=readF2L(ids_f)
     bug_fix=[]
     error_ids = []
     correct_ids = []
 
     bug_fix.append("bugid"+'\t'+"buggy"+'\t'+"patch")
-    for id in ids:
+    for idx,id in enumerate(ids):
         buginfo = {"_id": id}
         buginfo["buggy_code"] = codecs.open(input_dir + "/buggy_methods/" + id + '.txt', 'r',
                                             encoding='utf8').read().strip()
@@ -177,9 +177,10 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,temp_dir):
 
         buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
                                                 max_length=1000)
-        print("hitflag", hitflag)
+
         if len(buggy_code.strip()) <= 1:
             hitflag = 0
+
         if hitflag == 1:
             buggy_context=buggy_code.replace("<START_BUG>","").replace("<END_BUG>","").replace('\t','')
             buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','')
@@ -187,14 +188,34 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,temp_dir):
             buggy_src="buggy: "+buggy_line+" context: "+buggy_context
             bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
             correct_ids.append(buginfo['_id'])
-            print("success: ", len(correct_ids))
+            print("Total,Success: ",idx, len(correct_ids))
+        elif hitflag == 0:
+            buggy_method=codecs.open(input_dir + '/buggy_methods/' + id + '.txt').read().strip().replace('\t','')
+            buggy_src="buggy: "+buggy_line+" context: "+buggy_method
+            bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
+            correct_ids.append(buginfo['_id'])
+            print("Total,Success: ",idx, len(correct_ids))
         elif hitflag == 2:
             error_ids.append(buginfo['_id'])
         else:
             error_ids.append(buginfo['_id'])
         assert len(correct_ids)==len(correct_ids)
-        writeL2F(buggy_codes,output_prefix+'.bug-fix.csv')
+        writeL2F(bug_fix,output_prefix+'.bug-fix.csv')
         writeL2F(error_ids,output_prefix+'.fids')
         writeL2F(correct_ids, output_prefix+'.ids')
-preprocess_RewardRepair_fromRaw("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train",
-                                "/home/zhongwenkang/NPR4J_Data/RewardRepair/trn","/home/zhongwenkang/NPR4J_Data/SequenceR/temp_files/")
+#preprocess_RewardRepair_fromRaw("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train",
+                                #"/home/zhongwenkang/NPR4J_Data/RewardRepair/trn","/home/zhongwenkang/NPR4J_Data/SequenceR/temp_files/")
+
+def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
+    ids=readF2L(ids_f)
+    buggy_lines=[]
+    fix_lines=[]
+    for idx,id in enumerate(ids):
+        buggy_line=codecs.open(input_dir+'/buggy_lines/'+id+'.txt','r',encoding='utf8').read().strip()
+        fix_line=codecs.open(input_dir+'/fix_lines/'+id+'.txt','r',encoding='utf8').read().strip()
+        buggy_lines.append(buggy_line)
+        fix_lines.append(fix_line)
+    writeL2F(buggy_lines,output_prefix+'.buggy')
+    writeL2F(fix_lines,output_prefix+'.fix')
+#preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Valid/valid.ids","/home/zhongwenkang/RawData/Valid",
+#                              "/home/zhongwenkang/NPR4J_Data/CodeBertFT/val")
