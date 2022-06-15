@@ -1,5 +1,6 @@
 import codecs
 import os
+import re
 from collections import Counter
 from subprocess import Popen, PIPE
 
@@ -91,17 +92,8 @@ def jarWrapper(args:list):
 remove comments of java CoCoNut code
 """
 def remove_comments(code:str):
-    code_lines=code.split('\n')
-    filtered_lines=[]
-    for line in code_lines:
-        line=line.strip()
-        if line.startswith("/") or line.startswith("*"):
-            continue
-        else:
-            filtered_lines.append(line)
-    return ' '.join(filtered_lines)
-
-
+    clean_code=re.sub("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "", code)
+    return clean_code
 def test_genIdiom():
     corpus_dir="/root/zwk/DDPR_DATA/data/M1000_Tjava/trn.buggy"
     top_n=500000

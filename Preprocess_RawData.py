@@ -6,6 +6,7 @@ import javalang
 
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
 from CodeAbstract.CA_src2abs import run_src2abs
+from Utils.CA_Utils import remove_comments
 from Utils.IOHelper import readF2L, writeL2F
 
 
@@ -217,5 +218,26 @@ def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
         fix_lines.append(fix_line)
     writeL2F(buggy_lines,output_prefix+'.buggy')
     writeL2F(fix_lines,output_prefix+'.fix')
+def preprocess_CodeBertFT_fromRaw_methodLevel(ids_f,input_dir,output_prefix):
+    ids=readF2L(ids_f)
+    print(len(ids))
+    buggy_methods=[]
+    fix_methods=[]
+    for idx,id in enumerate(ids):
+        buggy_method=codecs.open(input_dir+'/buggy_methods/'+id+'.txt','r',encoding='utf8').read().strip()
+        buggy_method=remove_comments(buggy_method)
+        buggy_method=buggy_method.replace('\r\n','').replace('\n','').replace('\t','')
+        fix_line=codecs.open(input_dir+'/fix_methods/'+id+'.txt','r',encoding='utf8').read().strip()
+        fix_line=remove_comments(fix_line)
+        fix_line=fix_line.replace('\r\n','').replace('\n','').replace('\t','')
+        buggy_methods.append(buggy_method)
+        fix_methods.append(fix_line)
+        print(idx)
+    writeL2F(buggy_methods,output_prefix+'.buggy')
+    writeL2F(fix_methods,output_prefix+'.fix')
 #preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Valid/valid.ids","/home/zhongwenkang/RawData/Valid",
 #                              "/home/zhongwenkang/NPR4J_Data/CodeBertFT/val")
+preprocess_CodeBertFT_fromRaw_methodLevel("/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train",
+                              "/home/zhongwenkang/ML_Processed/CodeBERT/train")
+preprocess_CodeBertFT_fromRaw_methodLevel("/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid",
+                              "/home/zhongwenkang/ML_Processed/CodeBERT/valid")
