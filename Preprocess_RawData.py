@@ -4,6 +4,7 @@ import re
 
 import javalang
 
+from CodeAbstract.CA_Recoder import generate_classcontent
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
 from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.CA_Utils import remove_comments
@@ -36,7 +37,7 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
             fix_code=codecs.open(input_dir+'/fix_lines/'+id+'.txt').read().strip()
 
 
-            buggy_code,hitflag=run_SequenceR_abs(input_dir+"/buggy_classes/"+id+'.txt',tmp_f,buginfo,max_length=1000)
+            buggy_code,hitflag=run_SequenceR_abs(input_dir+"/buggy_classes_java/"+id+'.txt',tmp_f,buginfo,max_length=1000)
             print("hitflag",hitflag)
             if len(buggy_code.strip())<=1:
                     hitflag=0
@@ -57,6 +58,7 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
                     )
                     if not bug_count==1:
                         bug_1+=1
+                        error_ids.append(buginfo['_id'])
                     else:
                         buggy_codes.append(toked_bug)
                         fix_codes.append(toked_fix)
@@ -67,8 +69,48 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
                         #print(toked_fix)
                         correct_ids.append(buginfo['_id'])
                         in_count+=1
+            elif hitflag==0:
+                #as a substitude-schema, generating method-level context
+
+                buggy_method=readF2L(input_dir+'/buggy_methods/'+id+'.txt')
+                buggy_line_id=codecs.open(input_dir+'/metas/'+id+'.txt').read().strip().split("<sep>")[2]
+                buggy_line_id=int(buggy_line_id[1:-1].split(":")[0])
+                buggy_method[buggy_line_id]="<START_BUG> "+buggy_method[buggy_line_id]+" <END_BUG>"
+                buggy_code=' '.join(buggy_method)
+                try:
+                    toked_fix = javalang.tokenizer.tokenize(fix_code)
+                    toked_fix = ' '.join([tok.value for tok in toked_fix])
+                except:
+                    toked_fix = re.split(r"([.,!?;(){}])", fix_code)
+                    toked_fix = ' '.join(toked_fix)
+                try:
+                    toked_bug = javalang.tokenizer.tokenize(buggy_code)
+                    toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                                   '<START_BUG>').replace('< END_BUG >',
+                                                                                                          '<END_BUG>')
+                except:
+                    toked_bug = re.split(r"([.,!?;(){}])", buggy_code)
+                    toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace('< END_BUG >',
+                                                                                                    '<END_BUG>')
+                bug_count = toked_bug.count('<START_BUG>'
+                                            )
+                if not bug_count == 1:
+                    bug_1 += 1
+                    error_ids.append(buginfo['_id'])
+                else:
+                    buggy_codes.append(toked_bug)
+                    fix_codes.append(toked_fix)
+                    if '\n' in toked_bug:
+                        newline_count += 1
+                        print("newline_count", newline_count)
+                    # print(toked_bug)
+                    # print(toked_fix)
+                    correct_ids.append(buginfo['_id'])
+                    in_count += 1
+
             elif hitflag==2:
                     print(tmp_f)
+                    error_ids.append(buginfo['_id'])
             else:
                     error_ids.append(buginfo['_id'])
             print(ind,"in:",in_count,"bug >1",bug_1)
@@ -84,8 +126,9 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
         writeL2F(error_ids,error_f)
         writeL2F(correct_ids, correct_f)
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
-    build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
-
+    build(output_dir+".buggy",output_dir+".fix",output_dir+".fids",output_dir+".sids",ids)
+preprocess_SequenceR_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                             "/home/zhongwenkang/NPR4J_processed/SequenceR/test","/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 
@@ -237,7 +280,26 @@ def preprocess_CodeBertFT_fromRaw_methodLevel(ids_f,input_dir,output_prefix):
     writeL2F(fix_methods,output_prefix+'.fix')
 #preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Valid/valid.ids","/home/zhongwenkang/RawData/Valid",
 #                              "/home/zhongwenkang/NPR4J_Data/CodeBertFT/val")
-preprocess_CodeBertFT_fromRaw_methodLevel("/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train",
-                              "/home/zhongwenkang/ML_Processed/CodeBERT/train")
-preprocess_CodeBertFT_fromRaw_methodLevel("/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid",
-                              "/home/zhongwenkang/ML_Processed/CodeBERT/valid")
+#preprocess_CodeBertFT_fromRaw_methodLevel("/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train",
+#                              "/home/zhongwenkang/ML_Processed/CodeBERT/train")
+#preprocess_CodeBertFT_fromRaw_methodLevel("/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid",
+#                              "/home/zhongwenkang/ML_Processed/CodeBERT/valid")
+
+def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
+    ids=readF2L(ids_f)
+    if mode=="test":
+        fail_ids=[]
+
+        for idx,id in enumerate(ids):
+            if not os.path.exists(os.path.join(output_dir,id+'.json')):
+                print(idx)
+                try:
+                    generate_classcontent(os.path.join(input_dir,"buggy_classes",id+".txt"),os.path.join(output_dir,id+'.json'))
+                except:
+                    fail_ids.append(id)
+        print(len(fail_ids))
+        writeL2F(output_dir+'/fail.ids')
+
+
+#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                           #"/home/zhongwenkang/NPR4J_processed/Recoder")

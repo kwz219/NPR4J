@@ -8,19 +8,19 @@ from Dataset.MongoHelper import MongoHelper
 from Utils.IOHelper import readF2L
 
 
-def generate_classcontent(path,output_path,id):
+def generate_classcontent(path,output_path):
     codecontent=codecs.open(path,'r',encoding='utf8').read().strip()
     #print(codecontent)
     tree = javalang.parse.parse(codecontent)
     package_name=tree.package.name
-    print(package_name)
+    #print(package_name)
     #print(tree)
     i=1
 
     classcontent={"filename":path.split("/")[-1],"package_name":package_name,"classes":[]}
     for clspath,clsnode in tree.filter(javalang.tree.ClassDeclaration):
         classname=getattr(clsnode,"name")
-        print("classname: ",classname)
+        #print("classname: ",classname)
         class_dict = {"methods": [], "fields": [], "name":classname}
         for path,node in clsnode.filter(javalang.tree.MethodDeclaration):
             node_name = getattr(node, "name")
@@ -40,10 +40,10 @@ def generate_classcontent(path,output_path,id):
                     pa_item = {"name": pa_name, "type": pa_type}
                     simp_parameters.append(pa_item)
             method_dict = {"params": simp_parameters, "name": node_name,"type":return_type_name}
-            print("$", "methods", "$ -------------------------")
-            print(node_name)
-            print(simp_parameters)
-            print(return_type_name)
+            #print("$", "methods", "$ -------------------------")
+            #print(node_name)
+            #print(simp_parameters)
+            #print(return_type_name)
             i = i + 1
 
             new_methods=class_dict.get("methods")
@@ -59,9 +59,9 @@ def generate_classcontent(path,output_path,id):
             field_name=getattr(field_dec[0],"name")
             field_type_name=getattr(field_type,"name")
 
-            print("$", "Field", "$ -------------------------")
-            print(field_name)
-            print(field_type_name)
+            #print("$", "Field", "$ -------------------------")
+            #print(field_name)
+            #print(field_type_name)
             i+=1
             field_dict={"name":field_name,"type":field_type_name}
             new_fields=class_dict.get("fields")
@@ -71,7 +71,7 @@ def generate_classcontent(path,output_path,id):
 
         new_classes.append(class_dict)
         classcontent["classes"]=new_classes
-    with open(output_path+"/"+id+".classcontent","w",encoding='utf8')as f:
+    with open(output_path,"w",encoding='utf8')as f:
         json.dump([classcontent],f,indent=2)
 
 def generate_4benchmark(dir,output_dir):
