@@ -441,7 +441,7 @@ class SearchNode:
 
         
 beamss = []
-def BeamSearch(inputnl, vds, model, beamsize, batch_size, k):
+def BeamSearch(inputnl, vds, model, beamsize, batch_size, k,rulead_path):
     batch_size = len(inputnl[0].view(-1, args.NlLen))
     rrdic = {}
     for x in vds.Code_Voc:
@@ -453,7 +453,7 @@ def BeamSearch(inputnl, vds, model, beamsize, batch_size, k):
     a, b = getRulePkl(vds)
     tmpf = gVar(a).unsqueeze(0).repeat(2, 1).long()
     tmpc = gVar(b).unsqueeze(0).repeat(2, 1, 1).long()
-    rulead = gVar(pickle.load(open("/root/zwk/Processed_Recoder/rulead.pkl", "rb"))).float().unsqueeze(0).repeat(2, 1, 1)
+    rulead = gVar(pickle.load(open(rulead_path, "rb"))).float().unsqueeze(0).repeat(2, 1, 1)
     tmpindex = gVar(np.arange(len(vds.ruledict))).unsqueeze(0).repeat(2, 1).long()
     tmpchar = gVar(tmpast).unsqueeze(0).repeat(2, 1, 1).long()
     tmpindex2 = gVar(np.arange(len(vds.Code_Voc))).unsqueeze(0).repeat(2, 1).long()
@@ -1397,15 +1397,15 @@ def solveone(data, model):#(treestr, prob, model, subroot, vardic, typedic, idx,
     #assert(np.array_equal(x[2][0], dev_set.data[8][idx]))
     #assert(np.array_equal(x[3][0], dev_set.data[9][idx]))
     open('patch/%s.json' % data[0]['idss'], 'w').write(json.dumps(savedata, indent=4))
-def solveone2(data, model,ssize):#(treestr, prob, model, subroot, vardic, typedic, idx, idss, classname, mode):
+def solveone2(data, model,ssize,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):#(treestr, prob, model, subroot, vardic, typedic, idx, idss, classname, mode):
     #os.environ["CUDA_VISIBLE_DEVICES"]="2, 3"
     #assert(len(data) <= 40)
     args.batch_size = 20
-    dev_set = SumDataset(args, "val", valdatapkl_f="/root/zwk/Processed_Recoder/valdata.pkl",
-                         nl_voc_path="/root/zwk/Processed_Recoder/nl_voc.pkl",
-                         rule_path="/root/zwk/Processed_Recoder/rule.pkl",
-                         code_voc_path='/root/zwk/Processed_Recoder/code_voc.pkl',
-                         char_voc_path='/root/zwk/Processed_Recoder/char_voc.pkl')
+    dev_set = SumDataset(args, "val", valdatapkl_f=valdatapkl_f,
+                         nl_voc_path=nl_voc_f,
+                         rule_path=rule_f,
+                         code_voc_path=code_voc_path,
+                         char_voc_path=char_voc_path)
 
     dev_set.preProcessOne(data)#x = dev_set.preProcessOne(treestr, prob)
     #dev_set.nl = [treestr.split()]
@@ -1425,7 +1425,7 @@ def solveone2(data, model,ssize):#(treestr, prob, model, subroot, vardic, typedi
         #assert(np.array_equal(x[2][0], dev_set.datam[8][4]))
         #assert(np.array_equal(x[3][0], dev_set.datam[9][4]))
         #print(data[indexs]['mode'], data[indexs]['oldcode'])
-        ans = BeamSearch((x[0], x[1], None, None, None, None, None, None, x[2], x[3]), dev_set, model, int(ssize), args.batch_size, indexs)
+        ans = BeamSearch((x[0], x[1], None, None, None, None, None, None, x[2], x[3]), dev_set, model, int(ssize), args.batch_size, indexs,rulead_path)
         print('debug', len(ans[0]))
         for i in range(len(ans)):
             currid = indexs * args.batch_size + i
@@ -1465,15 +1465,15 @@ def solveone2(data, model,ssize):#(treestr, prob, model, subroot, vardic, typedi
     #assert(np.array_equal(x[2][0], dev_set.data[8][idx]))
     #assert(np.array_equal(x[3][0], dev_set.data[9][idx]))
     open('patchmu/%s.json' % data[0]['idss'], 'w').write(json.dumps(savedata, indent=4))
-def solveone3(data, model,ssize,classcontent_f):#(treestr, prob, model, subroot, vardic, typedic, idx, idss, classname, mode):
+def solveone3(data, model,ssize,classcontent_f,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):#(treestr, prob, model, subroot, vardic, typedic, idx, idss, classname, mode):
     #os.environ["CUDA_VISIBLE_DEVICES"]="2, 3"
     #assert(len(data) <= 40)
     args.batch_size = 20
-    dev_set = SumDataset(args, "val", valdatapkl_f="/root/zwk/Processed_Recoder/valdata.pkl",
-                         nl_voc_path="/root/zwk/Processed_Recoder/nl_voc.pkl",
-                         rule_path="/root/zwk/Processed_Recoder/rule.pkl",
-                         code_voc_path='/root/zwk/Processed_Recoder/code_voc.pkl',
-                         char_voc_path='/root/zwk/Processed_Recoder/char_voc.pkl')
+    dev_set = SumDataset(args, "val", valdatapkl_f=valdatapkl_f,
+                         nl_voc_path=nl_voc_f,
+                         rule_path=rule_f,
+                         code_voc_path=code_voc_path,
+                         char_voc_path=char_voc_path)
 
     dev_set.preProcessOne(data)#x = dev_set.preProcessOne(treestr, prob)
     #dev_set.nl = [treestr.split()]
@@ -1493,7 +1493,7 @@ def solveone3(data, model,ssize,classcontent_f):#(treestr, prob, model, subroot,
         #assert(np.array_equal(x[2][0], dev_set.datam[8][4]))
         #assert(np.array_equal(x[3][0], dev_set.datam[9][4]))
         #print(data[indexs]['mode'], data[indexs]['oldcode'])
-        ans = BeamSearch((x[0], x[1], None, None, None, None, None, None, x[2], x[3]), dev_set, model, ssize, args.batch_size, indexs)
+        ans = BeamSearch((x[0], x[1], None, None, None, None, None, None, x[2], x[3]), dev_set, model, ssize, args.batch_size, indexs,rulead_path)
         for i in range(len(ans)):
             currid = indexs * args.batch_size + i
 

@@ -3,6 +3,8 @@ import os
 
 import yaml
 
+from Recoder.testone_ghl import generate_fixes
+
 
 def translate_CoCoNut(config_file,clearml):
     with open(config_file, 'r') as f:
@@ -64,12 +66,30 @@ def translate_ONMT(config_file, clearml):
         cmd=cmd+" --batch_type "+config_dict["batch_type"]
     os.system(cmd)
 
+def translate_Recoder(config_file,clearml):
+    with open(config_file, 'r') as f:
+        config_dict = yaml.safe_load(f)
+        f.close()
+
+    model_path=config_dict["model_path"]
+    ids_f=config_dict["ids_path"]
+    bugs_dir=config_dict["input_dir"]
+    search_size=int(config_dict["search_size"])
+    classcontent_dir=config_dict["classcontent_dir"]
+    output_dir=config_dict["output_dir"]
+    valdatapkl_f=config_dict["valdatapkl_f"]
+    nl_voc_f=config_dict["nl_voc_f"]
+    rule_f=config_dict["rule_f"]
+    code_voc_f=config_dict["code_voc_path"]
+    char_voc_path=config_dict["char_voc_path"]
+    rulead_path=config_dict["rulead_path"]
+    generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path)
 def main():
     parser = argparse.ArgumentParser(
         description='translate.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt"])
+    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -79,5 +99,7 @@ def main():
         translate_CoCoNut(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="Cure":
         translate_Cure(config_file=opt.config,clearml=opt.clearml)
+    elif opt.model=="Recoder":
+        translate_Recoder(config_file=opt.config,clearml=opt.clearml)
 if __name__ == "__main__":
     main()

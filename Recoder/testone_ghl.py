@@ -385,7 +385,7 @@ def isAssign(line):
     return False
 import time
 
-def testone(ssize,testmodel,filepath,lineid,classname,classcontent_file):
+def testone(ssize,testmodel,filepath,lineid,classname,classcontent_file,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):
     model = testmodel
     st = time.time()
     lines1 = open(filepath, "r").read()
@@ -442,10 +442,10 @@ def testone(ssize,testmodel,filepath,lineid,classname,classcontent_file):
     # print(2)
     if os.path.exists(classcontent_file):
         print("Fixing with placeholder replace")
-        ans=solveone3(data,model,ssize,classcontent_file)
+        ans=solveone3(data,model,ssize,classcontent_file,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)
     else:
         print("No classcontent, fix with simple mode")
-        ans = solveone2(data, model, ssize)
+        ans = solveone2(data, model, ssize,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)
     # print(3)
     tans = []
     for p in ans:
@@ -533,18 +533,13 @@ def testone(ssize,testmodel,filepath,lineid,classname,classcontent_file):
             parser = javalang.parser.Parser(tokens)
         tans.append({'code':tmpcode})
     return tans
-def load_model_for_test(model_path):
-    dev_set = SumDataset(args, "val", valdatapkl_f="/root/zwk/Processed_Recoder/valdata.pkl", nl_voc_path="/root/zwk/Processed_Recoder/nl_voc.pkl", rule_path="/root/zwk/Processed_Recoder/rule.pkl",
-                          code_voc_path='/root/zwk/Processed_Recoder/code_voc.pkl', char_voc_path='/root/zwk/Processed_Recoder/char_voc.pkl')
-    rulead = gVar(pickle.load(open("/root/zwk/Processed_Recoder//rulead.pkl", "rb"))).float().unsqueeze(0).repeat(2, 1, 1)
+def load_model_for_test(model_path,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):
+    dev_set = SumDataset(args, "val", valdatapkl_f=valdatapkl_f, nl_voc_path=nl_voc_f, rule_path=rule_f,
+                          code_voc_path=code_voc_path, char_voc_path=char_voc_path)
+    rulead = gVar(pickle.load(open(rulead_path, "rb"))).float().unsqueeze(0).repeat(2, 1, 1)
     args.cnum = rulead.size(1)
     tmpast = getAstPkl(dev_set)
     a, b = getRulePkl(dev_set)
-    tmpf = gVar(a).unsqueeze(0).repeat(2, 1).long()
-    tmpc = gVar(b).unsqueeze(0).repeat(2, 1, 1).long()
-    tmpindex = gVar(np.arange(len(dev_set.ruledict))).unsqueeze(0).repeat(2, 1).long()
-    tmpchar = gVar(tmpast).unsqueeze(0).repeat(2, 1, 1).long()
-    tmpindex2 = gVar(np.arange(len(dev_set.Code_Voc))).unsqueeze(0).repeat(2, 1).long()
     # print(len(dev_set))
     args.Nl_Vocsize = len(dev_set.Nl_Voc)
     args.Code_Vocsize = len(dev_set.Code_Voc)
@@ -678,13 +673,35 @@ def fix_benchmarks(model_path,benchmarks_dir,search_size,fix_dir,classcontent_di
     bears_failed_f.writelines(bears_failed)
     #qbs_failed_f.writelines(qbs_failed)
 
+def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):
+    model=load_model_for_test(model_path,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)
+    ids=codecs.open(ids_f,'r',encoding='utf8').readlines()
+    failed_ids=[]
+    for idx,id in enumerate(ids):
+        id=id.strip()
+        buggyfile = bugs_dir + '/buggy_methods/' + id + ".txt"
+        metas = codecs.open(bugs_dir + '/metas/' + id + '.txt').read()
+        buggy_lineid = int(str(metas.split('<sep>')[2]).replace('[', '').split(':')[0]) + 1
+        classname = metas.split('<sep>')[4].split("@")[0].split('\\')[-1].replace(".java", '')
+        id = metas.split('<sep>')[1]
+        classcontent_file = classcontent_dir + '/' + id + ".classcontent"
+        print(buggy_lineid, classname)
+        try:
+            fixs = testone(search_size, model, buggyfile, buggy_lineid, classname,
+                           classcontent_file,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)  # list:dict:({'code':tmpcode, 'ast':psss['otree']})
+            fix_dict={}
+            # get patch_code
+            for idx,fix in enumerate(fixs):
+                fix_dict[idx]=fix["code"]
+            patch_f=codecs.open(output_dir+'/'+id+'.fix','w',encoding='utf8')
+            patch_f.write(json.dumps(fix_dict))
+        except:
+            failed_ids.append(id+'\n')
 
 
-
-
-if __name__ == '__main__':
-    import argparse
-    fix_benchmarks("/root/zwk/Recorder/save_new/best_model.ckpt","/root/zwk/Recoder_data",150,"/root/zwk/Recoder_data/bench_","/root/zwk/Recoder_data/classcontent")
+#if __name__ == '__main__':
+    #import argparse
+    #fix_benchmarks("/root/zwk/Recorder/save_new/best_model.ckpt","/root/zwk/Recoder_data",150,"/root/zwk/Recoder_data/bench_","/root/zwk/Recoder_data/classcontent")
     """"
     model = load_model_for_test("/root/zwk/NPR_DATA0306/Processed_Recoder/Model_save/checkpointSearch/best_model.ckpt")
     testdir = "./testdata"
