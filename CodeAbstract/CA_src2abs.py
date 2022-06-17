@@ -9,11 +9,11 @@ replace literals with INT_#,FLOAT_#,CHAR_#,STRING_#
 """
 def run_src2abs(code_granularity,input_code_path_A,input_code_path_B,output_abstract_path_A,output_abstract_path_B,idioms_path,mode="pair"):
     if mode=='single':
-        arglist=["/home/zhongwenkang/NPR4J-local/lib-jar/src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,output_abstract_path_A,idioms_path]
+        arglist=["../lib-jar/src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,output_abstract_path_A,idioms_path]
     else:
-        arglist=["/home/zhongwenkang/NPR4J-local/lib-jar/src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,input_code_path_B,output_abstract_path_A,output_abstract_path_B,idioms_path]
+        arglist=["../lib-jar/src2abs-0.1-jar-with-dependencies.jar"]+[mode,code_granularity,input_code_path_A,input_code_path_B,output_abstract_path_A,output_abstract_path_B,idioms_path]
     result=jarWrapper(arglist)
-    #print(result)
+    print(result)
 
 def test_src2abs():
     "method "

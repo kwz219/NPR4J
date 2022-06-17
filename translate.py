@@ -4,7 +4,7 @@ import os
 import yaml
 
 from Recoder.testone_ghl import generate_fixes
-
+import time
 
 def translate_CoCoNut(config_file,clearml):
     with open(config_file, 'r') as f:
@@ -99,6 +99,7 @@ def main():
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
+    start=time.time()
     if opt.model=="onmt":
         translate_ONMT(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="CoCoNut":
@@ -107,5 +108,8 @@ def main():
         translate_Cure(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="Recoder":
         translate_Recoder(config_file=opt.config,clearml=opt.clearml)
+    end=time.time()
+    time_sum=end-start
+    print("total_time",time_sum)
 if __name__ == "__main__":
     main()

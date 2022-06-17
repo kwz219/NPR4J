@@ -1,0 +1,10 @@
+model: /home/zhongwenkang/Pretrained_Models/Processed_SR/save/SR_26_step_50000.pt
+beam_size: 300
+n_best: 300
+src: /home/zhongwenkang/NPR4J_processed/SequenceR/test.buggy
+tgt: /home/zhongwenkang/NPR4J_processed/SequenceR/test.fix
+output: /home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_3500.pred
+gpu: 0
+batch_size: 1
+batch_type: sents
+max_length: 210

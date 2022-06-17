@@ -195,6 +195,9 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
 #preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",
 #                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","valid")
 
+preprocess_Tufano_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                          "/home/zhongwenkang/NPR4J_processed/Tufano",
+                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/NPR4J_processed/Tufano/temp/","test")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 
@@ -304,5 +307,5 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
         writeL2F(fail_ids,output_dir+'/fail.ids')
 
 
-preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
-                           "/home/zhongwenkang/NPR4J_processed/Recoder")
+#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                           #"/home/zhongwenkang/NPR4J_processed/Recoder")

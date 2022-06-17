@@ -696,8 +696,10 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
                 fix_dict[idx]=fix["code"]
             patch_f=codecs.open(output_dir+'/'+id+'.fix','w',encoding='utf8')
             patch_f.write(json.dumps(fix_dict,indent=10))
+
         except:
             failed_ids.append(id+'\n')
+
     writeL2F(failed_ids,output_dir+'/failed_ids.txt')
 
 
