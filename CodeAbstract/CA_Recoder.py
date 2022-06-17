@@ -8,7 +8,7 @@ from Dataset.MongoHelper import MongoHelper
 from Utils.IOHelper import readF2L
 
 
-def generate_classcontent(path,output_path):
+def generate_classcontent(path,output_path,filename):
     codecontent=codecs.open(path,'r',encoding='utf8').read().strip()
     #print(codecontent)
     tree = javalang.parse.parse(codecontent)
@@ -17,7 +17,7 @@ def generate_classcontent(path,output_path):
     #print(tree)
     i=1
 
-    classcontent={"filename":path.split("/")[-1],"package_name":package_name,"classes":[]}
+    classcontent={"filename":filename,"package_name":package_name,"classes":[]}
     for clspath,clsnode in tree.filter(javalang.tree.ClassDeclaration):
         classname=getattr(clsnode,"name")
         #print("classname: ",classname)

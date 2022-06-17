@@ -17,6 +17,9 @@ import subprocess
 from Recoder.Searchnode import Node
 import traceback
 import json
+
+from Utils.CA_Utils import writeL2F
+
 linenode = ['Statement_ter', 'BreakStatement_ter', 'ReturnStatement_ter', 'ContinueStatement', 'ContinueStatement_ter', 'LocalVariableDeclaration', 'condition', 'control', 'BreakStatement', 'ContinueStatement', 'ReturnStatement', "parameters", 'StatementExpression', 'return_type']
 #os.environ["CUDA_VISIBLE_DEVICES"]="1, 4"
 def getLocVar(node):
@@ -533,23 +536,21 @@ def testone(ssize,testmodel,filepath,lineid,classname,classcontent_file,valdatap
             parser = javalang.parser.Parser(tokens)
         tans.append({'code':tmpcode})
     return tans
-def load_model_for_test(model_path,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):
-    dev_set = SumDataset(args, "val", valdatapkl_f=valdatapkl_f, nl_voc_path=nl_voc_f, rule_path=rule_f,
-                          code_voc_path=code_voc_path, char_voc_path=char_voc_path)
-    rulead = gVar(pickle.load(open(rulead_path, "rb"))).float().unsqueeze(0).repeat(2, 1, 1)
-    args.cnum = rulead.size(1)
-    tmpast = getAstPkl(dev_set)
-    a, b = getRulePkl(dev_set)
+def load_model_for_test(model_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum):
+
+    args.cnum = cnum
+
     # print(len(dev_set))
-    args.Nl_Vocsize = len(dev_set.Nl_Voc)
-    args.Code_Vocsize = len(dev_set.Code_Voc)
-    args.Vocsize = len(dev_set.Char_Voc)
-    args.rulenum = len(dev_set.ruledict) + args.NlLen
+    args.Nl_Vocsize = nl_voc_size
+    args.Code_Vocsize = code_voc_size
+    args.Vocsize = voc_size
+    args.rulenum = rule_num
 
     print("NL_voc: "+str(args.Nl_Vocsize))
     print("code_voc: " + str(args.Code_Vocsize))
     print("voc_size: " + str(args.Vocsize))
     print("rule_num: " + str(args.rulenum))
+    print("cnum: "+str(args.cnum))
     model = Decoder(args)
     if torch.cuda.is_available():
         print('using GPU')
@@ -673,8 +674,8 @@ def fix_benchmarks(model_path,benchmarks_dir,search_size,fix_dir,classcontent_di
     bears_failed_f.writelines(bears_failed)
     #qbs_failed_f.writelines(qbs_failed)
 
-def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path):
-    model=load_model_for_test(model_path,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)
+def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum):
+    model=load_model_for_test(model_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum)
     ids=codecs.open(ids_f,'r',encoding='utf8').readlines()
     failed_ids=[]
     for idx,id in enumerate(ids):
@@ -684,7 +685,7 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
         buggy_lineid = int(str(metas.split('<sep>')[2]).replace('[', '').split(':')[0]) + 1
         classname = metas.split('<sep>')[4].split("@")[0].split('\\')[-1].replace(".java", '')
         id = metas.split('<sep>')[1]
-        classcontent_file = classcontent_dir + '/' + id + ".classcontent"
+        classcontent_file = classcontent_dir + '/' + id + ".json"
         print(buggy_lineid, classname)
         try:
             fixs = testone(search_size, model, buggyfile, buggy_lineid, classname,
@@ -694,9 +695,10 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
             for idx,fix in enumerate(fixs):
                 fix_dict[idx]=fix["code"]
             patch_f=codecs.open(output_dir+'/'+id+'.fix','w',encoding='utf8')
-            patch_f.write(json.dumps(fix_dict))
+            patch_f.write(json.dumps(fix_dict,indent=10))
         except:
             failed_ids.append(id+'\n')
+    writeL2F(failed_ids,output_dir+'/failed_ids.txt')
 
 
 #if __name__ == '__main__':

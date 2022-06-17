@@ -83,7 +83,13 @@ def translate_Recoder(config_file,clearml):
     code_voc_f=config_dict["code_voc_path"]
     char_voc_path=config_dict["char_voc_path"]
     rulead_path=config_dict["rulead_path"]
-    generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path)
+    NL_voc_size=int(config_dict["NL_voc_size"])
+    code_voc_size=int(config_dict["code_voc_size"])
+    voc_size=int(config_dict["voc_size"])
+    rule_num=int(config_dict["rule_num"])
+    cnum=int(config_dict["cnum"])
+    generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path,
+                   NL_voc_size,code_voc_size,voc_size,rule_num,cnum)
 def main():
     parser = argparse.ArgumentParser(
         description='translate.py',

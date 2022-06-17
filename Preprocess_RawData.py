@@ -127,8 +127,8 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
         writeL2F(correct_ids, correct_f)
         #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
     build(output_dir+".buggy",output_dir+".fix",output_dir+".fids",output_dir+".sids",ids)
-preprocess_SequenceR_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
-                             "/home/zhongwenkang/NPR4J_processed/SequenceR/test","/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
+#preprocess_SequenceR_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                             #"/home/zhongwenkang/NPR4J_processed/SequenceR/test","/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 
@@ -294,12 +294,15 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
             if not os.path.exists(os.path.join(output_dir,id+'.json')):
                 print(idx)
                 try:
-                    generate_classcontent(os.path.join(input_dir,"buggy_classes",id+".txt"),os.path.join(output_dir,id+'.json'))
+                    meta_info=codecs.open(os.path.join(input_dir,"metas",id+".txt")).read().strip()
+                    filename=meta_info.split("<sep>")[-1].split('@')[0].split("\\")[-1]
+                    generate_classcontent(os.path.join(input_dir,"buggy_classes",id+".txt"),os.path.join(output_dir,id+'.json')
+                                          ,filename)
                 except:
                     fail_ids.append(id)
         print(len(fail_ids))
-        writeL2F(output_dir+'/fail.ids')
+        writeL2F(fail_ids,output_dir+'/fail.ids')
 
 
-#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
-                           #"/home/zhongwenkang/NPR4J_processed/Recoder")
+preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                           "/home/zhongwenkang/NPR4J_processed/Recoder")
