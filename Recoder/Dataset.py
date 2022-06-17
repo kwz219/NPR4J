@@ -5,14 +5,14 @@ import random
 import pickle
 import os
 from nltk import word_tokenize
-from vocab import VocabEntry
+from Recoder.vocab import VocabEntry
 import numpy as np
 import re
 import h5py
 from tqdm import tqdm
 import json
 from scipy import sparse
-from parse_dataflow import GetFlow
+
 sys.setrecursionlimit(500000000)
 class SumDataset(data.Dataset):
     def __init__(self, config, dataName="train",trndatapkl_f="",valdatapkl_f="",nl_voc_path="/root/zwk/Recoder_models/nl_voc.pkl",rule_path="/root/zwk/Recoder_models/rule.pkl",code_voc_path="/root/zwk/Recoder_models/code_voc.pkl",char_voc_path="/root/zwk/Recoder_models/char_voc.pkl"):

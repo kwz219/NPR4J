@@ -1,5 +1,5 @@
 import torch.nn as nn
-from gelu import GELU
+from Recoder.gelu import GELU
 class ConvolutionLayer(nn.Module):
     def __init__(self, dmodel, layernum, kernelsize=3, dropout=0.1):
         super(ConvolutionLayer, self).__init__()

@@ -1,10 +1,10 @@
 import torch.nn as nn
 
-from Multihead_Attention import MultiHeadedAttention
-from SubLayerConnection import SublayerConnection
-from DenseLayer import DenseLayer
-from ConvolutionForward import ConvolutionLayer
-from Multihead_Combination import MultiHeadedCombination
+from Recoder.Multihead_Attention import MultiHeadedAttention
+from Recoder.SubLayerConnection import SublayerConnection
+from Recoder.DenseLayer import DenseLayer
+from Recoder.ConvolutionForward import ConvolutionLayer
+from Recoder.Multihead_Combination import MultiHeadedCombination
 
 
 class TransformerBlock(nn.Module):

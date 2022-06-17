@@ -8,13 +8,13 @@ import json
 import pickle
 from tqdm import tqdm
 import numpy as np
-from run import *
-from stringfycode import stringfyRoot
+from Recoder.run import *
+from Recoder.stringfycode import stringfyRoot
 from copy import deepcopy
 import time
 import io
 import subprocess
-from Searchnode import Node
+from Recoder.Searchnode import Node
 import traceback
 import json
 linenode = ['Statement_ter', 'BreakStatement_ter', 'ReturnStatement_ter', 'ContinueStatement', 'ContinueStatement_ter', 'LocalVariableDeclaration', 'condition', 'control', 'BreakStatement', 'ContinueStatement', 'ReturnStatement', "parameters", 'StatementExpression', 'return_type']

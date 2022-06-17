@@ -1,6 +1,6 @@
 from torch import nn
 import torch
-from gelu import GELU
+from Recoder.gelu import GELU
 class TreeConv(nn.Module):
     def __init__(self, kernel, dmodel):
         super(TreeConv ,self).__init__()

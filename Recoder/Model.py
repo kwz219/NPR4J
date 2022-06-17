@@ -1,18 +1,15 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-from Transfomer import TransformerBlock
-from rightnTransfomer import rightTransformerBlock
-from Multihead_Combination import MultiHeadedCombination
-from Embedding import Embedding
-from TreeConvGen import TreeConvGen
-from Multihead_Attention import MultiHeadedAttention
-from gelu import GELU
-from LayerNorm import LayerNorm
-from decodeTrans import decodeTransformerBlock
-from gcnnnormal import GCNNM
-from postionEmbedding import PositionalEmbedding
-from graphTransformer import graphTransformerBlock
+from Recoder.Transfomer import TransformerBlock
+from Recoder.rightnTransfomer import rightTransformerBlock
+from Recoder.Embedding import Embedding
+from Recoder.gelu import GELU
+from Recoder.LayerNorm import LayerNorm
+from Recoder.decodeTrans import decodeTransformerBlock
+from Recoder.gcnnnormal import GCNNM
+from Recoder.postionEmbedding import PositionalEmbedding
+from Recoder.graphTransformer import graphTransformerBlock
 class TreeAttEncoder(nn.Module):
     def __init__(self, args):
         super(TreeAttEncoder, self).__init__()

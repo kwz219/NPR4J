@@ -1,5 +1,5 @@
 import torch.nn as nn
-from CombinationLayer import CombinationLayer
+from Recoder.CombinationLayer import CombinationLayer
 
 
 class MultiHeadedCombination(nn.Module):

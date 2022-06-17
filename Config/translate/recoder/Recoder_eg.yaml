@@ -1,0 +1,12 @@
+model_path: /home/zhongwenkang/Pretrained_Models/Recoder/best_model.ckpt
+ids_path: /home/zhongwenkang/NPR4J_new_test/new_test/test.ids
+input_dir: /home/zhongwenkang/NPR4J_new_test/new_test
+search_size: 500
+classcontent_dir: /home/zhongwenkang/NPR4J_processed/Recoder
+output_dir: /home/zhongwenkang/NPR4J_Pred/Recoder
+valdatapkl_f: /home/zhongwenkang/Pretrained_Models/Recoder/valdata.pkl
+nl_voc_f: /home/zhongwenkang/Pretrained_Models/Recoder/nl_voc.pkl
+rule_f: /home/zhongwenkang/Pretrained_Models/Recoder/rule.pkl
+code_voc_path: /home/zhongwenkang/Pretrained_Models/Recoder/code_voc.pkl
+char_voc_path: /home/zhongwenkang/Pretrained_Models/Recoder/char_voc.pkl
+rulead_path: /home/zhongwenkang/Pretrained_Models/Recoder/rulead.pkl

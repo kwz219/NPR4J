@@ -1,8 +1,8 @@
 from torch import nn
 import torch
-from gelu import GELU
-from SubLayerConnection import SublayerConnection
-from Multihead_Combination import   MultiHeadedCombination
+from Recoder.gelu import GELU
+from Recoder.SubLayerConnection import SublayerConnection
+from Recoder.Multihead_Combination import MultiHeadedCombination
 class GCNN(nn.Module):
     def __init__(self, dmodel):
         super(GCNN ,self).__init__()

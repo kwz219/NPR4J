@@ -1,6 +1,6 @@
 import torch.nn as nn
-from TokenEmbedding import TokenEmbedding
-from postionEmbedding import PositionalEmbedding
+from Recoder.TokenEmbedding import TokenEmbedding
+from Recoder.postionEmbedding import PositionalEmbedding
 
 
 class Embedding(nn.Module):
