@@ -8,8 +8,7 @@ from CodeAbstract.CA_Recoder import generate_classcontent
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
 from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.CA_Utils import remove_comments
-from Utils.IOHelper import readF2L, writeL2F
-
+from Utils.IOHelper import readF2L, writeL2F, readF2L_ori
 
 """
 ids_f: a list of bug-fix ids
@@ -17,66 +16,33 @@ input_dir: raw data dir
 output_dir: where you want to output the processed code of SequenceR
 tmp_dir: when building a SequenceR-type context, you need a directory to restore temp files
 """
-def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
+def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
     ids=readF2L(ids_f)
+
     def build(src_f, tgt_f, error_f, correct_f, ids):
         buggy_codes = []
         fix_codes = []
         error_ids = []
-        correct_ids=[]
-        ind=1
-        newline_count=0
-        in_count=0
-        bug_1=0
+        correct_ids = []
+        ind = 1
+        in_count = 0
         for id in ids:
-            buginfo={"_id":id}
-            buginfo["buggy_code"]=codecs.open(input_dir+"/buggy_methods/"+id+'.txt','r',encoding='utf8').read().strip()
-            id_metas=codecs.open(input_dir+"/metas/"+id+'.txt','r',encoding='utf8').read().strip()
-            buginfo["err_pos"]=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
-            tmp_f=tmp_dir+id+'.txt'
-            fix_code=codecs.open(input_dir+'/fix_lines/'+id+'.txt').read().strip()
+            buginfo = {"_id": id}
+            buginfo["buggy_code"] = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+            buginfo["buggy_line"] = codecs.open(input_dir + "/buggy_lines/" + id + '.txt', 'r',
+                                                encoding='utf8').read().strip()
+            id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+            buginfo["err_start"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+            buginfo["err_end"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[1])
 
+            tmp_f = tmp_dir +'/'+ id + '.txt'
+            fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip()
 
-            buggy_code,hitflag=run_SequenceR_abs(input_dir+"/buggy_classes_java/"+id+'.txt',tmp_f,buginfo,max_length=1000)
-            print("hitflag",hitflag)
-            if len(buggy_code.strip())<=1:
-                    hitflag=0
-            if hitflag==1:
-                    try:
-                        toked_fix = javalang.tokenizer.tokenize(fix_code)
-                        toked_fix = ' '.join([tok.value for tok in toked_fix])
-                    except:
-                        toked_fix = re.split(r"([.,!?;(){}])", fix_code)
-                        toked_fix = ' '.join(toked_fix)
-                    try:
-                        toked_bug=javalang.tokenizer.tokenize(buggy_code)
-                        toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
-                    except:
-                        toked_bug = re.split(r"([.,!?;(){}])", buggy_code)
-                        toked_bug = ' '.join(toked_bug).replace('< START_BUG >','<START_BUG>').replace('< END_BUG >','<END_BUG>')
-                    bug_count=toked_bug.count('<START_BUG>'
-                    )
-                    if not bug_count==1:
-                        bug_1+=1
-                        error_ids.append(buginfo['_id'])
-                    else:
-                        buggy_codes.append(toked_bug)
-                        fix_codes.append(toked_fix)
-                        if '\n' in toked_bug:
-                            newline_count+=1
-                            print("newline_count",newline_count)
-                        #print(toked_bug)
-                        #print(toked_fix)
-                        correct_ids.append(buginfo['_id'])
-                        in_count+=1
-            elif hitflag==0:
-                #as a substitude-schema, generating method-level context
+            buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
+                                                    max_length=1000)
+            print("hitflag", hitflag)
 
-                buggy_method=readF2L(input_dir+'/buggy_methods/'+id+'.txt')
-                buggy_line_id=codecs.open(input_dir+'/metas/'+id+'.txt').read().strip().split("<sep>")[2]
-                buggy_line_id=int(buggy_line_id[1:-1].split(":")[0])
-                buggy_method[buggy_line_id]="<START_BUG> "+buggy_method[buggy_line_id]+" <END_BUG>"
-                buggy_code=' '.join(buggy_method)
+            if hitflag == 1:
                 try:
                     toked_fix = javalang.tokenizer.tokenize(fix_code)
                     toked_fix = ' '.join([tok.value for tok in toked_fix])
@@ -95,40 +61,83 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
                 bug_count = toked_bug.count('<START_BUG>'
                                             )
                 if not bug_count == 1:
-                    bug_1 += 1
-                    error_ids.append(buginfo['_id'])
-                else:
-                    buggy_codes.append(toked_bug)
-                    fix_codes.append(toked_fix)
-                    if '\n' in toked_bug:
-                        newline_count += 1
-                        print("newline_count", newline_count)
-                    # print(toked_bug)
-                    # print(toked_fix)
-                    correct_ids.append(buginfo['_id'])
-                    in_count += 1
+                    method = buginfo["buggy_code"]
+                    err_end=int(buginfo["err_end"])
+                    err_start=int(buginfo["err_start"])
+                    err_end = min(len(method) - 1, err_end)
+                    method[err_end] = "<END_BUG> " + method[err_end].strip()
+                    method[err_start] = "<START_BUG> " + method[err_start].strip()
+                    method=' '.join(method)
+                    try:
+                        toked_bug = javalang.tokenizer.tokenize(method)
+                        toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                                       '<START_BUG>').replace(
+                            '< END_BUG >', '<END_BUG>')
+                    except:
+                        toked_bug = re.split(r"([.,!?;(){}])", method)
+                        toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
+                            '< END_BUG >', '<END_BUG>')
+                buggy_codes.append(toked_bug)
+                fix_codes.append(toked_fix)
 
-            elif hitflag==2:
-                    print(tmp_f)
-                    error_ids.append(buginfo['_id'])
+                correct_ids.append(buginfo['_id'])
+                in_count += 1
+            elif hitflag == 2:
+                error_ids.append(buginfo['_id'])
+                print(tmp_f)
             else:
-                    error_ids.append(buginfo['_id'])
-            print(ind,"in:",in_count,"bug >1",bug_1)
-            print("newline_count", newline_count)
-            ind+=1
-        assert len(buggy_codes)==len(fix_codes)
-            #buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
+                try:
+                    toked_fix = javalang.tokenizer.tokenize(fix_code)
+                    toked_fix = ' '.join([tok.value for tok in toked_fix])
+                except:
+                    toked_fix = re.split(r"([.,!?;(){}])", fix_code)
+                    toked_fix = ' '.join(toked_fix)
+                if True:
+                    method = buginfo["buggy_code"]
+                    err_end=int(buginfo["err_end"])
+                    err_start=int(buginfo["err_start"])
+                    err_end=min(len(method)-1,err_end)
+                    method[err_end] = "<END_BUG> " + method[err_end].strip()
+                    method[err_start] = "<START_BUG> " + method[err_start].strip()
+                    method=' '.join(method)
+                    try:
+                        toked_bug = javalang.tokenizer.tokenize(method)
+                        toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                                       '<START_BUG>').replace(
+                            '< END_BUG >', '<END_BUG>')
+                    except:
+                        toked_bug = re.split(r"([.,!?;(){}])", method)
+                        toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
+                            '< END_BUG >', '<END_BUG>')
+                buggy_codes.append(toked_bug)
+                fix_codes.append(toked_fix)
+
+                correct_ids.append(buginfo['_id'])
+                in_count += 1
+            print(ind, "correct:", len(correct_ids))
+
+            ind += 1
         assert len(buggy_codes) == len(fix_codes)
-        print(len(buggy_codes),len(fix_codes))
-        print("newline_count", newline_count)
-        writeL2F(buggy_codes,src_f)
-        writeL2F(fix_codes,tgt_f)
-        writeL2F(error_ids,error_f)
+        # buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
+        assert len(buggy_codes) == len(fix_codes)
+        print(len(buggy_codes), len(fix_codes))
+
+        writeL2F(buggy_codes, src_f)
+        writeL2F(fix_codes, tgt_f)
+        writeL2F(error_ids, error_f)
         writeL2F(correct_ids, correct_f)
-        #build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
-    build(output_dir+".buggy",output_dir+".fix",output_dir+".fids",output_dir+".sids",ids)
+        # build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
+    build(output_prefix+".buggy",output_prefix+".fix",output_prefix+".fids",output_prefix+".sids",ids)
+preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             "/home/zhongwenkang/RawData_Processed/SequenceR/bears","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             "/home/zhongwenkang/RawData_Processed/SequenceR/d4j","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             "/home/zhongwenkang/RawData_Processed/SequenceR/qbs","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             "/home/zhongwenkang/RawData_Processed/SequenceR/bdj","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
 #preprocess_SequenceR_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
-                             #"/home/zhongwenkang/NPR4J_processed/SequenceR/test","/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
+                             #,"/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 
@@ -164,7 +173,7 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
             buggy_f = input_dir + '/buggy_methods/' + id + ".txt"
             fix_f = input_dir + '/fix_methods/' + id + ".txt"
 
-            if mode=="test":
+            if "test" in mode:
                 run_src2abs("method",buggy_f,"",out_a,"",idom_path,mode='single')
                 run_src2abs("method", fix_f, "", out_b, "", idom_path, mode='single')
             else:
@@ -195,9 +204,21 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
 #preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",
 #                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","valid")
 
-preprocess_Tufano_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
-                          "/home/zhongwenkang/NPR4J_processed/Tufano",
-                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/NPR4J_processed/Tufano/temp/","test")
+#preprocess_Tufano_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
+                          #"/home/zhongwenkang/NPR4J_processed/Tufano",
+                          #"CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/NPR4J_processed/Tufano/temp/","test")
+preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          "/home/zhongwenkang/RawData_Processed/Tufano",
+                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","bdj_test")
+preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          "/home/zhongwenkang/RawData_Processed/Tufano",
+                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","bears_test")
+preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          "/home/zhongwenkang/RawData_Processed/Tufano",
+                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","d4j_test")
+preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          "/home/zhongwenkang/RawData_Processed/Tufano",
+                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","qbs_test")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 

@@ -2,7 +2,7 @@ import nltk
 import numpy as np
 import os
 
-from translate_token import print_bleu_res_to_file
+from CODIT.translate_token import print_bleu_res_to_file
 
 
 def transform_to_ngram(code, n=2):

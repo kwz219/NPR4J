@@ -30,7 +30,8 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
             buginfo={"_id":id}
             buginfo["buggy_code"]=codecs.open(input_dir+"/buggy_methods/"+id+'.txt','r',encoding='utf8').read().strip()
             id_metas=codecs.open(input_dir+"/metas/"+id+'.txt','r',encoding='utf8').read().strip()
-            buginfo["err_pos"]=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+            buginfo["err_start"]=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+            buginfo["err_end"]=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[1])
             tmp_f=tmp_dir+id+'.txt'
             fix_code=codecs.open(input_dir+'/fix_lines/'+id+'.txt').read().strip()
 
@@ -54,24 +55,47 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_dir,tmp_dir):
                     bug_count=toked_bug.count('<START_BUG>'
                     )
                     if not bug_count==1:
-                        bug_1+=1
-                    else:
-                        buggy_codes.append(toked_bug)
-                        fix_codes.append(toked_fix)
-                        if '\n' in toked_bug:
-                            newline_count+=1
-                            print("newline_count",newline_count)
-                        #print(toked_bug)
-                        #print(toked_fix)
-                        correct_ids.append(buginfo['_id'])
-                        in_count+=1
+                        method=buginfo["buggy_code"]
+                        method[int(buginfo["err_end"])] = "<END_BUG> " + method[int(buginfo["err_end"])].strip()
+                        method[int(buginfo["err_start"])]="<START_BUG> "+method[int(buginfo["err_start"])].strip()
+                        try:
+                            toked_bug = javalang.tokenizer.tokenize(method)
+                            toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                                           '<START_BUG>').replace(
+                                '< END_BUG >', '<END_BUG>')
+                        except:
+                            toked_bug = re.split(r"([.,!?;(){}])", method)
+                            toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
+                                '< END_BUG >', '<END_BUG>')
+                    buggy_codes.append(toked_bug)
+                    fix_codes.append(toked_fix)
+
+                    correct_ids.append(buginfo['_id'])
+                    in_count+=1
             elif hitflag==2:
                     error_ids.append(buginfo['_id'])
                     print(tmp_f)
             else:
-                    error_ids.append(buginfo['_id'])
+                if True:
+                    method = buginfo["buggy_code"]
+                    method[int(buginfo["err_end"])] = "<END_BUG> " + method[int(buginfo["err_end"])].strip()
+                    method[int(buginfo["err_start"])] = "<START_BUG> " + method[int(buginfo["err_start"])].strip()
+                    try:
+                        toked_bug = javalang.tokenizer.tokenize(method)
+                        toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                                       '<START_BUG>').replace(
+                            '< END_BUG >', '<END_BUG>')
+                    except:
+                        toked_bug = re.split(r"([.,!?;(){}])", method)
+                        toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
+                            '< END_BUG >', '<END_BUG>')
+                buggy_codes.append(toked_bug)
+                fix_codes.append(toked_fix)
+
+                correct_ids.append(buginfo['_id'])
+                in_count += 1
             print(ind,"in:",in_count,"bug >1",bug_1)
-            print("newline_count", newline_count)
+
             ind+=1
         assert len(buggy_codes)==len(fix_codes)
             #buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)

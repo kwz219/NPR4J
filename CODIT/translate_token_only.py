@@ -8,11 +8,11 @@ import argparse
 import numpy as np
 from nltk.translate import bleu_score
 
-import onmt.opts
-from codit.grammar import JavaGrammar
-from codit.hypothesis import Hypothesis
-from onmt.translate.translator import build_translator
-from onmt.utils.logging import init_logger
+import CODIT.onmt.opts
+from CODIT.codit.grammar import JavaGrammar
+from CODIT.codit.hypothesis import Hypothesis
+from CODIT.onmt.translate.translator import build_translator
+from CODIT.onmt.utils.logging import init_logger
 
 
 def get_edit_dist(org_code, cand_code):

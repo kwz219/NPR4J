@@ -2,14 +2,14 @@ import pickle
 
 import argparse
 import sys, os
-from codit.clone_based_model import clone_based_structural_transformation
-from codit.codit_options_parser import get_options
-from codit.grammar import JavaGrammar
-from translate_structure import translate_all as structure_translate
+from CODIT.codit.clone_based_model import clone_based_structural_transformation
+from CODIT.codit.codit_options_parser import get_options
+from CODIT.codit.grammar import JavaGrammar
+from CODIT.translate_structure import translate_all as structure_translate
 import os
-from translate_token import main as token_translate
-from util import debug
-from clone_based_edit import main as clone_based_token_generate
+from CODIT.translate_token import main as token_translate
+from CODIT.util import debug
+from CODIT.clone_based_edit import main as clone_based_token_generate
 
 
 def check_existence(trees, golden_tree):

@@ -1,6 +1,6 @@
 import numpy as np
 
-import util
+import CODIT.util
 
 
 def read_examples(_src, _tgt):

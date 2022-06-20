@@ -4,7 +4,7 @@ from datetime import datetime
 from sys import stderr
 
 from apted import APTED, Config
-from codit.hypothesis import Hypothesis
+from CODIT.codit.hypothesis import Hypothesis
 import numpy as np
 
 

@@ -9,13 +9,13 @@ import numpy as np
 import torch
 from nltk.translate import bleu_score
 
-from codit.grammar import JavaGrammar
+from CODIT.codit.grammar import JavaGrammar
 from onmt.utils.logging import init_logger
 from onmt.translate.translator import build_translator
 
 import onmt.opts
-from util import debug
-from codit.hypothesis import Hypothesis
+from CODIT.util import debug
+from CODIT.codit.hypothesis import Hypothesis
 
 
 def get_edit_dist(org_code, cand_code):

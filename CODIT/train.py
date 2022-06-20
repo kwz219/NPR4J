@@ -6,9 +6,9 @@ from __future__ import division
 
 import argparse
 
-import onmt.opts as opts
-from onmt.train_multi import main as multi_main
-from onmt.train_single import main as single_main
+import CODIT.onmt.opts as opts
+from CODIT.onmt.train_multi import main as multi_main
+from CODIT.onmt.train_single import main as single_main
 
 
 def main(opt, train_type):

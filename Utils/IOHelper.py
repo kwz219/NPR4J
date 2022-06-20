@@ -28,6 +28,13 @@ def readF2L(filepath):
             lines.append(line.strip())
         f.close()
     return lines
+def readF2L_ori(filepath):
+    lines=[]
+    with open(filepath,'r',encoding='utf-8')as f:
+        for line in f:
+            lines.append(line)
+        f.close()
+    return lines
 def readF2L_enc(filepath,enc):
     lines=[]
     with open(filepath,'r',encoding=enc)as f:

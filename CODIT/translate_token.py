@@ -12,11 +12,11 @@ import numpy as np
 from nltk.translate import bleu_score
 
 import onmt.opts
-from codit.grammar import JavaGrammar
+from CODIT.codit.grammar import JavaGrammar
 from onmt.translate.translator import build_translator
 from onmt.utils.logging import init_logger
-from translate_structure import get_edit_dist
-from util import write_dummy_generated_node_types, debug
+from CODIT.translate_structure import get_edit_dist
+from CODIT.util import write_dummy_generated_node_types, debug
 
 
 def get_bleu_score(original_codes, generated_top_result):

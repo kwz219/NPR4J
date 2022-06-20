@@ -23,14 +23,14 @@ def checkif_oneline_diff(ids_f,input_dir,output_prefix):
                 err_count+=1
                 err_types.append(tag)
                 err_lines=src_pos+tgt_pos
-        if err_count>1 or "insert" in err_types or "delete" in err_types or err_lines>2:
+        if err_count>1 or "insert" in err_types or "delete" in err_types :
             none_ids.append(id)
         else:
             one_ids.append(id)
     print(len(one_ids))
     print(len(none_ids))
-    writeL2F(one_ids,output_prefix+"oneline.ids")
-    writeL2F(none_ids,output_prefix+"noneline.ids")
+    #writeL2F(one_ids,output_prefix+"oneline.ids")
+    #writeL2F(none_ids,output_prefix+"noneline.ids")
 
 #checkif_oneline_diff("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train","/home/zhongwenkang/RawData/Train/")
 #checkif_oneline_diff("/home/zhongwenkang/RawData/Valid/valid.ids","/home/zhongwenkang/RawData/Valid","/home/zhongwenkang/RawData/Valid/")

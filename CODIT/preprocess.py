@@ -11,10 +11,10 @@ import sys
 
 import torch
 
-from onmt.utils.logging import init_logger, logger
+from CODIT.onmt.utils.logging import init_logger, logger
 
-import onmt.inputters as inputters
-import onmt.opts as opts
+import CODIT.onmt.inputters as inputters
+import CODIT.onmt.opts as opts
 
 
 def check_existing_pt_files(opt):

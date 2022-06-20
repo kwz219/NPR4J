@@ -16,8 +16,11 @@ code abstract at 3 levels:
 """
 def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo,max_length):
     inputcode_f=inputcode_f.replace(".txt",".java")
+    if not os.path.exists(outputcode_f):
+        inputcode_f=inputcode_f.replace("bears_","").replace("bdjar_","").replace("qbs_","").replace("d4j_","")
     args=["./lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar",inputcode_f,outputcode_f]
     if not os.path.exists(outputcode_f):
+
         out,err=jarWrapper(args)
         #print(err)
     try:
@@ -26,6 +29,7 @@ def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo,max_length):
         code,hitflag = add_buggy_method(class_content,buginfo,max_length)
         if hitflag==3:
             print(outputcode_f)
+
     except:
         code=''
         hitflag=0
@@ -34,30 +38,29 @@ def run_SequenceR_abs(inputcode_f,outputcode_f,buginfo,max_length):
 def run_SequenceR_ContextM(buginfo):
     code = add_buggy_method(buginfo)
     return code
-def run_SequenceR_abs_p3(inputcode_f,outputcode_f,buginfo):
-    args=["../lib-jar/abstraction-p3.jar",inputcode_f,outputcode_f]
-    if not os.path.exists(outputcode_f):
-        out,err=jarWrapper(args)
-    try:
-        class_content=codecs.open(outputcode_f,'r',encoding='iso8859-1').read()
-        code,hitflag = add_buggy_method(class_content,buginfo)
-    except:
-        code=''
-        hitflag=0
-    return code,hitflag
+
 """
 add <START_BUG> before buggyline and <END_BUG> after buggyline
 remove comments of code 
 """
 def add_buggy_method(cont,res,max_length):
-    buggycode=res["buggy_code"].split("\n")
-    if "err_pos" in res.keys():
-        err_pos=res["err_pos"]
+    buggy_code=res["buggy_code"]
+    buggy_line=res["buggy_line"].strip()
+    err_start=int(res['err_start'])
+    err_end=int(res['err_end'])
+
+    print(buggy_code[err_start])
+    print(buggy_line)
+    if buggy_line in buggy_code[err_start]:
+        print("in")
     else:
-        err_pos=int(res['errs'][0]["src_pos"][1:-1].split(":")[0])
-    print("err_pos",err_pos)
+        print("not in ")
+    error_line="<START_BUG> "+buggy_line +" <END_BUG>"
+    buggy_code[err_start]=error_line
+    print("err_start",err_start)
+    print("err_end",err_end)
     m_start_ind=0
-    for ind,line in enumerate(buggycode):
+    for ind,line in enumerate(buggy_code):
         line =str(line.strip())
         if line=="":
             continue
@@ -72,11 +75,10 @@ def add_buggy_method(cont,res,max_length):
     if last=="{" and (not postfix==" "):
         m_start.replace("{"," {")
     m_start=m_start.replace("final public","public final").replace("String args[]","String[] args").replace(",Appt",", Appt")
-    buggycode[err_pos]="<START_BUG> " + buggycode[err_pos].strip() + " <END_BUG>"
-    errorline=buggycode[err_pos]
 
-    buggycode=buggycode[m_start_ind:-2]
-    #print(m_start)
+
+
+    buggycode=buggy_code[m_start_ind:]
 
 
     def truncate(codelist,errorpos):
@@ -124,14 +126,13 @@ def add_buggy_method(cont,res,max_length):
             hitflag=1
         else:
             new_lines.append(line.strip())
-    startpos=len(new_lines)//2
+
     if hitflag==0:
-        rep_index=new_lines.index("}",startpos)
-        new_lines=new_lines[:rep_index+1]+buggycode+new_lines[rep_index+1:]
+        new_lines=new_lines+buggycode
 
         hitflag=1
 
-
+    #print(new_lines)
     def remove_comments(codelines):
         pure_codes=[]
         for line in codelines:
@@ -140,8 +141,9 @@ def add_buggy_method(cont,res,max_length):
             else:
                 pure_codes.append(line.strip())
         return pure_codes
+    #print(new_lines)
     new_lines=remove_comments(new_lines)
-    error_pos=new_lines.index(errorline)
+    error_pos=new_lines.index(error_line)
     print(error_pos)
     trunc_lines=truncate(new_lines,error_pos)
 
