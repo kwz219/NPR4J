@@ -77,6 +77,8 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                         toked_bug = re.split(r"([.,!?;(){}])", method)
                         toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
                             '< END_BUG >', '<END_BUG>')
+                toked_bug = toked_bug.replace("<START_BUG> <START_BUG>", "<START_BUG>").replace("<END_BUG> <END_BUG>",
+                                                                                                "<END_BUG>")
                 buggy_codes.append(toked_bug)
                 fix_codes.append(toked_fix)
 
@@ -109,6 +111,7 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                         toked_bug = re.split(r"([.,!?;(){}])", method)
                         toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
                             '< END_BUG >', '<END_BUG>')
+                toked_bug=toked_bug.replace("<START_BUG> <START_BUG>","<START_BUG>").replace("<END_BUG> <END_BUG>","<END_BUG>")
                 buggy_codes.append(toked_bug)
                 fix_codes.append(toked_fix)
 
