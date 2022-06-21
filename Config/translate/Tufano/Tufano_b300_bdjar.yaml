@@ -1,0 +1,8 @@
+model: /home/zhongwenkang/Pretrained_Models/Processed_Tufano/save/Tufano_3_step_50000.pt
+beam_size: 300
+n_best: 300
+src: /home/zhongwenkang/RawData_Processed/Tufano/bdj_test.buggy
+output: /home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_bdjar.pred
+gpu: 0
+batch_size: 1
+max_length: 1010

@@ -1,0 +1,10 @@
+model: /home/zhongwenkang/Pretrained_Models/Processed_SR/save/SR_26_step_50000.pt
+beam_size: 300
+n_best: 300
+src: /home/zhongwenkang/RawData_Processed/SequenceR/bdj.buggy
+tgt: /home/zhongwenkang/RawData_Processed/SequenceR/bdj.fix
+output: /home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bdj.pred
+gpu: 0
+batch_size: 1
+batch_type: sents
+max_length: 210

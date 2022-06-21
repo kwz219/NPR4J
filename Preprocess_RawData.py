@@ -131,14 +131,14 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
         writeL2F(correct_ids, correct_f)
         # build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
     build(output_prefix+".buggy",output_prefix+".fix",output_prefix+".fids",output_prefix+".sids",ids)
-preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                             "/home/zhongwenkang/RawData_Processed/SequenceR/bears","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
-preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                             "/home/zhongwenkang/RawData_Processed/SequenceR/d4j","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
-preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                             "/home/zhongwenkang/RawData_Processed/SequenceR/qbs","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
-preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                             "/home/zhongwenkang/RawData_Processed/SequenceR/bdj","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+#preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             #"/home/zhongwenkang/RawData_Processed/SequenceR/bears","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+#preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             #"/home/zhongwenkang/RawData_Processed/SequenceR/d4j","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+#preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             #"/home/zhongwenkang/RawData_Processed/SequenceR/qbs","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
+#preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                             #"/home/zhongwenkang/RawData_Processed/SequenceR/bdj","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
 #preprocess_SequenceR_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
                              #,"/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
 """
@@ -210,18 +210,18 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
 #preprocess_Tufano_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
                           #"/home/zhongwenkang/NPR4J_processed/Tufano",
                           #"CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/NPR4J_processed/Tufano/temp/","test")
-preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                          "/home/zhongwenkang/RawData_Processed/Tufano",
-                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","bdj_test")
-preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                          "/home/zhongwenkang/RawData_Processed/Tufano",
-                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","bears_test")
-preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                          "/home/zhongwenkang/RawData_Processed/Tufano",
-                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","d4j_test")
-preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                          "/home/zhongwenkang/RawData_Processed/Tufano",
-                          "CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","qbs_test")
+#preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/RawData_Processed/Tufano",
+                          #"CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","bdj_test")
+#preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/RawData_Processed/Tufano",
+                          #"CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","bears_test")
+#preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/RawData_Processed/Tufano",
+                          #"CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","d4j_test")
+#preprocess_Tufano_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/RawData_Processed/Tufano",
+                          #"CodeAbstract/CA_Resource/Idioms.2w","/home/zhongwenkang/RawData_Processed/Tufano/temp/","qbs_test")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 
@@ -288,6 +288,14 @@ def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
         fix_lines.append(fix_line)
     writeL2F(buggy_lines,output_prefix+'.buggy')
     writeL2F(fix_lines,output_prefix+'.fix')
+preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/d4j")
+preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/qbs")
+preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bears")
+preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bdj")
 def preprocess_CodeBertFT_fromRaw_methodLevel(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
     print(len(ids))
