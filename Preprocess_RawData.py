@@ -1,6 +1,7 @@
 import codecs
 import os
 import re
+import subprocess
 
 import javalang
 
@@ -288,14 +289,14 @@ def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
         fix_lines.append(fix_line)
     writeL2F(buggy_lines,output_prefix+'.buggy')
     writeL2F(fix_lines,output_prefix+'.fix')
-preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/d4j")
-preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/qbs")
-preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bears")
-preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                              "/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bdj")
+#preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              #"/home/zhongwenkang/RawData_Processed/CodeBERT-ft/d4j")
+#preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              #"/home/zhongwenkang/RawData_Processed/CodeBERT-ft/qbs")
+#preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              #"/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bears")
+#preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                              #"/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bdj")
 def preprocess_CodeBertFT_fromRaw_methodLevel(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
     print(len(ids))
@@ -328,16 +329,46 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
         for idx,id in enumerate(ids):
             if not os.path.exists(os.path.join(output_dir,id+'.json')):
                 print(idx)
-                try:
+                if True:
                     meta_info=codecs.open(os.path.join(input_dir,"metas",id+".txt")).read().strip()
                     filename=meta_info.split("<sep>")[-1].split('@')[0].split("\\")[-1]
-                    generate_classcontent(os.path.join(input_dir,"buggy_classes",id+".txt"),os.path.join(output_dir,id+'.json')
+                    class_path=os.path.join(input_dir,"buggy_classes",id+".java")
+                    class_path=class_path.replace("d4j_","").replace("bdjar_","").replace("bears_","").replace("qbs_","")
+                    generate_classcontent(class_path,os.path.join(output_dir,id+'.json')
                                           ,filename)
+                '''
                 except:
                     fail_ids.append(id)
+                '''
         print(len(fail_ids))
         writeL2F(fail_ids,output_dir+'/fail.ids')
 
 
 #preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
                            #"/home/zhongwenkang/NPR4J_processed/Recoder")
+#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new",
+                           #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                            #"/home/zhongwenkang/RawData_Processed/Recoder")
+#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new",
+                           #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                            #"/home/zhongwenkang/RawData_Processed/Recoder")
+#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new",
+                           #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                            #"/home/zhongwenkang/RawData_Processed/Recoder")
+#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new",
+                           #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                            #"/home/zhongwenkang/RawData_Processed/Recoder")
+
+def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,output_dir,src_dict_f,tgt_dict_f,mode,src_lang="buggy",tgt_lang="fix"):
+    ids=readF2L(ids_f)
+    buggy_codes=[]
+    fix_lines=[]
+    for id in ids:
+        buggy_method=codecs.open(input_dir+'/buggy_methods/'+id+'.txt').read().strip()
+        buggy_line=codecs.open(input_dir+'/buggy_lines/'+id+'.txt').read().strip()
+        fix_line=codecs.open(input_dir+'/fix_lines/'+id+'.txt').read().strip()
+    if "test" in mode:
+        cmd = "python fairseq/preprocess.py " + "--CoCoNut-lang " + src_lang + " --target-lang " + tgt_lang + " --workers  10" \
+          + " --srcdict " + src_dict_f + " --tgt_dict " + tgt_dict_f + " --testpref " + input_dir + " --destdir " + output_dir
+        print(cmd)
+        subprocess.call(cmd, shell=True)

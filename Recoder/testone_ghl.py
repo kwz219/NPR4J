@@ -685,9 +685,14 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
         buggy_lineid = int(str(metas.split('<sep>')[2]).replace('[', '').split(':')[0]) + 1
         classname = metas.split('<sep>')[4].split("@")[0].split('\\')[-1].replace(".java", '')
         id = metas.split('<sep>')[1]
-        classcontent_file = classcontent_dir + '/' + id + ".json"
+        prefix = metas.split('<sep>')[0]
+        if prefix in ["bdjar","d4j","qbs","bears"]:
+            classcontent_file = classcontent_dir + '/' + prefix + "_" + id + ".json"
+        else:
+            classcontent_file = classcontent_dir + '/' + id + ".json"
         print(buggy_lineid, classname)
         try:
+            print("start fixing",id)
             fixs = testone(search_size, model, buggyfile, buggy_lineid, classname,
                            classcontent_file,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)  # list:dict:({'code':tmpcode, 'ast':psss['otree']})
             fix_dict={}
@@ -700,7 +705,7 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
         except:
             failed_ids.append(id+'\n')
 
-    writeL2F(failed_ids,output_dir+'/failed_ids.txt')
+    #writeL2F(failed_ids,output_dir+'/failed_ids.txt')
 
 
 #if __name__ == '__main__':
