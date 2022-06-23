@@ -1,6 +1,7 @@
 import codecs
 
 from Utils.CA_Utils import writeL2F
+from Utils.IOHelper import readF2L
 
 
 def merge_data(dir,pre):
@@ -43,4 +44,7 @@ def merge_test_abs():
                 idlist.append(id)
     writeL2F(codelist,dir+'/test.buggy')
     writeL2F(idlist,dir+'/test.buggy.ids')
-merge_test_abs()
+def count_lines(filepath):
+    files=readF2L(filepath)
+    print(len(files))
+count_lines(r"D:\RawData_Processed\RewardRepair\trn.bug-fix.csv")

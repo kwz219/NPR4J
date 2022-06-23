@@ -241,29 +241,32 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
     bug_fix.append("bugid"+'\t'+"buggy"+'\t'+"patch")
     for idx,id in enumerate(ids):
         buginfo = {"_id": id}
-        buginfo["buggy_code"] = codecs.open(input_dir + "/buggy_methods/" + id + '.txt', 'r',
+        buginfo["buggy_code"] = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+        buginfo["buggy_line"] = codecs.open(input_dir + "/buggy_lines/" + id + '.txt', 'r',
                                             encoding='utf8').read().strip()
         id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
-        buginfo["err_pos"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
-        tmp_f = tmp_dir + id + '.txt'
-        fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip().replace('\t','')
+        buginfo["err_start"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+        buginfo["err_end"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[1])
+        tmp_f = tmp_dir +'/'+ id + '.txt'
+        fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
 
         buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
                                                 max_length=1000)
 
         if len(buggy_code.strip()) <= 1:
             hitflag = 0
-
+        print("hitflag",hitflag)
         if hitflag == 1:
-            buggy_context=buggy_code.replace("<START_BUG>","").replace("<END_BUG>","").replace('\t','')
-            buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','')
+            buggy_context=buggy_code.replace("<START_BUG>","").replace("<END_BUG>","").replace('\t','').replace('\r\n','').replace('\n','')
+            buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
 
             buggy_src="buggy: "+buggy_line+" context: "+buggy_context
             bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
             correct_ids.append(buginfo['_id'])
             print("Total,Success: ",idx, len(correct_ids))
         elif hitflag == 0:
-            buggy_method=codecs.open(input_dir + '/buggy_methods/' + id + '.txt').read().strip().replace('\t','')
+            buggy_method=codecs.open(input_dir + '/buggy_methods/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
+            buggy_line = codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n', '').replace('\n', '')
             buggy_src="buggy: "+buggy_line+" context: "+buggy_method
             bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
             correct_ids.append(buginfo['_id'])
@@ -272,12 +275,12 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
             error_ids.append(buginfo['_id'])
         else:
             error_ids.append(buginfo['_id'])
-        assert len(correct_ids)==len(correct_ids)
+
         writeL2F(bug_fix,output_prefix+'.bug-fix.csv')
         writeL2F(error_ids,output_prefix+'.fids')
         writeL2F(correct_ids, output_prefix+'.ids')
-#preprocess_RewardRepair_fromRaw("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train",
-                                #"/home/zhongwenkang/NPR4J_Data/RewardRepair/trn","/home/zhongwenkang/NPR4J_Data/SequenceR/temp_files/")
+preprocess_RewardRepair_fromRaw("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train",
+                                "/home/zhongwenkang/NPR4J_Data/RewardRepair/trn","/home/zhongwenkang/NPR4J_Data/SequenceR/temp_files")
 
 def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
