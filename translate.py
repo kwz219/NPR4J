@@ -95,12 +95,12 @@ def main():
         description='translate.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder"])
+    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder","SequenceR","Tufano"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
     start=time.time()
-    if opt.model=="onmt":
+    if opt.model=="onmt" or opt.model=="SequenceR" or opt.model=="Recoder":
         translate_ONMT(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="CoCoNut":
         translate_CoCoNut(config_file=opt.config,clearml=opt.clearml)

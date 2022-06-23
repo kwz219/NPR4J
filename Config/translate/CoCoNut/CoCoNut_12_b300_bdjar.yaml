@@ -1,0 +1,10 @@
+clearml: False
+taskname: CoCoNut_12
+datadir: /home/zhongwenkang/RawData_Processed/CoCoNut/bdjar
+modelpath: /home/zhongwenkang/Trained_models/CoCoNut/CoCoNut_12_save/checkpoint_best.pt
+source: buggy
+target: fix
+outputfile: /home/zhongwenkang/Trained_models/CoCoNut/CoCoNut_12_save/b300_bdj.pred
+beam: 10
+nbest: 10
+use_context: True
