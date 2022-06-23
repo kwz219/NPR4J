@@ -10,6 +10,7 @@ from CodeAbstract.CA_SequenceR import run_SequenceR_abs
 from CodeAbstract.CA_src2abs import run_src2abs
 from Utils.CA_Utils import remove_comments
 from Utils.IOHelper import readF2L, writeL2F, readF2L_ori
+from Utils._tokenize import CoCoNut_tokenize
 
 """
 ids_f: a list of bug-fix ids
@@ -359,7 +360,7 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
                            #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
                             #"/home/zhongwenkang/RawData_Processed/Recoder")
 
-def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,output_dir,src_dict_f,tgt_dict_f,mode,src_lang="buggy",tgt_lang="fix"):
+def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,temp_prefix,output_dir,src_dict_f,tgt_dict_f,mode,src_lang="buggy",tgt_lang="fix"):
     ids=readF2L(ids_f)
     buggy_codes=[]
     fix_lines=[]
@@ -367,8 +368,20 @@ def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,output_dir,src_dict_f,tgt_dict_f,
         buggy_method=codecs.open(input_dir+'/buggy_methods/'+id+'.txt').read().strip()
         buggy_line=codecs.open(input_dir+'/buggy_lines/'+id+'.txt').read().strip()
         fix_line=codecs.open(input_dir+'/fix_lines/'+id+'.txt').read().strip()
+        buggy_method_toked=CoCoNut_tokenize(buggy_method)
+        buggy_line_toked=CoCoNut_tokenize(buggy_line)
+        fix_line_toked=CoCoNut_tokenize(fix_line)
+        buggy_codes.append(' '.join(buggy_line_toked)+' <CTX> '+' '.join(buggy_method_toked))
+        fix_lines.append(' '.join(fix_line_toked))
+    assert len(buggy_codes)==len(fix_lines)
+    writeL2F(buggy_codes,temp_prefix+'.buggy')
+    writeL2F(fix_lines,temp_prefix+'.fix')
+    print("Tokenization completed. Now start processing......")
     if "test" in mode:
-        cmd = "python fairseq/preprocess.py " + "--CoCoNut-lang " + src_lang + " --target-lang " + tgt_lang + " --workers  10" \
-          + " --srcdict " + src_dict_f + " --tgt_dict " + tgt_dict_f + " --testpref " + input_dir + " --destdir " + output_dir
+        cmd = "python fairseq/preprocess.py " + "--CoCoNut-lang " + src_lang + " --target-lang " + tgt_lang + " --workers  1" \
+          + " --srcdict " + src_dict_f + " --tgtdict " + tgt_dict_f + " --testpref " + temp_prefix + " --destdir " + output_dir
         print(cmd)
         subprocess.call(cmd, shell=True)
+Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                           "/home/zhongwenkang/RawData_Processed/CoCoNut/raw/bdjar_test","/home/zhongwenkang/RawData_Processed/CoCoNut/bdjar",
+                           "/home/zhongwenkang/RawData_Processed/CoCoNut/raw/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/raw/dict.fix.txt","bdjar_test")

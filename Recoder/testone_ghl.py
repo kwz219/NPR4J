@@ -705,7 +705,7 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
         except:
             failed_ids.append(id+'\n')
 
-    #writeL2F(failed_ids,output_dir+'/failed_ids.txt')
+    writeL2F(failed_ids,output_dir+'/failed_ids.txt')
 
 
 #if __name__ == '__main__':
