@@ -170,7 +170,7 @@ def Recovery_Tufano_target(ids_f,target_dir):
 recovery Tufano's predictions, using map files generated during
 the preprocessing phase
 """
-def Recovery_Tufano_all(ids_f,preds_f,candi_size,map_dir,output_f):
+def Recovery_Tufano_preds(ids_f,preds_f,candi_size,map_dir,output_f):
     ids=readF2L(ids_f)
     preds=readF2L(preds_f)
     print(len(ids))
@@ -178,7 +178,7 @@ def Recovery_Tufano_all(ids_f,preds_f,candi_size,map_dir,output_f):
     assert len(preds)/len(ids)==candi_size
     recover_preds=[]
     for i in range(len(ids)):
-        map_f=map_dir+'/'+ids[i]+".txt_buggy.txt.abs.map"
+        map_f=map_dir+'/'+ids[i]+"_buggy.txt.abs.map"
         map=json.load(codecs.open(map_f,'r',encoding='utf8'))
         print(ids[i])
 
@@ -186,10 +186,16 @@ def Recovery_Tufano_all(ids_f,preds_f,candi_size,map_dir,output_f):
         for pred in per_preds:
             re_pred=Recovery_Tufano_one(pred,map)
             recover_preds.append(re_pred)
-
     assert len(recover_preds)==len(preds)
     writeL2F(recover_preds,output_f)
-
+Recovery_Tufano_preds("/home/zhongwenkang/RawData_Processed/Tufano/bdj_test.sids","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_bdjar.pred",
+                      300,"/home/zhongwenkang/RawData_Processed/Tufano/temp/temp","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_bdjar.pred.recovery")
+Recovery_Tufano_preds("/home/zhongwenkang/RawData_Processed/Tufano/bears_test.sids","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_bears.pred",
+                      300,"/home/zhongwenkang/RawData_Processed/Tufano/temp/temp","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_bears.pred.recovery")
+Recovery_Tufano_preds("/home/zhongwenkang/RawData_Processed/Tufano/d4j_test.sids","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_d4j.pred",
+                      300,"/home/zhongwenkang/RawData_Processed/Tufano/temp/temp","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_d4j.pred.recovery")
+Recovery_Tufano_preds("/home/zhongwenkang/RawData_Processed/Tufano/qbs_test.sids","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_qbs.pred",
+                      300,"/home/zhongwenkang/RawData_Processed/Tufano/temp/temp","/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_qbs.pred.recovery")
 
 
 
@@ -277,33 +283,6 @@ Recovery_Tufano_target("F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/Tufan
 Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_5_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
                      "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
                      "F:/NPR_DATA0306/Bears_pred/CoCoNut_5_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_12_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_12_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_15_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_15_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_21_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_21_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_32_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_32_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_33_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_33_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_35_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_35_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_99_save/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_99_save",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_context_tune_7/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_context_tune_7",candi_size=100)
-Recovery_CoCoNut_all("F:/NPR_DATA0306/Bears_pred/CoCoNut_context_tune_9/pred.txt","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/CoCoNut/Bears.ids",
-                     "F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_lines","F:/NPR_DATA0306/Evaluationdata/Benchmark/buggy_methods",
-                     "F:/NPR_DATA0306/Bears_pred/CoCoNut_context_tune_9",candi_size=100)
 """
 
 

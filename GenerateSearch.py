@@ -170,9 +170,6 @@ def search_Recoder(examples_num):
             f.close()
 
 
-#search_CoCoNut(100)
-#search_Codit(10)
-#search_SequenceR(20)
-search_Tufano(10)
+
 
 
