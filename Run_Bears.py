@@ -137,7 +137,7 @@ def get_valid_modify(changedict:dict):
             change_file[changedict[id]['file_path']]='init'
     return change_file
 def get_min_ids(changedict:dict,patches_f):
-    candi_count=200
+    candi_count=500
     for id in changedict.keys():
         if changedict[id]['file_path'].endswith("Test.java"):
             continue
@@ -186,12 +186,15 @@ if __name__ == '__main__':
     for bugId in bugids:
         #deal with Bears-N
         skipflag=0
+
+        #these projects are uncompilable in our experiments
         checklist=["Bears-195","Bears-202","Bears-158","Bears-208","Bears-10","Bears-12","Bears-27","Bears-38","Bears-29","Bears-31","Bears-33","Bears-28","Bears-44","Bears-45"
                    "Bears-35","Bears-39","Bears-37","Bears-40","Bears-42","Bears-43","Bears-48","Bears-55","Bears-56","Bears-58","Bears-67","Bears-68","Bears-69","Bears-77","Bears-78",
                    "Bears-82","Bears-84","Bears-87","Bears-90","Bears-91","Bears-94","Bears-191","Bears-49","Bears-53","Bears-60","Bears-59","Bears-64"]
 
         if bugId in checklist or  (not bugId in bears_bugs.keys()) :
             continue
+        # which file should be modified
         change_dict = bears_bugs[bugId]
         change_file=get_valid_modify(change_dict)
         if len(change_file)==0:
@@ -233,7 +236,6 @@ if __name__ == '__main__':
                     f.write(bugId+" "+str(i)+" "+result+'\n')
                     f.close()
                 if result=="passHumanTest":
-                    skipflag=1
                     with open("/home/zhongwenkang/Eval_bears/"+opt.sys+'_'+bugId+"_right."+str(i),'w',encoding='utf8')as wf:
                         json.dump(change_file,wf,indent=2)
                         wf.close()
