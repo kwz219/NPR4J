@@ -362,7 +362,16 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
 #preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new",
                            #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
                             #"/home/zhongwenkang/RawData_Processed/Recoder")
+"""
+ids_f: id list
+input_dir: needed buggy_methods buggy_lines fix_lines
+temp_prefix: a directory which stores the processed raw data file
+output_dir: a directory that stores the compressed data file (fairseq data form)
+src_dict_f: dictionary for buggy codes
+tgt_dict_f: dictionary for fix codes
 
+before using , cd fairseq, run cmd 'python setup.py develop'
+"""
 def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,temp_prefix,output_dir,src_dict_f,tgt_dict_f,mode,src_lang="buggy",tgt_lang="fix"):
     ids=readF2L(ids_f)
     buggy_codes=[]
