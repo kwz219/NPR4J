@@ -7,7 +7,9 @@ import javalang
 from CoCoNut.tokenization.tokenization import get_strings_numbers, token2statement
 from Utils.IOHelper import readF2L, writeL2F
 import numpy as np
-
+"""
+Recovery abstract code to a concrete form
+"""
 def Recovery_Tufano(ids_f,map_dir,preds_f,nbest=10):
     ids=readF2L(ids_f)
     n_preds=readF2L(preds_f)
@@ -149,14 +151,10 @@ def Recovery_Edits(benchmark_dir,patches_f,output_f):
 #Recovery_Edits("F:/NPR_DATA0306/Evaluationdata/Benchmark",r"F:\NPR_DATA0306\FixResults\Final_Results\Edit_Benchmark.patches",r"F:\NPR_DATA0306\FixResults\Final_Results\Edits_Benchmark.txt")
 
 
-
-
-
-
-def testRecovery_Tufano():
-    map1={"a":"TYPE_1","b":"TYPE_11","c":"TYPE_111"}
-    teststr="public TYPE_11 TYPE_1 TYPE_111"
-    print(Recovery_Tufano_one(teststr,map1))
+"""
+for identical check
+recovery label
+"""
 def Recovery_Tufano_target(ids_f,target_dir):
     ids=readF2L(ids_f)
     recover_tgts=[]
@@ -166,7 +164,12 @@ def Recovery_Tufano_target(ids_f,target_dir):
         rec_str=Recovery_Tufano_one(ori_str,map)
         recover_tgts.append(Recovery_Tufano_one(rec_str,map))
     writeL2F(recover_tgts,target_dir+'/labels.txt')
-Recovery_Tufano_target(r"F:\NPR_DATA0306\Evaluationdata\Benchmark-processed\Tufano\benchmark.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/tgtabs")
+#Recovery_Tufano_target(r"F:\NPR_DATA0306\Evaluationdata\Benchmark-processed\Tufano\benchmark.ids","F:/NPR_DATA0306/Evaluationdata/Benchmark-processed/for_Tufano/tgtabs")
+
+"""
+recovery Tufano's predictions, using map files generated during
+the preprocessing phase
+"""
 def Recovery_Tufano_all(ids_f,preds_f,candi_size,map_dir,output_f):
     ids=readF2L(ids_f)
     preds=readF2L(preds_f)

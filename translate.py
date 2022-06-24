@@ -21,7 +21,7 @@ def translate_CoCoNut(config_file,clearml):
     outputfile=config_dict['outputfile']
 
     cmd ="python "+"fairseq/generate.py "+datadir+" --path "+modelpath+" --beam "+str(beam)+" --nbest "+str(nbest)+\
-        " -s "+source+" -t "+target+" --use-context "+" -clearml "+str(use_clearml)+" -taskname "+taskname+" -outputfile "+outputfile
+        " -s "+source+" -t "+target+" --use-context "+" -clearml "+str(use_clearml)+" -taskname "+taskname+" -outputfile "+outputfile+" --max-sentences 1"
 
     os.system(cmd)
 def translate_Cure(config_file,clearml):
