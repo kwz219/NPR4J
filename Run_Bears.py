@@ -15,7 +15,7 @@ def getResults(bugindex,change_dict,root,projects_dir):
         scriptdir = root+'/bears-benchmark/scripts'
         os.chdir(scriptdir)
         print('now in the dir:'+scriptdir )
-        repodir = root+'/'+projects_dir
+        repodir = projects_dir
         checkoutstring = 'python2 checkout_bug.py  --bugId  '+ bugindex + '  --workspace '+ repodir
         #customized script to allow test running
         compilestring = 'python2 compile_bug.py  --bugId  '+ bugindex + '  --workspace '+ repodir
@@ -144,7 +144,10 @@ def get_min_ids(changedict:dict,patches_f):
         else:
             if id not in patches_f.keys():
                 return -1
-            patches_count=len(patches_f[id]["patches"].keys())
+            if "patches" in patches_f.keys():
+                patches_count=len(patches_f[id]["patches"].keys())
+            else:
+                patches_count=len(patches_f[id].keys())
             candi_count=min(candi_count,patches_count)
     return candi_count
 def get_fixed_code(raw_method, new_method, java):
@@ -165,9 +168,9 @@ if __name__ == '__main__':
     parser.add_argument("-bears_f",required=True)
     parser.add_argument("-patches_f", help="",required=True)
     parser.add_argument("-sys",required=True)
-    parser.add_argument("-project_path", required=True)
-    parser.add_argument("-root_path",required=True)
-    parser.add_argument("-output_dir",required=True)
+    parser.add_argument("-project_path", help="dir where you check out bugs of bears",required=True)
+    parser.add_argument("-root_path",help="parent dir of bears-benchmark",required=True)
+    parser.add_argument("-output_dir",help="store the evaluation result and plausible patches",required=True)
     opt = parser.parse_args()
     now = datetime.datetime.now()
     date = now.strftime("%Y-%m-%d")
@@ -220,10 +223,13 @@ if __name__ == '__main__':
                         else:
                             classcontent=change_file.get(file_path)
                         buggymethod=per_id_dict['buggy_method']
-                        patch_candidata=patches_info[id]['patches'][str(i)]
+                        if "patches" in patches_info.keys():
+                            patch_candidate=patches_info[id]['patches'][str(i)]
+                        else:
+                            patch_candidate = patches_info[id][str(i+1)]
                         #print(i,patch_candidata)
                         try:
-                            new_class=get_fixed_code(buggymethod,patch_candidata,classcontent)
+                            new_class=get_fixed_code(buggymethod,patch_candidate,classcontent)
                         except:
                             new_class=classcontent
                         change_file.update({file_path:new_class})
@@ -231,15 +237,21 @@ if __name__ == '__main__':
 
                 print(bugId,change_file.keys())
                 rootPath=opt.root_path
-                result=getResults(bugId,change_file,rootPath,opt.project_path)
                 output_dir = opt.output_dir
+                if "Tufano" in opt.sys: #avoid nonsense compile
+                    if "VAR_" in patch_candidate or "METHOD_" in patch_candidate or "STRING_" in patch_candidate or "INT_" in patch_candidate:
+                        with open(os.path.join(output_dir, opt.sys + "_eval.result"), 'a', encoding='utf8') as f:
+                            f.write(bugId + " " + str(i+1) + " " + "failconcretize" + '\n')
+                            f.close()
+                        continue
+                result=getResults(bugId,change_file,rootPath,opt.project_path)
                 if not os.path.exists(output_dir):
                     os.mkdir(output_dir)
                 with open(os.path.join(output_dir,opt.sys+"_eval.result"),'a',encoding='utf8')as f:
-                    f.write(bugId+" "+str(i)+" "+result+'\n')
+                    f.write(bugId+" "+str(i+1)+" "+result+'\n')
                     f.close()
                 if result=="passHumanTest":
-                    with open(os.path.join(output_dir,opt.sys+'_'+bugId+"_right."+str(i)),'w',encoding='utf8')as wf:
+                    with open(os.path.join(output_dir,opt.sys+'_'+bugId+"_right."+str(i+1)),'w',encoding='utf8')as wf:
                         json.dump(change_file,wf,indent=2)
                         wf.close()
 
