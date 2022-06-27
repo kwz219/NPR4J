@@ -166,6 +166,8 @@ if __name__ == '__main__':
     parser.add_argument("-patches_f", help="",required=True)
     parser.add_argument("-sys",required=True)
     parser.add_argument("-project_path", required=True)
+    parser.add_argument("-root_path",required=True)
+    parser.add_argument("-output_dir",required=True)
     opt = parser.parse_args()
     now = datetime.datetime.now()
     date = now.strftime("%Y-%m-%d")
@@ -218,25 +220,26 @@ if __name__ == '__main__':
                         else:
                             classcontent=change_file.get(file_path)
                         buggymethod=per_id_dict['buggy_method']
-
                         patch_candidata=patches_info[id]['patches'][str(i)]
                         #print(i,patch_candidata)
                         try:
                             new_class=get_fixed_code(buggymethod,patch_candidata,classcontent)
                         except:
                             new_class=classcontent
-
                         change_file.update({file_path:new_class})
 
 
                 print(bugId,change_file.keys())
-                result=getResults(bugId,change_file,"/home/zhongwenkang/Eval_bears",opt.project_path)
-
-                with open("/home/zhongwenkang/Eval_bears/"+opt.sys+"_eval.result",'a',encoding='utf8')as f:
+                rootPath=opt.root_path
+                result=getResults(bugId,change_file,rootPath,opt.project_path)
+                output_dir = opt.output_dir
+                if not os.path.exists(output_dir):
+                    os.mkdir(output_dir)
+                with open(os.path.join(output_dir,opt.sys+"_eval.result"),'a',encoding='utf8')as f:
                     f.write(bugId+" "+str(i)+" "+result+'\n')
                     f.close()
                 if result=="passHumanTest":
-                    with open("/home/zhongwenkang/Eval_bears/"+opt.sys+'_'+bugId+"_right."+str(i),'w',encoding='utf8')as wf:
+                    with open(os.path.join(output_dir,opt.sys+'_'+bugId+"_right."+str(i)),'w',encoding='utf8')as wf:
                         json.dump(change_file,wf,indent=2)
                         wf.close()
 

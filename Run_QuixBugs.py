@@ -154,10 +154,14 @@ if __name__ =="__main__":
     parser.add_argument("-sys", help="", required=True)
     parser.add_argument("-patches_f", help="", required=True)
     parser.add_argument("-benchmarks_f", help="", required=True)
+    parser.add_argument("-output_dir",required=True)
     opt = parser.parse_args()
     sys = opt.sys
     patches_f = opt.patches_f
     benchmarks_f = opt.benchmarks_f
+    output_dir = opt.output_dir
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
     pf = codecs.open(patches_f, 'r', encoding='utf8')
     bf = codecs.open(benchmarks_f, 'r', encoding='utf8')
     pred_patches = json.load(pf)
@@ -188,13 +192,16 @@ if __name__ =="__main__":
                         new_class = ori_class.replace(buggy_method,tok_patch)
                         eval_result=getResults(name,new_class)
                         print(id,name,key,eval_result)
-                        with open(sys+'_eval.result','a',encoding='utf8')as f:
+                        with open(os.path.join(output_dir,sys+'_eval.result'),'a',encoding='utf8')as f:
                             f.write(' '.join([id,name,key,eval_result])+'\n')
                             f.close()
                         if eval_result=="passHumanTest":
                             skip_flag=1
+                            with open(os.path.join(output_dir,sys+"_passTest_"+key+".patch"),'w',encoding='utf8')as f:
+                                f.write(patch)
+                                f.close()
                     except:
-                        with open(sys+'_eval.result','a',encoding='utf8')as f:
+                        with open(os.path.join(output_dir,sys+'_eval.result'),'a',encoding='utf8')as f:
                             f.write(' '.join([id,name,key,'failtokenize'])+'\n')
                             f.close()
 
