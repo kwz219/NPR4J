@@ -209,7 +209,7 @@ if __name__ =="__main__":
                             f.write(' '.join([id,name,key,eval_result])+'\n')
                             f.close()
                         if eval_result=="passHumanTest":
-                            with open(os.path.join(output_dir,sys+name+"_passTest_"+key+".patch"),'w',encoding='utf8')as f:
+                            with open(os.path.join(output_dir,sys+"_"+name+"_passTest_"+key+".patch"),'w',encoding='utf8')as f:
                                 f.write(patch)
                                 f.close()
                     except:
