@@ -1,7 +1,7 @@
 import codecs
 import json
 
-from Utils.IOHelper import readF2L
+from Utils.IOHelper import readF2L, readF2L_ori
 
 
 def Prepare_Tufano_patches(cand_size,recovery_preds_f,output_f,ids_f):
@@ -25,19 +25,48 @@ def Prepare_Tufano_patches(cand_size,recovery_preds_f,output_f,ids_f):
                        #"/home/zhongwenkang/NPR4J4Eval/Tufano/Tufano_b300_d4j.patches","/home/zhongwenkang/RawData_Processed/Tufano/d4j_test.sids")
 #Prepare_Tufano_patches(300,"/home/zhongwenkang/NPR4J_Pred/Tufano/Tufano_b300_bears.bdj.recovery",
                        #"/home/zhongwenkang/NPR4J4Eval/Tufano/Tufano_b300_bdj.patches","/home/zhongwenkang/RawData_Processed/Tufano/bdj_test.sids")
-def Prepare_SequenceR_patches(cand_size,preds_f,ids_f,input_dir,output_f):
+def Prepare_patches_fromline(cand_size,preds_f,ids_f,input_dir,output_f):
     ids=readF2L(ids_f)
     preds=readF2L(preds_f)
     assert len(ids)*cand_size==len(preds)
     patches_all={}
     for idx,id in enumerate(ids):
         patches_id={}
+        id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+        err_line=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
         buggy_line=codecs.open(input_dir+'/buggy_lines/'+id+".txt").read().strip()
-        buggy_method=codecs.open(input_dir+'/buggy_methods/'+id+'.txt').read().strip()
+        buggy_method=readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+        assert (buggy_line in buggy_method[err_line])
         all_candidates=preds[idx*cand_size:(idx+1)*cand_size]
         for cid,pred in enumerate(all_candidates):
-            patch_method=buggy_method.replace(buggy_line,pred)
+            buggy_method[err_line]=pred
+            patch_method='\n'.join(buggy_method)
             patches_id[str(cid+1)]=patch_method
         patches_all[id]=patches_id
     with open(output_f,'w',encoding='utf8')as f:
         json.dump(patches_all,f,indent=2)
+
+def Prepare_SequenceR_patches(cand_size,preds_f,ids_f,input_dir,output_f):
+    Prepare_patches_fromline(cand_size,preds_f,ids_f,input_dir,output_f)
+#Prepare_SequenceR_patches(300,"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bdj.pred",
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks/bdj.ids.new"
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bdj.patches")
+#Prepare_SequenceR_patches(300,"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bears.pred",
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks/bears.ids.new"
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bears.patches")
+#Prepare_SequenceR_patches(300,"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_d4j.pred",
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks/d4j.ids.new"
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_d4j.patches")
+#Prepare_SequenceR_patches(300,"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_qbs.pred",
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks/qbs.ids.new"
+                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_qbs.patches")
+def Prepare_CodeBERTFT_patches(cand_size,preds_f,ids_f,input_dir,output_f):
+    Prepare_patches_fromline(cand_size, preds_f, ids_f, input_dir, output_f)
+
+def Prepare_CoCoNut_patches(cand_size,preds_f,ids_f,input_dir,output_f):
+    pass
+
