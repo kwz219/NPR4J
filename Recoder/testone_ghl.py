@@ -690,6 +690,7 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
             classcontent_file = classcontent_dir + '/' + prefix + "_" + id + ".json"
         else:
             classcontent_file = classcontent_dir + '/' + id + ".json"
+        print(classcontent_file)
         print(buggy_lineid, classname)
         try:
             print("start fixing",id)

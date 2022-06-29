@@ -100,7 +100,7 @@ def main():
 
     opt=parser.parse_args()
     start=time.time()
-    if opt.model=="onmt" or opt.model=="SequenceR" or opt.model=="Recoder":
+    if opt.model=="onmt" or opt.model=="SequenceR" or opt.model=="Tufano":
         translate_ONMT(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="CoCoNut":
         translate_CoCoNut(config_file=opt.config,clearml=opt.clearml)
