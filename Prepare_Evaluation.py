@@ -1,5 +1,6 @@
 import codecs
 import json
+import os
 
 from CoCoNut.tokenization.tokenization import get_strings_numbers, token2statement
 from Utils.IOHelper import readF2L, readF2L_ori
@@ -98,4 +99,19 @@ def Prepare_CoCoNut_patches(cand_size,preds_f,ids_f,input_dir,output_f):
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
 
-
+def prepare_Recoder_patches(pred_dir,output_f):
+    files=os.listdir(pred_dir)
+    patches_all={}
+    for file in files:
+        if not file.endswith(".fix"):
+            continue
+        id =file.split(".")[0]
+        patches_id={}
+        predictions=json.load(codecs.open(pred_dir+'/'+file,'r',encoding='utf8'))
+        for key in predictions.keys():
+            new_key=int(key)+1
+            patches_id[str(new_key)]=predictions[key]
+        patches_all[id]=patches_id
+    with open(output_f, 'w', encoding='utf8') as f:
+        json.dump(patches_all, f, indent=2)
+prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder","D:/NPR4J-Eval/d4j/recoder_b300.patches")

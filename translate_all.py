@@ -12,4 +12,4 @@ def translate_all_CoCoNut(dir):
             time.sleep(1)
             torch.cuda.empty_cache()
             time.sleep(1)
-translate_all_CoCoNut("/home/zhongwenkang/NPR4J/Config/translate/CoCoNut")
+#translate_all_CoCoNut("/home/zhongwenkang/NPR4J/Config/translate/CoCoNut")
