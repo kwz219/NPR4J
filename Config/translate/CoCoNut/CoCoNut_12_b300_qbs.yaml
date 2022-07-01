@@ -1,9 +1,9 @@
 beam: 300
 clearml: false
-datadir: /home/zhongwenkang/RawData_Processed/CoCoNut/qbs
-modelpath: /home/zhongwenkang/Pretrained_Models/Processed_CoCoNut/CoCoNut_12_save/checkpoint_best.pt
-nbest: 30
-outputfile: /home/zhongwenkang/NPR4J_Pred/CoCoNut/CoCoNut_12_b300_qbs.pred
+datadir: /home/zhongwenkang2/RawData_Processed/CoCoNut/qbs
+modelpath: /home/zhongwenkang2/NPR4J-Models/CoCoNut/CoCoNut_12_save/checkpoint_best.pt
+nbest: 300
+outputfile: /home/zhongwenkang2/NPR4J_Pred/CoCoNut/CoCoNut_12_b300_qbs.pred
 source: buggy
 target: fix
 taskname: CoCoNut

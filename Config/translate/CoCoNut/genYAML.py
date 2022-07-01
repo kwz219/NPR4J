@@ -1,12 +1,12 @@
 import yaml
 def gen_CoCoNut_translate():
-    datadir_prefix="/home/zhongwenkang/RawData_Processed/CoCoNut/"
-    modelpath_prefix="/home/zhongwenkang/Pretrained_Models/Processed_CoCoNut/"
-    outputfile_prefix="/home/zhongwenkang/NPR4J_Pred/CoCoNut/"
+    datadir_prefix="/home/zhongwenkang2/RawData_Processed/CoCoNut/"
+    modelpath_prefix="/home/zhongwenkang2/NPR4J-Models/CoCoNut/"
+    outputfile_prefix="/home/zhongwenkang2/NPR4J_Pred/CoCoNut/"
 
     benchmarks=["bdj","bears","qbs","d4j"]
     CoCoNut_id=["12","15","21","32","33","35","5","99","context_tune_7","context_tune_9"]
-    config_dict={"clearml":False,"taskname":"CoCoNut","source":"buggy","target":"fix","beam":300,"nbest":30,"use_context":True}
+    config_dict={"clearml":False,"taskname":"CoCoNut","source":"buggy","target":"fix","beam":300,"nbest":300,"use_context":True}
 
     for bench in benchmarks:
         for id in CoCoNut_id:

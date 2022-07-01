@@ -1,9 +1,9 @@
 beam: 300
 clearml: false
-datadir: /home/zhongwenkang/RawData_Processed/CoCoNut/bears
-modelpath: /home/zhongwenkang/Pretrained_Models/Processed_CoCoNut/CoCoNut_context_tune_7_save/checkpoint_best.pt
-nbest: 30
-outputfile: /home/zhongwenkang/NPR4J_Pred/CoCoNut/CoCoNut_context_tune_7_b300_bears.pred
+datadir: /home/zhongwenkang2/RawData_Processed/CoCoNut/bears
+modelpath: /home/zhongwenkang2/NPR4J-Models/CoCoNut/CoCoNut_context_tune_7_save/checkpoint_best.pt
+nbest: 300
+outputfile: /home/zhongwenkang2/NPR4J_Pred/CoCoNut/CoCoNut_context_tune_7_b300_bears.pred
 source: buggy
 target: fix
 taskname: CoCoNut

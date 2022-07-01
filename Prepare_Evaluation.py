@@ -50,10 +50,18 @@ def Prepare_patches_fromline(cand_size,preds_f,ids_f,input_dir,output_f):
 
 def Prepare_SequenceR_patches(cand_size,preds_f,ids_f,input_dir,output_f):
     Prepare_patches_fromline(cand_size,preds_f,ids_f,input_dir,output_f)
-#Prepare_SequenceR_patches(300,"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bdj.pred",
-                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks/bdj.ids.new"
-                          #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks",
-                          #"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bdj.patches")
+#Prepare_SequenceR_patches(300,"/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_d4j.pred",
+                          #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/d4j.ids.new",
+                          #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                          #"/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_d4j.patches")
+Prepare_SequenceR_patches(cand_size=300,preds_f="/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_bears.pred",
+                          ids_f="/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/bears.ids.new",
+                          input_dir="/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                          output_f="/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_bears.patches")
+Prepare_SequenceR_patches(300,"/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_qbs.pred",
+                          "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/qbs.ids.new",
+                          "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                          "/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_qbs.patches")
 #Prepare_SequenceR_patches(300,"/home/zhongwenkang/NPR4J_Pred/SequenceR/SequenceR_b300_bears.pred",
                           #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks/bears.ids.new"
                           #"/home/zhongwenkang/RawData/RawData/Evaluation/Benchmarks",
@@ -114,4 +122,4 @@ def prepare_Recoder_patches(pred_dir,output_f):
         patches_all[id]=patches_id
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
-prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder","D:/NPR4J-Eval/d4j/recoder_b300.patches")
+#prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder","D:/NPR4J-Eval/d4j/recoder_b300.patches")

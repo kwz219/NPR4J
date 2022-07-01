@@ -89,9 +89,9 @@ class TranslationTask(FairseqTask):
 
         # load dictionaries
         src_dict_f=os.path.join(args.data[0], 'dict.{}.txt'.format(args.CoCoNut_lang))
-
-        if not os.path.exists(src_dict_f):
-            args.CoCoNut_lang="ctx"
+        print(src_dict_f)
+        #if not os.path.exists(src_dict_f):
+            #args.CoCoNut_lang="ctx"
         src_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.CoCoNut_lang)))
         tgt_dict = Dictionary.load(os.path.join(args.data[0], 'dict.{}.txt'.format(args.target_lang)))
         assert src_dict.pad() == tgt_dict.pad()

@@ -6,19 +6,23 @@ import subprocess
 import sys
 import javalang
 from tqdm import tqdm
-def getResults(bugIndex, preds,meta_f,rootPath):
+def getResults(bugIndex, preds,meta_f,rootPath,log_file):
     print("QuixBugsDiscriminator getResults")
     #print("preds" + preds)
 
     bugId, buggyFile, lineNo = getInfoFromIndex(bugIndex,meta_f)
     lineNo = lineNo.replace('\n', '').replace('\t', '')
     print("bugId, buggyFile, lineNo: " + bugId, buggyFile, lineNo)
-
+    with open(log_file, 'a', encoding='utf8') as log_f:
+        log_f.write('bugId, buggyFile, lineNo: '+' '.join([bugId, buggyFile, lineNo]) + '\n')
+        log_f.close()
     # The bug path:
     quixbugroot = rootPath+'/quixbugs-experiment'
     current_bug = quixbugroot + buggyFile
     print("current_bug: " + current_bug)
-
+    with open(log_file, 'a', encoding='utf8') as log_f:
+        log_f.write('current_bug: '+current_bug + '\n')
+        log_f.close()
     # Get predicts and generate diffs:
     project_path = rootPath+'/quixbugs-experiment/tmp/' + bugId
 
@@ -30,6 +34,11 @@ def getResults(bugIndex, preds,meta_f,rootPath):
     # compile
     os.chdir(quixbugroot)
     result = os.popen('mvn compile').read()
+    with open(log_file, 'a', encoding='utf8') as log_f:
+        log_f.write("Compiling Result &&&&&&&&&" +'\n')
+        log_f.write(result + '\n')
+        log_f.write("Compiling End &&&&&&&&&" + '\n')
+        log_f.close()
     #print(result)
     os.chdir('..')
 
@@ -71,6 +80,11 @@ def getResults(bugIndex, preds,meta_f,rootPath):
         print(exestr)
 
         result = os.popen(exestr).read()
+        with open(log_file, 'a', encoding='utf8') as log_f:
+            log_f.write("Testing Result &&&&&&&&&" + '\n')
+            log_f.write(result + '\n')
+            log_f.write("Testing End &&&&&&&&&" + '\n')
+            log_f.close()
         print('This is the human test result')
         print(result)
 
@@ -171,7 +185,7 @@ if __name__ =="__main__":
     pred_patches = json.load(pf)
     benchmarks = json.load(bf)
     results=[]
-
+    log_file=output_dir+'/evaluate.log'
     for id in pred_patches.keys():
         if id in benchmarks.keys():
             per_patches = pred_patches.get(id)
@@ -194,6 +208,9 @@ if __name__ =="__main__":
                                 f.close()
                             continue
                     print("keys:$$$$$$$$$",key)
+                    with open(log_file,'a',encoding='utf8')as log_f:
+                        log_f.write("keys:$$$$$$$$$ "+key+'\n')
+                        log_f.close()
                     def get_tokenized_str(code):
                         tokens = list(javalang.tokenizer.tokenize(code))
                         tokens = [t.value for t in tokens]
@@ -205,6 +222,9 @@ if __name__ =="__main__":
                         new_class = ori_class.replace(buggy_method,tok_patch)
                         eval_result=getResults(name,new_class,meta_csv_f,rootPath)
                         print(id,name,key,eval_result)
+                        with open(log_file, 'a', encoding='utf8') as log_f:
+                            log_f.write(' '.join(id,name,key,eval_result) + '\n')
+                            log_f.close()
                         with open(os.path.join(output_dir,sys+'_eval.result'),'a',encoding='utf8')as f:
                             f.write(' '.join([id,name,key,eval_result])+'\n')
                             f.close()
