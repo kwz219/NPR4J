@@ -211,27 +211,24 @@ if __name__ =="__main__":
                     with open(log_file,'a',encoding='utf8')as log_f:
                         log_f.write("keys:$$$$$$$$$ "+key+'\n')
                         log_f.close()
-                    def get_tokenized_str(code):
-                        tokens = list(javalang.tokenizer.tokenize(code))
-                        tokens = [t.value for t in tokens]
-                        return ' '.join(tokens)
                     try:
-                        tok_patch = get_tokenized_str(patch)
-                        buggy_method=get_tokenized_str(id_info["buggy_method"])
-                        ori_class=get_tokenized_str(id_info["classcontent"])
-                        new_class = ori_class.replace(buggy_method,tok_patch)
-                        eval_result=getResults(name,new_class,meta_csv_f,rootPath,log_file)
-                        print(id,name,key,eval_result)
-                        with open(log_file, 'a', encoding='utf8') as log_f:
-                            log_f.write(' '.join([id,name,key,eval_result]) + '\n')
-                            log_f.close()
-                        with open(os.path.join(output_dir,sys+'_eval.result'),'a',encoding='utf8')as f:
-                            f.write(' '.join([id,name,key,eval_result])+'\n')
-                            f.close()
-                        if eval_result=="passHumanTest":
-                            with open(os.path.join(output_dir,sys+"_"+name+"_passTest_"+key+".patch"),'w',encoding='utf8')as f:
-                                f.write(patch)
+                        tok_patch = patch
+                        buggy_method=id_info["buggy_method"]
+                        ori_class=id_info["classcontent"]
+                        if buggy_method in ori_class:
+                            new_class = ori_class.replace(buggy_method,tok_patch)
+                            eval_result=getResults(name,new_class,meta_csv_f,rootPath,log_file)
+                            print(id,name,key,eval_result)
+                            with open(log_file, 'a', encoding='utf8') as log_f:
+                                log_f.write(' '.join([id,name,key,eval_result]) + '\n')
+                                log_f.close()
+                            with open(os.path.join(output_dir,sys+'_eval.result'),'a',encoding='utf8')as f:
+                                f.write(' '.join([id,name,key,eval_result])+'\n')
                                 f.close()
+                            if eval_result=="passHumanTest":
+                                with open(os.path.join(output_dir,sys+"_"+name+"_passTest_"+key+".patch"),'w',encoding='utf8')as f:
+                                    f.write(patch)
+                                    f.close()
                     except:
                         with open(os.path.join(output_dir,sys+'_eval.result'),'a',encoding='utf8')as f:
                             f.write(' '.join([id,name,key,'failtokenize'])+'\n')
