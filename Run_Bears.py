@@ -150,17 +150,20 @@ def get_min_ids(changedict:dict,patches_f):
                 patches_count=len(patches_f[id].keys())
             candi_count=min(candi_count,patches_count)
     return candi_count
-def get_fixed_code(raw_method, new_method, java):
+def get_fixed_code(raw_method, new_method, javaclass):
     def get_tokenized_str(code):
         tokens = list(javalang.tokenizer.tokenize(code))
         tokens = [t.value for t in tokens]
         return ' '.join(tokens)
     raw_str = get_tokenized_str(raw_method)
     new_str = get_tokenized_str(new_method)
-    java_str = get_tokenized_str(java)
+    java_str = get_tokenized_str(javaclass)
     if raw_str in java_str:
-        print("Replace Finished.")
-    return java_str.replace(raw_str, new_str)
+        print("=== Replace Finished ===")
+        return javaclass.replace(raw_str, new_str)
+    else:
+        print("=== Replace Error ===")
+        return "Replace Error"
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Run_Bears.py',
@@ -191,7 +194,7 @@ if __name__ == '__main__':
     for bugId in bugids:
         #deal with Bears-N
         skipflag=0
-
+        replace_error=0
         #these projects are uncompilable in our experiments
         checklist=["Bears-195","Bears-202","Bears-158","Bears-208","Bears-10","Bears-12","Bears-27","Bears-38","Bears-29","Bears-31","Bears-33","Bears-28","Bears-44","Bears-45"
                    "Bears-35","Bears-39","Bears-37","Bears-40","Bears-42","Bears-43","Bears-48","Bears-55","Bears-56","Bears-58","Bears-67","Bears-68","Bears-69","Bears-77","Bears-78",
@@ -228,12 +231,16 @@ if __name__ == '__main__':
                         else:
                             patch_candidate = patches_info[id][str(i+1)]
                         #print(i,patch_candidata)
-                        try:
-                            new_class=get_fixed_code(buggymethod,patch_candidate,classcontent)
-                        except:
-                            new_class=classcontent
-                        change_file.update({file_path:new_class})
 
+                        new_class=get_fixed_code(buggymethod,patch_candidate,classcontent)
+                        if new_class=="Replace Error":
+                            replace_error=1
+                        change_file.update({file_path:new_class})
+                if replace_error==1:
+                    with open(os.path.join(output_dir, opt.sys + "_eval.result"), 'a', encoding='utf8') as f:
+                        f.write(bugId + " " + str(i + 1) + " " + "replaceerror" + '\n')
+                        f.close()
+                    continue
 
                 print(bugId,change_file.keys())
                 rootPath=opt.root_path
