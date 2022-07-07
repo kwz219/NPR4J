@@ -179,6 +179,12 @@ def get_fixed_code(raw_method, new_method, javaclass):
     else:
         print("=== Replace Error ===")
         return "Replace Error"
+def add_annotations(buggy_method,candidate):
+    buggy_lines=buggy_method.strip().split('\n')
+    start=buggy_lines[0]
+    if '@' in start:
+        candidate=start+'\n'+' '+candidate
+    return candidate
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Run_Bears.py',
@@ -248,7 +254,8 @@ if __name__ == '__main__':
                         else:
                             patch_candidate = patches_info[id][str(i+1)]
                         #print(i,patch_candidata)
-
+                        if opt.sys == "Tufano":
+                            patch_candidate=add_annotations(buggymethod,patch_candidate)
                         new_class=get_fixed_code(buggymethod,patch_candidate,classcontent)
                         if new_class=="Replace Error":
                             replace_error=1
