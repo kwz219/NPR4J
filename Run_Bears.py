@@ -25,8 +25,7 @@ def getResults(bugindex,change_dict,root,projects_dir):
         os.chdir(projectdir)
         os.system("mvn clean")
         #apply patch
-        os.chdir(repodir)   
-
+        os.chdir(repodir)
         #prepare the diff
         for file in change_dict.keys():
 
@@ -52,6 +51,11 @@ def getResults(bugindex,change_dict,root,projects_dir):
         PassHumanTest = False
         execResult=""
         print(results)
+        with open(log_file, 'a', encoding='utf8') as lf:
+            lf.write("Compile Start &&&&&&" + '\n')
+            lf.write(str(results)+'\n')
+            lf.write("Compile End &&&&&&" + '\n')
+            lf.close()
         for line in results.split('\n'):
             if 'BUILD SUCCESS' in line:
                 print(line)
@@ -63,6 +67,11 @@ def getResults(bugindex,change_dict,root,projects_dir):
             teststring='python2 run_tests_bug.py --bugId '+bugindex+' --workspace '+repodir
             testresults = os.popen(teststring).read()
             print(testresults)
+            with open(log_file, 'a', encoding='utf8') as lf:
+                lf.write("Test Start &&&&&&" + '\n')
+                lf.write(str(testresults) + '\n')
+                lf.write("Test End &&&&&&" + '\n')
+                lf.close()
             useful_info=testresults.split("Results :")[-1]
             for line in useful_info.split('\n'):
                 if 'Failures: 0' in line and 'Errors: 0' in line:
@@ -81,6 +90,11 @@ def getResults(bugindex,change_dict,root,projects_dir):
         #print(recovery_str)
 
         print("execResult",execResult)
+        with open(log_file, 'a', encoding='utf8') as lf:
+
+            lf.write("execResult "+str(execResult)+'\n')
+
+            lf.close()
         return execResult
 
         
@@ -155,12 +169,13 @@ def get_fixed_code(raw_method, new_method, javaclass):
         tokens = list(javalang.tokenizer.tokenize(code))
         tokens = [t.value for t in tokens]
         return ' '.join(tokens)
-    raw_str = get_tokenized_str(raw_method)
-    new_str = get_tokenized_str(new_method)
-    java_str = get_tokenized_str(javaclass)
+    raw_str = raw_method
+    new_str = new_method
+    java_str = javaclass
     if raw_str in java_str:
         print("=== Replace Finished ===")
-        return javaclass.replace(raw_str, new_str)
+        new_class=javaclass.replace(raw_str,new_str)
+        return new_class
     else:
         print("=== Replace Error ===")
         return "Replace Error"
@@ -174,13 +189,14 @@ if __name__ == '__main__':
     parser.add_argument("-project_path", help="dir where you check out bugs of bears",required=True)
     parser.add_argument("-root_path",help="parent dir of bears-benchmark",required=True)
     parser.add_argument("-output_dir",help="store the evaluation result and plausible patches",required=True)
+    parser.add_argument("-start_from",help="continue evaluation from last time",default="0")
     opt = parser.parse_args()
     now = datetime.datetime.now()
     date = now.strftime("%Y-%m-%d")
     #getResults('10','if  (channel  !=  null  &&  channel.getPipeline().get(HttpRequestDecoder.class)  !=  null')
     bears_f=codecs.open(opt.bears_f,'r',encoding='utf8')
     patches_f=codecs.open(opt.patches_f,'r',encoding='utf8')
-
+    log_file=opt.output_dir+'/evaluate.log'
     bears_bugs=json.load(bears_f)
     patches_info=json.load(patches_f)
     bugids=["Bears-"+str(i) for i in range(1,252)]
@@ -199,8 +215,9 @@ if __name__ == '__main__':
         checklist=["Bears-195","Bears-202","Bears-158","Bears-208","Bears-10","Bears-12","Bears-27","Bears-38","Bears-29","Bears-31","Bears-33","Bears-28","Bears-44","Bears-45"
                    "Bears-35","Bears-39","Bears-37","Bears-40","Bears-42","Bears-43","Bears-48","Bears-55","Bears-56","Bears-58","Bears-67","Bears-68","Bears-69","Bears-77","Bears-78",
                    "Bears-82","Bears-84","Bears-87","Bears-90","Bears-91","Bears-94","Bears-191","Bears-49","Bears-53","Bears-60","Bears-59","Bears-64"]
-
-        if bugId in checklist or  (not bugId in bears_bugs.keys()) :
+        intId=int(bugId.split('-')[1])
+        startId=int(opt.start_from)
+        if (bugId in checklist) or (not bugId in bears_bugs.keys()) or intId < startId:
             continue
         # which file should be modified
         change_dict = bears_bugs[bugId]
@@ -243,6 +260,9 @@ if __name__ == '__main__':
                     continue
 
                 print(bugId,change_file.keys())
+                with open(log_file,'a',encoding='utf8')as lf:
+                    lf.write("START EVALUATE &&&&&& "+str(bugId)+" "+str(change_file.keys())+'\n')
+                    lf.close()
                 rootPath=opt.root_path
                 output_dir = opt.output_dir
                 if "Tufano" in opt.sys: #avoid nonsense compile
