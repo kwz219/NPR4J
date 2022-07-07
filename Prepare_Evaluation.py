@@ -95,22 +95,22 @@ def Prepare_CodeBERTFT_patches(cand_size,preds_f,ids_f,input_dir,output_f):
         patches_all[id] = patches_id
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
-Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/qbs.output",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/qbs.ids.new",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_qbs.patches")
-Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/bears.output",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/bears.ids.new",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_bears.patches")
-Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/d4j.output",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/d4j.ids.new",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_d4j.patches")
-Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/bdj.output",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/bdj.ids.new",
-                           "/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_bdj.patches")
+#Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/qbs.output",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/qbs.ids.new",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_qbs.patches")
+#Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/bears.output",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/bears.ids.new",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_bears.patches")
+#Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/d4j.output",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/d4j.ids.new",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_d4j.patches")
+#Prepare_CodeBERTFT_patches(300,"/home/zhongwenkang2/RawData_Processed/CodeBERT-ft/bdj.output",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/bdj.ids.new",
+                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang2/NPR4J_Pred/CodeBERT-ft/CodeBERT-ft_b300_bdj.patches")
 def Prepare_CoCoNut_patches(cand_size,preds_f,ids_f,input_dir,output_f):
     def Recovery_CoCoNut_one(buggy_str, pred_str):
         strings, numbers = get_strings_numbers(buggy_str)
@@ -141,13 +141,15 @@ def Prepare_CoCoNut_patches(cand_size,preds_f,ids_f,input_dir,output_f):
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
 
-def prepare_Recoder_patches(pred_dir,output_f):
+def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
     files=os.listdir(pred_dir)
     patches_all={}
     for file in files:
         if not file.endswith(".fix"):
             continue
         id =file.split(".")[0]
+        if id_prefix in ["qbs","d4j","bears"]:
+            id=id_prefix+"_"+id
         patches_id={}
         predictions=json.load(codecs.open(pred_dir+'/'+file,'r',encoding='utf8'))
         for key in predictions.keys():
@@ -157,3 +159,4 @@ def prepare_Recoder_patches(pred_dir,output_f):
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
 #prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder","D:/NPR4J-Eval/d4j/recoder_b300.patches")
+prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder","D:/NPR4J-Eval-Results/qbs/Recoder/recoder.patches","qbs")
