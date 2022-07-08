@@ -3,6 +3,7 @@ import json
 import os
 
 from CoCoNut.tokenization.tokenization import get_strings_numbers, token2statement
+from Recovery_Code import Recovery_CoCoNut_one
 from Utils.IOHelper import readF2L, readF2L_ori
 
 
@@ -140,6 +141,53 @@ def Prepare_CoCoNut_patches(cand_size,preds_f,ids_f,input_dir,output_f):
         patches_all[id] = patches_id
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
+def prepare_CoCoNut_patches_all(cand_size,buggy_f,preds_dir,ids_f,input_dir,output_f):
+
+    ids=readF2L(ids_f)
+    patches_all={}
+    buggy_lines=readF2L(buggy_f)
+    assert len(buggy_lines)==len(ids)
+    patches_final={}
+    for id in ids:
+        patches_final[id]=[]
+    ensemble_list=os.listdir(preds_dir)
+    for file in ensemble_list:
+        preds=readF2L(preds_dir+'/'+file)
+        for pred in preds:
+            if pred.startswith("H"):
+                id,prob,pred=pred.strip().split('\t')
+                bugID=ids[int(id.split('-')[1])]
+                buggy_line=buggy_lines[int(id.split('-')[1])]
+                tuple_list=patches_final[bugID]
+                tuple_list.append((float(prob),Recovery_CoCoNut_one(buggy_line,pred)))
+                patches_final[bugID]=tuple_list
+    for id in patches_final.keys():
+        tuple_list=patches_final[id]
+        print(id)
+        sorted_list=sorted(tuple_list,key=lambda t:t[0],reverse=True)
+        id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+        err_line = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+        buggy_line = codecs.open(input_dir + '/buggy_lines/' + id + ".txt").read().strip()
+        buggy_method = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+        assert (buggy_line in buggy_method[err_line])
+        final_dict={}
+        ind=1
+        checkset=set()
+        for (prob,pred) in sorted_list:
+            if pred not in checkset:
+                buggy_method[err_line] = pred
+                patch_method = '\n'.join(buggy_method)
+                final_dict[str(ind)]=patch_method
+                checkset.add(pred)
+                ind+=1
+                if ind >cand_size:
+                    break
+        patches_all[id]=final_dict
+    with open(output_f, 'w', encoding='utf8') as f:
+        json.dump(patches_all, f, indent=2)
+
+prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\qbs.buggy","D:/NPR4J-Pred/qbs/CoCoNut",r"D:\RawData_Processed\SequenceR\qbs.sids",
+                            "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches")
 
 def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
     files=os.listdir(pred_dir)
@@ -160,4 +208,4 @@ def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
         json.dump(patches_all, f, indent=2)
 #prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder","D:/NPR4J-Eval/d4j/recoder_b300.patches")
 #prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder","D:/NPR4J-Eval-Results/qbs/Recoder/recoder.patches","qbs")
-prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder","D:/NPR4J-Eval-Results/bears/Recoder/recoder.patches","bears")
+#prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder","D:/NPR4J-Eval-Results/bears/Recoder/recoder.patches","bears")

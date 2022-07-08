@@ -336,6 +336,8 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
                 if True:
                     meta_info=codecs.open(os.path.join(input_dir,"metas",id+".txt")).read().strip()
                     filename=meta_info.split("<sep>")[-1].split('@')[0].split("\\")[-1]
+                    if "BF_Rename" in filename:
+                        filename=filename.split('_')[-1].replace('.buggy','.java')
                     class_path=os.path.join(input_dir,"buggy_classes",id+".java")
                     class_path=class_path.replace("d4j_","").replace("bdjar_","").replace("bears_","").replace("qbs_","")
                     generate_classcontent(class_path,os.path.join(output_dir,id+'.json')
@@ -350,9 +352,9 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
 
 #preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
                            #"/home/zhongwenkang/NPR4J_processed/Recoder")
-#preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new",
-                           #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                            #"/home/zhongwenkang/RawData_Processed/Recoder")
+preprocess_Recoder_fromRaw("test","E:/NPR4J/RawData (2)/Benchmarks/d4j.ids.new",
+                           "E:/NPR4J/RawData (2)/Benchmarks",
+                            "D:/RawData_Processed/Recoder_d4j")
 #preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new",
                            #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
                             #"/home/zhongwenkang/RawData_Processed/Recoder")
@@ -394,15 +396,15 @@ def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,temp_prefix,output_dir,src_dict_f
           + " --srcdict " + src_dict_f + " --tgtdict " + tgt_dict_f + " --testpref " + temp_prefix + " --destdir " + output_dir
         print(cmd)
         subprocess.call(cmd, shell=True)
-Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/raw_bdj_test","/home/zhongwenkang/RawData_Processed/CoCoNut/bdjar",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","bdj_test")
-Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/raw_bears_test","/home/zhongwenkang/RawData_Processed/CoCoNut/bears",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","bears_test")
-Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/raw_qbs_test","/home/zhongwenkang/RawData_Processed/CoCoNut/qbs",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","qbs_test")
-Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/raw_d4j_test","/home/zhongwenkang/RawData_Processed/CoCoNut/d4j",
-                           "/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","d4j_test")
+#Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/raw_bdj_test","/home/zhongwenkang/RawData_Processed/CoCoNut/bdjar",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","bdj_test")
+#Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                           #,"/home/zhongwenkang/RawData_Processed/CoCoNut/bears",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","bears_test")
+#Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/qbs.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/raw_qbs_test","/home/zhongwenkang/RawData_Processed/CoCoNut/qbs",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","qbs_test")
+#Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/raw_d4j_test","/home/zhongwenkang/RawData_Processed/CoCoNut/d4j",
+                           #"/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","d4j_test")
