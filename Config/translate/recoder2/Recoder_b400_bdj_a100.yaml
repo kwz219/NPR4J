@@ -1,0 +1,17 @@
+model_path: /root/zwk/Recoder_models/best_model.ckpt
+ids_path: /root/zwk/BenchmarkData/bdj.ids.new
+input_dir: /root/zwk/BenchmarkData
+search_size: 400
+classcontent_dir: /root/zwk/Recoder_Classcontent/Recoder
+output_dir: /root/zwk/NPR4J_Pred/Recoder_bdj
+valdatapkl_f: /root/zwk/Recoder_models/valdata.pkl
+nl_voc_f: /root/zwk/Recoder_models/nl_voc.pkl
+rule_f: /root/zwk/Recoder_models/rule.pkl
+code_voc_path: /root/zwk/Recoder_models/code_voc.pkl
+char_voc_path: /root/zwk/Recoder_models/char_voc.pkl
+rulead_path: /root/zwk/Recoder_models/rulead.pkl
+NL_voc_size: 26167
+code_voc_size: 26167
+voc_size: 81
+rule_num: 1265
+cnum: 764

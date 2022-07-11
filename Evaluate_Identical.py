@@ -9,13 +9,22 @@ from Utils.IOHelper import readF2L
 def check_identical(label,candidates):
     hit_idx=-1
     pattern = re.compile(r'\s+');
-    for idx,cand in enumerate(candidates):
-        label_new=re.sub(pattern,'',label)
-        cand_new=re.sub(pattern,'',cand)
-        if label_new==cand_new:
-            print(label,cand)
-            hit_idx=idx+1
-            break
+    if isinstance(candidates,dict):
+        for idx in candidates.keys():
+            label_new=re.sub(pattern,'',label)
+            cand_new=re.sub(pattern,'',candidates[idx])
+            if label_new==cand_new:
+                hit_idx=idx
+                break
+        pass
+    else:
+        for idx,cand in enumerate(candidates):
+            label_new=re.sub(pattern,'',label)
+            cand_new=re.sub(pattern,'',cand)
+            if label_new==cand_new:
+                print(label,cand)
+                hit_idx=idx+1
+                break
     return hit_idx
 
     pass
@@ -102,5 +111,20 @@ def Evaluate_identical_Recoder(preds_dir,ids_f,labels_f,output_f):
             eval_result[id] = -1
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(eval_result, f, indent=2)
-Evaluate_identical_Recoder("D:/NPR4J-Pred/qbs/recoder",r"D:\RawData_Processed\SequenceR\qbs.sids",
-                           r"D:\RawData_Processed\CodeBERT-ft\qbs.fix",r"D:\NPR4J-Eval-Results\qbs\Recoder\identical.ids")
+#Evaluate_identical_Recoder("D:/NPR4J-Pred/qbs/recoder",r"D:\RawData_Processed\SequenceR\qbs.sids",
+                           #r"D:\RawData_Processed\CodeBERT-ft\qbs.fix",r"D:\NPR4J-Eval-Results\qbs\Recoder\identical.ids")
+def Evaluate_identical_CoCoNut(ids_f,patches_f,fix_methods_dir,output_f):
+    candidates=json.load(codecs.open(patches_f,'r',encoding='utf8'))
+    ids=readF2L(ids_f)
+    eval_result={}
+    for id in ids:
+        eval_result[id]=-1
+        id_preds=candidates[id]
+        fix_method=codecs.open(fix_methods_dir+'/'+id+'.txt','r',encoding='utf8').read().strip()
+        #print(fix_method,id_preds["1"])
+        identical_re=check_identical(fix_method,id_preds)
+        eval_result[id]=identical_re
+    with open(output_f, 'w', encoding='utf8') as f:
+        json.dump(eval_result, f, indent=2)
+Evaluate_identical_CoCoNut(r"D:\RawData_Processed\SequenceR\qbs.sids",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches",
+                           "E:/NPR4J/RawData (2)/Benchmarks/fix_methods",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\identical.ids")

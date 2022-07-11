@@ -272,8 +272,15 @@ if __name__ == '__main__':
                     lf.close()
                 rootPath=opt.root_path
                 output_dir = opt.output_dir
-                if "Tufano" in opt.sys: #avoid nonsense compile
+                # avoid nonsense compile
+                if "Tufano" in opt.sys:
                     if "VAR_" in patch_candidate or "METHOD_" in patch_candidate or "STRING_" in patch_candidate or "INT_" in patch_candidate:
+                        with open(os.path.join(output_dir, opt.sys + "_eval.result"), 'a', encoding='utf8') as f:
+                            f.write(bugId + " " + str(i+1) + " " + "failconcretize" + '\n')
+                            f.close()
+                        continue
+                elif "CoCoNut" in opt.sys:
+                    if "$STRING$" in patch_candidate or "$NUMBER$" in patch_candidate :
                         with open(os.path.join(output_dir, opt.sys + "_eval.result"), 'a', encoding='utf8') as f:
                             f.write(bugId + " " + str(i+1) + " " + "failconcretize" + '\n')
                             f.close()

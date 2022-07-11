@@ -186,8 +186,10 @@ def prepare_CoCoNut_patches_all(cand_size,buggy_f,preds_dir,ids_f,input_dir,outp
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
 
-prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\qbs.buggy","D:/NPR4J-Pred/qbs/CoCoNut",r"D:\RawData_Processed\SequenceR\qbs.sids",
-                            "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches")
+#prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\qbs.buggy","D:/NPR4J-Pred/qbs/CoCoNut",r"D:\RawData_Processed\SequenceR\qbs.sids",
+                            #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches")
+prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\bears.buggy","D:/NPR4J-Pred/bears/CoCoNut",r"D:\RawData_Processed\SequenceR\bears.sids",
+                            "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\bears\CoCoNut\CoCoNut_300.patches")
 
 def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
     files=os.listdir(pred_dir)
