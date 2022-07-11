@@ -4,6 +4,7 @@ import re
 import subprocess
 
 import javalang
+from tqdm import tqdm
 
 from CodeAbstract.CA_Recoder import generate_classcontent
 from CodeAbstract.CA_SequenceR import run_SequenceR_abs
@@ -408,3 +409,53 @@ def Preprocess_CoCoNut_fromRaw(ids_f,input_dir,temp_prefix,output_dir,src_dict_f
 #Preprocess_CoCoNut_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/d4j.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
                            #"/home/zhongwenkang/RawData_Processed/CoCoNut/raw_d4j_test","/home/zhongwenkang/RawData_Processed/CoCoNut/d4j",
                            #"/home/zhongwenkang/RawData_Processed/CoCoNut/dict.ctx.txt","/home/zhongwenkang/RawData_Processed/CoCoNut/dict.fix.txt","d4j_test")
+#TODO: Preprocess_PatchEdits_fromRawData
+def Preprocess_PatchEdits_fromSequenceR(ids_f,SequenceR_buggy_f,SequenceR_fix_f,output_data_f,output_ids_f):
+    SequenceR_buggys=readF2L(SequenceR_buggy_f)
+    SequenceR_fixes=readF2L(SequenceR_fix_f)
+    ids=readF2L(ids_f)
+    count=0
+    def deal_control_char(s):
+        temp = re.sub('[\x00-\x09|\x0b-\x0c|\x0e-\x1f]', '', s)
+        return temp
+    for i, code in enumerate(tqdm(SequenceR_buggys)):
+        if not ("<START_BUG>" in code and "<END_BUG>" in code):
+            continue
+        fix_code = SequenceR_fixes[i].strip()
+        code = deal_control_char(code)
+        fix_code = deal_control_char(fix_code)
+        while '###' in code:
+            code = code.replace('###', '')
+        while '###' in fix_code:
+            fix_code = fix_code.replace('###', '')
+        temp = code
+        code = code.strip().split()
+        start_index = code.index("<START_BUG>")
+        code.remove("<START_BUG>")
+        end_index = code.index("<END_BUG>")
+        code.remove("<END_BUG>")
+        dataset = 'test'
+        data = f"{dataset} ### {' '.join(code)} ### {start_index} {end_index} ### <s> {fix_code} </s>\n"
+        if data.count('###') != 3:
+            print(data.count('###'), '###' in data, temp)
+            print(data)
+        with open(output_data_f, 'a', encoding='utf8') as fp:
+            fp.write(data)
+
+        with open(output_ids_f, 'a', encoding='utf8') as fp:
+            fp.write(ids[i]+'\n')
+            count += 1
+    print(count)
+Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\qbs.sids",r"D:\RawData_Processed\SequenceR\qbs.buggy",
+                                    r"D:\RawData_Processed\SequenceR\qbs.fix",r"D:\RawData_Processed\PatchEdits\qbs.data",
+                                    r"D:\RawData_Processed\PatchEdits\qbs.ids")
+Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\bears.sids",r"D:\RawData_Processed\SequenceR\bears.buggy",
+                                    r"D:\RawData_Processed\SequenceR\bears.fix",r"D:\RawData_Processed\PatchEdits\bears.data",
+                                    r"D:\RawData_Processed\PatchEdits\bears.ids")
+Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\bdj.sids",r"D:\RawData_Processed\SequenceR\bdj.buggy",
+                                    r"D:\RawData_Processed\SequenceR\bdj.fix",r"D:\RawData_Processed\PatchEdits\bdj.data",
+                                    r"D:\RawData_Processed\PatchEdits\bdj.ids")
+Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\d4j.sids",r"D:\RawData_Processed\SequenceR\d4j.buggy",
+                                    r"D:\RawData_Processed\SequenceR\d4j.fix",r"D:\RawData_Processed\PatchEdits\d4j.data",
+                                    r"D:\RawData_Processed\PatchEdits\d4j.ids")
+
