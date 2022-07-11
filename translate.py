@@ -90,6 +90,17 @@ def translate_Recoder(config_file,clearml):
     cnum=int(config_dict["cnum"])
     generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path,
                    NL_voc_size,code_voc_size,voc_size,rule_num,cnum)
+def translate_PatchEdits(config_f):
+    with open(config_f, 'r') as f:
+        config_dict = yaml.safe_load(f)
+        f.close()
+    data_path=config_dict["data_path"]
+    vocab_path=config_dict["vocab_path"]
+    output_f=config_dict["output_path"]
+    model_path=config_dict["model_path"]
+    log_path=config_dict["log_path"]
+    beam_size=config_dict["beam_size"]
+    translate_PatchEdits(data_path,vocab_path,output_f,beam_size,model_path,log_path)
 def main():
     parser = argparse.ArgumentParser(
         description='translate.py',
