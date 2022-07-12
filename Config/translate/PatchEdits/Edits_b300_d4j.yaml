@@ -1,0 +1,6 @@
+data_path: /home/gehongliang/zwk/Data_Processed/PatchEdits/d4j.data
+vocab_path: /home/gehongliang/PE/Model/data/temp_vocab
+output_path: /home/gehongliang/zwk/NPR4J_Pred/d4j.pred
+model_path: /home/gehongliang/PE/Model/models-2022
+log_path: /home/gehongliang/zwk/NPR4J_Pred/d4j.log
+beam_size: 300

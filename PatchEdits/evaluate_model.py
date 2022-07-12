@@ -27,19 +27,21 @@ def PatchEdits_translate(data_path,vocabulary_f,preds_f,beam_size,model_path,log
 	with open(preds_f, "w",encoding='utf8') as f_out:
 		idx=0
 		for batch in data.batcher(mode="test", optimize_packing=False):
+			"""
 			if idx < 62:
 				print(idx,len(batch))
 				idx+=1
 				continue
+			"""
 			pre, pre_locs = batch[:2]
-
+			idx+=1
 			preds = model.predict(data.vocabulary, pre, pre_locs, config["data"]["beam_size"], config["data"]["max_bug_length"])
 			print(idx,"predict finished")
 			
-			write_completions(f_out, data.vocabulary, pre.numpy(), pre_locs.numpy(), preds)
+			write_completions(config,f_out, data.vocabulary, pre.numpy(), pre_locs.numpy(), preds)
 			print(idx, "write finished")
 
-def write_completions(f_out, vocabulary, bugs, bug_locs, completions, pointer_locs=None):
+def write_completions(config,f_out, vocabulary, bugs, bug_locs, completions, pointer_locs=None):
 	for bug_ix, comp_list in enumerate(completions):
 		f_out.write('\n')
 		if not comp_list:
