@@ -1,0 +1,6 @@
+data_path: /home/gehongliang/zwk/Data_Processed/PatchEdits/qbs.data
+vocab_path: /home/gehongliang/PE/Model/data/temp_vocab
+output_path: /home/gehongliang/zwk/NPR4J_Pred/qbs.pred
+model_path: /home/gehongliang/PE/Model/models-2022
+log_path: /home/gehongliang/zwk/NPR4J_Pred/qbs.pred
+beam_size: 300

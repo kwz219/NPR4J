@@ -2,7 +2,7 @@ import argparse
 import os
 
 import yaml
-
+from PatchEdits.evaluate_model import PatchEdits_translate
 from Recoder.testone_ghl import generate_fixes
 import time
 
@@ -100,13 +100,13 @@ def translate_PatchEdits(config_f):
     model_path=config_dict["model_path"]
     log_path=config_dict["log_path"]
     beam_size=config_dict["beam_size"]
-    translate_PatchEdits(data_path,vocab_path,output_f,beam_size,model_path,log_path)
+    PatchEdits_translate(data_path,vocab_path,output_f,beam_size,model_path,log_path)
 def main():
     parser = argparse.ArgumentParser(
         description='translate.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder","SequenceR","Tufano"])
+    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder","SequenceR","Tufano","PatchEdits"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -119,6 +119,8 @@ def main():
         translate_Cure(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="Recoder":
         translate_Recoder(config_file=opt.config,clearml=opt.clearml)
+    elif opt.model=="PatchEdits":
+        translate_PatchEdits(config_f=opt.config)
     end=time.time()
     time_sum=end-start
     print("total_time",time_sum)

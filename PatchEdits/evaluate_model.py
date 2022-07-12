@@ -6,14 +6,14 @@ import numpy as np
 import tensorflow as tf
 
 from PatchEdits.data_reader import DataReader
-from metrics import MetricsTracker
+from PatchEdits.metrics import MetricsTracker
 from PatchEdits.tracker import Tracker
 from PatchEdits.transformer_patching_model import TransformerPatchingModel
 
-config = yaml.safe_load(open("config.yml"))
+
 
 def PatchEdits_translate(data_path,vocabulary_f,preds_f,beam_size,model_path,log_path):
-
+	config = yaml.safe_load(open("/home/gehongliang/zwk/NPR4J/PatchEdits/config.yml"))
 	config["data"]["beam_size"]=beam_size
 	data = DataReader(config["data"], data_file=data_path, vocab_path=vocabulary_f)
 	model = TransformerPatchingModel(config["transformer"], data.vocabulary.vocab_dim, is_pointer=config["data"]["edits"])
