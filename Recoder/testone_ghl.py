@@ -559,7 +559,29 @@ def load_model_for_test(model_path,nl_voc_size,code_voc_size,voc_size,rule_num,c
     model = model.eval()
     model.load_state_dict(torch.load(model_path))
     return model
+def load_model_for_test_ori(model_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum):
 
+    args.cnum = cnum
+
+    # print(len(dev_set))
+    args.Nl_Vocsize = nl_voc_size
+    args.Code_Vocsize = code_voc_size
+    args.Vocsize = voc_size
+    args.rulenum = rule_num
+
+    print("NL_voc: "+str(args.Nl_Vocsize))
+    print("code_voc: " + str(args.Code_Vocsize))
+    print("voc_size: " + str(args.Vocsize))
+    print("rule_num: " + str(args.rulenum))
+    print("cnum: "+str(args.cnum))
+    model = Decoder(args)
+    if torch.cuda.is_available():
+        print('using GPU')
+        # os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+        model = model.cuda()
+    model = model.eval()
+    model.load_state_dict(torch.load(model_path))
+    return model
 def fix_benchmarks(model_path,benchmarks_dir,search_size,fix_dir,classcontent_dir):
     model=load_model_for_test(model_path)
     d4j_ids=codecs.open(benchmarks_dir+'/d4j.ids').readlines()
@@ -690,6 +712,8 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
             classcontent_file = classcontent_dir + '/' + prefix + "_" + id + ".json"
         else:
             classcontent_file = classcontent_dir + '/' + id + ".json"
+        if "BF_Rename" in classname:
+            classname=classname.split("_")[-1].replace(".buggy",'')
         print(classcontent_file)
         print(buggy_lineid, classname)
         try:
