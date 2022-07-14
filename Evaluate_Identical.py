@@ -126,5 +126,20 @@ def Evaluate_identical_CoCoNut(ids_f,patches_f,fix_methods_dir,output_f):
         eval_result[id]=identical_re
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(eval_result, f, indent=2)
-Evaluate_identical_CoCoNut(r"D:\RawData_Processed\SequenceR\qbs.sids",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches",
-                           "E:/NPR4J/RawData (2)/Benchmarks/fix_methods",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\identical.ids")
+#Evaluate_identical_CoCoNut(r"D:\RawData_Processed\SequenceR\qbs.sids",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches",
+                           #"E:/NPR4J/RawData (2)/Benchmarks/fix_methods",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\identical.ids")
+def Evaluate_identical_Edits(ids_f,patches_f,fix_methods_dir,output_f):
+    candidates=json.load(codecs.open(patches_f,'r',encoding='utf8'))
+    ids=readF2L(ids_f)
+    eval_result={}
+    for id in ids:
+        eval_result[id]=-1
+        id_preds=candidates[id]
+        fix_method=codecs.open(fix_methods_dir+'/'+id+'.txt','r',encoding='utf8').read().strip()
+        #print(fix_method,id_preds["1"])
+        identical_re=check_identical(fix_method,id_preds)
+        eval_result[id]=identical_re
+    with open(output_f, 'w', encoding='utf8') as f:
+        json.dump(eval_result, f, indent=2)
+Evaluate_identical_Edits(r"D:\RawData_Processed\PatchEdits\qbs.ids",r"D:\NPR4J-Pred\qbs\Edits\Edits_qbs_b300.patches",
+                         "E:/NPR4J/RawData (2)/Benchmarks/fix_methods",r"D:\NPR4J-Eval-Results\qbs\Edits\identical.ids")
