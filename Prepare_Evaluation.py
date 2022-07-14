@@ -51,6 +51,32 @@ def Prepare_patches_fromline(cand_size,preds_f,ids_f,input_dir,output_f):
 
 def Prepare_SequenceR_patches(cand_size,preds_f,ids_f,input_dir,output_f):
     Prepare_patches_fromline(cand_size,preds_f,ids_f,input_dir,output_f)
+def Prepare_Edits_patches(cand_size,preds_f,ids_f,input_dir,output_f):
+    ids=readF2L(ids_f)
+    preds=readF2L(preds_f)
+    assert len(ids)*(cand_size+2)==len(preds)
+    patches_all={}
+    for idx,id in enumerate(ids):
+        patches_id={}
+        id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+        err_line=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+        buggy_line=codecs.open(input_dir+'/buggy_lines/'+id+".txt").read().strip()
+        buggy_method=readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+        assert (buggy_line in buggy_method[err_line])
+        all_candidates=preds[idx*(cand_size+2):(idx+1)*(cand_size+2)]
+        for cid,pred in enumerate(all_candidates[2:]):
+            pred=pred.split("%:")[1]
+            pred=pred.replace('\t',' ')
+            buggy_method[err_line]=pred
+            patch_method='\n'.join(buggy_method)
+            patches_id[str(cid+1)]=patch_method
+        patches_all[id]=patches_id
+    with open(output_f,'w',encoding='utf8')as f:
+        json.dump(patches_all,f,indent=2)
+#Prepare_Edits_patches(300,r"D:\NPR4J-Pred\qbs\Edits\qbs.pred",r"D:\RawData_Processed\PatchEdits\qbs.ids",
+                      #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\qbs\Edits\Edits_qbs_b300.patches")
+Prepare_Edits_patches(300,r"D:\NPR4J-Pred\d4j\Edits\d4j.pred",r"D:\RawData_Processed\PatchEdits\d4j.ids",
+                      "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\Edits\Edits_d4j_b300.patches")
 #Prepare_SequenceR_patches(300,"/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_d4j.pred",
                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/d4j.ids.new",
                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
@@ -188,8 +214,10 @@ def prepare_CoCoNut_patches_all(cand_size,buggy_f,preds_dir,ids_f,input_dir,outp
 
 #prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\qbs.buggy","D:/NPR4J-Pred/qbs/CoCoNut",r"D:\RawData_Processed\SequenceR\qbs.sids",
                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\qbs\CoCoNut\CoCoNut_300.patches")
-prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\bears.buggy","D:/NPR4J-Pred/bears/CoCoNut",r"D:\RawData_Processed\SequenceR\bears.sids",
-                            "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\bears\CoCoNut\CoCoNut_300.patches")
+#prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\bears.buggy","D:/NPR4J-Pred/bears/CoCoNut",r"D:\RawData_Processed\SequenceR\bears.sids",
+                            #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\bears\CoCoNut\CoCoNut_300.patches")
+#prepare_CoCoNut_patches_all(300,r"D:\RawData_Processed\CodeBERT-ft\d4j.buggy","D:/NPR4J-Pred/d4j/CoCoNut",r"D:\RawData_Processed\SequenceR\d4j.sids",
+                           # "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Eval-Results\d4j\CoCoNut\CoCoNut_300_d4j.patches")
 
 def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
     files=os.listdir(pred_dir)

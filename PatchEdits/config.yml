@@ -7,7 +7,7 @@ transformer:
   num_heads: 8
   dropout_rate: 0.1
 data:
-  max_batch_size: 5000
+  max_batch_size: 1010
   beam_size: 100
   max_context_length: 500
   max_bug_length: 50

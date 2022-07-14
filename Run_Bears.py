@@ -178,6 +178,8 @@ def get_fixed_code(raw_method, new_method, javaclass):
         return new_class
     else:
         print("=== Replace Error ===")
+        #print(raw_str)
+        #print(java_str)
         return "Replace Error"
 def add_annotations(buggy_method,candidate):
     buggy_lines=buggy_method.strip().split('\n')
@@ -234,6 +236,7 @@ if __name__ == '__main__':
             id_range=get_min_ids(change_dict,patches_info)
             if id_range==-1:
                 skipflag=1
+            print(bugId+" START &&&&&")
             for i in range(id_range):
                 change_file = get_valid_modify(change_dict)
                 if skipflag == 1:
