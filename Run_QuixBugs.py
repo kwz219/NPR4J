@@ -190,6 +190,7 @@ if __name__ =="__main__":
     print("before running, mv QuixFixOracleHelper.java to src/main/java/java_programs !")
     print("before running, mv QuixFixOracleHelper.java to src/main/java/java_programs !")
     for id in pred_patches.keys():
+
         if id in benchmarks.keys() :
             per_patches = pred_patches.get(id)
             id_info = benchmarks.get(id)

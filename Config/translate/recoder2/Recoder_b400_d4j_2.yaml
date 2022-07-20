@@ -1,0 +1,17 @@
+model_path: /root/autodl-tmp/Recoder_data/Recoder_data/best_model.ckpt
+ids_path: /root/autodl-tmp/RawData/Evaluation/Benchmarks/d4j.ids.new
+input_dir: /root/autodl-tmp/RawData/Evaluation/Benchmarks
+search_size: 400
+classcontent_dir: /root/autodl-tmp/Recoder_d4j_classcontent
+output_dir: /root/autodl-tmp/NPR4J-Pred/d4j/recoder_2
+valdatapkl_f: /root/autodl-tmp/Recoder_data/Recoder_data/valdata.pkl
+nl_voc_f: /root/autodl-tmp/Recoder_data/Recoder_data/nl_voc.pkl
+rule_f: /root/autodl-tmp/Recoder_data/Recoder_data/rule.pkl
+code_voc_path: /root/autodl-tmp/Recoder_data/Recoder_data/code_voc.pkl
+char_voc_path: /root/autodl-tmp/Recoder_data/Recoder_data/char_voc.pkl
+rulead_path: /root/autodl-tmp/Recoder_data/Recoder_data/rulead.pkl
+NL_voc_size: 26167
+code_voc_size: 26167
+voc_size: 81
+rule_num: 1265
+cnum: 764

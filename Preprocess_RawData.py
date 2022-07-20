@@ -201,6 +201,7 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
     writeL2F(fix_codes, output_dir + "/" + mode + ".fix")
     writeL2F(success_ids, output_dir + "/" + mode + ".sids")
     writeL2F(fail_ids, output_dir + "/" + mode + ".fids")
+
 #peprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/test/success.ids", "/home/zhongwenkang/ML/test",
 #                              "/home/zhongwenkang/ML_Processed/Tufano",
 #                              r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt",
@@ -353,9 +354,9 @@ def preprocess_Recoder_fromRaw(mode,ids_f,input_dir,output_dir):
 
 #preprocess_Recoder_fromRaw("test","/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
                            #"/home/zhongwenkang/NPR4J_processed/Recoder")
-preprocess_Recoder_fromRaw("test","E:/NPR4J/RawData (2)/Benchmarks/d4j.ids.new",
-                           "E:/NPR4J/RawData (2)/Benchmarks",
-                            "D:/RawData_Processed/Recoder_d4j")
+#preprocess_Recoder_fromRaw("test","E:/NPR4J/RawData (2)/Benchmarks/d4j.ids.new",
+                           #"E:/NPR4J/RawData (2)/Benchmarks",
+                           # "D:/RawData_Processed/Recoder_d4j")
 #preprocess_Recoder_fromRaw("test","/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new",
                            #"/home/zhongwenkang/RawData/Evaluation/Benchmarks",
                             #"/home/zhongwenkang/RawData_Processed/Recoder")

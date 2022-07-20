@@ -75,8 +75,10 @@ def Prepare_Edits_patches(cand_size,preds_f,ids_f,input_dir,output_f):
         json.dump(patches_all,f,indent=2)
 #Prepare_Edits_patches(300,r"D:\NPR4J-Pred\qbs\Edits\qbs.pred",r"D:\RawData_Processed\PatchEdits\qbs.ids",
                       #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\qbs\Edits\Edits_qbs_b300.patches")
-Prepare_Edits_patches(300,r"D:\NPR4J-Pred\d4j\Edits\d4j.pred",r"D:\RawData_Processed\PatchEdits\d4j.ids",
-                      "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\Edits\Edits_d4j_b300.patches")
+#Prepare_Edits_patches(300,r"D:\NPR4J-Pred\d4j\Edits\d4j.pred",r"D:\RawData_Processed\PatchEdits\d4j.ids",
+                      #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\Edits\Edits_d4j_b300.patches")
+#Prepare_Edits_patches(300,r"D:\NPR4J-Pred\bears\Edits\bears.pred",r"D:\RawData_Processed\PatchEdits\bears.ids",
+                      #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\bears\Edits\Edits_bears_b300.patches")
 #Prepare_SequenceR_patches(300,"/home/zhongwenkang2/NPR4J_Pred/SequenceR/SequenceR_b300_d4j.pred",
                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks/d4j.ids.new",
                           #"/home/zhongwenkang2/RawData/RawData/Evaluation/Benchmarks",
@@ -236,6 +238,9 @@ def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
         patches_all[id]=patches_id
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
-#prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder","D:/NPR4J-Eval/d4j/recoder_b300.patches")
+prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder_2","D:/NPR4J-Eval/d4j/recoder_b300.patches")
+prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder_ori","D:/NPR4J-Eval/bears/recoder_ori_b300.patches","bears")
+prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder_ori","D:/NPR4J-Eval/qbs/recoder_ori_b300.patches","qbs")
+prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder_ori","D:/NPR4J-Eval/d4j/recoder_ori_b300.patches","d4j")
 #prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder","D:/NPR4J-Eval-Results/qbs/Recoder/recoder.patches","qbs")
 #prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder","D:/NPR4J-Eval-Results/bears/Recoder/recoder.patches","bears")

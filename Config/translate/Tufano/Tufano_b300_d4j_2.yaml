@@ -1,0 +1,8 @@
+model: /home/zhongwenkang3/NPR4J-Models/Tufano/Tufano_3_step_50000.pt
+beam_size: 300
+n_best: 300
+src: /home/zhongwenkang3/RawData_Processed/Tufano/d4j_test.buggy
+output: /home/zhongwenkang3/NPR4J_Pred/Tufano/Tufano_b300_d4j.pred
+gpu: 0
+batch_size: 1
+max_length: 1010

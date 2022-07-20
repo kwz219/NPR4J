@@ -1,0 +1,17 @@
+model_path: /root/autodl-tmp/Recoder_original/best_model.ckpt
+ids_path: /root/autodl-tmp/RawData/Evaluation/Benchmarks/bears.ids.new
+input_dir: /root/autodl-tmp/RawData/Evaluation/Benchmarks
+search_size: 400
+classcontent_dir: /root/autodl-tmp/RawData_Processed/Recoder
+output_dir: /root/autodl-tmp/NPR4J-Pred/bears/recoder_ori
+valdatapkl_f: /root/autodl-tmp/Recoder_original/valdata.pkl
+nl_voc_f: /root/autodl-tmp/Recoder_original/nl_voc.pkl
+rule_f: /root/autodl-tmp/Recoder_original/rule.pkl
+code_voc_path: /root/autodl-tmp/Recoder_original/code_voc.pkl
+char_voc_path: /root/autodl-tmp/Recoder_original/char_voc.pkl
+rulead_path: /root/autodl-tmp/Recoder_original/rulead.pkl
+NL_voc_size: 41696
+code_voc_size: 41696
+voc_size: 83
+rule_num: 1265
+cnum: 764
