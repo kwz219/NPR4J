@@ -234,56 +234,107 @@ tmp_dir: when building a SequenceR-type context, you need a directory to restore
 idiom_path: tokens that will not be abstracted , eg_path: CodeAbstract/CA_Resource/Idioms.2w
 mode: when you are preparing test or valid data, using mode 'test'
 """
-def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
+def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir,mode="train"):
     ids=readF2L(ids_f)
     bug_fix=[]
     error_ids = []
     correct_ids = []
+    if mode == "train":
+        bug_fix.append("bugid"+'\t'+"buggy"+'\t'+"patch")
+        for idx,id in enumerate(ids):
+            buginfo = {"_id": id}
+            buginfo["buggy_code"] = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+            buginfo["buggy_line"] = codecs.open(input_dir + "/buggy_lines/" + id + '.txt', 'r',
+                                                encoding='utf8').read().strip()
+            id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+            buginfo["err_start"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+            buginfo["err_end"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[1])
+            tmp_f = tmp_dir +'/'+ id + '.txt'
+            fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
 
-    bug_fix.append("bugid"+'\t'+"buggy"+'\t'+"patch")
-    for idx,id in enumerate(ids):
-        buginfo = {"_id": id}
-        buginfo["buggy_code"] = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
-        buginfo["buggy_line"] = codecs.open(input_dir + "/buggy_lines/" + id + '.txt', 'r',
-                                            encoding='utf8').read().strip()
-        id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
-        buginfo["err_start"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
-        buginfo["err_end"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[1])
-        tmp_f = tmp_dir +'/'+ id + '.txt'
-        fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
+            buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
+                                                    max_length=1000)
 
-        buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
-                                                max_length=1000)
+            if len(buggy_code.strip()) <= 1:
+                hitflag = 0
+            print("hitflag",hitflag)
+            if hitflag == 1:
+                buggy_context=buggy_code.replace("<START_BUG>","").replace("<END_BUG>","").replace('\t','').replace('\r\n','').replace('\n','')
+                buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
 
-        if len(buggy_code.strip()) <= 1:
-            hitflag = 0
-        print("hitflag",hitflag)
-        if hitflag == 1:
-            buggy_context=buggy_code.replace("<START_BUG>","").replace("<END_BUG>","").replace('\t','').replace('\r\n','').replace('\n','')
-            buggy_line=codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
+                buggy_src="buggy: "+buggy_line+" context: "+buggy_context
+                bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
+                correct_ids.append(buginfo['_id'])
+                print("Total,Success: ",idx, len(correct_ids))
+            elif hitflag == 0:
+                buggy_method=codecs.open(input_dir + '/buggy_methods/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
+                buggy_line = codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n', '').replace('\n', '')
+                buggy_src="buggy: "+buggy_line+" context: "+buggy_method
+                bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
+                correct_ids.append(buginfo['_id'])
+                print("Total,Success: ",idx, len(correct_ids))
+            elif hitflag == 2:
+                error_ids.append(buginfo['_id'])
+            else:
+                error_ids.append(buginfo['_id'])
+    elif mode == "test":
+        bug_fix.append("bugid" +'\t'+"store_id"+ '\t' + "buggy" + '\t' + "patch")
+        for idx, id in enumerate(ids):
+            buginfo = {"_id": id}
+            buginfo["buggy_code"] = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+            buginfo["buggy_line"] = codecs.open(input_dir + "/buggy_lines/" + id + '.txt', 'r',
+                                                encoding='utf8').read().strip()
+            id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+            buginfo["err_start"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+            buginfo["err_end"] = int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[1])
+            tmp_f = tmp_dir + '/' + id + '.txt'
+            fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip().replace('\t', '').replace(
+                '\r\n', '').replace('\n', '')
 
-            buggy_src="buggy: "+buggy_line+" context: "+buggy_context
-            bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
-            correct_ids.append(buginfo['_id'])
-            print("Total,Success: ",idx, len(correct_ids))
-        elif hitflag == 0:
-            buggy_method=codecs.open(input_dir + '/buggy_methods/' + id + '.txt').read().strip().replace('\t','').replace('\r\n','').replace('\n','')
-            buggy_line = codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t','').replace('\r\n', '').replace('\n', '')
-            buggy_src="buggy: "+buggy_line+" context: "+buggy_method
-            bug_fix.append(buginfo['_id']+'\t'+buggy_src+'\t'+fix_code)
-            correct_ids.append(buginfo['_id'])
-            print("Total,Success: ",idx, len(correct_ids))
-        elif hitflag == 2:
-            error_ids.append(buginfo['_id'])
-        else:
-            error_ids.append(buginfo['_id'])
+            buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
+                                                    max_length=1000)
 
-        writeL2F(bug_fix,output_prefix+'.bug-fix.csv')
-        writeL2F(error_ids,output_prefix+'.fids')
-        writeL2F(correct_ids, output_prefix+'.ids')
+            if len(buggy_code.strip()) <= 1:
+                hitflag = 0
+            print("hitflag", hitflag)
+            if hitflag == 1:
+                buggy_context = buggy_code.replace("<START_BUG>", "").replace("<END_BUG>", "").replace('\t',
+                                                                                                       '').replace(
+                    '\r\n', '').replace('\n', '')
+                buggy_line = codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t',
+                                                                                                           '').replace(
+                    '\r\n', '').replace('\n', '')
+
+                buggy_src = "buggy: " + buggy_line + " context: " + buggy_context
+                bug_fix.append(str(idx)+'\t'+buginfo['_id'] + '\t' + buggy_src + '\t' + fix_code)
+                correct_ids.append(buginfo['_id'])
+                print("Total,Success: ", idx, len(correct_ids))
+            elif hitflag == 0:
+                buggy_method = codecs.open(input_dir + '/buggy_methods/' + id + '.txt').read().strip().replace('\t',
+                                                                                                               '').replace(
+                    '\r\n', '').replace('\n', '')
+                buggy_line = codecs.open(input_dir + '/buggy_lines/' + id + '.txt').read().strip().replace('\t',
+                                                                                                           '').replace(
+                    '\r\n', '').replace('\n', '')
+                buggy_src = "buggy: " + buggy_line + " context: " + buggy_method
+                bug_fix.append(str(idx)+'\t'+buginfo['_id'] + '\t' + buggy_src + '\t' + fix_code)
+                correct_ids.append(buginfo['_id'])
+                print("Total,Success: ", idx, len(correct_ids))
+            elif hitflag == 2:
+                error_ids.append(buginfo['_id'])
+            else:
+                error_ids.append(buginfo['_id'])
+    writeL2F(bug_fix, output_prefix + '.bug-fix.csv')
+    writeL2F(error_ids, output_prefix + '.fids')
+    writeL2F(correct_ids, output_prefix + '.ids')
 #preprocess_RewardRepair_fromRaw("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train",
                                 #"/home/zhongwenkang/NPR4J_Data/RewardRepair/trn","/home/zhongwenkang/NPR4J_Data/SequenceR/temp_files")
-
+preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/d4j.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
+                                "D:/RawData_Processed/RewardRepair/d4j","D:/RawData_Processed/RewardRepair/tmp","test")
+preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/qbs.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
+                                "D:/RawData_Processed/RewardRepair/qbs","D:/RawData_Processed/RewardRepair/tmp","test")
+preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/bears.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
+                                "D:/RawData_Processed/RewardRepair/bears","D:/RawData_Processed/RewardRepair/tmp","test")
 def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
     buggy_lines=[]
@@ -447,16 +498,16 @@ def Preprocess_PatchEdits_fromSequenceR(ids_f,SequenceR_buggy_f,SequenceR_fix_f,
             fp.write(ids[i]+'\n')
             count += 1
     print(count)
-Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\qbs.sids",r"D:\RawData_Processed\SequenceR\qbs.buggy",
-                                    r"D:\RawData_Processed\SequenceR\qbs.fix",r"D:\RawData_Processed\PatchEdits\qbs.data",
-                                    r"D:\RawData_Processed\PatchEdits\qbs.ids")
-Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\bears.sids",r"D:\RawData_Processed\SequenceR\bears.buggy",
-                                    r"D:\RawData_Processed\SequenceR\bears.fix",r"D:\RawData_Processed\PatchEdits\bears.data",
-                                    r"D:\RawData_Processed\PatchEdits\bears.ids")
-Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\bdj.sids",r"D:\RawData_Processed\SequenceR\bdj.buggy",
-                                    r"D:\RawData_Processed\SequenceR\bdj.fix",r"D:\RawData_Processed\PatchEdits\bdj.data",
-                                    r"D:\RawData_Processed\PatchEdits\bdj.ids")
-Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\d4j.sids",r"D:\RawData_Processed\SequenceR\d4j.buggy",
-                                    r"D:\RawData_Processed\SequenceR\d4j.fix",r"D:\RawData_Processed\PatchEdits\d4j.data",
-                                    r"D:\RawData_Processed\PatchEdits\d4j.ids")
+#Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\qbs.sids",r"D:\RawData_Processed\SequenceR\qbs.buggy",
+                                    #r"D:\RawData_Processed\SequenceR\qbs.fix",r"D:\RawData_Processed\PatchEdits\qbs.data",
+                                    #r"D:\RawData_Processed\PatchEdits\qbs.ids")
+#Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\bears.sids",r"D:\RawData_Processed\SequenceR\bears.buggy",
+                                    #r"D:\RawData_Processed\SequenceR\bears.fix",r"D:\RawData_Processed\PatchEdits\bears.data",
+                                    #r"D:\RawData_Processed\PatchEdits\bears.ids")
+#Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\bdj.sids",r"D:\RawData_Processed\SequenceR\bdj.buggy",
+                                    #r"D:\RawData_Processed\SequenceR\bdj.fix",r"D:\RawData_Processed\PatchEdits\bdj.data",
+                                    #r"D:\RawData_Processed\PatchEdits\bdj.ids")
+#Preprocess_PatchEdits_fromSequenceR(r"D:\RawData_Processed\SequenceR\d4j.sids",r"D:\RawData_Processed\SequenceR\d4j.buggy",
+                                    #r"D:\RawData_Processed\SequenceR\d4j.fix",r"D:\RawData_Processed\PatchEdits\d4j.data",
+                                    #r"D:\RawData_Processed\PatchEdits\d4j.ids")
 
