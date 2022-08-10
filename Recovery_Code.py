@@ -201,7 +201,10 @@ def Recovery_Tufano_preds(ids_f,preds_f,candi_size,map_dir,output_f):
                       #300,"D:/RawData_Processed/Tufano/temp/temp","D:/NPR4J-Pred/d4j/Tufano/Tufano_b300_d4j.pred.recovery")
 #Recovery_Tufano_preds("D:/RawData_Processed/Tufano/qbs_test.sids","D:/RawData_Processed/Tufano/qbs_test.fix",
                       #1,"D:/RawData_Processed/Tufano/temp/temp","D:/RawData_Processed/Tufano/qbs_test.fix.recovery")
-
+Recovery_Tufano_preds("D:/RawData_Processed/Tufano/bears_test.sids","D:/RawData_Processed/Tufano/bears_test.fix",
+                      1,"D:/RawData_Processed/Tufano/temp/temp","D:/RawData_Processed/Tufano/bears_test.fix.recovery")
+#Recovery_Tufano_preds("D:/RawData_Processed/Tufano/d4j_test.sids","D:/RawData_Processed/Tufano/d4j_test.fix",
+                      #1,"D:/RawData_Processed/Tufano/temp/temp","D:/RawData_Processed/Tufano/d4j_test.fix.recovery")
 
 
 
