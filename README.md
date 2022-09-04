@@ -1,7 +1,10 @@
 
 ## NPR4J-Framework
+### Features
+<img src="./images/features.PNG" width="60%">
+
 ### Overall Procedure
-<img src="./images/NPR4J-procedure.PNG" width="40%">
+<img src="./images/NPR4J-procedure.PNG" width="60%">
 
 
 ### Data Preprocess
