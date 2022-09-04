@@ -238,9 +238,53 @@ def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
         patches_all[id]=patches_id
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
-prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder_2","D:/NPR4J-Eval/d4j/recoder_b300.patches")
-prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder_ori","D:/NPR4J-Eval/bears/recoder_ori_b300.patches","bears")
-prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder_ori","D:/NPR4J-Eval/qbs/recoder_ori_b300.patches","qbs")
-prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder_ori","D:/NPR4J-Eval/d4j/recoder_ori_b300.patches","d4j")
+
+def prepare_RewardRepair_patches(ids_f,pred_f,input_dir,output_f,cand_size=300):
+    ids=readF2L(ids_f)
+    preds=readF2L(pred_f)
+    assert len(preds)==len(ids)*cand_size
+    patches_all={}
+    for i in range(0,len(ids)):
+        print(i)
+        print(i*cand_size,(i+1)*cand_size)
+        group_preds=preds[i*cand_size:(i+1)*cand_size]
+        print(len(group_preds))
+        print(group_preds[0])
+        idx=group_preds[0].split('\t')[0]
+        id=ids[int(idx)]
+        id_metas = codecs.open(input_dir + "/metas/" + id + '.txt', 'r', encoding='utf8').read().strip()
+        err_line=int(str(id_metas.split("<sep>")[2])[1:-1].split(":")[0])
+
+        buggy_method=readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
+        patches_id={}
+        for cid, pred in enumerate(group_preds):
+            preds_split = pred.split('\t')
+            if len(preds_split)==2:
+                final_pred=preds_split[1]
+            else:
+                final_pred=' '.join(preds_split[1:])
+
+            buggy_method[err_line] = final_pred
+            patch_method = '\n'.join(buggy_method)
+            patches_id[str(cid + 1)] = patch_method
+        patches_all[id] = patches_id
+    with open(output_f, 'w', encoding='utf8') as f:
+        json.dump(patches_all, f, indent=2)
+#prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\qbs.ids.new",r"D:\RawData_Processed\RR_pred\qbs.mine.preds",
+                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\qbs\RewardRepair\qbs_mine.patches")
+#prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\d4j.ids.new",r"D:\RawData_Processed\RR_pred\d4j.mine.preds",
+                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\RewardRepair\d4j_mine.patches")
+prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\bears.ids.new",r"D:\RawData_Processed\RR_pred\bears.mine.preds",
+                             "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\RewardRepair\bears_mine.patches")
+#prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\qbs.ids.new",r"D:\NPR4J-Pred\RewardRepair\ori\qbs_preds.csv",
+                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\RewardRepair\ori\qbs_ori.patches")
+#prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\bears.ids.new",r"D:\NPR4J-Pred\RewardRepair\ori\bears_preds.csv",
+                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\RewardRepair\ori\bears_ori.patches")
+#prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\d4j.ids.new",r"D:\NPR4J-Pred\RewardRepair\ori\d4j_preds.csv",
+                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\RewardRepair\ori\d4j_ori.patches")
+#prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder_2","D:/NPR4J-Eval/d4j/recoder_b300.patches")
+#prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder_ori","D:/NPR4J-Eval/bears/recoder_ori_b300.patches","bears")
+#prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder_ori","D:/NPR4J-Eval/qbs/recoder_ori_b300.patches","qbs")
+#prepare_Recoder_patches("D:/NPR4J-Pred/d4j/recoder_ori","D:/NPR4J-Eval/d4j/recoder_ori_b300.patches","d4j")
 #prepare_Recoder_patches("D:/NPR4J-Pred/qbs/recoder","D:/NPR4J-Eval-Results/qbs/Recoder/recoder.patches","qbs")
 #prepare_Recoder_patches("D:/NPR4J-Pred/bears/recoder","D:/NPR4J-Eval-Results/bears/Recoder/recoder.patches","bears")

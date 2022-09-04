@@ -83,7 +83,7 @@ def getResults(bugindex,change_dict,root,projects_dir):
         #Recovery
         for file in change_dict.keys():
             originFile = repodir + '/'+bugindex + '_'+filename.replace(".java","_tmp.java")
-            rm_str='rm -rf '+repodir + '/' +bugindex+'/'+ file
+            rm_str='rm -f '+repodir + '/' +bugindex+'/'+ file
             recovery_str='mv  ' + originFile + '  ' + repodir + '/' +bugindex+'/'+ file
             os.system(rm_str)
             os.system(recovery_str)
@@ -150,6 +150,14 @@ def get_valid_modify(changedict:dict):
         else:
             change_file[changedict[id]['file_path']]='init'
     return change_file
+
+def can_be_fix(change_dict,patch_dict):
+    for id in change_dict.keys():
+
+        if id not in patch_dict.keys():
+            return False
+    return True
+
 def get_min_ids(changedict:dict,patches_f):
     candi_count=500
     for id in changedict.keys():
@@ -225,12 +233,14 @@ if __name__ == '__main__':
                    "Bears-82","Bears-84","Bears-87","Bears-90","Bears-91","Bears-94","Bears-191","Bears-49","Bears-53","Bears-60","Bears-59","Bears-64"]
         intId=int(bugId.split('-')[1])
         startId=int(opt.start_from)
+        print("Start Evaluating Bears")
         if (bugId in checklist) or (not bugId in bears_bugs.keys()) or intId < startId:
             continue
         # which file should be modified
         change_dict = bears_bugs[bugId]
         change_file=get_valid_modify(change_dict)
-        if len(change_file)==0:
+        if len(change_file)==0 or (not can_be_fix(change_dict,patches_info)):
+            print("skip")
             continue
         else:
             id_range=get_min_ids(change_dict,patches_info)
