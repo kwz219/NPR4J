@@ -15,10 +15,15 @@ from scipy import sparse
 
 sys.setrecursionlimit(500000000)
 class SumDataset(data.Dataset):
-    def __init__(self, config, dataName="train",trndatapkl_f="",valdatapkl_f="",nl_voc_path="/root/zwk/Recoder_models/nl_voc.pkl",rule_path="/root/zwk/Recoder_models/rule.pkl",code_voc_path="/root/zwk/Recoder_models/code_voc.pkl",char_voc_path="/root/zwk/Recoder_models/char_voc.pkl"):
-        self.train_path = "train_process.txt"
-        self.val_path = "dev_process.txt"  # "validD.txt"
+    def __init__(self, config, dataName="train",process_data_f="",nl_path="",val_nl_path="",val_process_data_f="",trndatapkl_f="",valdatapkl_f="",nl_voc_path="/root/zwk/Recoder_models/nl_voc.pkl",rule_path="/root/zwk/Recoder_models/rule.pkl",code_voc_path="/root/zwk/Recoder_models/code_voc.pkl",char_voc_path="/root/zwk/Recoder_models/char_voc.pkl"):
+        self.train_path = trndatapkl_f
+        self.train_nl_path=nl_path
+        self.val_path = valdatapkl_f  # "validD.txt"
+        self.val_nl_path=val_nl_path
         self.test_path = "test_process.txt"
+        self.nl_voc_path=nl_voc_path
+        self.char_voc_path=char_voc_path
+        self.code_voc_path=code_voc_path
         self.Nl_Voc = {"pad": 0, "Unknown": 1}
         self.Code_Voc = {"pad": 0, "Unknown": 1}
         self.Char_Voc = {"pad": 0, "Unknown": 1}
@@ -42,7 +47,7 @@ class SumDataset(data.Dataset):
             self.rrdict[self.ruledict[x]] = x
         if not os.path.exists(nl_voc_path):
             print("init vocabulary")
-            #self.init_dic()
+            self.init_dic()
         self.Load_Voc(nl_voc_path,code_voc_path,char_voc_path)
         #print(self.Nl_Voc)
         if dataName == "train":
@@ -52,12 +57,9 @@ class SumDataset(data.Dataset):
                 return
             else:
                 print("training data doesn't exist !")
-            """
-            data = pickle.load(open('process_datacopy_pl.pkl', 'rb'))
-            print(len(data))
-            train_size = int(len(data) / 8 * 7)
-            self.data = self.preProcessData(data)
-            """
+                data = pickle.load(open(process_data_f, 'rb'))
+                self.data = self.preProcessData(data)
+
         elif dataName == "val":
             print(valdatapkl_f)
             if os.path.exists(valdatapkl_f):
@@ -68,19 +70,10 @@ class SumDataset(data.Dataset):
                 return
             else:
                 print("validation data doesn't exist !")
-            #self.data = self.preProcessData(open(self.val_path, "r", encoding='utf-8'))
+                self.data = self.preProcessData(pickle.load(open(val_process_data_f, "rb")))
         else:
 
             if os.path.exists("testdata.pkl"):
-                #data = pickle.load(open('process_datacopy.pkl', 'rb'))
-                #train_size = int(len(data) / 8 * 7)
-                #data = data[train_size:]
-                '''print(data[5])
-                print(self.rrdict[152])
-                print(data[6])
-                print(data[11])
-                print(data[13])
-                exit(0)'''
                 self.data = pickle.load(open("testdata.pkl", "rb"))
                 #self.code = pickle.load(open("testcode.pkl", "rb"))
                 self.nl = pickle.load(open("testnl.pkl", "rb"))
@@ -109,7 +102,7 @@ class SumDataset(data.Dataset):
         maxCharLen = 0
         nls = []
         rules = []
-        data = pickle.load(open('process_datacopy_pl.pkl', 'rb'))
+        data = pickle.load(open(self.train_path, 'rb'))
         for x in data:
             if len(x['rule']) > self.Code_Len:
                 continue
@@ -128,7 +121,7 @@ class SumDataset(data.Dataset):
         code_voc = VocabEntry.from_corpus(rules, size=50000, freq_cutoff=10)
         self.Nl_Voc = nl_voc.word2id
         self.Code_Voc = code_voc.word2id'''
-        code_voc = VocabEntry.from_corpus(nls, size=50000, freq_cutoff=10)
+        code_voc = VocabEntry.from_corpus(nls, size=60000, freq_cutoff=10)
         self.Code_Voc = code_voc.word2id
         for x in self.ruledict:
             print(x)
@@ -152,9 +145,9 @@ class SumDataset(data.Dataset):
             for c in x:
                 if c not in self.Char_Voc:
                     self.Char_Voc[c] = len(self.Char_Voc)
-        open("nl_voc.pkl", "wb").write(pickle.dumps(self.Nl_Voc))
-        open("code_voc.pkl", "wb").write(pickle.dumps(self.Code_Voc))
-        open("char_voc.pkl", "wb").write(pickle.dumps(self.Char_Voc))
+        open(self.nl_voc_path, "wb").write(pickle.dumps(self.Nl_Voc))
+        open(self.code_voc_path, "wb").write(pickle.dumps(self.Code_Voc))
+        open(self.char_voc_path, "wb").write(pickle.dumps(self.Char_Voc))
         print(maxNlLen, maxCodeLen, maxCharLen)
     def Get_Em(self, WordList, voc):
         ans = []
@@ -256,29 +249,6 @@ class SumDataset(data.Dataset):
                         nladrow.append(x.id)
                         nladcol.append(s.id)
                         nladdata.append(1)
-            nl = nltmp
-            #tmp = GetFlow()
-            #for p in range(len(tmp)):
-            #    for l in range(len(tmp[0])):
-            #        nladrow.append(p)
-            #        nladcol.append(l)
-            #        nladdata.append(1)
-            '''for x in nodes:
-                if x.father:
-                    if x.id < self.Nl_Len and x.father.id < self.Nl_Len:
-                        nladrow.append(x.id)
-                        nladcol.append(x.father.id)
-                        nladdata.append(1)
-                    for s in x.father.child:
-                        if x.id < self.Nl_Len and s.id < self.Nl_Len:
-                            nladrow.append(x.id)
-                            nladcol.append(s.id)
-                            nladdata.append(1)
-                for s in x.child:
-                    if x.id < self.Nl_Len and s.id < self.Nl_Len:
-                        nladrow.append(x.id)
-                        nladcol.append(s.id)
-                        nladdata.append(1)'''
             nl = nltmp
             inputnls = self.pad_seq(self.Get_Em(nl, self.Nl_Voc), self.Nl_Len)
             nlad = sparse.coo_matrix((nladdata, (nladrow, nladcol)), shape=(self.Nl_Len, self.Nl_Len))
@@ -464,11 +434,11 @@ class SumDataset(data.Dataset):
         self.nl = nls
         #self.code = codes
         if self.dataName == "train":
-            open("data.pkl", "wb").write(pickle.dumps(batchs, protocol=4))
-            open("nl.pkl", "wb").write(pickle.dumps(nls))
+            open(self.train_path, "wb").write(pickle.dumps(batchs, protocol=4))
+            open(self.train_nl_path, "wb").write(pickle.dumps(nls))
         if self.dataName == "val":
-            open("valdata.pkl", "wb").write(pickle.dumps(batchs, protocol=4))
-            open("valnl.pkl", "wb").write(pickle.dumps(nls))
+            open(self.val_path, "wb").write(pickle.dumps(batchs, protocol=4))
+            open(self.val_nl_path, "wb").write(pickle.dumps(nls))
         if self.dataName == "test":
             open("testdata.pkl", "wb").write(pickle.dumps(batchs))
             #open("testcode.pkl", "wb").write(pickle.dumps(self.code))
@@ -508,4 +478,4 @@ class Node:
         self.child = []
         self.sibiling = None
     
-#dset = SumDataset(args)
+
