@@ -4,9 +4,9 @@ import json
 import codecs
 "write list to file"
 def writeL2F(contents:list,filepath):
-    with open(filepath,'w',encoding='utf-8',errors='surrogatepass')as f:
-        for line in contents:
-            #print(line)
+    with open(filepath,'w',encoding='utf-8')as f:
+        for idx,line in enumerate(contents):
+            print(idx,line)
             f.write(str(line)+'\n')
         f.close()
 "read java file, using javalang tokenizer to tokenize "

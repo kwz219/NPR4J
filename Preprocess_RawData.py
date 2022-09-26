@@ -29,7 +29,10 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
         correct_ids = []
         ind = 1
         in_count = 0
+
+        small_fixes=[]
         for id in ids:
+            print(id)
             buginfo = {"_id": id}
             buginfo["buggy_code"] = readF2L_ori(input_dir + "/buggy_methods/" + id + '.txt')
             buginfo["buggy_line"] = codecs.open(input_dir + "/buggy_lines/" + id + '.txt', 'r',
@@ -41,8 +44,8 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
             tmp_f = tmp_dir +'/'+ id + '.txt'
             fix_code = codecs.open(input_dir + '/fix_lines/' + id + '.txt').read().strip()
 
-            buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,
-                                                    max_length=1000)
+            buggy_code, hitflag = run_SequenceR_abs(input_dir + "/buggy_classes/" + id + '.txt', tmp_f, buginfo,max_length=1000)
+
             print("hitflag", hitflag)
 
             if hitflag == 1:
@@ -52,6 +55,7 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                 except:
                     toked_fix = re.split(r"([.,!?;(){}])", fix_code)
                     toked_fix = ' '.join(toked_fix)
+
                 try:
                     toked_bug = javalang.tokenizer.tokenize(buggy_code)
                     toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
@@ -61,32 +65,61 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                     toked_bug = re.split(r"([.,!?;(){}])", buggy_code)
                     toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace('< END_BUG >',
                                                                                                     '<END_BUG>')
-                bug_count = toked_bug.count('<START_BUG>'
-                                            )
-                if not bug_count == 1:
+
+                if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
                     method = buginfo["buggy_code"]
                     err_end=int(buginfo["err_end"])
                     err_start=int(buginfo["err_start"])
                     err_end = min(len(method) - 1, err_end)
-                    method[err_end] = "<END_BUG> " + method[err_end].strip()
-                    method[err_start] = "<START_BUG> " + method[err_start].strip()
+                    print("err_start",err_start,"err_end",err_end)
+                    print(len(method))
+                    error_line = "<START_BUG> " + buginfo["buggy_line"] + " <END_BUG>"
+                    method = method[:err_start] + [error_line] + method[err_end:]
                     method=' '.join(method)
+                    if not ("<START_BUG>" in method and "<END_BUG>" in method):
+                        print("not contain flags")
+                    else:
+                        print("contain flags-------")
                     try:
                         toked_bug = javalang.tokenizer.tokenize(method)
                         toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
                                                                                        '<START_BUG>').replace(
                             '< END_BUG >', '<END_BUG>')
+                        toked_buggyline=javalang.tokenizer.tokenize(buginfo["buggy_line"])
+                        toked_buggyline=' '.join([tok.value for tok in toked_buggyline])
+                        if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                            if toked_bug.count(toked_buggyline)==1:
+                                toked_bug=toked_bug.replace(toked_buggyline,"<START_BUG> "+toked_buggyline+" <END_BUG>")
+                            else:
+                                buggy_code=buggy_code.replace('\t\n','').replace('\n','')
+                                toked_bug = re.split(r"([.,!?;(){}])", buggy_code)
+                                toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
+                                    '< END_BUG >', '<END_BUG>')
+                        else:
+                            print("1 contain flags-------")
                     except:
-                        toked_bug = re.split(r"([.,!?;(){}])", method)
+                        buggy_code = buggy_code.replace('\t\n', '').replace('\n', '')
+                        toked_bug = re.split(r"([.,!?;(){}])", buggy_code)
                         toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
                             '< END_BUG >', '<END_BUG>')
+
                 toked_bug = toked_bug.replace("<START_BUG> <START_BUG>", "<START_BUG>").replace("<END_BUG> <END_BUG>",
                                                                                                 "<END_BUG>")
-                buggy_codes.append(toked_bug)
-                fix_codes.append(toked_fix)
-
-                correct_ids.append(buginfo['_id'])
-                in_count += 1
+                if len(toked_bug) > 10:
+                    toked_bug = toked_bug.replace('\t\n', '').replace('\n', '')
+                    buggy_codes.append(toked_bug)
+                    if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                        print("not contain flags")
+                    else:
+                        print("final contain")
+                    if toked_fix.strip()=="":
+                        toked_fix = "<DELETE>"
+                    toked_fix = toked_fix.replace('\t\n', ' ').replace('\n', ' ')
+                    if len(toked_fix) < 2:
+                        small_fixes.append(id + "<sep>" + toked_fix)
+                    fix_codes.append(toked_fix)
+                    correct_ids.append(buginfo['_id'])
+                    in_count += 1
             elif hitflag == 2:
                 error_ids.append(buginfo['_id'])
                 print(tmp_f)
@@ -97,41 +130,104 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                 except:
                     toked_fix = re.split(r"([.,!?;(){}])", fix_code)
                     toked_fix = ' '.join(toked_fix)
-                if True:
+                try:
                     method = buginfo["buggy_code"]
                     err_end=int(buginfo["err_end"])
                     err_start=int(buginfo["err_start"])
                     err_end=min(len(method)-1,err_end)
-                    method[err_end] = "<END_BUG> " + method[err_end].strip()
-                    method[err_start] = "<START_BUG> " + method[err_start].strip()
+                    error_line = "<START_BUG> " + buginfo["buggy_line"] + " <END_BUG>"
+                    method = method[:err_start] + [error_line] + method[err_end:]
                     method=' '.join(method)
                     try:
                         toked_bug = javalang.tokenizer.tokenize(method)
                         toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
                                                                                        '<START_BUG>').replace(
                             '< END_BUG >', '<END_BUG>')
+                        toked_buggyline=javalang.tokenizer.tokenize(buginfo["buggy_line"])
+                        toked_buggyline=' '.join([tok.value for tok in toked_buggyline])
+                        if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                            if toked_bug.count(toked_buggyline)==1:
+                                toked_bug=toked_bug.replace(toked_buggyline,"<START_BUG> "+toked_buggyline+" <END_BUG>")
+                            else:
+                                method = method.replace('\t\n', ' ').replace('\n', ' ')
+
+                                toked_bug = re.split(r"([.,!?;(){}])", method)
+                                toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
+                                    '< END_BUG >', '<END_BUG>')
+                        else:
+                            print("1 contain flags-------")
                     except:
+                        method = method.replace('\t\n', ' ').replace('\n', ' ')
                         toked_bug = re.split(r"([.,!?;(){}])", method)
                         toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace(
                             '< END_BUG >', '<END_BUG>')
-                toked_bug=toked_bug.replace("<START_BUG> <START_BUG>","<START_BUG>").replace("<END_BUG> <END_BUG>","<END_BUG>")
-                buggy_codes.append(toked_bug)
-                fix_codes.append(toked_fix)
 
-                correct_ids.append(buginfo['_id'])
-                in_count += 1
+
+                    toked_bug=toked_bug.replace("<START_BUG> <START_BUG>","<START_BUG>").replace("<END_BUG> <END_BUG>","<END_BUG>")
+
+                    if len(toked_bug)>10:
+                        toked_bug = toked_bug.replace('\t\n', '').replace('\n', '')
+                        buggy_codes.append(toked_bug)
+                        if toked_fix.strip().isspace():
+                            toked_fix="<DELETE>"
+                        toked_fix = toked_fix.replace('\t\n', ' ').replace('\n', ' ')
+                        if len(toked_fix)<2:
+                            small_fixes.append(id+"<sep>"+toked_fix)
+                        fix_codes.append(toked_fix)
+
+                        correct_ids.append(buginfo['_id'])
+                        in_count += 1
+                except:
+                    continue
             print(ind, "correct:", len(correct_ids))
-
+            print('='*20)
             ind += 1
         assert len(buggy_codes) == len(fix_codes)
         # buggy_codes,fix_codes,correct_ids=shuffle(buggy_codes,fix_codes,correct_ids)
         assert len(buggy_codes) == len(fix_codes)
         print(len(buggy_codes), len(fix_codes))
+        #print(small_fixes)
 
-        writeL2F(buggy_codes, src_f)
-        writeL2F(fix_codes, tgt_f)
-        writeL2F(error_ids, error_f)
-        writeL2F(correct_ids, correct_f)
+        write_fail_indexs=[]
+
+        with open("tmp.txt",'w',encoding='utf8')as f:
+            for idx,line in enumerate(buggy_codes):
+                try:
+                    f.write(line+'\n')
+                except:
+                    write_fail_indexs.append(idx)
+                    error_ids.append(correct_ids[idx])
+            for idx,line in enumerate(fix_codes):
+                try:
+                    f.write(line+'\n')
+                except:
+                    write_fail_indexs.append(idx)
+                    error_ids.append(correct_ids[idx])
+            f.close()
+
+        with open(src_f,'w',encoding='utf8')as f:
+            for idx,line in enumerate(buggy_codes):
+                if not idx  in write_fail_indexs:
+                    f.write(line+'\n')
+            f.close()
+        with open(tgt_f,'w',encoding='utf8')as f:
+            for idx,line in enumerate(fix_codes):
+                if not idx  in write_fail_indexs:
+                    f.write(line+'\n')
+            f.close()
+        with open(error_f,'w',encoding='utf8')as f:
+            for idx,line in enumerate(list(set(error_ids))):
+                f.write(line+'\n')
+            f.close()
+        with open(correct_f,'w',encoding='utf8')as f:
+            for idx,line in enumerate(correct_ids):
+                if not idx  in write_fail_indexs:
+                    f.write(line+'\n')
+            f.close()
+        #writeL2F(buggy_codes, src_f)
+        #writeL2F(fix_codes, tgt_f)
+        #writeL2F(error_ids, error_f)
+        #writeL2F(correct_ids, correct_f)
         # build(output_dir+"trn.buggy",output_dir+"trn.fix",output_dir+"trn.fids",output_dir+"trn.sids",ids)
     build(output_prefix+".buggy",output_prefix+".fix",output_prefix+".fids",output_prefix+".sids",ids)
 #preprocess_SequenceR_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bears.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
@@ -144,6 +240,12 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                              #"/home/zhongwenkang/RawData_Processed/SequenceR/bdj","/home/zhongwenkang/RawData_Processed/SequenceR/temp")
 #preprocess_SequenceR_fromRaw("/home/zhongwenkang/NPR4J_new_test/new_test/test.ids","/home/zhongwenkang/NPR4J_new_test/new_test",
                              #,"/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
+#preprocess_SequenceR_fromRaw(r"E:\NPR4J\InsertionData\d4j.ids","E:/NPR4J/InsertionData",
+                             #"E:/NPR4J/InsertionData_processed/SequenceR/d4j2","E:/NPR4J/InsertionData_processed/SequenceR/temp")
+preprocess_SequenceR_fromRaw(r"/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids","/home/zhongwenkang3/NPR4J_Data/BigTrain",
+                             r"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SR_trn","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SR_temp")
+#preprocess_SequenceR_fromRaw(r"/home/zhongwenkang3/NPR4J_Data/Small/Valid/valid.ids","/home/zhongwenkang3/NPR4J_Data/Small/Valid",
+                             #r"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SequenceR/SR_val","/home/zhongwenkang3/RawData_Processed/SR_temp")
 """
 ids_f: a list of bug-fix ids
 input_dir: raw data dir 
@@ -329,12 +431,14 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir,mode="
     writeL2F(correct_ids, output_prefix + '.ids')
 #preprocess_RewardRepair_fromRaw("/home/zhongwenkang/RawData/Train/trn.ids","/home/zhongwenkang/RawData/Train",
                                 #"/home/zhongwenkang/NPR4J_Data/RewardRepair/trn","/home/zhongwenkang/NPR4J_Data/SequenceR/temp_files")
-preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/d4j.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
-                                "D:/RawData_Processed/RewardRepair/d4j","D:/RawData_Processed/RewardRepair/tmp","test")
-preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/qbs.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
-                                "D:/RawData_Processed/RewardRepair/qbs","D:/RawData_Processed/RewardRepair/tmp","test")
-preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/bears.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
-                                "D:/RawData_Processed/RewardRepair/bears","D:/RawData_Processed/RewardRepair/tmp","test")
+#preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/d4j.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
+                                #"D:/RawData_Processed/RewardRepair/d4j","D:/RawData_Processed/RewardRepair/tmp","test")
+#preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/qbs.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
+                                #"D:/RawData_Processed/RewardRepair/qbs","D:/RawData_Processed/RewardRepair/tmp","test")
+#preprocess_RewardRepair_fromRaw("E:/NPR4J/RawData (2)/Benchmarks/bears.ids.new","E:/NPR4J/RawData (2)/Benchmarks",
+                                #"D:/RawData_Processed/RewardRepair/bears","D:/RawData_Processed/RewardRepair/tmp","test")
+#preprocess_RewardRepair_fromRaw("/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed",
+                                #)
 def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
     buggy_lines=[]
