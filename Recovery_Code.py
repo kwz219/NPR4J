@@ -29,15 +29,27 @@ def Recovery_Tufano_one(ori_str,wordmap:dict):
         ori_str=ori_str.replace(key,reverse_map.get(key).strip())
     final_str=ori_str.replace('\n','').replace('\r','')
     return final_str
-def Recovery_CoCoNut_one(buggy_str,pred_str):
-    strings,numbers=get_strings_numbers(buggy_str)
+def Recovery_CoCoNut_one(buggy_file,pred_str):
+    strings,numbers=get_strings_numbers_from_file(buggy_file)
     recovery_tokens=pred_str.split()
     recovery_str=token2statement(recovery_tokens,numbers,strings)
     #print(recovery_str)
     if len(recovery_str)==0:
         recovery_str=[pred_str]
     return recovery_str[0]
-def Recovery_CoCoNut_all(preds_f,ids_f,buggy_lines_dir,buggy_methods_dir,output_dir,candi_size=100):
+
+def get_strings_numbers_from_file(file_path):
+    numbers_set = set()
+    strings_set = set()
+    with open(file_path, 'r') as file:
+        data = file.readlines()
+        for _, line in enumerate(data):
+            strings, numbers = get_strings_numbers(line)
+            numbers_set.update(numbers)
+            strings_set.update(strings)
+    return list(strings_set), list(numbers_set)
+
+def Recovery_CoCoNut_all(preds_f,ids_f,buggy_lines_dir,buggy_methods_dir,buggy_classes_dir,output_dir,candi_size=100):
     ids=readF2L(ids_f)
     preds=readF2L(preds_f)
     assert len(preds) % (candi_size + 2) == 0
@@ -52,7 +64,7 @@ def Recovery_CoCoNut_all(preds_f,ids_f,buggy_lines_dir,buggy_methods_dir,output_
         patches_dict=dict()
         for pid,pred in enumerate(group[2:]):
             pred=pred.split('\t')[-1]
-            rec_line=Recovery_CoCoNut_one(id_buggyline,pred)
+            rec_line=Recovery_CoCoNut_one(buggy_classes_dir+'/'+id+'.java',pred)
             rec_method=id_buggymethod.replace(id_buggyline,rec_line)
             patches_dict[str(pid)]=rec_method
         with open(output_dir+'/'+id+'.txt','w',encoding='utf8')as f:
