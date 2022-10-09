@@ -7,7 +7,7 @@
 <img src="./images/NPR4J-procedure.PNG" width="60%">
 
 ### Install Prerequirement
-> pip install bson pymongo h5py javalang nltk torch transformers
+> pip install bson pymongo h5py javalang nltk torch transformers OpenNMT-py
 ### Data Preprocess
 Processing data into forms that each NPR system needs
 >Preprocess_RawData.py
