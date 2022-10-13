@@ -184,11 +184,11 @@ def main():
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=False)
-    parser.add_argument("-model", help="", required=True,choices=["onmt","fairseq","Cure","CoCoNut","FConv","CODIT","Recoder","Edits"])
+    parser.add_argument("-model", help="", required=True,choices=["onmt","Tufano","SequenceR","Cure","CoCoNut","FConv","CODIT","Recoder","Edits"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
-    if opt.model=="onmt":
+    if opt.model=="onmt" or opt.model=="SequenceR" or opt.model=="Tufano":
         train_ONMT(config_file=opt.config,clearML=opt.clearml)
     elif opt.model=="CoCoNut":
         train_CoCoNut(config_file=opt.config,clearml=opt.clearml)
