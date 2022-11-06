@@ -6,6 +6,9 @@
 ### Overall Procedure
 <img src="./images/NPR4J-procedure.PNG" width="60%">
 
+### Instructions for training and translateing models with NPR4J
+https://docs.google.com/document/d/1EEheTmFiMcvsgvCtb5BSL4YdlxLiSReweuzqKIshCkE/edit?usp=sharing
+
 ### Install Prerequirement
 > pip install bson pymongo h5py javalang nltk torch transformers OpenNMT-py
 ### Data Preprocess
