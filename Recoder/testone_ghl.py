@@ -398,6 +398,8 @@ def testone(ssize,testmodel,filepath,lineid,classname,classcontent_file,valdatap
     tree = parser.parse_member_declaration()
     
     tmproot = getroottree(generateAST(tree))
+
+    "find the root tree node of the buggy line codes, start from the root node"
     currroot = getNodeById(tmproot, lineid)
     # print(currroot.printTree(currroot))
     lnode, mnode = getSubroot(currroot)
@@ -714,6 +716,82 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
             classcontent_file = classcontent_dir + '/' + id + ".json"
         if "BF_Rename" in classname:
             classname=classname.split("_")[-1].replace(".buggy",'')
+        print(classcontent_file)
+        print(buggy_lineid, classname)
+        try:
+            print("start fixing",id)
+            fixs = testone(search_size, model, buggyfile, buggy_lineid, classname,
+                           classcontent_file,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path)  # list:dict:({'code':tmpcode, 'ast':psss['otree']})
+            fix_dict={}
+            # get patch_code
+            for idx,fix in enumerate(fixs):
+                fix_dict[idx]=fix["code"]
+            patch_f=codecs.open(output_dir+'/'+id+'.fix','w',encoding='utf8')
+            patch_f.write(json.dumps(fix_dict,indent=10))
+
+        except:
+            failed_ids.append(id+'\n')
+
+    writeL2F(failed_ids,output_dir+'/failed_ids.txt')
+
+
+#if __name__ == '__main__':
+    #import argparse
+    #fix_benchmarks("/root/zwk/Recorder/save_new/best_model.ckpt","/root/zwk/Recoder_data",150,"/root/zwk/Recoder_data/bench_","/root/zwk/Recoder_data/classcontent")
+    """"
+    model = load_model_for_test("/root/zwk/NPR_DATA0306/Processed_Recoder/Model_save/checkpointSearch/best_model.ckpt")
+    testdir = "./testdata"
+    error_info = "/error_infos.txt"
+    error_info_path = testdir + error_info
+    errorinfolines = codecs.open(error_info_path, 'r', encoding='utf8').readlines()
+    fail_info_path = testdir + "/fail_info.txt"
+    failed = []
+    patch_info_path = testdir + "/patch.txt"
+    patch_fp = open(patch_info_path,"w")
+    for info in tqdm(errorinfolines):
+        fix_dict = {}
+        infos = info.split("<SEP>")
+        id = infos[0]
+
+        buggy_lineid = int(infos[1])
+        buggyfile = testdir + '/' + id + ".buggy"
+        try:
+            fixs = testone(10, model, buggyfile,buggy_lineid)  # list:dict:({'code':tmpcode, 'ast':psss['otree']})
+            fix_dict["id"] = id
+            code = []
+            # get patch_code
+            for fix in fixs:
+                code.append(fix["code"])
+            fix_dict["code"] = code
+            patch_fp.write(json.dumps(fix_dict))
+            patch_fp.write("\n")
+        except:
+            failed.append(id)
+    patch_fp.close()
+    fail_fp = open(fail_info_path, "w")
+    for line in failed:
+        fail_fp.write(line)
+        fail_fp.write("'\n'")
+    fail_fp.close()
+    #print(time.time() - st)
+    #open("ans.txt", "w").write("\n\n-------\n\n".join(tans))
+    """
+
+def generate_fixes_d4j(model_path,ids_f,buggy_methods_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_path,char_voc_path,rulead_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum):
+    model=load_model_for_test(model_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum)
+    ids=codecs.open(ids_f,'r',encoding='utf8').readlines()
+    failed_ids=[]
+    for idx,id in enumerate(ids):
+
+        #e.g. of id: Chart_4_XYPlot_68
+        infos=id.strip().split("_")
+
+        buggyfile = buggy_methods_dir+'/' + id + ".txt"
+
+        buggy_lineid = int(infos[-1]) + 1
+        classname = infos[2]
+
+        classcontent_file = classcontent_dir +'/' + infos[0]+'-'+infos[1]+'.json'
         print(classcontent_file)
         print(buggy_lineid, classname)
         try:

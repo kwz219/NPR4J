@@ -3,7 +3,7 @@ import os
 
 import yaml
 from PatchEdits.evaluate_model import PatchEdits_translate
-from Recoder.testone_ghl import generate_fixes
+from Recoder.testone_ghl import generate_fixes, generate_fixes_d4j
 import time
 
 def translate_CoCoNut(config_file,clearml):
@@ -88,8 +88,13 @@ def translate_Recoder(config_file,clearml):
     voc_size=int(config_dict["voc_size"])
     rule_num=int(config_dict["rule_num"])
     cnum=int(config_dict["cnum"])
-    generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path,
+
+    if "mode" in config_dict and config_dict["mode"]=="simple_d4j":
+        generate_fixes_d4j(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path,
                    NL_voc_size,code_voc_size,voc_size,rule_num,cnum)
+    else:
+        generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path,
+                       NL_voc_size,code_voc_size,voc_size,rule_num,cnum)
 def translate_PatchEdits(config_f):
     with open(config_f, 'r') as f:
         config_dict = yaml.safe_load(f)
