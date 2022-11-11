@@ -782,13 +782,16 @@ def generate_fixes_d4j(model_path,ids_f,buggy_methods_dir,search_size,classconte
     ids=codecs.open(ids_f,'r',encoding='utf8').readlines()
     failed_ids=[]
     for idx,id in enumerate(ids):
-
+        id=id.strip()
         #e.g. of id: Chart_4_XYPlot_68
         infos=id.strip().split("_")
 
         buggyfile = buggy_methods_dir+'/' + id + ".txt"
 
-        buggy_lineid = int(infos[-1]) + 1
+        if "-" in infos[3]:
+            buggy_lineid = int(infos[3].split("-")[0])+1
+        else:
+            buggy_lineid = int(infos[3]) + 1
         classname = infos[2]
 
         classcontent_file = classcontent_dir +'/' + infos[0]+'-'+infos[1]+'.json'
@@ -804,7 +807,6 @@ def generate_fixes_d4j(model_path,ids_f,buggy_methods_dir,search_size,classconte
                 fix_dict[idx]=fix["code"]
             patch_f=codecs.open(output_dir+'/'+id+'.fix','w',encoding='utf8')
             patch_f.write(json.dumps(fix_dict,indent=10))
-
         except:
             failed_ids.append(id+'\n')
 
