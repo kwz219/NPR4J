@@ -10,7 +10,7 @@
 https://docs.google.com/document/d/1EEheTmFiMcvsgvCtb5BSL4YdlxLiSReweuzqKIshCkE/edit?usp=sharing
 
 ### Install Prerequirement
-> pip install bson pymongo h5py javalang nltk torch transformers OpenNMT-py
+> pip install bson scipy pymongo h5py javalang nltk torch transformers OpenNMT-py==2.2.0
 ### Data Preprocess
 Processing data into forms that each NPR system needs
 >Preprocess_RawData.py
