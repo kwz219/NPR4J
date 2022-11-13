@@ -5,6 +5,7 @@ import subprocess
 import yaml
 
 from CoCoNut.training.train import train_context, train_fconv, train_trans
+from CodeBert_ft.run2 import trainWithArgs
 
 
 def train_ONMT(config_file,clearML):
@@ -175,6 +176,27 @@ def train_Recoder(config_file):
     cmd="python ./Recoder/run.py -trn_data "+trn_data +" -val_data "+val_data+" -save_dir "+save_dir+" -nl_voc "+nl_voc\
         +" rule "+rule+" code_voc "+code_voc+" char_voc "+char_voc+" max_epoch "+str(max_epoch)
     os.system(cmd)
+def train_CodeBERT_ft(config_file):
+    with open(config_file, 'r') as f:
+        config_dict = yaml.safe_load(f)
+    train_prefix = config_dict["train_prefix"]
+    dev_prefix = config_dict["dev_prefix"]
+    train_batch_size = config_dict["train_batch_size"]
+    eval_batch_size = config_dict["eval_batch_size"]
+    train_steps = config_dict["train_steps"]
+    eval_steps = config_dict["eval_steps"]
+    learning_rate = float(config_dict["learning_rate"])
+    model_type= config_dict["model_type"]
+    model_path=config_dict["model_name_or_path"]
+    output_dir = config_dict["output_dir"]
+
+    trainWithArgs(gradient_accumulation_steps=1,train_batch_size=train_batch_size,train_filename=train_prefix,do_train=True,
+                  train_steps=train_steps,learning_rate=learning_rate,do_eval=True,eval_steps=eval_steps,test_filename=None,do_test=False,
+                  warmup_steps=0,max_source_length=256,max_target_length=128,beam_size=10,tokenizer_name="",weight_decay=0,adam_epsilon=1e-8,
+                  dev_file_name=dev_prefix,eval_batch_size=eval_batch_size,config_name="",model_name_or_path=model_path,model_type=model_type,
+                  output_dir=output_dir)
+
+
 def train_Edits(config_file):
     with open(config_file, 'r') as f:
         config_dict = yaml.safe_load(f)
@@ -184,7 +206,7 @@ def main():
         description='build_vocab.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=False)
-    parser.add_argument("-model", help="", required=True,choices=["onmt","Tufano","SequenceR","Cure","CoCoNut","FConv","CODIT","Recoder","Edits"])
+    parser.add_argument("-model", help="", required=True,choices=["onmt","Tufano","SequenceR","Cure","CoCoNut","FConv","CODIT","Recoder","Edits","CodeBert_ft"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -200,6 +222,8 @@ def main():
         train_Recoder(opt.config)
     elif opt.model=="Edits":
         train_Edits(opt.config)
+    elif opt.model=="CodeBert_ft":
+        train_CodeBERT_ft(opt.config)
 
 
 

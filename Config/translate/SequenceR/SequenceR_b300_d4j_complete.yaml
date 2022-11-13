@@ -1,0 +1,9 @@
+model: /root/autodl-tmp/Model/SequenceR/SR_26_step_50000.pt
+beam_size: 300
+n_best: 300
+src: /root/autodl-tmp/Data/SequenceR/SR_buggy.txt
+output: /root/autodl-tmp/Preds/d4j_SequenceR/SequenceR_b300_d4j_complete.pred
+gpu: 0
+batch_size: 1
+batch_type: sents
+max_length: 300
