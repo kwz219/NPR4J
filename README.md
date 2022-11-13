@@ -3,6 +3,25 @@
 ### Features
 <img src="./images/features.png" width="30%">
 
+### List of implemented papers
+#### >Supervised Learning
+
+[Zhu, Qihao, et al. "A syntax-guided edit decoder for neural program repair." Proceedings of the 29th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering. 2021.](https://dl.acm.org/doi/10.1145/3468264.3468544)
+
+[Lutellier, Thibaud, et al. "Coconut: combining context-aware neural translation models using ensemble for program repair." Proceedings of the 29th ACM SIGSOFT international symposium on software testing and analysis. 2020.](https://dl.acm.org/doi/10.1145/3395363.3397369)
+
+[Ding, Yangruibo, et al. "Patching as translation: the data and the metaphor." 2020 35th IEEE/ACM International Conference on Automated Software Engineering (ASE). IEEE, 2020.](https://dl.acm.org/doi/10.1145/3324884.3416587)
+
+[Chen, Zimin, et al. "Sequencer: Sequence-to-sequence learning for end-to-end program repair." IEEE Transactions on Software Engineering 47.9 (2019): 1943-1959.](https://ieeexplore.ieee.org/document/8827954/)
+
+[Chakraborty, Saikat, et al. "Codit: Code editing with tree-based neural models." IEEE Transactions on Software Engineering (2020).](https://ieeexplore.ieee.org/document/9181462/)
+
+[Tufano, Michele, et al. "An empirical study on learning bug-fixing patches in the wild via neural machine translation." ACM Transactions on Software Engineering and Methodology (TOSEM) 28.4 (2019): 1-29.](https://dl.acm.org/doi/10.1145/3340544)
+
+#### >Pretrain Enhanced
+
+[Mashhadi, Ehsan, and Hadi Hemmati. "Applying codebert for automated program repair of java simple bugs." 2021 IEEE/ACM 18th International Conference on Mining Software Repositories (MSR). IEEE, 2021.](https://ieeexplore.ieee.org/document/9463106/)
+
 ### Overall Procedure
 <img src="./images/NPR4J-procedure.PNG" width="60%">
 
