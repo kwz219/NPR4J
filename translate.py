@@ -2,7 +2,10 @@ import argparse
 import os
 
 import yaml
+
+from CodeBert_ft.run2 import mainWithArgs
 from PatchEdits.evaluate_model import PatchEdits_translate
+
 from Recoder.testone_ghl import generate_fixes, generate_fixes_d4j
 import time
 
@@ -95,6 +98,30 @@ def translate_Recoder(config_file,clearml):
     else:
         generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output_dir,valdatapkl_f,nl_voc_f,rule_f,code_voc_f,char_voc_path,rulead_path,
                        NL_voc_size,code_voc_size,voc_size,rule_num,cnum)
+
+def translate_CodeBERT_ft(config_file):
+    with open(config_file, 'r') as f:
+        config_dict = yaml.safe_load(f)
+        f.close()
+
+    eval_batch_size = config_dict["eval_batch_size"]
+
+
+    model_type= config_dict["model_type"]
+    model_path=config_dict["model_name_or_path"]
+    test_filename = config_dict["test_filename"]
+    load_model_path = config_dict["load_model_path"]
+    beam_size = int(config_dict["beam_size"])
+    pref_file = config_dict["pred_file"]
+
+    mainWithArgs(gradient_accumulation_steps=1,train_batch_size=1,train_filename='',do_train=False,
+                  train_steps=0,learning_rate=0,do_eval=False,eval_steps=0,test_filename=test_filename,do_test=True,
+                  warmup_steps=0,max_source_length=256,max_target_length=128,beam_size=beam_size,tokenizer_name="",weight_decay=0,adam_epsilon=1e-8,
+                  dev_file_name=None,eval_batch_size=eval_batch_size,config_name="",model_name_or_path=model_path,model_type=model_type,
+                  output_dir='',load_model_path=load_model_path,pred_file=pref_file)
+    pass
+
+"""
 def translate_PatchEdits(config_f):
     with open(config_f, 'r') as f:
         config_dict = yaml.safe_load(f)
@@ -106,12 +133,13 @@ def translate_PatchEdits(config_f):
     log_path=config_dict["log_path"]
     beam_size=config_dict["beam_size"]
     PatchEdits_translate(data_path,vocab_path,output_f,beam_size,model_path,log_path)
+"""
 def main():
     parser = argparse.ArgumentParser(
         description='translate.py',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-clearml",help="record experiment by clearml",default=True)
-    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder","SequenceR","Tufano","PatchEdits"])
+    parser.add_argument("-model", help="", required=True,choices=["CoCoNut","Cure","onmt","Recoder","SequenceR","Tufano","PatchEdits","CodeBert_ft"])
     parser.add_argument("-config",help="location of config file",required=True)
 
     opt=parser.parse_args()
@@ -125,7 +153,9 @@ def main():
     elif opt.model=="Recoder":
         translate_Recoder(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="PatchEdits":
-        translate_PatchEdits(config_f=opt.config)
+        PatchEdits_translate(config_f=opt.config)
+    elif opt.model == "CodeBert_ft":
+        translate_CodeBERT_ft(opt.config)
     end=time.time()
     time_sum=end-start
     print("total_time",time_sum)

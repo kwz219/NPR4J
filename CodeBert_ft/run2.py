@@ -89,7 +89,10 @@ def readF2L(file):
 def read_APRexamples(filename):
 
     buggy_codes=readF2L(filename+'.buggy')
-    fix_codes=readF2L(filename+'.fix')
+    if not os.path.exists(filename+'.fix'):
+        fix_codes=buggy_codes
+    else:
+        fix_codes=readF2L(filename+'.fix')
     assert len(buggy_codes)==len(fix_codes)
     examples=[]
     for idx,buggy_code in enumerate(buggy_codes):
@@ -545,9 +548,9 @@ def main():
             logger.info("  "+"*"*20)    
             """
 
-def trainWithArgs(gradient_accumulation_steps,train_batch_size,train_filename,do_train,train_steps,learning_rate,do_eval,eval_steps,test_filename,do_test,
+def mainWithArgs(gradient_accumulation_steps,train_batch_size,train_filename,do_train,train_steps,learning_rate,do_eval,eval_steps,test_filename,do_test,
                   warmup_steps,max_source_length,max_target_length,beam_size,tokenizer_name,weight_decay,adam_epsilon,dev_file_name,eval_batch_size,
-                  config_name,model_name_or_path,model_type,output_dir,load_model_path=None,do_lower_case=False,local_rank=-1,no_cuda=False,n_gpu=1,seed=42):
+                  config_name,model_name_or_path,model_type,output_dir,pred_file="./pred.txt",load_model_path=None,do_lower_case=False,local_rank=-1,no_cuda=False,n_gpu=1,seed=42):
 
     if local_rank == -1 or no_cuda:
         device = torch.device("cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
@@ -568,8 +571,8 @@ def trainWithArgs(gradient_accumulation_steps,train_batch_size,train_filename,do
     if n_gpu > 0:
         torch.cuda.manual_seed_all(seed)
     # make dir if output_dir not exist
-    if os.path.exists(output_dir) is False:
-        os.makedirs(output_dir)
+    #if os.path.exists(output_dir) is False:
+        #os.makedirs(output_dir)
 
     config_class, model_class, tokenizer_class = MODEL_CLASSES[model_type]
     config = config_class.from_pretrained(config_name if config_name else model_name_or_path)
@@ -733,62 +736,7 @@ def trainWithArgs(gradient_accumulation_steps,train_batch_size,train_filename,do
                     output_model_file = os.path.join(output_dir, "pytorch_model.bin")
                     torch.save(model_to_save.state_dict(), output_model_file)
 
-                """  
-                #Calculate bleu  
-                if 'dev_bleu' in dev_dataset:
-                    eval_examples,eval_data=dev_dataset['dev_bleu']
-                else:
-                    eval_examples = read_APRexamples(args.dev_filename)
-                    eval_examples = random.sample(eval_examples,min(1000,len(eval_examples)))
-                    eval_features = convert_examples_to_features(eval_examples, tokenizer, args,stage='test')
-                    all_source_ids = torch.tensor([f.source_ids for f in eval_features], dtype=torch.long)
-                    all_source_mask = torch.tensor([f.source_mask for f in eval_features], dtype=torch.long)    
-                    eval_data = TensorDataset(all_source_ids,all_source_mask)   
-                    dev_dataset['dev_bleu']=eval_examples,eval_data
 
-
-
-                eval_sampler = SequentialSampler(eval_data)
-                eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
-
-                model.eval() 
-                p=[]
-                for batch in eval_dataloader:
-                    batch = tuple(t.to(device) for t in batch)
-                    source_ids,source_mask= batch                  
-                    with torch.no_grad():
-                        preds = model(source_ids=source_ids,source_mask=source_mask)  
-                        for pred in preds:
-                            t=pred[0].cpu().numpy()
-                            t=list(t)
-                            if 0 in t:
-                                t=t[:t.index(0)]
-                            text = tokenizer.decode(t,clean_up_tokenization_spaces=False)
-                            p.append(text)
-                model.train()
-                predictions=[]
-                with open(os.path.join(args.output_dir,"dev.output"),'w') as f, open(os.path.join(args.output_dir,"dev.gold"),'w') as f1:
-                    for ref,gold in zip(p,eval_examples):
-                        predictions.append(str(gold.idx)+'\t'+ref)
-                        f.write(str(gold.idx)+'\t'+ref+'\n')
-                        f1.write(str(gold.idx)+'\t'+gold.target+'\n')     
-
-                (goldMap, predictionMap) = bleu.computeMaps(predictions, os.path.join(args.output_dir, "dev.gold")) 
-                dev_bleu=round(bleu.bleuFromMaps(goldMap, predictionMap)[0],2)
-                logger.info("  %s = %s "%("bleu-4",str(dev_bleu)))
-                logger.info("  "+"*"*20)    
-                if dev_bleu>best_bleu:
-                    logger.info("  Best bleu:%s",dev_bleu)
-                    logger.info("  "+"*"*20)
-                    best_bleu=dev_bleu
-                    # Save best checkpoint for best bleu
-                    output_dir = os.path.join(args.output_dir, 'checkpoint-best-bleu')
-                    if not os.path.exists(output_dir):
-                        os.makedirs(output_dir)
-                    model_to_save = model.module if hasattr(model, 'module') else model  # Only save the model it-self
-                    output_model_file = os.path.join(output_dir, "pytorch_model.bin")
-                    torch.save(model_to_save.state_dict(), output_model_file)
-               """
     if do_test:
         files = []
         if dev_file_name is not None:
@@ -809,7 +757,7 @@ def trainWithArgs(gradient_accumulation_steps,train_batch_size,train_filename,do
 
             model.eval()
             p = []
-            pred_f = codecs.open(test_filename + ".output", 'w', encoding='utf8')
+            pred_f = codecs.open(pred_file, 'w', encoding='utf8')
             for batch in tqdm(eval_dataloader, total=len(eval_dataloader)):
                 batch = tuple(t.to(device) for t in batch)
                 source_ids, source_mask = batch
