@@ -112,7 +112,7 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                         print("not contain flags")
                     else:
                         print("final contain")
-                    if toked_fix.strip()=="":
+                    if toked_fix.strip()=="" or toked_fix.strip().isspace() or len(toked_fix)<1:
                         toked_fix = "<DELETE>"
                     toked_fix = toked_fix.replace('\t\n', ' ').replace('\n', ' ')
                     if len(toked_fix) < 2:
@@ -168,7 +168,7 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                     if len(toked_bug)>10:
                         toked_bug = toked_bug.replace('\t\n', '').replace('\n', '')
                         buggy_codes.append(toked_bug)
-                        if toked_fix.strip().isspace():
+                        if toked_fix.strip()=="" or toked_fix.strip().isspace() or len(toked_fix)<1:
                             toked_fix="<DELETE>"
                         toked_fix = toked_fix.replace('\t\n', ' ').replace('\n', ' ')
                         if len(toked_fix)<2:
@@ -242,8 +242,8 @@ def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
                              #,"/home/zhongwenkang/NPR4J_processed/SequenceR/temp")
 #preprocess_SequenceR_fromRaw(r"E:\NPR4J\InsertionData\d4j.ids","E:/NPR4J/InsertionData",
                              #"E:/NPR4J/InsertionData_processed/SequenceR/d4j2","E:/NPR4J/InsertionData_processed/SequenceR/temp")
-preprocess_SequenceR_fromRaw(r"/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids","/home/zhongwenkang3/NPR4J_Data/BigTrain",
-                             r"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SR_trn","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SR_temp")
+#preprocess_SequenceR_fromRaw(r"/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids","/home/zhongwenkang3/NPR4J_Data/BigTrain",
+                             #r"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SR_trn","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SR_temp")
 #preprocess_SequenceR_fromRaw(r"/home/zhongwenkang3/NPR4J_Data/Small/Valid/valid.ids","/home/zhongwenkang3/NPR4J_Data/Small/Valid",
                              #r"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SequenceR/SR_val","/home/zhongwenkang3/RawData_Processed/SR_temp")
 """
@@ -294,9 +294,11 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
                         buggy_codes.append(buggy_code)
                         fix_codes.append(fix_code)
                         success_ids.append(id)
+                    else:
+                        fail_ids.append(id)
                 except:
                     fail_ids.append(id)
-        print(ind)
+        print(ind,len(success_ids),len(fail_ids))
         ind+=1
 
     writeL2F(buggy_codes,output_dir+"/"+mode+".buggy")
@@ -308,6 +310,10 @@ def preprocess_Tufano_fromRaw(ids_f,input_dir,output_dir,idom_path,temp_dir,mode
 #                              "/home/zhongwenkang/ML_Processed/Tufano",
 #                              r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt",
 #                              "/home/zhongwenkang/ML_Processed/Tufano/temp", "test")
+#preprocess_Tufano_fromRaw(r"/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids", "/home/zhongwenkang3/NPR4J_Data/BigTrain",
+                              #"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Tufano",
+                              #r"/home/zhongwenkang3/NPR4J/CodeAbstract/CA_Resource/idioms.4w",
+                              #"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Tufano/temp", "train")
 #preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/train/success.ids","/home/zhongwenkang/ML/train","/home/zhongwenkang/ML_Processed/Tufano",
 #                          r"/home/zhongwenkang/ML_Processed/Tufano/idioms.txt","/home/zhongwenkang/ML_Processed/Tufano/temp","train")
 #preprocess_Tufano_fromRaw(r"/home/zhongwenkang/ML/valid/success.ids","/home/zhongwenkang/ML/valid","/home/zhongwenkang/ML_Processed/Tufano",

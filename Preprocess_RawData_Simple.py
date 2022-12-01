@@ -230,15 +230,12 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
     print(len(failed_ids),failed_ids)
     writeL2F(success_ids,output_prefix+"_ids.txt")
     writeL2F(abstracted_lines,output_prefix+"_buggy.txt")
-preprocess_SequenceR_Buggy_Simple(ids_f=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/ids.txt",
-                                  buggy_method_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_methods",
-                                  buggy_class_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_classes",
-                                  output_prefix="D:/文档/APR-Ensemble/Defects4JData/SequenceRData/SR",
-                                  tmp_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/abstract_class",
-                                  jar_path=r"D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
-
-
-
+#preprocess_SequenceR_Buggy_Simple(ids_f=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/ids.txt",
+                                  #buggy_method_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_methods",
+                                  #buggy_class_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_classes",
+                                  #output_prefix="D:/文档/APR-Ensemble/Defects4JData/SequenceRData/SR",
+                                  #tmp_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/abstract_class",
+                                  #jar_path=r"D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
 
 def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
     ids=readF2L(ids_f)
@@ -666,6 +663,190 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir,mode="
                                 #"D:/RawData_Processed/RewardRepair/bears","D:/RawData_Processed/RewardRepair/tmp","test")
 #preprocess_RewardRepair_fromRaw("/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed",
                                 #)
+def preprocess_RewardRepair_fromRaw_simple(ids_f,buggy_methods_dir,buggy_class_dir,output_prefix,tmp_dir,jar_path):
+    ids=readF2L(ids_f)
+    bug_fix=[]
+    error_ids = []
+    success_ids = []
+    bug_fix.append("bugid" +'\t'+"store_id"+ '\t' + "buggy" + '\t' + "patch")
+    for idx,id in enumerate(ids):
+
+        # e.g. of id: Chart_7_TimePeriodValues_43-46
+        infos = id.split("_")
+        err_lines = infos[3]
+        err_start = -1
+        err_end = -1
+        if "-" in err_lines:
+            start_end = err_lines.split("-")
+            err_start = int(start_end[0])
+            err_end = int(start_end[1])
+        else:
+            err_start = int(err_lines)
+            err_end = int(err_lines)
+
+        print("error line ids", err_start, err_end)
+        "generate abstract file of buggy class"
+        buggy_class_f = buggy_class_dir + '/' + id + '.java'
+        output_f = tmp_dir + '/' + id + '.java'
+        args = [jar_path, buggy_class_f, output_f]
+        if not os.path.exists(output_f):
+            out, err = jarWrapper(args)
+
+
+        method_lines = readF2L(buggy_methods_dir + '/' + id + '.txt')
+        if err_start == err_end:
+            buggy_line = method_lines[err_start]
+
+        else:
+            buggy_line = method_lines[err_start:err_end + 1]
+        print("buggy_line", buggy_line)
+
+        "generate 3-level abstract file"
+        abstract_class = []
+        success_flag = 0
+        error_start_in_class = err_start
+        error_end_in_class = err_end
+        try:
+            class_lines = readLines(output_f)
+
+            for idx, line in enumerate(class_lines):
+
+                check_line = method_lines[0].replace("<START_BUG>", "").replace("<END_BUG>", "")
+
+                if check_line.strip() in line.strip():
+                    print(idx)
+                    abstract_class = class_lines[:idx] + method_lines + class_lines[idx + 1:]
+                    success_flag = 1
+                    error_start_in_class = idx + error_start_in_class
+                    error_end_in_class = idx + error_end_in_class
+                    break
+
+            print(len(abstract_class))
+            clean_class = []
+            ori_error_start_in_class = error_start_in_class
+            ori_error_end_in_class = error_end_in_class
+            # print(abstract_class)
+            print("error position in class:", error_start_in_class, error_end_in_class)
+            print("buggy line in class:", abstract_class[error_start_in_class].strip(),
+                  abstract_class[error_end_in_class].strip())
+
+            for idx, line in enumerate(abstract_class):
+                line4check = str(line.strip())
+                if line4check.startswith("/") or line4check.startswith("*") or line4check == "" or line4check == r"*/":
+                    if idx < ori_error_start_in_class:
+                        error_start_in_class = error_start_in_class - 1
+                        error_end_in_class = error_end_in_class - 1
+                    elif idx >= ori_error_start_in_class and idx <= ori_error_end_in_class:
+                        clean_class.append(line)
+                else:
+                    # print(line.strip())
+                    clean_class.append(line)
+
+            # print(clean_class)
+            # print(error_start_in_class,error_end_in_class)
+            print("error_line_inclean: ", clean_class[error_start_in_class].strip(),
+                  clean_class[error_end_in_class].strip())
+
+            if success_flag == 1:
+
+
+                def truncate(class_lines, err_start, err_end, max_length=1000):
+                    length_list = []
+                    for line in class_lines:
+                        try:
+                            toked = javalang.tokenizer.tokenize(line)
+                            length_list.append(len(toked))
+                            # toked_codes.append(' '.join([tok.value for tok in toked]))
+                        except:
+                            toked = re.split(r"[.,!?;(){}]", line)
+                            length_list.append(len(toked))
+                            # toked_codes.append(' '.join(toked))
+                    # print("tokenized")
+                    assert len(length_list) == len(class_lines)
+                    length_sum = sum(length_list)
+                    if length_sum <= max_length:
+                        return class_lines
+                    else:
+                        "start to delete from the end"
+                        cur_len_satisfy = False
+                        end_pos = len(class_lines)
+                        while end_pos > err_end:
+                            total_length = sum(length_list[:end_pos])
+                            if total_length <= max_length:
+                                cur_len_satisfy = True
+                                break
+                            else:
+                                end_pos = end_pos - 1
+                        if cur_len_satisfy:
+                            return class_lines[:end_pos]
+                        else:
+                            start_pos = 0
+                            while start_pos > err_start:
+                                total_len = sum(length_list[start_pos:end_pos])
+                                if total_len <= max_length:
+                                    return class_lines[start_pos:end_pos]
+                                else:
+                                    start_pos += 1
+                            return class_lines[start_pos:end_pos]
+
+                abstract_class = truncate(clean_class, error_start_in_class, error_end_in_class)
+
+            else:
+                abstract_class = method_lines
+
+            "tokenize source codes"
+
+            clean_line=''
+            if type(buggy_line)==list :
+                clean_line = ' '.join(buggy_line)
+            else:
+                 clean_line =buggy_line
+
+            clean_line =re.sub('\s+',' ',clean_line)
+            clean_context = re.sub('\s+',' ',' '.join(abstract_class))
+            buggy_src = "buggy: "+clean_line + " context: "+clean_context
+
+            bug_fix.append(str(len(bug_fix)-1)+'\t'+id+'\t'+buggy_src+'\t'+'<BLANK>')
+
+            success_ids.append(id)
+
+
+
+        except:
+            method_lines = readF2L(buggy_methods_dir + '/' + id + '.txt')
+            if type(buggy_line)==list :
+                clean_line = ' '.join(buggy_line)
+            else:
+                 clean_line =buggy_line
+
+            clean_line =re.sub('\s+',' ',clean_line)
+            clean_context = re.sub('\s+',' ',' '.join(abstract_class))
+            buggy_src = "buggy: "+clean_line + " context: "+clean_context
+
+            bug_fix.append(str(len(bug_fix)-1)+'\t'+id+'\t'+buggy_src+'\t'+'<BLANK>')
+            success_ids.append(id)
+
+    writeL2F(bug_fix, output_prefix + '.bug-fix.csv')
+    writeL2F(error_ids, output_prefix + '.fids')
+    writeL2F(success_ids, output_prefix + '.ids')
+
+preprocess_RewardRepair_fromRaw_simple("D:\文档\APR-Ensemble\Defects4JData\SequenceRData\ids.txt",
+                                       "D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_methods",
+                                       "D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_classes",
+                                       "D:/文档/APR-Ensemble/Defects4JData/RewardRepairData/d4j",
+                                       "D:/文档/APR-Ensemble/Defects4JData/SequenceRData/abstract_class",
+                                       "D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
+def preprocess_CodeBertFT_fromRaw_Simple(ids_f,buggy_lines_dir,output_file):
+    ids=readF2L(ids_f)
+    buggy_lines=[]
+    for id in ids:
+        buggy_line=codecs.open(buggy_lines_dir+'/'+id+'.txt').read().strip()
+        buggy_line=re.sub('\s+',' ',buggy_line)
+        buggy_lines.append(buggy_line)
+    writeL2F(buggy_lines,output_file)
+#preprocess_CodeBertFT_fromRaw_Simple("D:\文档\APR-Ensemble\Defects4JData\SequenceRData\ids.txt",
+                                     #"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_lines",
+                                     #"D:\文档\APR-Ensemble\Defects4JData\CodeBertData\\d4j_buggy.txt")
 def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
     buggy_lines=[]
