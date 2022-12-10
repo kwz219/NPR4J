@@ -67,15 +67,8 @@ CoCoNut (singleton mode): less than 10GB for training and predicting
 Tufano: less than 10GB for trainging and predicting  
 
 
-## Experiment Results for Standup4NPR (accepted by ASE 22)
->1. Evaluation_Results.zip: concrete evaluation results of every candidate predicted by the six NPR systems.  
-|---Evaluation_Result   
-&#8194;&#8194;&#8194;|---Diversity  
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Main    
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Bugs.jar      
-&#8194;&#8194;&#8194;|---Empirical  
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Defects4J    
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Bears    
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---QuixBugs      
-&#8194;&#8194;&#8194;&#8194;&#8194;&#8194;|---Manual_Check: manual check results of plausible/correct patches
-___
+##Latest Experiment Results (updated, 2022/12/10)
+> considering 7 NPR systems: (Edits, Tufano, CoCoNut, CodeBERT-ft, RewardRepair, Recoder, SequenceR) 
+> candidate number: up to 300  
+> manual validation results: https://docs.google.com/spreadsheets/d/11oUYyEiMnDfHRONSrB9hY1smXcrroJSN/edit?usp=sharing&ouid=116802316915888919937&rtpof=true&sd=true
+
