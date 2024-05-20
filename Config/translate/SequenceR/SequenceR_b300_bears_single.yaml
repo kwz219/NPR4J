@@ -1,0 +1,10 @@
+model: /home/zwk/NPR4J_Models/SequenceR/SR_26_step_50000.pt
+beam_size: 300
+n_best: 300
+src: /home/zwk/Processed_Data/SequenceR/bears_single.buggy
+tgt: /home/zwk/Processed_Data/SequenceR/bears_single.fix
+output: /home/zwk/Processed_Data/SequenceR/bears_single.pred
+gpu: 0
+batch_size: 1
+batch_type: sents
+max_length: 210

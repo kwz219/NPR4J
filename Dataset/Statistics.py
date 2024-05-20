@@ -1,4 +1,6 @@
 import codecs
+import json
+import os
 import random
 import re
 from collections import Counter
@@ -6,11 +8,35 @@ from collections import Counter
 import javalang
 from bson import ObjectId
 
-from Dataset.DataConstants import BUG_COL
+from Dataset.DataConstants import BUG_COL,Defects4j_repos,Bears_repos,Bugs_dot_jar_repos,Benchmark_repos,APR_tool_repos
 from Dataset.MongoHelper import MongoHelper
 from Utils.IOHelper import writeL2F, readF2L, readF2L_enc
 
+def rewrite_commit_json(cmd_json_f,output_f):
+    ori_commit=json.load(codecs.open(cmd_json_f,'r',encoding='utf8'))
+    new_json={}
+    for cinfo in ori_commit:
+        id=cinfo['_id']
+        repo=cinfo['repo']
+        new_json[id]=repo
+    with open(output_f,'w',encoding='utf8')as f:
+        json.dump(new_json,f,indent=2)
 
+def extract_repos_exclude(commits_json,meta_dirs:list,output_f):
+    exclude_commit_ids=[]
+    exclude_repos=Defects4j_repos+Bears_repos+Bugs_dot_jar_repos+Benchmark_repos+APR_tool_repos
+    commit_repos=json.load(codecs.open(commits_json,'r',encoding='utf8'))
+    for meta_dir in meta_dirs:
+        meta_files=os.listdir(meta_dir)
+        for file in meta_files:
+            if not file.endswith('txt'):
+                continue
+            meta_info=codecs.open(meta_dir+'/'+file,'r',encoding='utf8').read().strip()
+            commit_id=meta_info.split('<sep>')[4].split('\\')[0]
+            exclude_commit_ids.append(commit_id)
+    for commit in exclude_commit_ids:
+        exclude_repos.append(commit_repos[commit])
+    writeL2F(exclude_repos,output_f)
 def count_diff():
     mongoClient = MongoHelper()
     bug_col = mongoClient.get_col(BUG_COL)
@@ -339,4 +365,6 @@ if __name__ == "__main__":
                  src_data_f="D:/DDPR_DATA/OneLine_Replacement/M1000_Tufano/val.fix",output_f="F:/NPR_DATA0306/Processed_Tufano/val.fix")
     """
     #extract_trndata_4CoCoNut("F:/NPR_DATA0306/Medium/trn.ids")
-    extract_ctx("F:/NPR_DATA0306/Processed_CoCoNut/val.meta")
+    #extract_ctx("F:/NPR_DATA0306/Processed_CoCoNut/val.meta")
+    #rewrite_commit_json(r"E:\NPR4J\commit.json", r"E:\NPR4J\commit_simple.json")
+    #extract_repos_exclude(r"E:\NPR4J\commit_simple.json",[r"E:/NPR4J/val_meta/RawData/metas",r"E:/NPR4J/test_meta/Raw_Data/metas"],r"E:\NPR4J\exclude_repos.json")

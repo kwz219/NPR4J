@@ -550,8 +550,11 @@ def main():
 
 def mainWithArgs(gradient_accumulation_steps,train_batch_size,train_filename,do_train,train_steps,learning_rate,do_eval,eval_steps,test_filename,do_test,
                   warmup_steps,max_source_length,max_target_length,beam_size,tokenizer_name,weight_decay,adam_epsilon,dev_file_name,eval_batch_size,
-                  config_name,model_name_or_path,model_type,output_dir,pred_file="./pred.txt",load_model_path=None,do_lower_case=False,local_rank=-1,no_cuda=False,n_gpu=1,seed=42):
+                  config_name,model_name_or_path,model_type,output_dir,clearml_config:dict,pred_file="./pred.txt",load_model_path=None,do_lower_case=False,local_rank=-1,no_cuda=False,n_gpu=1,seed=42):
 
+    if clearml_config["use"]==True:
+        from clearml import Task
+        task = Task.init(project_name=clearml_config["project_name"], task_name=clearml_config["task_name"])
     if local_rank == -1 or no_cuda:
         device = torch.device("cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
         n_gpu = torch.cuda.device_count()

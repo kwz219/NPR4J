@@ -65,14 +65,13 @@ class SumDataset(data.Dataset):
             if os.path.exists(valdatapkl_f):
                 print("loading validation data")
                 self.data = pickle.load(open(valdatapkl_f, "rb"))
-                nl_path=valdatapkl_f.replace("data_pl","nl_pl")
+                nl_path = valdatapkl_f.replace("data_pl","nl_pl")
                 self.nl = pickle.load(open(nl_path, "rb"))
                 return
             else:
                 print("validation data doesn't exist !")
                 self.data = self.preProcessData(pickle.load(open(val_process_data_f, "rb")))
         else:
-
             if os.path.exists("testdata.pkl"):
                 self.data = pickle.load(open("testdata.pkl", "rb"))
                 #self.code = pickle.load(open("testcode.pkl", "rb"))

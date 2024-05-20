@@ -1,0 +1,17 @@
+train_batch_size: 64
+eval_batch_size: 16
+beam_size: 10
+max_source_length: 256
+max_target_length: 128
+output_dir: /home/zwk/NPR4J_Models/CodeBERT_trained
+train_prefix: /home/zwk/CodeBERT-master/CodeBertFT/trn
+train_steps: 50000
+dev_prefix: /home/zwk/CodeBERT-master/CodeBertFT/val
+eval_steps: 1000
+do_train: True
+do_eval: True
+do_test: False
+model_type: roberta
+model_name_or_path: /home/zwk/codebert-base
+learning_rate: 5e-5
+

@@ -4,7 +4,7 @@ import os
 import yaml
 
 from CodeBert_ft.run2 import mainWithArgs
-from PatchEdits.evaluate_model import PatchEdits_translate
+#from PatchEdits.evaluate_model import PatchEdits_translate
 
 from Recoder.testone_ghl import generate_fixes, generate_fixes_d4j
 import time
@@ -113,12 +113,13 @@ def translate_CodeBERT_ft(config_file):
     load_model_path = config_dict["load_model_path"]
     beam_size = int(config_dict["beam_size"])
     pref_file = config_dict["pred_file"]
+    clearml_config = config_dict["clearml_config"]
 
     mainWithArgs(gradient_accumulation_steps=1,train_batch_size=1,train_filename='',do_train=False,
                   train_steps=0,learning_rate=0,do_eval=False,eval_steps=0,test_filename=test_filename,do_test=True,
                   warmup_steps=0,max_source_length=256,max_target_length=128,beam_size=beam_size,tokenizer_name="",weight_decay=0,adam_epsilon=1e-8,
                   dev_file_name=None,eval_batch_size=eval_batch_size,config_name="",model_name_or_path=model_path,model_type=model_type,
-                  output_dir='',load_model_path=load_model_path,pred_file=pref_file)
+                  output_dir='',load_model_path=load_model_path,clearml_config = clearml_config,pred_file=pref_file)
     pass
 
 """
@@ -153,7 +154,8 @@ def main():
     elif opt.model=="Recoder":
         translate_Recoder(config_file=opt.config,clearml=opt.clearml)
     elif opt.model=="PatchEdits":
-        PatchEdits_translate(config_f=opt.config)
+        #PatchEdits_translate(config_f=opt.config)
+        pass
     elif opt.model == "CodeBert_ft":
         translate_CodeBERT_ft(opt.config)
     end=time.time()

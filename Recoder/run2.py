@@ -2,18 +2,16 @@ import argparse
 
 import torch
 from torch import optim
-from Dataset import SumDataset
+from Recoder.Dataset import SumDataset
 import os
 from tqdm import tqdm
-from Model import *
-import numpy as np
-#import wandb
-from copy import deepcopy
+from Recoder.Model import *
+
 import pickle
-from ScheduledOptim import *
+from Recoder.ScheduledOptim import *
 import sys
-from Radam import RAdam
-from Searchnode import Node
+
+from Recoder.Searchnode import Node
 import json
 import torch.nn.functional as F
 import traceback
@@ -1543,17 +1541,11 @@ def solveone3(data, model,ssize,classcontent_f):#(treestr, prob, model, subroot,
 if __name__ == "__main__":
     np.set_printoptions(threshold=sys.maxsize)
     if sys.argv[1] == "train":
-        train(256,"/home/zhongwenkang/Recorder/ori_models/data.pkl","/home/zhongwenkang/Recorder/ori_models/rulead.pkl",
-              valdatapkl_f="/home/zhongwenkang/Recorder/ori_models/testdata.pkl",save_dir="/home/zhongwenkang/Recorder/save",
-              nl_voc_path="/home/zhongwenkang/Recorder/ori_models/nl_voc.pkl",rule_path="/home/zhongwenkang/Recorder/ori_models/rule.pkl",
-              code_voc_path="/home/zhongwenkang/Recorder/ori_models/code_voc.pkl",char_voc_path="/home/zhongwenkang/Recorder/ori_models/char_voc.pkl",
-              max_epoch=20,task_name="Recoder_replicate")
-    elif sys.argv[1] == "train2":
-        train(384,"/root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/data_pl.pkl","/root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/rulead_pl.pkl",
-              valdatapkl_f="/root/zwk/NPR_DATA0306/Processed_Recoder/val_pl/valdata_pl.pkl",save_dir="/root/zwk/NPR_DATA0306/Processed_Recoder/save_384",
-              nl_voc_path="/root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/nl_voc_pl.pkl",rule_path="/root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/rule.pkl",
-              code_voc_path="/root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/code_voc_pl.pkl",char_voc_path="/root/zwk/NPR_DATA0306/Processed_Recoder/trn_pl/char_voc_pl.pkl",
-              max_epoch=20,task_name="Recoder_replicate")
+        train(256,"/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/trn_data.pkl","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/rulead.pkl",
+              valdatapkl_f="/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/val_data.pkl",save_dir="/home/zhongwenkang3/BigTrnSave/Recoder",
+              nl_voc_path="/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/nl_voc.pkl",rule_path="/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/rule.pkl",
+              code_voc_path="/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/code_voc.pkl",char_voc_path="/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/Recoder/char_voc.pkl",
+              max_epoch=20,task_name="Recoder")
     else:
         test()
      #test()

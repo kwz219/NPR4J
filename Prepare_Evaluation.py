@@ -6,7 +6,78 @@ from CoCoNut.tokenization.tokenization import get_strings_numbers, token2stateme
 from Recovery_Code import Recovery_CoCoNut_one
 from Utils.IOHelper import readF2L, readF2L_ori
 
+def Prepare_SequenceR_patches_byBlocks(ids_f,pred_f,output_f,candidate_size=300):
+    ids = readF2L(ids_f)
+    preds = readF2L(pred_f)
 
+    print(len(ids),len(preds)/300)
+    assert len(ids)*candidate_size == len(preds)
+
+    output_dict={}
+    for i in range(len(ids)):
+        per_preds = preds[i*candidate_size:(i+1)*candidate_size]
+        id_contents={}
+        for idx,pred in enumerate(per_preds):
+            id_contents[idx]=pred
+        output_dict[ids[i]]=id_contents
+
+    with open(output_f,'w',encoding='utf8')as f:
+        json.dump(output_dict,f,indent=4)
+
+#Prepare_SequenceR_patches_byBlocks(ids_f=r"D:\文档\APR-Ensemble\Defects4JData\SequenceRData\SR_new_ids.txt",
+                                   #pred_f=r"D:\文档\APR-Ensemble\Defects4JData\preds\Preds\d4j_SequenceR\SequenceR_b300_d4j_complete2.pred",
+                                   #output_f=r"D:\文档\APR-Ensemble\Defects4JData\preds4Eval\SeqR_d4j_eval2.pred")
+
+def Prepare_CodeBERT_ft_patches_byBlocks(ids_f,pred_f,output_f,candidate_size=300):
+    ids = readF2L(ids_f)
+    preds = readF2L(pred_f)
+
+    print(len(ids),len(preds)/300)
+    assert len(ids)*candidate_size == len(preds)
+
+    output_dict={}
+    for i in range(len(ids)):
+        per_preds = preds[i*candidate_size:(i+1)*candidate_size]
+        id_contents={}
+        for idx,pred in enumerate(per_preds):
+            clean_pred=pred.replace("<PRED_START>",'').replace("<PRED_END>",'')
+            id_contents[idx]=clean_pred
+        output_dict[ids[i]]=id_contents
+
+    with open(output_f,'w',encoding='utf8')as f:
+        json.dump(output_dict,f,indent=4)
+    pass
+#Prepare_CodeBERT_ft_patches_byBlocks(ids_f="D:\文档\APR-Ensemble\Defects4JData\SequenceRData\ids.txt",
+                                     #pred_f="D:\文档\APR-Ensemble\Defects4JData\preds\Preds\CodeBertFT_d4j_pred.txt",
+                                     #output_f="D:\文档\APR-Ensemble\Defects4JData\preds4Eval\CodeBERTft_d4j_eval.pred")
+def Prepare_RewardRepair_patches_byBlocks(ids_f,pred_f,output_f,candidate_size=300):
+    ids = readF2L(ids_f)
+    preds = readF2L(pred_f)
+
+    print(len(ids),len(preds)/300)
+    assert len(ids)*candidate_size == len(preds)
+
+    output_dict={}
+    for i in range(len(ids)):
+        per_preds = preds[i*candidate_size:(i+1)*candidate_size]
+        id_contents={}
+        for idx,pred in enumerate(per_preds):
+            pred_info = pred.split('\t')
+            index=int(pred_info[0])
+            print(pred_info[0])
+            if len(pred_info)==2:
+                clean_pred = pred_info[1]
+            else:
+                clean_pred = '\t'.join(pred_info[1:])
+            id_contents[idx]=clean_pred
+        output_dict[ids[index]]=id_contents
+
+    with open(output_f,'w',encoding='utf8')as f:
+        json.dump(output_dict,f,indent=4)
+    pass
+Prepare_RewardRepair_patches_byBlocks(ids_f="D:\文档\APR-Ensemble\Defects4JData\RewardRepairData\d4j.ids",
+                                     pred_f="D:\文档\APR-Ensemble\Defects4JData\preds\Preds\ReR_d4j_b300.pred",
+                                     output_f="D:\文档\APR-Ensemble\Defects4JData\preds4Eval\RewardRepair_ori_d4j_eval.pred")
 def Prepare_Tufano_patches(cand_size,recovery_preds_f,output_f,ids_f):
     ids=readF2L(ids_f)
     recovery_preds=readF2L(recovery_preds_f)
@@ -238,7 +309,20 @@ def prepare_Recoder_patches(pred_dir,output_f,id_prefix=""):
         patches_all[id]=patches_id
     with open(output_f, 'w', encoding='utf8') as f:
         json.dump(patches_all, f, indent=2)
-
+def prepare_Recoder_patches_byBlocks(pred_dir,output_f):
+    files = os.listdir(pred_dir)
+    patches_all={}
+    for file in files:
+        if not file.endswith(".fix"):
+            continue
+        id = file.replace(".fix",'')
+        predictions = json.load(codecs.open(pred_dir + '/' + file, 'r', encoding='utf8'))
+        if not predictions["0"]=="error":
+            patches_all[id]=predictions
+    with open(output_f, 'w', encoding='utf8') as f:
+        json.dump(patches_all, f, indent=2)
+#prepare_Recoder_patches_byBlocks("D:/文档/APR-Ensemble/Defects4JData/preds/Preds/d4j_Recoder_ori_b300",
+                                #"D:\文档\APR-Ensemble\Defects4JData\preds4Eval\Recoder_ori_b300_d4j_eval.pred")
 def prepare_RewardRepair_patches(ids_f,pred_f,input_dir,output_f,cand_size=300):
     ids=readF2L(ids_f)
     preds=readF2L(pred_f)
@@ -274,8 +358,8 @@ def prepare_RewardRepair_patches(ids_f,pred_f,input_dir,output_f,cand_size=300):
                              #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\qbs\RewardRepair\qbs_mine.patches")
 #prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\d4j.ids.new",r"D:\RawData_Processed\RR_pred\d4j.mine.preds",
                              #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\RewardRepair\d4j_mine.patches")
-prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\bears.ids.new",r"D:\RawData_Processed\RR_pred\bears.mine.preds",
-                             "E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\RewardRepair\bears_mine.patches")
+#prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\bears.ids.new",r"D:\RawData_Processed\RR_pred\bears.mine.preds",
+                             #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\d4j\RewardRepair\bears_mine.patches")
 #prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\qbs.ids.new",r"D:\NPR4J-Pred\RewardRepair\ori\qbs_preds.csv",
                              #"E:/NPR4J/RawData (2)/Benchmarks",r"D:\NPR4J-Pred\RewardRepair\ori\qbs_ori.patches")
 #prepare_RewardRepair_patches(r"E:\NPR4J\RawData (2)\Benchmarks\bears.ids.new",r"D:\NPR4J-Pred\RewardRepair\ori\bears_preds.csv",

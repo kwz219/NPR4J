@@ -1,0 +1,18 @@
+beam_size: 300
+max_source_length: 256
+max_target_length: 128
+test_filename: /home/zhongwenkang/NPR_Data/RawData/CodeBERT_d4j
+load_model_path: /home/zhongwenkang/NPR_Data/Models/CodeBERT-ft/save/pytorch_model.bin
+pred_file: /home/zhongwenkang/NPR_Data/Pred/CodeBertFT_d4j_pred.txt
+eval_batch_size: 1
+do_train: False
+do_eval: False
+do_test: True
+model_type: roberta
+model_name_or_path: /home/zhongwenkang/NPR_Data/Models/CodeBERT-ft/base/codebert-base
+clearml_config:
+  use: False
+  project_name: CodeBERT-Translate
+  name: translate_d4j
+
+

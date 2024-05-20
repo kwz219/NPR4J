@@ -28,7 +28,228 @@ output_dir: where you want to output the processed code of SequenceR
 tmp_dir: when building a SequenceR-type context, you need a directory to restore temp files
 """
 
-def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,output_prefix,tmp_dir,jar_path):
+def preprocess_SequenceR_Buggy_Simple(buggy_method_dir,buggy_class_dir,output_prefix,tmp_dir,jar_path):
+
+
+    ids = os.listdir(buggy_method_dir)
+    success_ids=[]
+    failed_ids=[]
+    abstracted_lines=[]
+
+    def truncate(class_lines, max_length=1000):
+        length_list = []
+        for line in class_lines:
+            try:
+                toked = javalang.tokenizer.tokenize(line)
+                length_list.append(len(toked))
+                # toked_codes.append(' '.join([tok.value for tok in toked]))
+            except:
+                toked = re.split(r"[.,!?;(){}]", line)
+                length_list.append(len(toked))
+                # toked_codes.append(' '.join(toked))
+        # print("tokenized")
+        assert len(length_list) == len(class_lines)
+        length_sum = sum(length_list)
+        if length_sum <= max_length:
+            return class_lines
+        else:
+            "start to delete from the end"
+            cur_len_satisfy = False
+            end_pos = len(class_lines)
+            while end_pos > 0:
+                total_length = sum(length_list[:end_pos])
+                if total_length <= max_length:
+                    cur_len_satisfy = True
+                    break
+                elif "<START_BUG>" in class_lines[end_pos - 1] or "<END_BUG>" in class_lines[end_pos - 1]:
+                    break
+                else:
+                    end_pos = end_pos - 1
+            if cur_len_satisfy:
+                return class_lines[:end_pos]
+            else:
+                start_pos = 0
+                while start_pos < end_pos:
+                    total_len = sum(length_list[start_pos:end_pos])
+                    if total_len <= max_length:
+                        return class_lines[start_pos:end_pos]
+                    elif "<START_BUG>" in class_lines[start_pos] or "<END_BUG>" in class_lines[
+                        start_pos]:
+                        break
+                    else:
+                        start_pos += 1
+                return class_lines[start_pos:end_pos]
+    for id in ids:
+        print(id)
+        print("=============")
+
+
+        # e.g. of id: project_filename_faultyline
+        id = id.replace(".txt","")
+        infos = id.split("_")
+        err_lines = infos[2]
+        err_start = -1
+        err_end = -1
+        if "-" in err_lines:
+            start_end = err_lines.split("-")
+            err_start = int(start_end[0])
+            err_end = int(start_end[1])
+        else:
+            err_start = int(err_lines)
+            err_end = int(err_lines)
+
+        #print("error line ids",err_start,err_end)
+        "generate abstract file of buggy class"
+        class_name = infos[0]+'_'+infos[1]
+        buggy_class_f = buggy_class_dir+'/'+class_name+'.java'
+        output_f = tmp_dir+'/'+class_name+'.java'
+        args = [jar_path, buggy_class_f, output_f]
+        if not os.path.exists(output_f):
+            out, err = jarWrapper(args)
+            print(out,err)
+
+        "add error label to the method"
+        method_lines = readF2L(buggy_method_dir+'/'+id+'.txt')
+        if err_start == err_end:
+            buggy_line = method_lines[err_start]
+            method_lines[err_start]= " <START_BUG> "+ method_lines[err_start] +" <END_BUG> "+'\n'
+        else:
+            method_lines[err_start] = " <START_BUG> "+ method_lines[err_start]
+            method_lines[err_end] = method_lines[err_end]+" <END_BUG> "+'\n'
+            buggy_line = method_lines[err_start:err_end+1]
+        #print("buggy_line",buggy_line)
+
+        "generate 3-level abstract file"
+        abstract_class=[]
+        success_flag=0
+        error_start_in_class=err_start
+        error_end_in_class = err_end
+        try:
+            class_lines = readLines(output_f)
+            for idx,line in enumerate(class_lines):
+
+                check_line = method_lines[0].replace("<START_BUG>","").replace("<END_BUG>","")
+
+                if check_line.strip() in line.strip():
+                    print(idx)
+                    abstract_class = class_lines[:idx]+method_lines+class_lines[idx+1:]
+                    success_flag=1
+                    error_start_in_class = idx+error_start_in_class
+                    error_end_in_class = idx+error_end_in_class
+                    break
+
+            #print(len(abstract_class))
+            clean_class=[]
+            ori_error_start_in_class = error_start_in_class
+            ori_error_end_in_class = error_end_in_class
+            #print(abstract_class)
+            #print("error position in class:",error_start_in_class,error_end_in_class)
+            #print("buggy line in class:",abstract_class[error_start_in_class].strip(),abstract_class[error_end_in_class].strip())
+
+            for idx,line in enumerate(abstract_class):
+                line4check=str(line.strip())
+                if line4check.startswith("/") or line4check.startswith("*") or line4check=="" or line4check==r"*/":
+                    if idx<ori_error_start_in_class:
+                        error_start_in_class= error_start_in_class-1
+                        error_end_in_class = error_end_in_class-1
+                    elif idx >= ori_error_start_in_class and idx<=ori_error_end_in_class:
+                        clean_class.append(line)
+                else:
+                    #print(line.strip())
+                    clean_class.append(line)
+
+            #print(clean_class)
+            #print(error_start_in_class,error_end_in_class)
+            #print("error_line_inclean: ",clean_class[error_start_in_class].strip(),clean_class[error_end_in_class].strip())
+            assert clean_class[error_start_in_class].strip()==method_lines[err_start].strip()
+            assert clean_class[error_end_in_class].strip() == method_lines[err_end].strip()
+            if success_flag ==1:
+                #print("<START_BUG>" in ' '.join(abstract_class),"<END_BUG>" in ' '.join(abstract_class))
+
+
+                #abstract_class=truncate(clean_class,error_start_in_class,error_end_in_class)
+
+                def count_length(lines):
+                    length_list=[]
+                    for line in lines:
+                        length_list.append(len(re.split(r"[.,!?;(){}]", line)))
+                    return sum(length_list)
+                if count_length(clean_class)>=1000:
+                    abstract_class=method_lines
+                else:
+                    abstract_class=clean_class
+                #print("<START_BUG>" in ' '.join(abstract_class), "<END_BUG>" in ' '.join(abstract_class))
+            else:
+                abstract_class=method_lines
+
+            "tokenize source codes"
+            print("before", count_length(abstract_class))
+            abstract_class=truncate(abstract_class,300)
+            print("after",count_length(abstract_class))
+            try:
+                toked_bug = javalang.tokenizer.tokenize(' '.join(abstract_class))
+                toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                           '<START_BUG>').replace('< END_BUG >',
+                                                                                                  '<END_BUG>')
+            except:
+                toked_bug = re.split(r"([.,!?;(){}])", ' '.join(abstract_class))
+                toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace('< END_BUG >',
+                                                                                                '<END_BUG>')
+
+
+            if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                exit(0)
+                try:
+                    toked_bug = javalang.tokenizer.tokenize(' '.join(abstract_class))
+                    toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                                   '<START_BUG>').replace('< END_BUG >',
+                                                                                                          '<END_BUG>')
+                except:
+                    toked_bug = re.split(r"([.,!?;(){}])", ' '.join(abstract_class))
+                    toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace('< END_BUG >',
+                                                                                                    '<END_BUG>')
+                    if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                        print(id)
+                        failed_ids.append(id)
+                    else:
+                        success_ids.append(id)
+                        abstracted_lines.append(toked_bug.strip().replace('\r\n',' ').replace('\n',' '))
+            else:
+                success_ids.append(id)
+                print("added",len(toked_bug.split()))
+                abstracted_lines.append(toked_bug.strip().replace('\r\n',' ').replace('\n',' '))
+
+
+
+        except:
+            abstract_class = truncate(abstract_class, 300)
+            try:
+                toked_bug = javalang.tokenizer.tokenize(' '.join(abstract_class))
+                toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
+                                                                           '<START_BUG>').replace('< END_BUG >',
+                                                                                                  '<END_BUG>')
+            except:
+                toked_bug = re.split(r"([.,!?;(){}])", ' '.join(abstract_class))
+                toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace('< END_BUG >',
+                                                                                                '<END_BUG>')
+                if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                    exit(1)
+                    failed_ids.append(id)
+                    print("fail",id)
+                else:
+                    success_ids.append(id)
+                    abstracted_lines.append(toked_bug.strip().replace('\r\n',' ').replace('\n',' '))
+
+    print(len(failed_ids),failed_ids)
+    writeL2F(success_ids,output_prefix+"_ids.txt")
+    writeL2F(abstracted_lines,output_prefix+"_buggy.txt")
+#preprocess_SequenceR_Buggy_Simple(buggy_method_dir="E:/tongtong_experiments/vulsConfig/buggyFiles/BuggyMethods",
+                                  #buggy_class_dir=r"E:\tongtong_experiments\vulsConfig\buggyFiles",
+                                  #output_prefix=r"E:\tongtong_experiments\vulsConfig\buggyFiles\OutPut\vul",
+                                  #tmp_dir=r"E:\tongtong_experiments\vulsConfig\buggyFiles\Abstract",
+                                  #jar_path=r"D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
+
+def preprocess_SequenceR_Buggy_f4j(ids_f,buggy_method_dir,buggy_class_dir,output_prefix,tmp_dir,jar_path):
 
 
     ids = readF2L(ids_f)
@@ -41,7 +262,7 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
 
         if id.startswith("Math_66") or id.startswith("Mockito_23") or id.startswith("Time_11"):
             continue
-        elif id.startswith("Lang_37"):
+        if id.startswith("Lang_37"):
             toked_bug="    public static <T> T[] addAll ( T[] array1 , T... array2 ) { if ( array1 == null ) { "+\
             " return clone ( array2 ) ; } else if ( array2 == null ) {   return clone ( array1 ) ;      } "+\
             " final Class<?> type1 = array1 . getClass() . getComponentType() ; T[] joinedArray = ( T[] ) "+\
@@ -49,7 +270,7 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
                       "System . arraycopy ( array2 , 0 , joinedArray , array1 . length , array2 . length ) ; return joinedArray ; }"
             success_ids.append(id)
             abstracted_lines.append(toked_bug.strip())
-            continue
+
         # e.g. of id: Chart_7_TimePeriodValues_43-46
         infos = id.split("_")
         err_lines = infos[3]
@@ -63,7 +284,7 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
             err_start = int(err_lines)
             err_end = int(err_lines)
 
-        print("error line ids",err_start,err_end)
+        #print("error line ids",err_start,err_end)
         "generate abstract file of buggy class"
         buggy_class_f = buggy_class_dir+'/'+id+'.java'
         output_f = tmp_dir+'/'+id+'.java'
@@ -80,7 +301,7 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
             method_lines[err_start] = " <START_BUG> "+ method_lines[err_start]
             method_lines[err_end] = method_lines[err_end]+" <END_BUG> "+'\n'
             buggy_line = method_lines[err_start:err_end+1]
-        print("buggy_line",buggy_line)
+        #print("buggy_line",buggy_line)
 
         "generate 3-level abstract file"
         abstract_class=[]
@@ -89,7 +310,6 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
         error_end_in_class = err_end
         try:
             class_lines = readLines(output_f)
-
             for idx,line in enumerate(class_lines):
 
                 check_line = method_lines[0].replace("<START_BUG>","").replace("<END_BUG>","")
@@ -102,15 +322,13 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
                     error_end_in_class = idx+error_end_in_class
                     break
 
-
-            print(len(abstract_class))
+            #print(len(abstract_class))
             clean_class=[]
             ori_error_start_in_class = error_start_in_class
             ori_error_end_in_class = error_end_in_class
             #print(abstract_class)
-            print("error position in class:",error_start_in_class,error_end_in_class)
-            print("buggy line in class:",abstract_class[error_start_in_class].strip(),abstract_class[error_end_in_class].strip())
-
+            #print("error position in class:",error_start_in_class,error_end_in_class)
+            #print("buggy line in class:",abstract_class[error_start_in_class].strip(),abstract_class[error_end_in_class].strip())
 
             for idx,line in enumerate(abstract_class):
                 line4check=str(line.strip())
@@ -126,14 +344,14 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
 
             #print(clean_class)
             #print(error_start_in_class,error_end_in_class)
-            print("error_line_inclean: ",clean_class[error_start_in_class].strip(),clean_class[error_end_in_class].strip())
+            #print("error_line_inclean: ",clean_class[error_start_in_class].strip(),clean_class[error_end_in_class].strip())
             assert clean_class[error_start_in_class].strip()==method_lines[err_start].strip()
             assert clean_class[error_end_in_class].strip() == method_lines[err_end].strip()
             if success_flag ==1:
-                print("<START_BUG>" in ' '.join(abstract_class),"<END_BUG>" in ' '.join(abstract_class))
+                #print("<START_BUG>" in ' '.join(abstract_class),"<END_BUG>" in ' '.join(abstract_class))
 
 
-                def truncate(class_lines,err_start,err_end,max_length=1000):
+                def truncate(class_lines,max_length=1000):
                     length_list=[]
                     for line in class_lines:
                         try:
@@ -153,10 +371,12 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
                         "start to delete from the end"
                         cur_len_satisfy=False
                         end_pos=len(class_lines)
-                        while end_pos > err_end:
+                        while end_pos > 0:
                             total_length = sum(length_list[:end_pos])
                             if total_length <= max_length:
                                 cur_len_satisfy=True
+                                break
+                            elif "<START_BUG>" in class_lines[end_pos-1] or "<END_BUG>" in class_lines[end_pos-1]:
                                 break
                             else:
                                 end_pos=end_pos-1
@@ -164,19 +384,35 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
                             return class_lines[:end_pos]
                         else:
                             start_pos=0
-                            while start_pos > err_start:
+                            while start_pos < end_pos:
                                 total_len = sum(length_list[start_pos:end_pos])
                                 if total_len <=max_length:
                                     return class_lines[start_pos:end_pos]
+                                elif "<START_BUG>" in class_lines[start_pos] or "<END_BUG>" in class_lines[
+                                    start_pos ]:
+                                    break
                                 else:
                                     start_pos+=1
                             return class_lines[start_pos:end_pos]
-                abstract_class=truncate(clean_class,error_start_in_class,error_end_in_class)
-                print("<START_BUG>" in ' '.join(abstract_class), "<END_BUG>" in ' '.join(abstract_class))
+                #abstract_class=truncate(clean_class,error_start_in_class,error_end_in_class)
+
+                def count_length(lines):
+                    length_list=[]
+                    for line in lines:
+                        length_list.append(len(re.split(r"[.,!?;(){}]", line)))
+                    return sum(length_list)
+                if count_length(clean_class)>=1000:
+                    abstract_class=method_lines
+                else:
+                    abstract_class=clean_class
+                #print("<START_BUG>" in ' '.join(abstract_class), "<END_BUG>" in ' '.join(abstract_class))
             else:
                 abstract_class=method_lines
 
             "tokenize source codes"
+            print("before", count_length(abstract_class))
+            abstract_class=truncate(abstract_class,300)
+            print("after",count_length(abstract_class))
             try:
                 toked_bug = javalang.tokenizer.tokenize(' '.join(abstract_class))
                 toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
@@ -189,6 +425,7 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
 
 
             if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                exit(0)
                 try:
                     toked_bug = javalang.tokenizer.tokenize(' '.join(abstract_class))
                     toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
@@ -206,11 +443,13 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
                         abstracted_lines.append(toked_bug.strip().replace('\r\n',' ').replace('\n',' '))
             else:
                 success_ids.append(id)
+                print("added",len(toked_bug.split()))
                 abstracted_lines.append(toked_bug.strip().replace('\r\n',' ').replace('\n',' '))
 
 
 
         except:
+            abstract_class = truncate(abstract_class, 300)
             try:
                 toked_bug = javalang.tokenizer.tokenize(' '.join(abstract_class))
                 toked_bug = ' '.join([tok.value for tok in toked_bug]).replace('< START_BUG >',
@@ -221,8 +460,9 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
                 toked_bug = ' '.join(toked_bug).replace('< START_BUG >', '<START_BUG>').replace('< END_BUG >',
                                                                                                 '<END_BUG>')
                 if not ("<START_BUG>" in toked_bug and "<END_BUG>" in toked_bug):
+                    exit(1)
                     failed_ids.append(id)
-                    print(id)
+                    print("fail",id)
                 else:
                     success_ids.append(id)
                     abstracted_lines.append(toked_bug.strip().replace('\r\n',' ').replace('\n',' '))
@@ -230,12 +470,6 @@ def preprocess_SequenceR_Buggy_Simple(ids_f,buggy_method_dir,buggy_class_dir,out
     print(len(failed_ids),failed_ids)
     writeL2F(success_ids,output_prefix+"_ids.txt")
     writeL2F(abstracted_lines,output_prefix+"_buggy.txt")
-#preprocess_SequenceR_Buggy_Simple(ids_f=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/ids.txt",
-                                  #buggy_method_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_methods",
-                                  #buggy_class_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_classes",
-                                  #output_prefix="D:/文档/APR-Ensemble/Defects4JData/SequenceRData/SR",
-                                  #tmp_dir=r"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/abstract_class",
-                                  #jar_path=r"D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
 
 def preprocess_SequenceR_fromRaw(ids_f,input_dir,output_prefix,tmp_dir):
     ids=readF2L(ids_f)
@@ -663,17 +897,17 @@ def preprocess_RewardRepair_fromRaw(ids_f,input_dir,output_prefix,tmp_dir,mode="
                                 #"D:/RawData_Processed/RewardRepair/bears","D:/RawData_Processed/RewardRepair/tmp","test")
 #preprocess_RewardRepair_fromRaw("/home/zhongwenkang3/NPR4J_Data/BigTrain/trn.ids","/home/zhongwenkang3/NPR4J_Data/BigTrain_Processed",
                                 #)
-def preprocess_RewardRepair_fromRaw_simple(ids_f,buggy_methods_dir,buggy_class_dir,output_prefix,tmp_dir,jar_path):
-    ids=readF2L(ids_f)
+def preprocess_RewardRepair_fromRaw_simple(buggy_methods_dir,buggy_class_dir,output_prefix,tmp_dir,jar_path):
+    ids=os.listdir(buggy_methods_dir)
     bug_fix=[]
     error_ids = []
     success_ids = []
     bug_fix.append("bugid" +'\t'+"store_id"+ '\t' + "buggy" + '\t' + "patch")
     for idx,id in enumerate(ids):
-
-        # e.g. of id: Chart_7_TimePeriodValues_43-46
+        id = id.replace('.txt','')
+        # e.g. of id: Chart_TimePeriodValues_43-46
         infos = id.split("_")
-        err_lines = infos[3]
+        err_lines = infos[2]
         err_start = -1
         err_end = -1
         if "-" in err_lines:
@@ -686,8 +920,9 @@ def preprocess_RewardRepair_fromRaw_simple(ids_f,buggy_methods_dir,buggy_class_d
 
         print("error line ids", err_start, err_end)
         "generate abstract file of buggy class"
-        buggy_class_f = buggy_class_dir + '/' + id + '.java'
-        output_f = tmp_dir + '/' + id + '.java'
+        classname = infos[0]+"_"+infos[1]
+        buggy_class_f = buggy_class_dir + '/' + classname + '.java'
+        output_f = tmp_dir + '/' +classname+ '.java'
         args = [jar_path, buggy_class_f, output_f]
         if not os.path.exists(output_f):
             out, err = jarWrapper(args)
@@ -830,12 +1065,18 @@ def preprocess_RewardRepair_fromRaw_simple(ids_f,buggy_methods_dir,buggy_class_d
     writeL2F(error_ids, output_prefix + '.fids')
     writeL2F(success_ids, output_prefix + '.ids')
 
-preprocess_RewardRepair_fromRaw_simple("D:\文档\APR-Ensemble\Defects4JData\SequenceRData\ids.txt",
-                                       "D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_methods",
-                                       "D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_classes",
-                                       "D:/文档/APR-Ensemble/Defects4JData/RewardRepairData/d4j",
-                                       "D:/文档/APR-Ensemble/Defects4JData/SequenceRData/abstract_class",
-                                       "D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
+#preprocess_RewardRepair_fromRaw_simple("D:\文档\APR-Ensemble\Defects4JData\SequenceRData\ids.txt",
+                                       #"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_methods",
+                                       #"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/buggy_classes",
+                                       #"D:/文档/APR-Ensemble/Defects4JData/RewardRepairData/d4j",
+                                       #"D:/文档/APR-Ensemble/Defects4JData/SequenceRData/abstract_class",
+                                       #"D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
+preprocess_RewardRepair_fromRaw_simple(buggy_methods_dir=r"E:\tongtong_experiments\vulsConfig\buggyFiles\BUggyMethods",
+                                  buggy_class_dir=r"E:\tongtong_experiments\vulsConfig\buggyFiles",
+                                  output_prefix=r"E:\tongtong_experiments\vulsConfig\buggyFiles\RR_OutPut\vul",
+                                  tmp_dir=r"E:\tongtong_experiments\vulsConfig\buggyFiles\Abstract",
+                                  jar_path=r"D:/NPR4J/lib-jar/abstraction-1.0-SNAPSHOT-jar-with-dependencies.jar")
+
 def preprocess_CodeBertFT_fromRaw_Simple(ids_f,buggy_lines_dir,output_file):
     ids=readF2L(ids_f)
     buggy_lines=[]
@@ -866,6 +1107,9 @@ def preprocess_CodeBertFT_fromRaw(ids_f,input_dir,output_prefix):
                               #"/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bears")
 #preprocess_CodeBertFT_fromRaw("/home/zhongwenkang/RawData/Evaluation/Benchmarks/bdj.ids.new","/home/zhongwenkang/RawData/Evaluation/Benchmarks",
                               #"/home/zhongwenkang/RawData_Processed/CodeBERT-ft/bdj")
+
+#preprocess_CodeBertFT_fromRaw(r"E:\NPR4J\RawData (2)\Benchmarks\\bear_one_hunk_ids.txt",r"E:\NPR4J\RawData (2)\Benchmarks",
+                              #"E:/NPR4J/RawData (2)/Processed_Data/CodeBERT/bears")
 def preprocess_CodeBertFT_fromRaw_methodLevel(ids_f,input_dir,output_prefix):
     ids=readF2L(ids_f)
     print(len(ids))

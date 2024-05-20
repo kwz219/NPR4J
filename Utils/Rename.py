@@ -18,6 +18,6 @@ def batch_opera(folder_path):
 
 
 if __name__ == "__main__":
-    folder_path = r'D:\RawData_New\new_test\new_test\buggy_classes'
+    folder_path = r'/home/zhongwenkang3/NPR4J_Data/Small/Valid/buggy_classes'
     batch_opera(folder_path)
 

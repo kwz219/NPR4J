@@ -1,0 +1,18 @@
+beam_size: 300
+max_source_length: 256
+max_target_length: 128
+test_filename: /home/zwk/Processed_Data/CodeBERT/bears
+load_model_path: /home/zwk/NPR4J_Models/CodeBERT_trained/pytorch_model.bin
+pred_file: /home/zwk/NPR_Preds/CodeBertFT_bears_pred2.txt
+eval_batch_size: 1
+do_train: False
+do_eval: False
+do_test: True
+model_type: roberta
+model_name_or_path: /home/zwk/codebert-base
+clearml_config:
+  use: False
+  project_name: CodeBERT-Translate
+  task_name: translate_bears
+
+

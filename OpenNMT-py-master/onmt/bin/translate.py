@@ -12,7 +12,7 @@ from clearml import Task
 def translate(opt):
     ArgumentParser.validate_translate_opts(opt)
     logger = init_logger(opt.log_file)
-
+    task = Task.init(project_name="translate_onmt", task_name="SeqR_Bears")
     translator = build_translator(opt, logger=logger, report_score=True)
     src_shards = split_corpus(opt.src, opt.shard_size)
     tgt_shards = split_corpus(opt.tgt, opt.shard_size)
@@ -58,6 +58,7 @@ def main():
     parser = _get_parser()
 
     opt = parser.parse_args()
+
 
 
     translate(opt)

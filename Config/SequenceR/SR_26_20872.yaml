@@ -1,0 +1,50 @@
+adagrad_accumulator_init: 0.1
+batch_size: 32
+bridge: true
+copy_attn: true
+copy_loss_by_seqlength: true
+data:
+  train:
+    path_src: /home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SequenceR/SR_trn.buggy
+    path_tgt: /home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SequenceR/SR_trn.fix
+    transforms: []
+    weight: 1
+  valid:
+    path_src: /home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SequenceR/SR_val.buggy
+    path_tgt: /home/zhongwenkang3/NPR4J_Data/BigTrain_Processed/SequenceR/SR_val.fix
+    transforms: []
+dropout: 0.2564549114479172
+dynamic_dict: true
+early_stopping: 3
+early_stopping_criteria: accuracy
+encoder_type: brnn
+global_attention: general
+gpu_ranks: [0,1]
+layers: 2
+learning_rate: 0.42732344206724004
+log_file: /home/zhongwenkang3/BigTrnSave/SequenceR/bigtrn_sr.log
+max_grad_norm: 4
+optim: adagrad
+overwrite: true
+reuse_copy_attn: true
+rnn_size: 512
+save_checkpoint_steps: 5000
+save_data: None
+save_model: /home/zhongwenkang3/BigTrnSave/SequenceR/bigtrn_sr
+seed: 912
+share_vocab: false
+src_seq_length: 1010
+src_seq_length_trunc: 1010
+src_vocab: /home/zhongwenkang3/BigTrnSave/SequenceR/src.vocab
+src_vocab_size: 173766
+tensorboard: true
+tensorboard_log_dir: /home/zhongwenkang3/BigTrnSave/SequenceR/bigtrn_sr.tensorlog
+tgt_seq_length: 512
+tgt_seq_length_trunc: 512
+tgt_vocab: /home/zhongwenkang3/BigTrnSave/SequenceR/tgt.vocab
+tgt_vocab_size: 88834
+train_steps: 100000
+valid_batch_size: 16
+valid_steps: 5000
+word_vec_size: 512
+world_size: 2

@@ -702,6 +702,8 @@ def generate_fixes(model_path,ids_f,bugs_dir,search_size,classcontent_dir,output
     model=load_model_for_test(model_path,nl_voc_size,code_voc_size,voc_size,rule_num,cnum)
     ids=codecs.open(ids_f,'r',encoding='utf8').readlines()
     failed_ids=[]
+    #from clearml import Task
+    #task = Task.init(project_name="NPR4j_translate", task_name="Recoder_bears")
     for idx,id in enumerate(ids):
         id=id.strip()
         buggyfile = bugs_dir + '/buggy_methods/' + id + ".txt"
