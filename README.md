@@ -1,10 +1,10 @@
 
 ## NPR4J-Framework
-### Features
-<img src="./images/features.png" width="30%">
+### Supported NPR systems
+<img src="./images/img.png" width="40%">
 
 ### List of implemented papers
-#### >Supervised Learning
+#### >NMT-based
 
 [Zhu, Qihao, et al. "A syntax-guided edit decoder for neural program repair." Proceedings of the 29th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering. 2021.](https://dl.acm.org/doi/10.1145/3468264.3468544)
 
@@ -18,9 +18,18 @@
 
 [Tufano, Michele, et al. "An empirical study on learning bug-fixing patches in the wild via neural machine translation." ACM Transactions on Software Engineering and Methodology (TOSEM) 28.4 (2019): 1-29.](https://dl.acm.org/doi/10.1145/3340544)
 
-#### >Pretrain Enhanced
+#### >Open-Source-LLM-based
 
 [Mashhadi, Ehsan, and Hadi Hemmati. "Applying codebert for automated program repair of java simple bugs." 2021 IEEE/ACM 18th International Conference on Mining Software Repositories (MSR). IEEE, 2021.](https://ieeexplore.ieee.org/document/9463106/)
+
+[He Ye, Matias Martinez, and Martin Monperrus. 2022. Neural Program Repair with Execution-based Backpropagation. In 44th IEEE/ACM 44th International Conference on Software Engineering, ICSE 2022, Pittsburgh, PA, USA, May 25-27, 2022. ACM, 1506–1518.](https://ieeexplore.ieee.org/document/9793856)
+
+[Kai Huang, Xiangxin Meng, Jian Zhang, Yang Liu, Wenjie Wang, Shuhao Li, and Yuqing Zhang. 2023. An Empirical
+Study on Fine-Tuning Large Language Models of Code for Automated Program Repair. In 38th IEEE/ACM International
+Conference on Automated Software Engineering, ASE 2023, Luxembourg, September 11-15, 2023. IEEE, 1162–1174. ](https://ieeexplore.ieee.org/document/10298532/)
+
+### A light NPR-execution Framework
+https://github.com/kwz219/NPR-Exec 
 
 ### Overall Procedure
 <img src="./images/NPR4J-procedure.PNG" width="60%">
@@ -67,8 +76,9 @@ CoCoNut (singleton mode): less than 10GB for training and predicting
 Tufano: less than 10GB for trainging and predicting  
 
 
-##Latest Experiment Results (updated, 2022/12/10)
-> considering 7 NPR systems: (Edits, Tufano, CoCoNut, CodeBERT-ft, RewardRepair, Recoder, SequenceR) 
+##Latest Experiment Results 
+> considering 9 NPR systems: (Edits, Tufano, CoCoNut, CodeBERT-ft, RewardRepair, Recoder, SequenceR, CodeBert-ft, UniXCoder-ft) 
 > candidate number: up to 300  
-> manual validation results: https://docs.google.com/spreadsheets/d/11oUYyEiMnDfHRONSrB9hY1smXcrroJSN/edit?usp=sharing&ouid=116802316915888919937&rtpof=true&sd=true
+> manual validation results 1: https://docs.google.com/spreadsheets/d/11oUYyEiMnDfHRONSrB9hY1smXcrroJSN/edit?usp=sharing&ouid=116802316915888919937&rtpof=true&sd=true
+> manual validation results 2: latest_results/additional_result_check.xlsx
 
