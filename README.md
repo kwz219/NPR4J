@@ -74,6 +74,8 @@ CODIT:  less than 10GB for training and predicting
 Edits: less than 10GB for training and predicting  
 CoCoNut (singleton mode): less than 10GB for training and predicting  
 Tufano: less than 10GB for trainging and predicting  
+CodeT5-ft: 40GB for training, 20GB for predicting  
+UniXCoder-ft: 40GB for training, 20GB for predicting  
 
 
 ##Latest Experiment Results 
