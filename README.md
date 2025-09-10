@@ -78,7 +78,7 @@ CodeT5-ft: 40GB for training, 20GB for predicting
 UniXCoder-ft: 40GB for training, 20GB for predicting  
 
 
-##Latest Experiment Results 
+##Latest Experimental Results 
 > considering 9 NPR systems: (Edits, Tufano, CoCoNut, CodeBERT-ft, RewardRepair, Recoder, SequenceR, CodeBert-ft, UniXCoder-ft) 
 > candidate number: up to 300  
 > manual validation results 1: https://docs.google.com/spreadsheets/d/11oUYyEiMnDfHRONSrB9hY1smXcrroJSN/edit?usp=sharing&ouid=116802316915888919937&rtpof=true&sd=true
